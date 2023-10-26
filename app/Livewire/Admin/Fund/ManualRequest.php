@@ -22,8 +22,8 @@ class ManualRequest extends Component
     {
         $this->banks = Bank::where('status','1')->get();
         $this->paymentModes = PaymentMode::get();
-        $fuunds = Fund::where('user_id')
-        return view('livewire.admin.fund.manual-request');
+        $funds = Fund::where('user_id',auth()->user()->id)->get();
+        return view('livewire.admin.fund.manual-request',compact('funds'));
     }
 
     public function fundNewRequest() {
