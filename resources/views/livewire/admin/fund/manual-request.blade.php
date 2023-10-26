@@ -57,17 +57,16 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            {{-- @foreach ($apiPartners as $key =>$apipartner)
+                            @foreach ($funds as $key =>$fund)
     
                                 <tr>
                                     <td><i class="fab fa-vuejs fa-lg text-success me-3"></i><strong>{{$loop->iteration}}</strong></td>
-                                    <td>{{$apipartner->id}}</td>
-                                    <td> {{ucfirst($apipartner->name)}}<br>{{$apipartner->apiPartner->mobile_no}}<br>{{ucfirst($apipartner->getRoleNames()->first())}}</td>
-                                    <td>{{ucfirst($apipartner->apiPartner->parentDetails->name)}}<br>{{$apipartner->apiPartner->parentDetails->getRoleNames()->first()=='super admin'?'9519035604':$apipartner->apiPartner->mobile_no}}<br>{{ucfirst($apipartner->apiPartner->parentDetails->getRoleNames()->first())}}</td>
-                                    <td>{{ucfirst($apipartner->apiPartner->shop_name)}}</br>{{$apipartner->apiPartner->website}}</td>
-                                    <td>0.00</td>
-                                    <td>{{$apipartner->created_at}}</td>
-                                    <td>
+                                    <td>Name -  {{ucfirst($fund->bank->name)}}<br>Account No.- {{$fund->bank->account_number}}<br>Branch - {{$fund->bank->branch_name}}</td>
+                                    <td>Ref No. -{{ucfirst($fund->references_no)}}<br>Paydate - {{$fund->pay_date}}<br>Paymode - {{strtoupper($fund->paymentMode->name)}}</td>
+                                    <td>{{$fund->amount}}</td>
+                                    <td>{{$fund->remark}}</td>
+                                    <td>{{$fund->status->name}}</td>
+                                    {{--<<td>
                                         <label class="switch">
                                             <input type="checkbox" @if($apipartner->status==1) checked @endif wire:change='statusUpdate({{$apipartner->id}},{{$apipartner->status}})' >
                                             <span class="slider round"></span> 
@@ -89,9 +88,9 @@
                                                 <div class="loading" wire:loading wire:target='deleteConfirmation'  wire:loading.attr="disabled" ></div>
                                             </div>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
