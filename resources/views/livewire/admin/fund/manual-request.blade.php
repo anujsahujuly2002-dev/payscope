@@ -96,94 +96,135 @@
     
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="form" tabindex="-1" aria-hidden="true" role="dialog" wire:ignore.self>
-                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                    <form wire:submit.prevent="storeFundNewRequest" autocomplete="off">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                {{-- @if ($editapipartnerForm)
-                                    <h5 class="modal-title" id="formTitle">Edit apipartner</h5>
-                                @else --}}
-                                    <h5 class="modal-title" id="formTitle">Wallet Fund Request</h5> 
-                                {{-- @endif --}}
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row g-2">
-                                    <div class="col-md-4 mb-0">
-                                        <label for="name" class="form-label">Deposit Bank</label>
-                                        <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='fundNewRequests.bank'>
-                                            <option value="">Select Bank</option>
-                                            @foreach ($banks as $bank)
-                                                <option value="{{$bank->id}}">{{$bank->name}}({{$bank->account_number}})</option>
-                                            @endforeach
-                                        </select>
-                                        @error('bank')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4 mb-0">
-                                        <label for="email" class="form-label">Amount</label>
-                                        <input type="text" id="email" class="form-control @error('amount') is-invalid @enderror" placeholder="Enter Amount" wire:model.defer='fundNewRequests.amount'/>
-                                        @error('amount')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4 mb-0">
-                                        <label for="mobile_number" class="form-label">Payment Mode</label>
-                                        <select id="paymnet_mode" class="form-control @error('payment_mode') is-invalid @enderror"  wire:model.defer='fundNewRequests.payment_mode'>
-                                            <option value="">Select Payment Mode</option>
-                                            @foreach ($paymentModes as $paymentMode)
-                                                <option value="{{$paymentMode->id}}">{{ucfirst($paymentMode->name)}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('payment_mode')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4 mb-0">
-                                        <label for="pay_date" class="form-label">Pay Date</label>
-                                        <input type="date" id="pay_date" class="form-control @error('pay_date') is-invalid @enderror" placeholder="Enter Address" wire:model.defer='fundNewRequests.pay_date'/>
-                                        @error('pay_date')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4 mb-0">
-                                        <label for="reference_number" class="form-label">Ref No.</label>
-                                        <input type="text" id="reference_number" class="form-control @error('reference_number') is-invalid @enderror" placeholder="Enter Refernce No" wire:model.defer='fundNewRequests.reference_number'/>
-                                        @error('reference_number')
+            @if(!$approvedForm)
+                <div class="modal fade" id="form" tabindex="-1" aria-hidden="true" role="dialog" wire:ignore.self>
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <form wire:submit.prevent="storeFundNewRequest" autocomplete="off">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    {{-- @if ($editapipartnerForm)
+                                        <h5 class="modal-title" id="formTitle">Edit apipartner</h5>
+                                    @else --}}
+                                        <h5 class="modal-title" id="formTitle">Wallet Fund Request</h5> 
+                                    {{-- @endif --}}
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-2">
+                                        <div class="col-md-4 mb-0">
+                                            <label for="name" class="form-label">Deposit Bank</label>
+                                            <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='fundNewRequests.bank'>
+                                                <option value="">Select Bank</option>
+                                                @foreach ($banks as $bank)
+                                                    <option value="{{$bank->id}}">{{$bank->name}}({{$bank->account_number}})</option>
+                                                @endforeach
+                                            </select>
+                                            @error('bank')
                                             <div class="invalid-feedback">
                                                 {{$message}}
-                                            </div>
-                                        @enderror
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="email" class="form-label">Amount</label>
+                                            <input type="text" id="email" class="form-control @error('amount') is-invalid @enderror" placeholder="Enter Amount" wire:model.defer='fundNewRequests.amount'/>
+                                            @error('amount')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="mobile_number" class="form-label">Payment Mode</label>
+                                            <select id="paymnet_mode" class="form-control @error('payment_mode') is-invalid @enderror"  wire:model.defer='fundNewRequests.payment_mode'>
+                                                <option value="">Select Payment Mode</option>
+                                                @foreach ($paymentModes as $paymentMode)
+                                                    <option value="{{$paymentMode->id}}">{{ucfirst($paymentMode->name)}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('payment_mode')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="pay_date" class="form-label">Pay Date</label>
+                                            <input type="date" id="pay_date" class="form-control @error('pay_date') is-invalid @enderror" placeholder="Enter Address" wire:model.defer='fundNewRequests.pay_date'/>
+                                            @error('pay_date')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="reference_number" class="form-label">Ref No.</label>
+                                            <input type="text" id="reference_number" class="form-control @error('reference_number') is-invalid @enderror" placeholder="Enter Refernce No" wire:model.defer='fundNewRequests.reference_number'/>
+                                            @error('reference_number')
+                                                <div class="invalid-feedback">
+                                                    {{$message}}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="pay_slip" class="form-label">Pay Slip (Optional)</label>
+                                            <input type="file" id="pay_slip" class="form-control"  wire:model.defer='paySlip'/>
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="pincode" class="form-label">Remark</label>
+                                            <textarea type="text" id="pincode" class="form-control " placeholder="Enter Remark" wire:model.defer='fundNewRequests.remark'></textarea>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 mb-0">
-                                        <label for="pay_slip" class="form-label">Pay Slip (Optional)</label>
-                                        <input type="file" id="pay_slip" class="form-control"  wire:model.defer='paySlip'/>
-                                    </div>
-                                    <div class="col-md-4 mb-0">
-                                        <label for="pincode" class="form-label">Remark</label>
-                                        <textarea type="text" id="pincode" class="form-control " placeholder="Enter Remark" wire:model.defer='fundNewRequests.remark'></textarea>
-                                    </div>
+                                    
                                 </div>
-                                  
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close </button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="modal fade" id="form" tabindex="-1" aria-hidden="true" role="dialog" wire:ignore.self>
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <form wire:submit.prevent="storeFundNewRequest" autocomplete="off">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    {{-- @if ($editapipartnerForm)
+                                        <h5 class="modal-title" id="formTitle">Edit apipartner</h5>
+                                    @else --}}
+                                        <h5 class="modal-title" id="formTitle">Fund Request Update</h5> 
+                                    {{-- @endif --}}
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-2">
+                                        <div class="col-md-4 mb-0">
+                                            <label for="name" class="form-label">Deposit Bank</label>
+                                            <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='fundNewRequests.bank'>
+                                                <option value="">Select Bank</option>
+                                                @foreach ($banks as $bank)
+                                                    <option value="{{$bank->id}}">{{$bank->name}}({{$bank->account_number}})</option>
+                                                @endforeach
+                                            </select>
+                                            @error('bank')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
             @include('admin.delete-confirmation.delete-confirmation')
         </div>    
     </div>

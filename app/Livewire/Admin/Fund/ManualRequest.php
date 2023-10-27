@@ -18,6 +18,7 @@ class ManualRequest extends Component
     public $paymentModes;
     public $fundNewRequests=[];
     public $paySlip;
+    public $approvedForm = false;
     public function render()
     {
         $this->banks = Bank::where('status','1')->get();
@@ -69,5 +70,12 @@ class ManualRequest extends Component
         else:
             session()->flash('error','Fund Request Not Added Please try again !');
         endif;
+    }
+
+    public function updateRequest() {
+        if(!auth()->user()->can('approved-fund-request'))
+        throw UnauthorizedException::forPermissions(['approved-fund-request']);
+        $this->approvedForm = true;
+        $this->dispatch('show-form');
     }
 }
