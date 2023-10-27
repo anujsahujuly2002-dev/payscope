@@ -42,7 +42,6 @@ class ManualRequest extends Component
     }
 
     public function storeFundNewRequest() {
-        // dd($this->fundNewRequests);
         $validateData = Validator::make($this->fundNewRequests,[
             'bank'=>'required',
             'amount'=>'required|numeric|min:100',
@@ -54,7 +53,7 @@ class ManualRequest extends Component
             $image = time().'.'.$this->paySlip->getClientOriginalExtension();
             Storage::putFileAs('public/upload/pay_slip/', $this->paySlip,$image);
         endif;
-        $validateData['remark'] = $this->fundNewRequests['remark'];
+        $validateData['remark'] = $this->fundNewRequests['remark']??"";
         $funds = Fund::create([
             'user_id'=>auth()->user()->id,
             'bank_id'=>$validateData['bank'],
