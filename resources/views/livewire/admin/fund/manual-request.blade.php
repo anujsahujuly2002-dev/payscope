@@ -54,6 +54,9 @@
                                 <th>Amount</th>
                                 <th>Remark</th>
                                 <th>Status</th>
+                                @can('approved-fund-request')
+                                    <th>Action</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
@@ -65,30 +68,26 @@
                                     <td>Ref No. -{{ucfirst($fund->references_no)}}<br>Paydate - {{$fund->pay_date}}<br>Paymode - {{strtoupper($fund->paymentMode->name)}}</td>
                                     <td>{{$fund->amount}}</td>
                                     <td>{{$fund->remark}}</td>
-                                    <td>{{$fund->status->name}}</td>
-                                    {{--<<td>
-                                        <label class="switch">
-                                            <input type="checkbox" @if($apipartner->status==1) checked @endif wire:change='statusUpdate({{$apipartner->id}},{{$apipartner->status}})' >
-                                            <span class="slider round"></span> 
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                @can('apipartner-edit')
-                                                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='editapipartner({{$apipartner}})'><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                                                @endcan
-                                                @can('apipartner-delete')
-                                                <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='deleteConfirmation({{$apipartner->id}})'><i class="bx bx-trash me-2"></i> Delete</a>
-                                                @endcan
-                                                <div class="loading" wire:loading wire:target='deleteConfirmation'  wire:loading.attr="disabled" ></div>
+                                    <td>{!!$fund->status->name!!}</td>
+                                    @canany(['approved-fund-request'])
+                                        <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    @can('approved-fund-request')
+                                                        <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='updateRequest()'><i class="bx bx-edit-alt me-2"></i> Update Request</a>
+                                                    @endcan
+                                                 {{--    @can('apipartner-delete')
+                                                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='deleteConfirmation({{$apipartner->id}})'><i class="bx bx-trash me-2"></i> Delete</a>
+                                                    @endcan --}}
+                                                    <div class="loading" wire:loading wire:target='deleteConfirmation'  wire:loading.attr="disabled" ></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td> --}}
+                                        </td>
+                                    @endcanany
                                 </tr>
                             @endforeach
                         </tbody>
