@@ -78,7 +78,7 @@
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     @can('approved-fund-request')
-                                                        <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='updateRequest()'><i class="bx bx-edit-alt me-2"></i> Update Request</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='updateRequest({{$fund}})'><i class="bx bx-edit-alt me-2"></i> Update Request</a>
                                                     @endcan
                                                  {{--    @can('apipartner-delete')
                                                     <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='deleteConfirmation({{$apipartner->id}})'><i class="bx bx-trash me-2"></i> Delete</a>

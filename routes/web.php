@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('cache-clear',function(){
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+});
 
 Route::get('/',function (){
     return to_route('admin.login');
