@@ -200,7 +200,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row g-2">
-                                        <div class="col-md-4 mb-0">
+                                        <div class="col-md-12 mb-0">
                                             <label for="name" class="form-label">Deposit Bank</label>
                                             <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='fundNewRequests.bank'>
                                                 <option value="">Select Bank</option>
