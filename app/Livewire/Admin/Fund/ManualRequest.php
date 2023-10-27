@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Bank;
 use App\Models\Fund;
 use App\Models\PaymentMode;
+use App\Models\Status;
+use App\Models\Wallet;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +21,9 @@ class ManualRequest extends Component
     public $fundNewRequests=[];
     public $paySlip;
     public $approvedForm = false;
+    public $status;
+    public $remark;
+    public $fund;
     public function render()
     {
         $this->banks = Bank::where('status','1')->get();
@@ -26,7 +31,8 @@ class ManualRequest extends Component
         $funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
         })->get();
-        return view('livewire.admin.fund.manual-request',compact('funds'));
+        $statuses = Status::get();
+        return view('livewire.admin.fund.manual-request',compact('funds','statuses'));
     }
 
     public function fundNewRequest() {
@@ -72,10 +78,34 @@ class ManualRequest extends Component
         endif;
     }
 
-    public function updateRequest() {
+    public function updateRequest(Fund $fund) {
         if(!auth()->user()->can('approved-fund-request'))
         throw UnauthorizedException::forPermissions(['approved-fund-request']);
+        $this->fund = $fund;
+        $this->status = $fund->status->id;
+        $this->remark = $fund->remark;
         $this->approvedForm = true;
         $this->dispatch('show-form');
+    }
+
+    public function updateFundRequest(){
+        if($this->status=='2'):
+            $wallets = Wallet::where('user_id', $this->fund->user_id)->first()->amount;
+            Wallet::where('user_id', $this->fund->user_id)->update([
+                'amount' => $wallets+ $this->fund->amount
+            ]);
+        endif;
+        $updateFundRequest = $this->fund->update([
+            'status_id'=> $this->status,
+            'remark'=>$this->remark
+        ]);
+        if($updateFundRequest):
+            $this->dispatch('hide-form');
+            sleep(1);
+            session()->flash('success','Fund Request Update Successfully !');
+            return back();
+        else:
+            session()->flash('error','Fund Request Not Update Please try again !');
+        endif;
     }
 }

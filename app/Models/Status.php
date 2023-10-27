@@ -14,7 +14,7 @@ class Status extends Model
         elseif($value=='rejected'):
             $status='<span class="badge rounded-pill bg-danger">Rejected</span>';
         elseif($value=='approved'):
-            $status = '<span class="badge rounded-pill bg-success">Success</span>';
+            $status = '<span class="badge rounded-pill bg-success">Approved</span>';
         endif;
         return $status;
     }

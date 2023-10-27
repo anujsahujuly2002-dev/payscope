@@ -171,8 +171,8 @@
                                             <input type="file" id="pay_slip" class="form-control"  wire:model.defer='paySlip'/>
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="pincode" class="form-label">Remark</label>
-                                            <textarea type="text" id="pincode" class="form-control " placeholder="Enter Remark" wire:model.defer='fundNewRequests.remark'></textarea>
+                                            <label for="remark" class="form-label">Remark</label>
+                                            <textarea type="text" id="remark" class="form-control " placeholder="Enter Remark" wire:model.defer='fundNewRequests.remark'></textarea>
                                         </div>
                                     </div>
                                     
@@ -187,8 +187,8 @@
                 </div>
             @else
                 <div class="modal fade" id="form" tabindex="-1" aria-hidden="true" role="dialog" wire:ignore.self>
-                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                        <form wire:submit.prevent="storeFundNewRequest" autocomplete="off">
+                    <div class="modal-dialog" role="document">
+                        <form wire:submit.prevent="updateFundRequest" autocomplete="off">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     {{-- @if ($editapipartnerForm)
@@ -201,11 +201,11 @@
                                 <div class="modal-body">
                                     <div class="row g-2">
                                         <div class="col-md-12 mb-0">
-                                            <label for="name" class="form-label">Deposit Bank</label>
-                                            <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='fundNewRequests.bank'>
-                                                <option value="">Select Bank</option>
-                                                @foreach ($banks as $bank)
-                                                    <option value="{{$bank->id}}">{{$bank->name}}({{$bank->account_number}})</option>
+                                            <label for="name" class="form-label">Status</label>
+                                            <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='status'>
+                                                <option value="">Select Status</option>
+                                                @foreach ($statuses as $status)
+                                                    <option value="{{$status->id}}">{!!$status->name!!}</option>
                                                 @endforeach
                                             </select>
                                             @error('bank')
@@ -213,6 +213,10 @@
                                                 {{$message}}
                                                 </div>
                                             @enderror
+                                        </div>
+                                        <div class="col-md-12 mb-0">
+                                            <label for="remark" class="form-label">Remark</label>
+                                            <textarea type="text" id="remark" class="form-control " placeholder="Enter Remark" wire:model.defer='remark'></textarea>
                                         </div>
                                     </div> 
                                 </div>
