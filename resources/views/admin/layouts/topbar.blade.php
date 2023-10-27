@@ -21,7 +21,14 @@
             <!-- /Search -->
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
-
+                <div class="widget widget-lg">
+                    <a class="btn" href="javascript:void()" rel="noopener" target="_blank" aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">
+                        <i class='bx bxs-wallet-alt'></i>
+                        &nbsp;
+                        <span>Wallet</span>
+                    </a>
+                    <a class="social-count" href="javascript:void(0)" rel="noopener" target="_blank" aria-label="755 stargazers on GitHub" style="margin-right:24px ">0.00</a>
+                </div>
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">

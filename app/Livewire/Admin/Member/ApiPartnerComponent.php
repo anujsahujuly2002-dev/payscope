@@ -59,7 +59,7 @@ class ApiPartnerComponent extends Component
             'pancard_number'=>'required|string',
             'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
             'scheme'=>'required',
-            'website'=>'required|url:https'
+            // 'website'=>'required|url:https'
         ])->validate();
         $user = User::create([
             'name'=>$validateDate['name'],
