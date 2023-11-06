@@ -27,7 +27,7 @@
                         &nbsp;
                         <span>Wallet</span>
                     </a>
-                    <a class="social-count" href="javascript:void(0)" rel="noopener" target="_blank" aria-label="755 stargazers on GitHub" style="margin-right:24px ">0.00</a>
+                    <a class="social-count" href="javascript:void(0)" rel="noopener" target="_blank" aria-label="755 stargazers on GitHub" style="margin-right:24px ">{{App\Models\Wallet::where('user_id',auth()->user()->id)->first()->amount}}</a>
                 </div>
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
