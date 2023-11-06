@@ -170,7 +170,7 @@
                             <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
                                     <div class="avatar flex-shrink-0">
-                                        <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card"
+                                        <img src="{{asset('assets/img/icons/unicons/cc-primary.png')}}" alt="Credit Card"
                                             class="rounded" />
                                     </div>
                                     <div class="dropdown">
@@ -388,7 +388,7 @@
                         <ul class="p-0 m-0">
                             <li class="d-flex mb-4 pb-1">
                                 <div class="avatar flex-shrink-0 me-3">
-                                    <img src="../assets/img/icons/unicons/paypal.png" alt="User" class="rounded" />
+                                    <img src="{{asset('assets/img/icons/unicons/paypal.png')}}" alt="User" class="rounded" />
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
@@ -403,7 +403,7 @@
                             </li>
                             <li class="d-flex mb-4 pb-1">
                                 <div class="avatar flex-shrink-0 me-3">
-                                    <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
+                                    <img src="{{asset('assets/img/icons/unicons/wallet.png')}}" alt="User" class="rounded" />
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
@@ -418,7 +418,7 @@
                             </li>
                             <li class="d-flex mb-4 pb-1">
                                 <div class="avatar flex-shrink-0 me-3">
-                                    <img src="../assets/img/icons/unicons/chart.png" alt="User" class="rounded" />
+                                    <img src="{{asset('assets/img/icons/unicons/chart.png')}}" alt="User" class="rounded" />
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
@@ -433,7 +433,7 @@
                             </li>
                             <li class="d-flex mb-4 pb-1">
                                 <div class="avatar flex-shrink-0 me-3">
-                                    <img src="../assets/img/icons/unicons/cc-success.png" alt="User" class="rounded" />
+                                    <img src="{{asset('assets/img/icons/unicons/cc-success.png')}}" alt="User" class="rounded" />
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
@@ -448,7 +448,7 @@
                             </li>
                             <li class="d-flex mb-4 pb-1">
                                 <div class="avatar flex-shrink-0 me-3">
-                                    <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
+                                    <img src="{{asset('assets/img/icons/unicons/wallet.png')}}" alt="User" class="rounded" />
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
@@ -463,7 +463,7 @@
                             </li>
                             <li class="d-flex">
                                 <div class="avatar flex-shrink-0 me-3">
-                                    <img src="../assets/img/icons/unicons/cc-warning.png" alt="User" class="rounded" />
+                                    <img src="{{asset('assets/img/icons/unicons/cc-warning.png')}}" alt="User" class="rounded" />
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
