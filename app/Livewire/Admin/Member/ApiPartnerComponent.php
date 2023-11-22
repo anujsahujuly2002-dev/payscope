@@ -128,8 +128,8 @@ class ApiPartnerComponent extends Component
             $u->whereDate('created_at',$this->start_date);
         })->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
-        })->toRawSql();
-        dd($this->apiPartners );
+        })->get();
+        // dd($this->apiPartners );
     }
 
 
