@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="{{asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
         <link rel="stylesheet" href="{{asset('assets/vendor/libs/apex-charts/apex-charts.css')}}" />
         <link rel="stylesheet" href="{{asset('assets/css/select2.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
         @stack('css')
         <!-- Page CSS -->
         <!-- Helpers -->

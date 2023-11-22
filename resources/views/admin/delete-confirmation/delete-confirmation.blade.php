@@ -1,6 +1,6 @@
 @push('script')
 <script>
-   
+
 window.addEventListener('show-delete-confirmation',()=>{
     Swal.fire({
     title: 'Are you sure?',
@@ -17,13 +17,17 @@ window.addEventListener('show-delete-confirmation',()=>{
     })
 });
 
-window.addEventListener('show-delete-message',event=>{     
+window.addEventListener('show-delete-message',event=>{
     Swal.fire(
         'Deleted!',
         event.detail[0].message,
         'success'
     )
 });
+
+$('.start-date').change(function(e) {
+    @this.set('start_date', $(this).val())
+})
 </script>
-    
+
 @endpush

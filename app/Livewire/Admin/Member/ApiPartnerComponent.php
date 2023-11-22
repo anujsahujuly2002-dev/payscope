@@ -19,22 +19,29 @@ class ApiPartnerComponent extends Component
 {
     use WithPagination;
     public $state=[];
-   
-    public function render()
-    {
-        if(!Auth::user()->can('api-partner-list')):
-            throw UnauthorizedException::forPermissions(['api-partner-list']);
-        endif;
-        $states = State::orderBy('name','ASC')->get();
-        $schemes = Scheme::where('user_id',auth()->user()->id)->get();
-        $apiPartners = User::whereHas('roles',function($q){
+    public $start_date;
+    public $apiPartners;
+    public $value;
+    public $end_date;
+    public function mount(){
+        $this->apiPartners = User::whereHas('roles',function($q){
             $q->where('name','api-partner');
         })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->whereHas('apiPartner',function ($p){
                 $p->where('added_by',auth()->user()->id);
             });
         })->get();
-        return view('livewire.admin.member.api-partner-component',compact('states','schemes','apiPartners'));
+    }
+    public function render()
+    {
+        if(!Auth::user()->can('api-partner-list')):
+            throw UnauthorizedException::forPermissions(['api-partner-list']);
+        endif;
+        // dd($this->start_date);
+        $states = State::orderBy('name','ASC')->get();
+        $schemes = Scheme::where('user_id',auth()->user()->id)->get();
+
+        return view('livewire.admin.member.api-partner-component',compact('states','schemes'));
     }
 
     // This Method Api Partner Create Method
@@ -97,15 +104,26 @@ class ApiPartnerComponent extends Component
             return redirect()->back()->with('error','Api Partner not created Please Try again !');
         endif;
     }
-    
+
     public function statusUpdate($userId,$status){
         $statusUpdate = User::findOrFail($userId)->update([
             'status'=>$status ==1?0:1,
         ]);
-       
+
         return redirect()->back()->with('success','Your Status has been updated');
-       
+
+    }
+    public function search() {
+       $this->apiPartners = User::whereHas('roles',function($q){
+            $q->where('name','api-partner');
+        })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->whereHas('apiPartner',function ($p){
+                $p->where('added_by',auth()->user()->id);
+            });
+        })->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })->get();
     }
 
-    
+
 }

@@ -15,39 +15,40 @@
         </div>
         <div class="card mb-2">
             <div class="search_section">
-                <form action="">
-                    <div class="row search-form">
-                        <div class="col-md-2">
-                            <div class="form-group mb-10">
-                                <input type="text" class="form-control" placeholder="Start Date">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group mb-10">
-                                <input type="text" class="form-control" placeholder="To Date">
-                            </div>
-                        </div>
-                        <div class="col-md-2 mb-10">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search Value">
-                            </div>
-                        </div>
-                        <div class="col-md-2 mb-10">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Agent Id / Parent Id">
-                            </div>
-                        </div>
-                        <div class="col-md-2 mb-10">
-                            <div class="form-group">
-                                <select class="form-control">
-                                    <option value="">Select member Status</option>
-                                    <option value="">Active</option>
-                                    <option value="">Block</option>
-                                </select>
-                            </div>
+                <div class="row search-form">
+                    <div class="col-md-2">
+                        <div class="form-group mb-10">
+                            <input type="text" class="form-control start-date" placeholder="Start Date" id="start-date" wire:model='start_date'>
                         </div>
                     </div>
-                </form>
+                    <div class="col-md-2">
+                        <div class="form-group mb-10">
+                            <input type="text" class="form-control start-date" placeholder="To Date" id="end-date">
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-10">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search Value" wire:model.defer="value">
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-10">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Agent Id / Parent Id">
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-10">
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option value="">Select member Status</option>
+                                <option value="">Active</option>
+                                <option value="">Block</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button wire:click.prevent='search' class="btn btn-primary" style="float: right" >Search</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Basic Bootstrap Table -->

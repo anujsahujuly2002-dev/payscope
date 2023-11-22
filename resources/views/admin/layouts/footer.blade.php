@@ -39,18 +39,41 @@
 <script src="{{asset('assets/js/dashboards-analytics.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{asset('assets/js/select2.js')}}"></script>
+<script src="{{asset('assets/js/bootstrap-datepicker.min.js')}}"></script>
 @stack('script')
 
-@livewireScripts
+
 <script>
- /*    $(document).ready(function() {
-        $('select').select2({
+    $(document).ready(function() {
+    /*  $('select').select2({
             width: 'auto',
             allowClear: false,
             height: '100%',
             dropdownParent: $('#form')
+        }); */
+        $(".start-date").datepicker({
+            'autoclose':true,
+            'clearBtn':true,
+            'todayHighlight':true,
+            'format':'yyyy-mm-dd'
         });
-    }) */
+
+        $('#start-date').datepicker("setDate", new Date());
+        $('#end-date').datepicker('setStartDate', new Date());
+
+            $('#end-date').focus(function(){
+            if($('#start-date').val().length == 0){
+                $('#end-date').datepicker('hide');
+                $('#start-date').focus();
+            }
+        });
+
+        $('#start-date').datepicker().on('changeDate', function(e) {
+            $('#end-date').datepicker('setStartDate', $('#start-date').val());
+            $('#end-date').datepicker('setDate', $('#start-date').val());
+        });
+
+    })
     window.addEventListener('show-form',event=>{
         $("#form").modal('show');
     });
@@ -61,5 +84,6 @@
     });
 
 </script>
+@livewireScripts
 </body>
 </html>
