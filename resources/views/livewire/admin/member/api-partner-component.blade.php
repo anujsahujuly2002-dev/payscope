@@ -38,10 +38,10 @@
                     </div>
                     <div class="col-md-2 mb-10">
                         <div class="form-group">
-                            <select class="form-control">
+                            <select class="form-control" wire:model.defer="status">
                                 <option value="">Select member Status</option>
-                                <option value="">Active</option>
-                                <option value="">Block</option>
+                                <option value="1">Active</option>
+                                <option value="0">Block</option>
                             </select>
                         </div>
                     </div>

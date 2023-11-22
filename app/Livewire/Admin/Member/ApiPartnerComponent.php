@@ -23,6 +23,7 @@ class ApiPartnerComponent extends Component
     public $apiPartners;
     public $value;
     public $end_date;
+    public $status;
     public function mount(){
         $this->apiPartners = User::whereHas('roles',function($q){
             $q->where('name','api-partner');
@@ -134,7 +135,10 @@ class ApiPartnerComponent extends Component
             $u->whereDate('created_at',$this->start_date);
         })->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
-        })->get();
+        })->when($this->status !=null,function($s){
+            $s->where('status',$this->status);
+        })
+        ->get();
         // dd($this->apiPartners );
     }
 
