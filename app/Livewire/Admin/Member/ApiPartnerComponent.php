@@ -124,7 +124,13 @@ class ApiPartnerComponent extends Component
                     $d->where('mobile_no',$this->value);
                 });
             });
-        })->when($this->start_date !=null && $this->end_date ==null,function($u){
+        })
+        ->when($this->value !=null,function($d){
+            $d->whereHas('apiPartner',function ($p){
+                    $p->where('mobile_no',$this->value);
+                });
+            })
+        ->when($this->start_date !=null && $this->end_date ==null,function($u){
             $u->whereDate('created_at',$this->start_date);
         })->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
