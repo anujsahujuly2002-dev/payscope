@@ -114,15 +114,22 @@ class ApiPartnerComponent extends Component
 
     }
     public function search() {
+        // dd($this->value);
        $this->apiPartners = User::whereHas('roles',function($q){
             $q->where('name','api-partner');
         })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->whereHas('apiPartner',function ($p){
-                $p->where('added_by',auth()->user()->id);
+                $p->where('added_by',auth()->user()->id)
+                ->when($this->value !=null,function($d){
+                    $d->where('mobile_no',$this->value);
+                });
             });
         })->when($this->start_date !=null && $this->end_date ==null,function($u){
             $u->whereDate('created_at',$this->start_date);
-        })->get();
+        })->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
+            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })->toRawSql();
+        dd($this->apiPartners );
     }
 
 

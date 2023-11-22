@@ -18,12 +18,12 @@
                 <div class="row search-form">
                     <div class="col-md-2">
                         <div class="form-group mb-10">
-                            <input type="text" class="form-control start-date" placeholder="Start Date" id="start-date" wire:model='start_date'>
+                            <input type="text" class="form-control start-date startdate" placeholder="Start Date" id="start-date" wire:model='start_date'>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group mb-10">
-                            <input type="text" class="form-control start-date" placeholder="To Date" id="end-date">
+                            <input type="text" class="form-control start-date end-date" placeholder="To Date" id="end-date" wire:moel="end_date">
                         </div>
                     </div>
                     <div class="col-md-2 mb-10">

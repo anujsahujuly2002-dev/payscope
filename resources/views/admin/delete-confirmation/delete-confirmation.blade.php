@@ -25,8 +25,11 @@ window.addEventListener('show-delete-message',event=>{
     )
 });
 
-$('.start-date').change(function(e) {
+$('.startdate').change(function(e) {
     @this.set('start_date', $(this).val())
+})
+$('.end-date').change(function(e) {
+    @this.set('end_date', $(this).val())
 })
 </script>
 
