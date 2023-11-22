@@ -385,3 +385,8 @@ input:checked + .slider:before {
 .text-semibold {
     font-weight: 700;
 }
+
+.search-form {
+    margin: auto;
+    padding-top: 10px;
+}

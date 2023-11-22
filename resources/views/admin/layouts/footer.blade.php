@@ -43,14 +43,14 @@
 
 @livewireScripts
 <script>
-    $(document).ready(function() {
+ /*    $(document).ready(function() {
         $('select').select2({
             width: 'auto',
             allowClear: false,
             height: '100%',
             dropdownParent: $('#form')
         });
-    })
+    }) */
     window.addEventListener('show-form',event=>{
         $("#form").modal('show');
     });

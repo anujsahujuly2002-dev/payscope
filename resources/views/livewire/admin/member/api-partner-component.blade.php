@@ -13,6 +13,43 @@
                 @endcan
             </div>
         </div>
+        <div class="card mb-2">
+            <div class="search_section">
+                <form action="">
+                    <div class="row search-form">
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control" placeholder="Start Date">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control" placeholder="To Date">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search Value">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Agent Id / Parent Id">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option value="">Select member Status</option>
+                                    <option value="">Active</option>
+                                    <option value="">Block</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <!-- Basic Bootstrap Table -->
         <div class="card">
             <h5 class="card-header">Api Partner List</h5>
@@ -45,7 +82,7 @@
                                 <td>
                                     <label class="switch">
                                         <input type="checkbox" @if($apipartner->status==1) checked @endif wire:change='statusUpdate({{$apipartner->id}},{{$apipartner->status}})' >
-                                        <span class="slider round"></span> 
+                                        <span class="slider round"></span>
                                     </label>
                                 </td>
                                 <td>
@@ -81,7 +118,7 @@
                             {{-- @if ($editapipartnerForm)
                                 <h5 class="modal-title" id="formTitle">Edit apipartner</h5>
                             @else --}}
-                                <h5 class="modal-title" id="formTitle">Create Api Partner</h5> 
+                                <h5 class="modal-title" id="formTitle">Create Api Partner</h5>
                             {{-- @endif --}}
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -232,5 +269,5 @@
             </div>
         </div>
         @include('admin.delete-confirmation.delete-confirmation')
-    </div>    
+    </div>
 </div>
