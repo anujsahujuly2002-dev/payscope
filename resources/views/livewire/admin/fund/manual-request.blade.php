@@ -42,6 +42,45 @@
                     @endif
                 </div>
             @endrole
+            <div class="card mb-2">
+                <div class="search_section">
+                    <div class="row search-form">
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control start-date startdate" placeholder="Start Date" id="start-date" wire:model='start_date'>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control start-date end-date" placeholder="To Date" id="end-date" wire:moel="end_date">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="References No" wire:model.defer="value">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Agent Id / Parent Id" wire:model.defer='agentId'>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <select class="form-control" wire:model.defer="status">
+                                    <option value="">Status</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{$status->id}}">{!!$status->name!!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button wire:click.prevent='search' class="btn btn-primary" style="float: right" >Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <h5 class="card-header">Wallet Load Request</h5>
                 <div class="table-responsive text-nowrap">
@@ -61,7 +100,7 @@
                         </thead>
                         <tbody class="table-border-bottom-0">
                             @foreach ($funds as $key =>$fund)
-    
+
                                 <tr>
                                     <td><i class="fab fa-vuejs fa-lg text-success me-3"></i><strong>{{$loop->iteration}}</strong></td>
                                     <td>Name -  {{ucfirst($fund->bank->name)}}<br>Account No.- {{$fund->bank->account_number}}<br>Branch - {{$fund->bank->branch_name}}</td>
@@ -93,7 +132,7 @@
                         </tbody>
                     </table>
                 </div>
-    
+
             </div>
             <!-- Modal -->
             @if(!$approvedForm)
@@ -105,7 +144,7 @@
                                     {{-- @if ($editapipartnerForm)
                                         <h5 class="modal-title" id="formTitle">Edit apipartner</h5>
                                     @else --}}
-                                        <h5 class="modal-title" id="formTitle">Wallet Fund Request</h5> 
+                                        <h5 class="modal-title" id="formTitle">Wallet Fund Request</h5>
                                     {{-- @endif --}}
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
@@ -175,7 +214,7 @@
                                             <textarea type="text" id="remark" class="form-control " placeholder="Enter Remark" wire:model.defer='fundNewRequests.remark'></textarea>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close </button>
@@ -194,7 +233,7 @@
                                     {{-- @if ($editapipartnerForm)
                                         <h5 class="modal-title" id="formTitle">Edit apipartner</h5>
                                     @else --}}
-                                        <h5 class="modal-title" id="formTitle">Fund Request Update</h5> 
+                                        <h5 class="modal-title" id="formTitle">Fund Request Update</h5>
                                     {{-- @endif --}}
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
@@ -218,7 +257,7 @@
                                             <label for="remark" class="form-label">Remark</label>
                                             <textarea type="text" id="remark" class="form-control " placeholder="Enter Remark" wire:model.defer='remark'></textarea>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close </button>
@@ -230,5 +269,5 @@
                 </div>
             @endif
             @include('admin.delete-confirmation.delete-confirmation')
-        </div>    
+        </div>
     </div>

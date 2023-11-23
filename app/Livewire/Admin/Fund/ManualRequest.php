@@ -24,15 +24,22 @@ class ManualRequest extends Component
     public $status;
     public $remark;
     public $fund;
+    public $start_date;
+    public $end_date;
+    public $funds;
+    public $value;
+    public $agentId;
+    public function mount() {
+        $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->get();
+    }
     public function render()
     {
         $this->banks = Bank::where('status','1')->get();
         $this->paymentModes = PaymentMode::get();
-        $funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->get();
         $statuses = Status::get();
-        return view('livewire.admin.fund.manual-request',compact('funds','statuses'));
+        return view('livewire.admin.fund.manual-request',compact('statuses'));
     }
 
     public function fundNewRequest() {
@@ -106,5 +113,22 @@ class ManualRequest extends Component
         else:
             session()->flash('error','Fund Request Not Update Please try again !');
         endif;
+    }
+
+    public function search() {
+        $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })->when($this->status !=null,function($u){
+            $u->where('status_id',$this->status);
+        })
+        ->when($this->agentId !=null,function($u){
+            $u->where('user_id',$this->agentId);
+        })
+        ->when($this->value !=null,function($u){
+            $u->where('references_no',$this->value);
+        })
+        ->get();
     }
 }
