@@ -6,7 +6,7 @@
     <div class="app-brand demo">
         <a href="{{route('admin.dashboard')}}" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{asset('assets/img/logo/logo1.jpeg')}}" alt="" srcset="">                 
+                <img src="{{asset('assets/img/logo/logo1.jpeg')}}" alt="" srcset="">
             </span>
         </a>
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -42,15 +42,15 @@
                             <div data-i18n="Without menu">Company Manager</div>
                         </a>
                     </li>
-               
+
                 <li class="menu-item">
                     <a href="javascript:void()" class="menu-link">
                         <div data-i18n="Without navbar">Company Profile</div>
                     </a>
                 </li>
-               
+
             </ul>
-        </li> 
+        </li>
         {{-- Resource Manage --}}
         <!-- Role And Permission -->
         @canany(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete'])
@@ -75,7 +75,7 @@
                     </li>
                     @endcanany
                 </ul>
-            </li> 
+            </li>
         @endcanany
         <!--Member -->
         @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'])
@@ -113,7 +113,7 @@
                         </li>
                     @endcanany
                 </ul>
-            </li> 
+            </li>
         @endcanany
 
         {{-- Set Up Tools --}}
@@ -132,7 +132,7 @@
                         </li>
                     @endcanany
                 </ul>
-            </li> 
+            </li>
         @endcanany
 
         {{-- Fund Transfer --}}
@@ -148,13 +148,13 @@
                             <div data-i18n="Without menu">Transfer / Return </div>
                         </a>
                     </li>
-                   
+
                     <li class="menu-item @if(in_array(request()->route()->getName(),['admin.fund.manual.request'])) active @endif">
                         <a href="{{route('admin.fund.manual.request')}}" class="menu-link">
                             <div data-i18n="Without menu">Request </div>
                         </a>
                     </li>
-                    <li class="menu-item">
+                   {{--  <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link">
                             <div data-i18n="Without menu">Request Report </div>
                         </a>
@@ -163,9 +163,9 @@
                         <a href="javascript:void(0)" class="menu-link">
                             <div data-i18n="Without menu">Virtual Report </div>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
-            </li> 
+            </li>
         @endcanany
 
         {{-- Transaction History  --}}
@@ -180,7 +180,7 @@
                         <div data-i18n="Without menu">Aeps </div>
                     </a>
                 </li>
-               
+
                 <li class="menu-item">
                     <a href="javascript:void()" class="menu-link">
                         <div data-i18n="Without menu">Aadhar Pay </div>
@@ -212,7 +212,7 @@
                     </a>
                 </li>
             </ul>
-        </li> 
+        </li>
         {{-- Transaction History  --}}
         {{-- Account Ledger  --}}
         <li class="menu-item">
@@ -226,14 +226,14 @@
                         <div data-i18n="Without menu">Main Wallet </div>
                     </a>
                 </li>
-               
+
                 <li class="menu-item">
                     <a href="javascript:void()" class="menu-link">
                         <div data-i18n="Without menu">Aeps Wallet </div>
                     </a>
                 </li>
             </ul>
-        </li> 
+        </li>
         {{-- Account Ledger  --}}
         {{-- Pending Approvals --}}
         <li class="menu-item">
@@ -247,14 +247,14 @@
                         <div data-i18n="Without menu">Complaints </div>
                     </a>
                 </li>
-               
+
                 <li class="menu-item">
                     <a href="javascript:void()" class="menu-link">
                         <div data-i18n="Without menu">Payout Bank </div>
                     </a>
                 </li>
             </ul>
-        </li> 
+        </li>
         {{-- Pending Approvals --}}
         {{-- Admin Setting --}}
         <li class="menu-item">
@@ -268,7 +268,7 @@
                         <div data-i18n="Without menu">Api Manager </div>
                     </a>
                 </li>
-               
+
                 <li class="menu-item">
                     <a href="javascript:void()" class="menu-link">
                         <div data-i18n="Without menu">Bank Manager </div>
@@ -295,7 +295,7 @@
                     </a>
                 </li>
             </ul>
-        </li> 
+        </li>
         {{-- Admin Setting --}}
         {{-- Log Manager --}}
         <li class="menu-item">
@@ -309,14 +309,14 @@
                         <div data-i18n="Without menu">Api Logs </div>
                     </a>
                 </li>
-               
+
                 <li class="menu-item">
                     <a href="javascript:void()" class="menu-link">
                         <div data-i18n="Without menu">Login Session </div>
                     </a>
                 </li>
             </ul>
-        </li> 
+        </li>
         {{-- Log Manager --}}
         {{-- Logout --}}
         <li class="menu-item @if(request()->route()->getName() =='admin.logout') active @endif">
