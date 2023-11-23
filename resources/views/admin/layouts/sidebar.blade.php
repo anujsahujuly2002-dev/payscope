@@ -143,17 +143,18 @@
                     <div data-i18n="Layouts">Fund Manager</div>
                 </a>
                 <ul class="menu-sub">
+                    <li class="menu-item @if(in_array(request()->route()->getName(),['admin.fund.manual.request'])) active @endif">
+                        <a href="{{route('admin.fund.manual.request')}}" class="menu-link">
+                            <div data-i18n="Without menu">Request </div>
+                        </a>
+                    </li>
                     <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link">
                             <div data-i18n="Without menu">Transfer / Return </div>
                         </a>
                     </li>
 
-                    <li class="menu-item @if(in_array(request()->route()->getName(),['admin.fund.manual.request'])) active @endif">
-                        <a href="{{route('admin.fund.manual.request')}}" class="menu-link">
-                            <div data-i18n="Without menu">Request </div>
-                        </a>
-                    </li>
+
                    {{--  <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link">
                             <div data-i18n="Without menu">Request Report </div>
