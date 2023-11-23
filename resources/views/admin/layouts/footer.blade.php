@@ -68,10 +68,10 @@
             }
         });
 
-        $('#start-date').datepicker().on('changeDate', function(e) {
+        /* $('#start-date').datepicker().on('changeDate', function(e) {
             $('#end-date').datepicker('setStartDate', $('#start-date').val());
             $('#end-date').datepicker('setDate', $('#start-date').val());
-        });
+        }); */
 
     })
     window.addEventListener('show-form',event=>{
