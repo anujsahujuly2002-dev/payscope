@@ -168,6 +168,46 @@
                 </ul>
             </li>
         @endcanany
+        {{-- Fund Transfer --}}
+        @canany(['payout-request'])
+            <li class="menu-item @if(in_array(request()->route()->getName(),['admin.payout.payout.request'])) active open @endif">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bxs-wallet-alt"></i>
+                    <div data-i18n="Layouts">Payout Manager</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('payout-request')
+                        <li class="menu-item @if(in_array(request()->route()->getName(),['admin.payout.payout.request'])) active @endif">
+                            <a href="{{route('admin.payout.payout.request')}}" class="menu-link">
+                                <div data-i18n="Without menu">Payout Request </div>
+                            </a>
+                        </li>
+                    @endcan
+                    <li class="menu-item @if(in_array(request()->route()->getName(),['admin.payout.payout.request'])) active @endif">
+                        <a href="{{route('admin.payout.payout.request')}}" class="menu-link">
+                            <div data-i18n="Without menu">Pending Payout Req </div>
+                        </a>
+                    </li>
+                   {{--  <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                            <div data-i18n="Without menu">Payout Report </div>
+                        </a>
+                    </li> --}}
+
+
+                   {{--  <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                            <div data-i18n="Without menu">Request Report </div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                            <div data-i18n="Without menu">Virtual Report </div>
+                        </a>
+                    </li> --}}
+                </ul>
+            </li>
+        @endcanany
 
         {{-- Transaction History  --}}
         <li class="menu-item">

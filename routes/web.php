@@ -38,7 +38,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // Role And Permission Route
         Route::controller(RoleAndPermissions::class)->group(function(){
             Route::prefix('permission')->name('permission.')->group(function() {
-               Route::get('/','permissonList')->name('list'); 
+               Route::get('/','permissonList')->name('list');
             });
             Route::prefix('/role')->name('role.')->group(function() {
                 Route::get('/','roleList')->name('list');
@@ -60,6 +60,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // Fund Manage Route
         Route::controller(FundController::class)->prefix('fund')->name('fund.')->group(function(){
             Route::get('/manual-request','manualRequest')->name('manual.request');
+        });
+
+        // Payout Manager Route
+        Route::controller(PayoutMangerController::class)->prefix('payout')->name('payout.')->group(function() {
+            Route::get('/payout-request','payoutRequest')->name('payout.request');
         });
     });
 });
