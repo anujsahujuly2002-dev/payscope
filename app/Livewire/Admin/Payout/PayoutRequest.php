@@ -34,7 +34,7 @@ class PayoutRequest extends Component
     }
 
     public function storePayoutNewRequest() {
-        dd(request()->ip());
+        // dd(request()->ip());
         $validateData = Validator::make($this->payoutFormRequest,[
             'account_number'=>'required|numeric|min:5',
             'ifsc_code' =>'required',
