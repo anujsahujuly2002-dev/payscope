@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class PayoutRequestHistory extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'api_id',
+        'fund_request_id',
+        'api_id',
+        'amount',
+        'charge',
+        'status_id',
+        'credited_by',
+        'balance',
+        'type',
+        'transtype',
+        'product',
+        'remarks',
+    ];
 }
