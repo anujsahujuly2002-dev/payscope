@@ -76,6 +76,7 @@ class PayoutRequest extends Component
                 'payout_ref'=>$validateData['payoutid']
             ]);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             $this->dispatch('hide-form');
             return redirect()->back()->with('error','Duplicate Transaction Not Allowed, Please Check Transaction History');
         }
