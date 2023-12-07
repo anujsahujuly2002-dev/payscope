@@ -34,7 +34,7 @@ class PayoutRequest extends Component
     }
 
     public function storePayoutNewRequest() {
-        
+        dd(request()->ip());
         $validateData = Validator::make($this->payoutFormRequest,[
             'account_number'=>'required|numeric|min:5',
             'ifsc_code' =>'required',
@@ -131,7 +131,7 @@ class PayoutRequest extends Component
             'X-Ipay-Auth-Code'=>'1',
             'X-Ipay-Client-Id'=>'YWY3OTAzYzNlM2ExZTJlOUWx2c0hIFCZJmVsLIO8Mxw=',
             'X-Ipay-Client-Secret'=>'6252d9bfe8832ff8cd648ed2f4e9cd5820c8e5864bb5ac15217670c74bafd73b',
-            'X-Ipay-Endpoint-Ip'=>request()->ip(),
+            'X-Ipay-Endpoint-Ip'=>'1.22.138.249',
             'Content-Type'=>'application/json'
         ];
 
