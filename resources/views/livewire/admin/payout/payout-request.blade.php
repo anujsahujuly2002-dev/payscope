@@ -42,7 +42,7 @@
                 @endif
             </div>
         @endrole --}}
-        {{-- <div class="card mb-2">
+        <div class="card mb-2">
             <div class="search_section">
                 <div class="row search-form">
                     <div class="col-md-2">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="card">
             <h5 class="card-header">Payout Request</h5>
             <div class="table-responsive text-nowrap">
