@@ -169,7 +169,7 @@
             </li>
         @endcanany
         {{-- Fund Transfer --}}
-        @canany(['payout-request'])
+        @canany(['payout-request','payout-new-request'])
             <li class="menu-item @if(in_array(request()->route()->getName(),['admin.payout.payout.request'])) active open @endif">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bxs-wallet-alt"></i>
@@ -183,11 +183,11 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="menu-item @if(in_array(request()->route()->getName(),['admin.payout.payout.request'])) active @endif">
+                   {{--  <li class="menu-item @if(in_array(request()->route()->getName(),['admin.payout.payout.request'])) active @endif">
                         <a href="{{route('admin.payout.payout.request')}}" class="menu-link">
                             <div data-i18n="Without menu">Pending Payout Req </div>
                         </a>
-                    </li>
+                    </li> --}}
                    {{--  <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link">
                             <div data-i18n="Without menu">Payout Report </div>

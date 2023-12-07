@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @push('title')
-    Payout Pending Request
+    Payout  Request
 @endpush
 @section('content')
 <!-- Content wrapper -->
