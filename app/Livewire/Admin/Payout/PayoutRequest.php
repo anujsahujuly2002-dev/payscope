@@ -4,25 +4,28 @@ namespace App\Livewire\Admin\Payout;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Status;
 use App\Models\Wallet;
 use Livewire\Component;
 use App\Models\FundRequest;
 use App\Models\PaymentMode;
 use App\Models\PayoutRequestHistory;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Exceptions\UnauthorizedException;
-use Illuminate\Support\Facades\Http;
 
 class PayoutRequest extends Component
 {
     public $paymentModes;
     public $payoutFormRequest = [];
+    public $statuses = [];
     public function render()
     {
         if(!auth()->user()->can('payout-request')):
             throw UnauthorizedException::forPermissions(['payout-request']);
         endif;
         $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
+        $this->statuses =  Status::get();
         return view('livewire.admin.payout.payout-request');
     }
 
@@ -103,7 +106,7 @@ class PayoutRequest extends Component
         ]);
 
         $url = "https://api.instantpay.in/payments/payout";
-        $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+        $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=103.44.52.186'));
         $requestParameter = [
             "payer" => [
                 "bankProfileId" => "24255428726",
@@ -131,12 +134,12 @@ class PayoutRequest extends Component
             'X-Ipay-Auth-Code'=>'1',
             'X-Ipay-Client-Id'=>'YWY3OTAzYzNlM2ExZTJlOUWx2c0hIFCZJmVsLIO8Mxw=',
             'X-Ipay-Client-Secret'=>'6252d9bfe8832ff8cd648ed2f4e9cd5820c8e5864bb5ac15217670c74bafd73b',
-            'X-Ipay-Endpoint-Ip'=>'217.21.90.110',
+            'X-Ipay-Endpoint-Ip'=>'103.44.52.186',
             'Content-Type'=>'application/json'
         ];
 
-        $response = Http::withHeaders($headers)->post($url,$requestParameter);
-        dd($response->body());
+        $res = apiCall($headers,$url,$requestParameter,true,$validateData['payoutid']);
+        dd($res);
 
 
 
