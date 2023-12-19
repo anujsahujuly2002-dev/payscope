@@ -17,7 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('cache-clear',function(){
     Artisan::call('route:clear');
     Artisan::call('cache:clear');
+    
     echo "Cache Cleared !";
+});
+
+Route::get('migrate',function(){
+    Artisan::call('migrate');
+    echo "Migration successfully!";
 });
 
 Route::get('/',function (){
