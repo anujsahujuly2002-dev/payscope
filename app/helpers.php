@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 if(!function_exists('apiCall')):
     function apiCall($headers,$url,$prameter,$log=false,$txn_id) {
         try {
-            $response = Http::timeout(-1)->withHeaders($headers)->post($url,$prameter);
+            $response = Http::retry(3, 100)->withHeaders($headers)->post($url,$prameter);
             $res = $response->getBody()->getContents();
             if($log):
                 ApiLog::create([

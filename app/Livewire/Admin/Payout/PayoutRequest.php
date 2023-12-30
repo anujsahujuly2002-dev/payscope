@@ -33,6 +33,7 @@ class PayoutRequest extends Component
         if(!auth()->user()->can('payout-new-request')):
             throw UnauthorizedException::forPermissions(['payout-new-request']);
         endif;
+        $this->reset();
         $this->dispatch('show-form');
     }
 
@@ -79,7 +80,7 @@ class PayoutRequest extends Component
                 'payout_ref'=>$validateData['payoutid']
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             $this->dispatch('hide-form');
             return redirect()->back()->with('error','Duplicate Transaction Not Allowed, Please Check Transaction History');
         }
@@ -106,7 +107,7 @@ class PayoutRequest extends Component
         ]);
 
         $url = "https://api.instantpay.in/payments/payout";
-        $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=103.44.52.186'));
+        $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=13.233.123.53'));
         $requestParameter = [
             "payer" => [
                 "bankProfileId" => "24255428726",
@@ -134,15 +135,34 @@ class PayoutRequest extends Component
             'X-Ipay-Auth-Code'=>'1',
             'X-Ipay-Client-Id'=>'YWY3OTAzYzNlM2ExZTJlOUWx2c0hIFCZJmVsLIO8Mxw=',
             'X-Ipay-Client-Secret'=>'6252d9bfe8832ff8cd648ed2f4e9cd5820c8e5864bb5ac15217670c74bafd73b',
-            'X-Ipay-Endpoint-Ip'=>'103.44.52.186',
+            'X-Ipay-Endpoint-Ip'=>'13.233.123.53',
             'Content-Type'=>'application/json'
         ];
 
         $res = apiCall($headers,$url,$requestParameter,true,$validateData['payoutid']);
-        dd($res);
-
-
-
+        if(isset($res['statuscode']) && in_array($res['statuscode'],['TXN','TUP'])):
+            FundRequest::where('id',$fundRequest->id)->update([
+                'status_id'=>'2',
+                'payout_ref' =>$res['data']['txnReferenceId'],
+            ]);
+            PayoutRequestHistory::where('id',$fundRequest->id)->update([
+                'status_id'=>'2',
+            ]);
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('success','Your '.$res['status']);
+        else:
+            FundRequest::where('id',$fundRequest->id)->update([
+                'status_id'=>'3',
+            ]);
+            PayoutRequestHistory::where('id',$fundRequest->id)->update([
+                'status_id'=>'3',
+            ]);
+            Wallet::where('user_id',auth()->user()->id)->update([
+                'amount'=>auth()->user()->walletAmount->amount,
+            ]);
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('error','Your '.$res['status']);
+        endif;
     }
 
 
