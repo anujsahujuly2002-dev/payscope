@@ -19,6 +19,19 @@ class PayoutRequest extends Component
     public $paymentModes;
     public $payoutFormRequest = [];
     public $statuses = [];
+    public $payoutRequestData;
+    public $start_date;
+    public $end_date;
+    public $value;
+    public $agentId;
+    public $status;
+
+    public function mount() {
+        $this->payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->get();
+    }
+
     public function render()
     {
         if(!auth()->user()->can('payout-request')):
@@ -26,10 +39,14 @@ class PayoutRequest extends Component
         endif;
         $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
         $this->statuses =  Status::get();
+        $this->payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->get();
         return view('livewire.admin.payout.payout-request');
     }
 
     public function payoutRequest() {
+        
         if(!auth()->user()->can('payout-new-request')):
             throw UnauthorizedException::forPermissions(['payout-new-request']);
         endif;
@@ -163,6 +180,28 @@ class PayoutRequest extends Component
             $this->dispatch('hide-form');
             return redirect()->back()->with('error','Your '.$res['status']);
         endif;
+    }
+
+    public function search() {
+        $this->payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })
+        ->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })
+        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
+            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })
+        ->when($this->status !=null,function($u){
+            $u->where('status_id',$this->status);
+        })
+        ->when($this->agentId !=null,function($u){
+            $u->where('user_id',$this->agentId);
+        })
+        ->when($this->value !=null,function($u){
+            $u->where('payout_ref',$this->value);
+        })
+        ->get();
     }
 
 

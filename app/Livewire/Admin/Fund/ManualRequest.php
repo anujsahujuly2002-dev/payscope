@@ -29,6 +29,7 @@ class ManualRequest extends Component
     public $funds;
     public $value;
     public $agentId;
+
     public function mount() {
         $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
@@ -39,6 +40,9 @@ class ManualRequest extends Component
         $this->banks = Bank::where('status','1')->get();
         $this->paymentModes = PaymentMode::get();
         $statuses = Status::get();
+        $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->get();
         return view('livewire.admin.fund.manual-request',compact('statuses'));
     }
 

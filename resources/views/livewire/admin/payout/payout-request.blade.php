@@ -14,34 +14,6 @@
             </div>
         </div>
         <!-- Basic Bootstrap Table -->
-        {{-- @role('api-partner')
-            <div class="row">
-                @if($banks->count()>0)
-                    @foreach ($banks as $bank)
-                        <div class="col-sm-4">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="text-semibold no-margin-top">{{$bank->name}}</h6>
-                                            <ul class="list list-unstyled">
-                                                <li>Ifsc : <span class="text-semibold">{{$bank->ifsc_code}}</span> </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h6 class="text-semibold text-right no-margin-top">{{$bank->account_number}}</h6>
-                                            <ul class="list list-unstyled text-right">
-                                                <li>Branch : <span class="text-semibold">{{$bank->branch_name}}</span> </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
-        @endrole --}}
         <div class="card mb-2">
             <div class="search_section">
                 <div class="row search-form">
@@ -99,36 +71,18 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        {{-- @foreach ($funds as $key =>$fund)
-
+                        
+                        @foreach ($payoutRequestData as $key =>$payoutReq)
                             <tr>
                                 <td><i class="fab fa-vuejs fa-lg text-success me-3"></i><strong>{{$loop->iteration}}</strong></td>
-                                <td>Name -  {{ucfirst($fund->bank->name)}}<br>Account No.- {{$fund->bank->account_number}}<br>Branch - {{$fund->bank->branch_name}}</td>
-                                <td>Ref No. -{{ucfirst($fund->references_no)}}<br>Paydate - {{$fund->pay_date}}<br>Paymode - {{strtoupper($fund->paymentMode->name)}}</td>
-                                <td>{{$fund->amount}}</td>
-                                <td>{{$fund->remark}}</td>
-                                <td>{!!$fund->status->name!!}</td>
-                                @canany(['approved-fund-request'])
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                @can('approved-fund-request')
-                                                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='updateRequest({{$fund}})'><i class="bx bx-edit-alt me-2"></i> Update Request</a>
-                                                @endcan
-                                                @can('apipartner-delete')
-                                                <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='deleteConfirmation({{$apipartner->id}})'><i class="bx bx-trash me-2"></i> Delete</a>
-                                                @endcan
-                                                <div class="loading" wire:loading wire:target='deleteConfirmation'  wire:loading.attr="disabled" ></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                @endcanany
+                                <td> {{ucfirst($payoutReq->user->name)}}<br> {{$payoutReq->user->apiPartner->mobile_no}}</td>
+                                <td>Account No. -{{ucfirst($payoutReq->account_number)}}<br>Account Holder Name - {{$payoutReq->account_holder_name}}<br>Ifsc Code - {{strtoupper($payoutReq->ifsc_code)}}</td>
+                                <td>Transaction Id:-{{$payoutReq->payout_id}} <br> Payout Id:-{{$payoutReq->payout_id}}</td>
+                                <td>{{$payoutReq->amount}}</td>
+                                <td>{{$payoutReq->remarks}}</td>
+                                <td>{!!$payoutReq->status->name!!}</td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

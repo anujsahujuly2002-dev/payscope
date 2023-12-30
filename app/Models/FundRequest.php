@@ -21,4 +21,12 @@ class FundRequest extends Model
         'payout_id',
         'payout_ref',
     ];
+
+    public function user () {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function status() {
+        return $this->belongsTo(Status::class,'status_id','id');
+    }
 }
