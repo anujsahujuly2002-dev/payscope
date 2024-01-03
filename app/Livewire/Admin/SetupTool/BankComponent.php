@@ -6,9 +6,11 @@ use Livewire\Component;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Bank;
+use Livewire\WithPagination;
 
 class BankComponent extends Component
 {
+    use WithPagination;
     public $state=[];
     public $editBankForm;
     public $bank;
@@ -19,7 +21,7 @@ class BankComponent extends Component
         if(!auth()->user()->can('bank-list')):
             throw UnauthorizedException::forPermissions(['bank-list']);
         endif;
-       $banks = Bank::where('user_id',auth()->user()->id)->latest()->get();
+       $banks = Bank::where('user_id',auth()->user()->id)->latest()->paginate(10);
         return view('livewire.admin.setup-tool.bank-component',compact('banks'));
     }
 

@@ -1,13 +1,12 @@
 @extends('admin.layouts.master')
-@push('title')
-    Manage Bank
-@endpush
-@section('content')
-    <!-- Content wrapper -->
-    <div class="content-wrapper">
-    <!-- Content -->
-    <div class="container-xxl flex-grow-1 container-p-y">
-        @livewire('admin.setup-tool.bank-component')
-    </div>
-    <!-- Content wrapper -->
+@section('title')
+Manage Bank
 @endsection
+@section('content')
+    @component('admin.common-components.breadcrumb')
+        @slot('pagetitle') List @endslot
+        @slot('title')Manage Bank @endslot
+    @endcomponent
+    @livewire('admin.setup-tool.bank-component')
+@endsection
+

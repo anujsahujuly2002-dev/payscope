@@ -76,18 +76,24 @@
                         <li><a href="javascript:void()">Master Distributor</a></li>
                         <li><a href="javascript:void()">Distributor</a></li>
                         <li><a href="javascript:void()">Retailer</a></li>
-                        <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
+                        @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'])
+                            <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
+                        @endcanany
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
-                        <span>Setup Tools</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Bank Account</a></li>
-                    </ul>
-                </li>
+                @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="uil-book-alt"></i>
+                            <span>Setup Tools</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete'])
+                                <li><a href="{{route('admin.setup.bank')}}">Bank Account</a></li>
+                            @endcanany
+                        </ul>
+                    </li>
+                @endcanany
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-book-alt"></i>
