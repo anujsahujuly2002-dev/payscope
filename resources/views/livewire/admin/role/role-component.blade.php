@@ -1,151 +1,194 @@
-<div><div wire:loading  class="loading"></div>
-    @include('admin.flash-message.flash-message')
+<div>
+    <div wire:loading  class="loading"></div>
     <div class="row">
-        <div class="col-md-6">
-            <h4 class="fw-bold py-3 mb-4">Manage Role</h4>
-        </div>
-        <div class="col-md-6">
-            @can('role-create') 
-                <button wire:click.prevent='createRole' class="btn btn-primary" style="float: right" >Create Role</button>
-            @endcan
-            <div wire:loading wire:target="createRole" class="loading"></div>
-        </div>
-    </div>
-    <!-- Basic Bootstrap Table -->
-    <div class="card">
-        <h5 class="card-header">Role List</h5>
-        <div class="table-responsive text-nowrap">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Sr No.</th>
-                        <th>Role Name</th>
-                        <th>Permission Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    @foreach ($roles as $key => $role)
-                        @php
-                            $currentPage = $roles->currentPage() !=1?$roles->perPage():1;
-                            $srNo  =($roles->currentPage()-1)*$currentPage;
-                        @endphp
-                        <tr>
-                            <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>{{$srNo+$key+1}}</strong></td>
-                            <td>{{ucfirst(Str_replace('-',' ',$role->name))}}</td>
-                            <td>
-                               @foreach ($role->permissions as $permissions)
-                                <span class="badge rounded-pill bg-secondary">{{str_replace('-',' ',$permissions->name)}}</span>
-                               @endforeach
-                            </td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        @can('role-edit') 
-                                        <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='editRole({{$role}})'><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                                        @endcan
-                                        @can('role-delete')
-                                        <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='deleteConfirmation({{$role->id}})'><i class="bx bx-trash me-2"></i> Delete</a>
-                                        @endcan
-                                        <div class="loading" wire:loading wire:target='deleteConfirmation'  wire:loading.attr="disabled" ></div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-inline float-md-end mb-3">
+                                        <div class="search-box ms-2">
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control rounded bg-light border-0"
+                                                    placeholder="Search...">
+                                                <i class="mdi mdi-magnify search-icon"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        @if ($roles->hasPages())
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    @if($roles->onFirstPage())
-                        <li class="page-item prev">
-                            <a class="page-link" href="javascript:void(0);" ><i class="tf-icon bx bx-chevrons-left"></i></a>
-                        </li>
-                    @else
-                        <li class="page-item prev">
-                            <a class="page-link" href="javascript:void(0);" wire:click="previousPage" wire:loading.attr="disabled"><i class="tf-icon bx bx-chevrons-left"></i></a>
-                        </li>
-                    @endif
-                    @for ($i = 1; $i <= $roles->lastPage(); $i++)
-                    @if ($roles->currentPage() == $i)
-                        <li class="page-item active" wire:key="paginator-page-{{ $i }}">
-                            <a class="page-link" href="javascript:void(0);">{{$i}}</a>
-                        </li>
-                    @else
-                        <li class="page-item " wire:key="paginator-page-{{ $i }}">
-                            <a class="page-link" href="javascript:void(0);" wire:click="gotoPage({{ $i }})">{{$i}}</a>
-                        </li>
-                    @endif
-                    
-                    @endfor
-                    @if (!$roles->onLastPage())
-                        <li class="page-item next">
-                            <a class="page-link" href="javascript:void(0);" wire:click="nextPage" wire:loading.attr="disabled"><i class="tf-icon bx bx-chevrons-right"></i></a>
-                        </li>
-                    @else
-                        <li class="page-item next">
-                            <a class="page-link" href="javascript:void(0);" ><i class="tf-icon bx bx-chevrons-right"></i></a>
-                        </li>
-                    @endif
-                    
-                </ul>
-            </nav>
-        @endif
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="form" tabindex="-1" aria-hidden="true" role="dialog" wire:ignore.self>
-        <div class="modal-dialog modal-lg" role="document">
-            <form wire:submit.prevent="{{$editRoleForm?"updateRole":"storeRole"}}" autocomplete="off">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="formTitle">{{$editRoleForm?"Update":"Create"}} Role</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row g-2">
-                            <div class="col mb-0">
-                                <label for=role-name" class="form-label">Role Name</label>
-                                <input type="text" id=role-name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Role Name" wire:model.lazy='name'/>
+                                <div class="col-md-6">
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='createRole'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                    </div>
+                                </div>
                             </div>
-                            @error('name')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="row g-2 my-3">
-                            @foreach ($permission as $key=> $permissionGroup)
-                                <div class="col-md-6 mb-0">
-                                    <small class="text-light fw-semibold d-block">{{ ucfirst($key) }}</small>
-                                    @foreach ($permissionGroup as $key1=> $per)
-                                    <div class="form-check form-check-inline mt-3">
-                                        <input class="form-check-input" type="checkbox" wire:model.lazy='permissionsId' value="{{ $per->id }}" wire.key="{{ $per->id}}"  id="per{{ $per->id }}" />
-                                        <label class="form-check-label" for="per{{ $per->id }}" style="margin: 0px;">{{ ucfirst(str_replace("-"," ",$per->name)) }}</label>
-                                    </div>
-                                    @endforeach
-                                </div> 
-                            @endforeach
-                            @error('permissionsId')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                            @enderror
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close </button>
-                        <button type="submit" class="btn btn-primary" >{{$editRoleForm?"Update":"Create"}}</button>
-                        
+                    <!-- end row -->
+                    <div class="table-responsive mb-4">
+                        <table class="table table-centered table-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 50px;">
+                                        <div class="form-check font-size-16">
+                                            {{-- <input type="checkbox" class="form-check-input" id="contacusercheck"> --}}
+                                            <label class="form-check-label" for="contacusercheck">Sr No.</label>
+                                        </div>
+                                    </th>
+                                    <th scope="col">Role Name</th>
+                                    <th scope="col">Permission Name</th>
+                                    @canany(['role-edit', 'role-delete'])
+                                        <th scope="col" style="width: 200px;">Action</th>
+                                    @endcanany
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($roles as $key => $role)
+                                    @php
+                                        $currentPage = $roles->currentPage() !=1?$roles->perPage():1;
+                                        $srNo  =($roles->currentPage()-1)*$currentPage;
+                                    @endphp
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="form-check font-size-16">
+                                                {{-- <input type="checkbox" class="form-check-input" id="contacusercheck1"> --}}
+                                                <label class="form-check-label" for="contacusercheck1">{{$loop->iteration}}</label>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <a href="#" class="text-body">{{ucfirst(Str_replace('-',' ',$role->name))}}</a>
+                                        </td>
+                                        <td>
+                                            @foreach ($role->permissions as $permissions)
+                                                <span class="badge rounded-pill bg-secondary">{{str_replace('-',' ',$permissions->name)}}</span>
+                                            @endforeach
+                                        </td>
+                                        {{-- <td>SimonRyles@minible.com</td> --}}
+                                        @canany(['role-edit', 'role-delete'])
+                                            <td>
+                                                <ul class="list-inline mb-0">
+                                                    @can('role-edit') 
+                                                        <li class="list-inline-item">
+                                                            <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='editRole({{$role}})'><i class="uil uil-pen font-size-18"></i></a>
+                                                        </li>
+                                                    @endcan
+                                                    @can('role-delete')
+                                                        <li class="list-inline-item">
+                                                            <a href="javascript:void(0);" class="px-2 text-danger" wire:click.prevent='deleteConfirmation({{$role->id}})'><i class="uil uil-trash-alt font-size-18"></i></a>
+                                                        </li>
+                                                    @endcan
+                                                    {{-- <li class="list-inline-item dropdown">
+                                                        <a class="text-muted dropdown-toggle font-size-18 px-2" href="#"
+                                                            role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                                                            <i class="uil uil-ellipsis-v"></i>
+                                                        </a>
+
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" href="#">Action</a>
+                                                            <a class="dropdown-item" href="#">Another action</a>
+                                                            <a class="dropdown-item" href="#">Something else here</a>
+                                                        </div>
+                                                    </li> --}}
+                                                </ul>
+                                            </td>
+                                        @endcanany
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
                     </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <div>
+                                <p class="mb-sm-0">Showing 1 to 10 of 12 entries</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="float-sm-end">
+                                <ul class="pagination mb-sm-0">
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">1</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </form>
+            </div>
         </div>
     </div>
+        <!--  Large modal example -->
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent="{{$editRoleForm?"updateRole":"storeRole"}}" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">{{$editRoleForm?"Update":"Create"}} Role</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-2">
+                                <div class="col mb-0">
+                                    <label for="role-name" class="form-label">Role Name</label>
+                                    <input type="text" id="role-name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Role Name" wire:model.lazy='name'/>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row g-4 my-3">
+                                @foreach ($permission as $key=> $permissionGroup)
+                                    <div class="col-md-6">
+                                        <h5 class="font-size-14 mb-3">
+                                            <i class="mdi mdi-arrow-right text-primary me-1"></i>{{ ucfirst($key) }}
+                                        </h5>
+                                        <div class="vstack gap-2">
+                                            @foreach ($permissionGroup as $key1=> $per)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="formCheck{{$per->id}}"  value="{{ $per->id }}" wire.key="{{ $per->id}}" wire:model.lazy='permissionsId'>
+                                                    <label class="form-check-label" for="formCheck{{$per->id}}">
+                                                        {{ ucfirst(str_replace("-"," ",$per->name)) }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                                @error('permissionsId')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 </div>

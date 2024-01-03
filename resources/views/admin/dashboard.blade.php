@@ -1,14 +1,15 @@
 @extends('admin.layouts.master')
-@push('title')
-    DashBoard
-@endpush
+@section('title') Dashboard @endsection
 @section('content')
-<!-- Content wrapper -->
-<div class="content-wrapper">
-    <!-- Content -->
-    <div class="container-xxl flex-grow-1 container-p-y">
-        @livewire('admin.dashboard-component')
-    </div>
-    <!-- / Content-->
+@component('admin.common-components.breadcrumb')
+@slot('pagetitle') {{env('APP_NAME')}} @endslot
+@slot('title') Dashboard @endslot
+@endcomponent
+    @livewire('admin.dashboard-component')
+@endsection
+@section('script')
+<!-- apexcharts -->
+<script src="{{asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
+<script src="{{asset('/assets/js/pages/dashboard.init.js') }}"></script>
 @endsection

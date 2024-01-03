@@ -1,4 +1,4 @@
-@push('script')
+@section('script-bottom')
 <script>
 
 window.addEventListener('show-delete-confirmation',()=>{
@@ -32,5 +32,4 @@ $('.end-date').change(function(e) {
     @this.set('end_date', $(this).val())
 })
 </script>
-
-@endpush
+@endsection

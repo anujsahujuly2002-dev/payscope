@@ -71,13 +71,12 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        
                         @foreach ($payoutRequestData as $key =>$payoutReq)
                             <tr>
                                 <td><i class="fab fa-vuejs fa-lg text-success me-3"></i><strong>{{$loop->iteration}}</strong></td>
                                 <td> {{ucfirst($payoutReq->user->name)}}<br> {{$payoutReq->user->apiPartner->mobile_no}}</td>
                                 <td>Account No. -{{ucfirst($payoutReq->account_number)}}<br>Account Holder Name - {{$payoutReq->account_holder_name}}<br>Ifsc Code - {{strtoupper($payoutReq->ifsc_code)}}</td>
-                                <td>Transaction Id:-{{$payoutReq->payout_id}} <br> Payout Id:-{{$payoutReq->payout_id}}</td>
+                                <td>Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}}</td>
                                 <td>{{$payoutReq->amount}}</td>
                                 <td>{{$payoutReq->remarks}}</td>
                                 <td>{!!$payoutReq->status->name!!}</td>

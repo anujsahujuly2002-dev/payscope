@@ -1,55 +1,73 @@
 <div>
     @include('admin.flash-message.flash-message')
-    <div class="app-brand justify-content-center">
-        <a href="javascript:void()" class="app-brand-link gap-2">
-            <span class="app-brand-logo demo"></span>
-            <span class="app-brand-text demo text-body fw-bolder">Payscope</span>
-        </a>
+    <div class="text-center mt-2">
+        <h5 class="text-primary">Welcome Back !</h5>
+        <p class="text-muted">Sign in to continue to {{env('APP_NAME')}}.</p>
     </div>
-    <h4 class="mb-2">Welcome to Payscope! 👋</h4>
-    <form id="formAuthentication" class="mb-3" wire:submit.prevent="doLogin">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email or Username</label>
-            <input type="text" class="form-control @error('username')is-invalid @enderror" id="email" wire:model="username"placeholder="Enter your email or username" autofocus aria-describedby="emailHelp"/>
-            @error('username') 
-                <div class="invalid-feedback">
-                    {{$message}}
-                </div> 
-            @enderror
-        </div>
-        <div class="mb-3 form-password-toggle">
-            <div class="d-flex justify-content-between">
-                <label class="form-label" for="password">Password</label>
-                <a href="javascript:void()">
-                    <small>Forgot Password?</small>
-                </a>
+    <div class="p-2 mt-4">
+        <form wire:submit.prevent="doLogin">
+            <div class="mb-3">
+                <label class="form-label" for="username">Email</label>
+                <input type="text" class="form-control @error('username') is-invalid @enderror"  wire:model="username" value="{{ old('username') }}" id="username" placeholder="Enter Email address">
+                @error('username')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
-            <div class="input-group input-group-merge">
-                <input type="password" id="password" class="form-control @error('password')is-invalid @enderror" wire:model="password"
-                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                    aria-describedby="password" />
-                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-
+            <div class="mb-3">
+                <div class="float-end">
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="text-muted">Forgot
+                            password?</a>
+                    @endif
+                </div>
+                <label class="form-label" for="userpassword">Password</label>
+                <input type="password" class="form-control @error('password') is-invalid @enderror" wire:model="password" value="" name="password" id="userpassword" placeholder="Enter password">
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
-            @error('password') 
-                <div class="invalid-feedback">
-                    {{$message}}
-                </div> 
-            @enderror
-        </div>
-        <div class="mb-3">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="remember-me" />
-                <label class="form-check-label" for="remember-me"> Remember Me </label>
+                <input type="checkbox" class="form-check-input" id="auth-remember-check"
+                    name="remember" {{ old('remember') ? 'checked' : '' }}>
+                <label class="form-check-label" for="auth-remember-check">Remember me</label>
             </div>
-        </div>
-        <div class="mb-3">
-            <button class="btn btn-primary d-grid w-100 cursor-pointer"> Sign in</button>
-            <div wire:loading wire:target="doLogin" class="loading"></div>
-        </div>
-    </form>
-    <p class="text-center">
-        <span>New on our platform?</span>
-        <a href="javascript:void()"> <span>Create an account</span></a>
-    </p>
+            <div class="mt-3 text-end">
+                <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log In</button>
+                <div wire:loading wire:target="doLogin" class="loading"></div>
+            </div>
+            {{-- <div class="mt-4 text-center">
+                <div class="signin-other-title">
+                    <h5 class="font-size-14 mb-3 title">Sign in with</h5>
+                </div>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="javascript:void()"
+                            class="social-list-item bg-primary text-white border-primary">
+                            <i class="mdi mdi-facebook"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript:void()"
+                            class="social-list-item bg-info text-white border-info">
+                            <i class="mdi mdi-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript:void()"
+                            class="social-list-item bg-danger text-white border-danger">
+                            <i class="mdi mdi-google"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div> --}}
+            {{-- <div class="mt-4 text-center">
+                <p class="mb-0">Don't have an account ? <a href="{{ url('register') }}"
+                        class="fw-medium text-primary"> Signup now </a> </p>
+            </div> --}}
+        </form>
+    </div>
 </div>

@@ -29,7 +29,7 @@ class PayoutRequest extends Component
     public function mount() {
         $this->payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
-        })->get();
+        })->orderBy('id','desc')->get();
     }
 
     public function render()
@@ -41,7 +41,7 @@ class PayoutRequest extends Component
         $this->statuses =  Status::get();
         $this->payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
-        })->get();
+        })->orderBy('id','desc')->get();
         return view('livewire.admin.payout.payout-request');
     }
 
@@ -142,7 +142,7 @@ class PayoutRequest extends Component
             "latitude"           => $new_arr[0]['geoplugin_latitude'],
             "longitude"          => $new_arr[0]['geoplugin_longitude'],
             "remarks"            => 'test',
-            'alertEmail'         => auth()->user()->email,
+            // 'alertEmail'         => auth()->user()->email,
             "purpose"           => "REIMBURSEMENT",
             "otp"                => "",
             "otpReference"       => ""
