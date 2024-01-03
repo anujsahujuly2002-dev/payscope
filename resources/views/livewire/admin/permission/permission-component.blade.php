@@ -24,7 +24,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('permssion-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='createRole'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='addPermission'><i class="mdi mdi-plus me-2"></i> Add New</a>
                                         @endcan
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                                 <ul class="list-inline mb-0">
                                                     @can('role-edit') 
                                                         <li class="list-inline-item">
-                                                            <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='editRole({{$permission}})'><i class="uil uil-pen font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='editPermission({{$permission}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
                                                     @endcan
                                                     @can('role-delete')
@@ -180,8 +180,17 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col mb-0">
-                                    <label for="role-name" class="form-label">Role Name</label>
-                                    <input type="text" id="role-name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Role Name" wire:model.lazy='name'/>
+                                    <label for="role-name" class="form-label">Permission Group</label>
+                                    <input type="text" id="role-name" class="form-control  @error('group') is-invalid @enderror" placeholder="Enter Permission Group" wire:model.defer='state.group'/>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col mb-0">
+                                    <label for="role-name" class="form-label">Permission Name</label>
+                                    <input type="text" id="role-name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Permission Name" wire:model.defer='state.name'/>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -189,30 +198,6 @@
                                     @enderror
                                 </div>
                             </div>
-                            {{-- <div class="row g-4 my-3">
-                                @foreach ($permission as $key=> $permissionGroup)
-                                    <div class="col-md-6">
-                                        <h5 class="font-size-14 mb-3">
-                                            <i class="mdi mdi-arrow-right text-primary me-1"></i>{{ ucfirst($key) }}
-                                        </h5>
-                                        <div class="vstack gap-2">
-                                            @foreach ($permissionGroup as $key1=> $per)
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck{{$per->id}}"  value="{{ $per->id }}" wire.key="{{ $per->id}}" wire:model.lazy='permissionsId'>
-                                                    <label class="form-check-label" for="formCheck{{$per->id}}">
-                                                        {{ ucfirst(str_replace("-"," ",$per->name)) }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endforeach
-                                @error('permissionsId')
-                                    <div class="invalid-feedback">
-                                        {{$message}}
-                                    </div>
-                                @enderror
-                            </div> --}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
