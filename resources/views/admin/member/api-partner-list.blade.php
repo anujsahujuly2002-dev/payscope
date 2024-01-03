@@ -1,13 +1,12 @@
 @extends('admin.layouts.master')
-@push('title')
-    Api Partner List
-@endpush
-@section('content')
-    <!-- Content wrapper -->
-    <div class="content-wrapper">
-    <!-- Content -->
-    <div class="container-xxl flex-grow-1 container-p-y">
-        @livewire('admin.member.api-partner-component')
-    </div>
-    <!-- Content wrapper -->
+@section('title')
+Api Partner List
 @endsection
+@section('content')
+    @component('admin.common-components.breadcrumb')
+        @slot('pagetitle') List @endslot
+        @slot('title')Manage Api Partner @endslot
+    @endcomponent
+    @livewire('admin.member.api-partner-component')
+@endsection
+

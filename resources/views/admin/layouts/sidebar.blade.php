@@ -76,7 +76,7 @@
                         <li><a href="javascript:void()">Master Distributor</a></li>
                         <li><a href="javascript:void()">Distributor</a></li>
                         <li><a href="javascript:void()">Retailer</a></li>
-                        <li><a href="javascript:void()">Api Partner</a></li>
+                        <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
                     </ul>
                 </li>
                 <li>

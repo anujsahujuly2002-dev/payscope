@@ -69,7 +69,7 @@
                                             {{$permission->name}}
                                         </td>
                                         {{-- <td>SimonRyles@minible.com</td> --}}
-                                        @canany(['role-edit', 'role-delete'])
+                                        @canany(['permission-edit', 'permission-delete'])
                                             <td>
                                                 <ul class="list-inline mb-0">
                                                     @can('role-edit') 

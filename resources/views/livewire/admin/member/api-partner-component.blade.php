@@ -1,126 +1,172 @@
 <div>
     <div wire:loading  class="loading"></div>
-    <div>
-        @include('admin.flash-message.flash-message')
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="fw-bold py-3 mb-4">Manage Api Partner</h4>
-            </div>
-            <div class="col-md-6">
-                @can('api-partner-create')
-                <button wire:click.prevent='createApiPartner' class="btn btn-primary" style="float: right" >Create
-                    Api Partner</button>
-                @endcan
-            </div>
-        </div>
-        <div class="card mb-2">
-            <div class="search_section">
-                <div class="row search-form">
-                    <div class="col-md-2">
-                        <div class="form-group mb-10">
-                            <input type="text" class="form-control start-date startdate" placeholder="Start Date" id="start-date" wire:model='start_date'>
+    @include('admin.flash-message.flash-message')
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-inline float-md-end mb-3">
+                                        <div class="search-box ms-2">
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control rounded bg-light border-0"
+                                                    placeholder="Search...">
+                                                <i class="mdi mdi-magnify search-icon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        @can('api-partner-create')
+                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='createApiPartner'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group mb-10">
-                            <input type="text" class="form-control start-date end-date" placeholder="To Date" id="end-date" wire:moel="end_date">
+                    <!-- end row -->
+                    <div class="table-responsive mb-4">
+                        <table class="table table-centered table-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 50px;">
+                                        <div class="form-check font-size-16">
+                                            {{-- <input type="checkbox" class="form-check-input" id="contacusercheck"> --}}
+                                            <label class="form-check-label" for="contacusercheck">Sr No.</label>
+                                        </div>
+                                    </th>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Parent Details</th>
+                                    <th scope="col">Company Profile</th>
+                                    <th scope="col">Wallet Amount</th>
+                                    <th scope="col">Created At</th>
+                                    <th scope="col">Status</th>
+                                    {{-- @canany(['permission-edit', 'permission-delete'])
+                                        <th scope="col" style="width: 200px;">Action</th>
+                                    @endcanany --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($apiPartners as $key =>$apipartner)
+                                    @php
+                                        $currentPage = $apiPartners->currentPage() !=1?$apiPartners->perPage():1;
+                                        $srNo  =($apiPartners->currentPage()-1)*$currentPage;
+                                    @endphp
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="form-check font-size-16">
+                                                {{-- <input type="checkbox" class="form-check-input" id="contacusercheck1"> --}}
+                                                <label class="form-check-label" for="contacusercheck1">{{$srNo+$loop->iteration}}</label>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <a href="javascript:void(0)" class="text-body">{{$apipartner->id}}</a>
+                                        </td>
+                                        <td>
+                                            {{ucfirst($apipartner->name)}}<br>{{$apipartner->apiPartner->mobile_no}}<br>{{ucfirst($apipartner->getRoleNames()->first())}}
+                                        </td>
+                                        <td>
+                                            {{ucfirst($apipartner->apiPartner->parentDetails->name)}}<br>{{$apipartner->apiPartner->parentDetails->getRoleNames()->first()=='super admin'?'9519035604':$apipartner->apiPartner->mobile_no}}<br>{{ucfirst($apipartner->apiPartner->parentDetails->getRoleNames()->first())}}
+                                        </td>
+                                        <td>
+                                            {{ucfirst($apipartner->apiPartner->shop_name)}}<br>{{$apipartner->apiPartner->website}}
+                                        </td>
+                                        <td>
+                                            {{$apipartner->walletAmount->amount}}
+                                        </td>
+                                        <td>
+                                            {{$apipartner->created_at}}
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="switch{{$apipartner->id}}" switch="bool"  @if($apipartner->status==1) checked @endif wire:change='statusUpdate({{$apipartner->id}},{{$apipartner->status}})' />
+                                            <label for="switch{{$apipartner->id}}" data-on-label="Active" data-off-label="Inactive"></label>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <div>
+                                <p class="mb-sm-0">Showing 1 to 10 of {{$apiPartners->total()}} entries</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            @if ($apiPartners->hasPages())
+                                <div class="float-sm-end">
+                                    <ul class="pagination mb-sm-0">
+                                        @if ($apiPartners->onFirstPage())
+                                            <li class="page-item disabled">
+                                                <a href="javascript:void()" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                            </li>
+                                        @else
+                                            <li class="page-item" wire:click="previousPage">
+                                                <a href="javascript:void()" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                            </li>
+                                        @endif
+                                        @if ($apiPartners->currentPage()>3)
+                                            <li class="page-item" wire:click="gotoPage({{1}})">
+                                                <a href="javascript:void(0)" class="page-link">1</a>
+                                            </li>
+                                        @endif
+                                        @if ($apiPartners->currentPage()>4)
+                                            <li class="page-item" wire:click="gotoPage({{1}})">
+                                                <a href="javascript:void(0)" class="page-link">....</a>
+                                            </li>
+                                        @endif
+                                        @foreach (range(1, $apiPartners->lastPage()) as $i)
+                                            @if ($i >=$apiPartners->currentPage()-2 && $i <=$apiPartners->currentPage()) 
+                                                <li class="page-item @if($apiPartners->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
+                                                    <a href="javascript:void(0)" class="page-link">{{$i}}</a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                        @if ($apiPartners->currentPage() < $apiPartners->lastPage() - 3)
+                                            <li class="page-item">
+                                                <a href="javascript:void(0)" class="page-link">....</a>
+                                            </li>
+                                        @endif
+                                        @if($apiPartners->currentPage() < $apiPartners->lastPage() - 2)
+                                            <li class="page-item"  wire:click="gotoPage({{ $apiPartners->lastPage()}})">
+                                                <a href="javascript:void(0)" class="page-link">{{ $apiPartners->lastPage()}}</a>
+                                            </li> 
+                                        @endif
+                                        @if($apiPartners->hasMorePages())
+                                            <li class="page-item" wire:click="nextPage">
+                                                <a href="javascript:void(0)" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                            </li>
+                                        @else
+                                            <li class="page-item disabled">
+                                                <a href="javascript:void(0)" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     </div>
-                    <div class="col-md-2 mb-10">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search Value" wire:model.defer="value">
-                        </div>
-                    </div>
-                    <div class="col-md-2 mb-10">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Agent Id / Parent Id">
-                        </div>
-                    </div>
-                    <div class="col-md-2 mb-10">
-                        <div class="form-group">
-                            <select class="form-control" wire:model.defer="status">
-                                <option value="">Select member Status</option>
-                                <option value="1">Active</option>
-                                <option value="0">Block</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button wire:click.prevent='search' class="btn btn-primary" style="float: right" >Search</button>
-                    </div>
+
                 </div>
             </div>
         </div>
-        <!-- Basic Bootstrap Table -->
-        <div class="card">
-            <h5 class="card-header">Api Partner List</h5>
-            <div class="table-responsive text-nowrap">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>id</th>
-                            <th>Name</th>
-                            <th>Parent Details</th>
-                            <th>Company Profile</th>
-                            <th>Wallet Details</th>
-                            <th>Created At </th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        @foreach ($apiPartners as $key =>$apipartner)
-
-                            <tr>
-                                <td><i class="fab fa-vuejs fa-lg text-success me-3"></i><strong>{{$loop->iteration}}</strong></td>
-                                <td>{{$apipartner->id}}</td>
-                                <td> {{ucfirst($apipartner->name)}}<br>{{$apipartner->apiPartner->mobile_no}}<br>{{ucfirst($apipartner->getRoleNames()->first())}}</td>
-                                <td>{{ucfirst($apipartner->apiPartner->parentDetails->name)}}<br>{{$apipartner->apiPartner->parentDetails->getRoleNames()->first()=='super admin'?'9519035604':$apipartner->apiPartner->mobile_no}}<br>{{ucfirst($apipartner->apiPartner->parentDetails->getRoleNames()->first())}}</td>
-                                <td>{{ucfirst($apipartner->apiPartner->shop_name)}}</br>{{$apipartner->apiPartner->website}}</td>
-                                <td>{{$apipartner->walletAmount->amount}}</td>
-                                <td>{{$apipartner->created_at}}</td>
-                                <td>
-                                    <label class="switch">
-                                        <input type="checkbox" @if($apipartner->status==1) checked @endif wire:change='statusUpdate({{$apipartner->id}},{{$apipartner->status}})' >
-                                        <span class="slider round"></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            {{-- @can('apipartner-edit')
-                                                <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='editapipartner({{$apipartner}})'><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                                            @endcan
-                                            @can('apipartner-delete')
-                                            <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent='deleteConfirmation({{$apipartner->id}})'><i class="bx bx-trash me-2"></i> Delete</a>
-                                            @endcan --}}
-                                            <div class="loading" wire:loading wire:target='deleteConfirmation'  wire:loading.attr="disabled" ></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="form" tabindex="-1" aria-hidden="true" role="dialog" wire:ignore.self>
-            <div class="modal-dialog modal-xl" role="document">
+    </div>
+        <!--  Large modal example -->
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
                 <form wire:submit.prevent="StoreApiPartner" autocomplete="off">
                     <div class="modal-content">
                         <div class="modal-header">
-                            {{-- @if ($editapipartnerForm)
-                                <h5 class="modal-title" id="formTitle">Edit apipartner</h5>
-                            @else --}}
-                                <h5 class="modal-title" id="formTitle">Create Api Partner</h5>
-                            {{-- @endif --}}
+                            <h5 class="modal-title" id="myLargeModalLabel">Create Api Partner</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -262,13 +308,13 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close </button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
-                    </div>
+                    </div><!-- /.modal-content -->
                 </form>
-            </div>
-        </div>
-        @include('admin.delete-confirmation.delete-confirmation')
-    </div>
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    <!-- end row -->
+    @include('admin.delete-confirmation.delete-confirmation')
 </div>

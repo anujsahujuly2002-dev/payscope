@@ -19,6 +19,7 @@ class PermissionComponent extends Component
     public $permission;
     public $permissionId;
     public $listeners = ['deleteConfirmed'=>'deletePrmission'];
+    
     public function render()
     {
         if(!Auth::user()->can('permission-list')):

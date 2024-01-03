@@ -20,19 +20,20 @@ class ApiPartnerComponent extends Component
     use WithPagination;
     public $state=[];
     public $start_date;
-    public $apiPartners;
+    // public $apiPartners;
     public $value;
     public $end_date;
     public $status;
-    public function mount(){
-        $this->apiPartners = User::whereHas('roles',function($q){
-            $q->where('name','api-partner');
-        })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-            $query->whereHas('apiPartner',function ($p){
-                $p->where('added_by',auth()->user()->id);
-            });
-        })->get();
-    }
+
+    // public function mount(){
+    //     $this->apiPartners = User::whereHas('roles',function($q){
+    //         $q->where('name','api-partner');
+    //     })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+    //         $query->whereHas('apiPartner',function ($p){
+    //             $p->where('added_by',auth()->user()->id);
+    //         });
+    //     })->latest()->paginate(10);
+    // }
     public function render()
     {
         if(!Auth::user()->can('api-partner-list')):
@@ -41,8 +42,14 @@ class ApiPartnerComponent extends Component
         // dd($this->start_date);
         $states = State::orderBy('name','ASC')->get();
         $schemes = Scheme::where('user_id',auth()->user()->id)->get();
-
-        return view('livewire.admin.member.api-partner-component',compact('states','schemes'));
+        $apiPartners = User::whereHas('roles',function($q){
+            $q->where('name','api-partner');
+        })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->whereHas('apiPartner',function ($p){
+                $p->where('added_by',auth()->user()->id);
+            });
+        })->latest()->paginate(10);
+        return view('livewire.admin.member.api-partner-component',compact('states','schemes','apiPartners'));
     }
 
     // This Method Api Partner Create Method
@@ -107,8 +114,9 @@ class ApiPartnerComponent extends Component
     }
 
     public function statusUpdate($userId,$status){
+        // dd($userId,$status);
         $statusUpdate = User::findOrFail($userId)->update([
-            'status'=>$status ==1?0:1,
+            'status'=>$status,
         ]);
 
         return redirect()->back()->with('success','Your Status has been updated');
