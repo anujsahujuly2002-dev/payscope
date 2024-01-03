@@ -1,5 +1,6 @@
 <div>
     <div wire:loading  class="loading"></div>
+    @include('admin.flash-message.flash-message')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -22,7 +23,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
-                                        <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='createRole'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                        @can('role-create') 
+                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='createRole'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
