@@ -116,7 +116,7 @@ class ApiPartnerComponent extends Component
     public function statusUpdate($userId,$status){
         // dd($userId,$status);
         $statusUpdate = User::findOrFail($userId)->update([
-            'status'=>$status,
+            'status'=>$status==0?1:0,
         ]);
 
         return redirect()->back()->with('success','Your Status has been updated');

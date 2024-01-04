@@ -94,16 +94,18 @@
                         </ul>
                     </li>
                 @endcanany
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
-                        <span>Fund Manager</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Request</a></li>
-                        <li><a href="javascript:void()">Transfer / Return </a></li>
-                    </ul>
-                </li>
+                @canany(['fund-manager-manual-request'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="uil-book-alt"></i>
+                            <span>Fund Manager</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{route('admin.fund.manual.request')}}">Request</a></li>
+                            <li><a href="javascript:void()">Transfer / Return </a></li>
+                        </ul>
+                    </li>
+                @endcanany
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-book-alt"></i>

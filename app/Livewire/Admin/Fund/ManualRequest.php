@@ -2,20 +2,21 @@
 
 namespace App\Livewire\Admin\Fund;
 
-use Livewire\Component;
 use App\Models\Bank;
 use App\Models\Fund;
-use App\Models\PaymentMode;
 use App\Models\Status;
 use App\Models\Wallet;
-use Spatie\Permission\Exceptions\UnauthorizedException;
+use Livewire\Component;
+use App\Models\PaymentMode;
+use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ManualRequest extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads,WithPagination;
     public $banks;
     public $paymentModes;
     public $fundNewRequests=[];
@@ -26,24 +27,24 @@ class ManualRequest extends Component
     public $fund;
     public $start_date;
     public $end_date;
-    public $funds;
+    // public $funds;
     public $value;
     public $agentId;
 
-    public function mount() {
-        $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->get();
-    }
+    // public function mount() {
+    //     $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+    //         $query->where('user_id',auth()->user()->id);
+    //     })->latest()->paginate(10);
+    // }
     public function render()
     {
         $this->banks = Bank::where('status','1')->get();
         $this->paymentModes = PaymentMode::get();
         $statuses = Status::get();
-        $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+        $funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
-        })->get();
-        return view('livewire.admin.fund.manual-request',compact('statuses'));
+        })->latest()->paginate(10);
+        return view('livewire.admin.fund.manual-request',compact('statuses','funds'));
     }
 
     public function fundNewRequest() {
