@@ -106,15 +106,17 @@
                         </ul>
                     </li>
                 @endcanany
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
-                        <span>Payout Manager</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Payout Request </a></li>
-                    </ul>
-                </li>
+                @canany(['payout-request','payout-new-request'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="uil-book-alt"></i>
+                            <span>Payout Manager</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
+                        </ul>
+                    </li>
+                @endcanany
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-book-alt"></i>

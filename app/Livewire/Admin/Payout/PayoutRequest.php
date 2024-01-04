@@ -9,6 +9,7 @@ use App\Models\Wallet;
 use Livewire\Component;
 use App\Models\FundRequest;
 use App\Models\PaymentMode;
+use Livewire\WithPagination;
 use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -16,10 +17,11 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class PayoutRequest extends Component
 {
+    use WithPagination;
     public $paymentModes;
     public $payoutFormRequest = [];
     public $statuses = [];
-    public $payoutRequestData;
+    // public $payoutRequestData;
     public $start_date;
     public $end_date;
     public $value;
@@ -29,7 +31,7 @@ class PayoutRequest extends Component
     public function mount() {
         $this->payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
-        })->orderBy('id','desc')->get();
+        })->latest()->paginate(10);
     }
 
     public function render()
@@ -39,10 +41,10 @@ class PayoutRequest extends Component
         endif;
         $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
         $this->statuses =  Status::get();
-        $this->payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+        $payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
-        })->orderBy('id','desc')->get();
-        return view('livewire.admin.payout.payout-request');
+        })->orderBy('id','desc')->latest()->paginate(10);
+        return view('livewire.admin.payout.payout-request',compact('payoutRequestData'));
     }
 
     public function payoutRequest() {

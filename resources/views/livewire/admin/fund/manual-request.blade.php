@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="  @if(!auth()->user()->can('fund-new-request')) col-md-12 @else col-md-6 @endif ">
+                                <div class="@if(!auth()->user()->can('fund-new-request')) col-md-12 @else col-md-6 @endif">
                                     <div class="form-inline float-md-end mb-3">
                                         <div class="search-box ms-2">
                                             <div class="position-relative">

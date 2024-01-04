@@ -29,4 +29,12 @@ class FundRequest extends Model
     public function status() {
         return $this->belongsTo(Status::class,'status_id','id');
     }
+
+    public function payoutTransactionHistories() {
+        return $this->hasOne(PayoutRequestHistory::class,'fund_request_id','id');
+    }
+
+    public function getCreatedAtAttribute($value){
+        return date('d M y - h:i A', strtotime($value));
+    }
 }
