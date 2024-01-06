@@ -41,7 +41,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-invoice"></i>
+                        <i class="mdi mdi-head-cog"></i>
                         <span>Resources</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -53,7 +53,7 @@
                 @canany(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-book-alt"></i>
+                            <i class="uil-cog"></i>
                             <span>Role & Permission</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -68,7 +68,7 @@
                 @endcan
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
+                        <i class="uil-users-alt"></i>
                         <span>Member</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -84,7 +84,7 @@
                 @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-book-alt"></i>
+                            <i class="uil-cog"></i>
                             <span>Setup Tools</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -97,7 +97,7 @@
                 @canany(['fund-manager-manual-request'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-book-alt"></i>
+                            <i class="uil-money-insert"></i>
                             <span>Fund Manager</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -109,7 +109,7 @@
                 @canany(['payout-request','payout-new-request'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-book-alt"></i>
+                            <i class="uil-money-withdrawal"></i>
                             <span>Payout Manager</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -119,7 +119,7 @@
                 @endcanany
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
+                        <i class="uil-history"></i>
                         <span>Transaction History </span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -134,7 +134,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
+                        <i class="uil-book-open"></i>
                         <span>Account Ledger </span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -144,7 +144,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
+                        <i class="far fa-clock"></i>
                         <span> Pending Approvals</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -154,7 +154,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
+                        <i class="uil-cog"></i>
                         <span> Admin Setting  </span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -168,7 +168,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-book-alt"></i>
+                        <i class="fas fa-book-open"></i>
                         <span> Log Manager</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -178,7 +178,7 @@
                 </li>
                 <li>
                     <a href="{{route('admin.logout')}}">
-                        <i class="uil-home-alt"></i>
+                        <i class="fas fa-sign-out-alt"></i>
                         {{-- <span class="badge rounded-pill bg-primary float-end">01</span> --}}
                         <span>Logout</span>
                     </a>
