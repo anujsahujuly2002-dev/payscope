@@ -31,5 +31,42 @@ $('.startdate').change(function(e) {
 $('.end-date').change(function(e) {
     @this.set('end_date', $(this).val())
 })
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition,showError);
+  } else { 
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+    console.log(position.coords.latitude);
+    @this.dispatch('latitude-longitude',{latitude:position.coords.latitude, longitude:position.coords.longitude}) ;
+    // @this.set('latitude',);
+    // @this.set('longitude',position.coords.longitude);  
+}
+
+$(document).ready(function(){
+    getLocation();
+
+});
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      alert("User denied the request for Geolocation.")
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Location information is unavailable.")
+      break;
+    case error.TIMEOUT:
+      alert("The request to get user location timed out.")
+      break;
+    case error.UNKNOWN_ERROR:
+      alert("An unknown error occurred.")
+      break;
+  }
+}
 </script>
 @endsection

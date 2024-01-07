@@ -70,4 +70,5 @@
             </div> --}}
         </form>
     </div>
+    @include('admin.delete-confirmation.delete-confirmation')
 </div>
