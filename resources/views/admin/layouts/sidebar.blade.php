@@ -166,16 +166,21 @@
                         <li><a href="javascript:void()">Quick Link </a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="fas fa-book-open"></i>
-                        <span> Log Manager</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Api Logs</a></li>
-                        <li><a href="javascript:void()">Login Session </a></li>
-                    </ul>
-                </li>
+                @canany(['login-session'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="fas fa-book-open"></i>
+                            <span> Log Manager</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="javascript:void()">Api Logs</a></li>
+                            @can('login-session')
+                                <li><a href="{{route('admin.log.manager.login.session')}}">Login Session </a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+
                 <li>
                     <a href="{{route('admin.logout')}}">
                         <i class="fas fa-sign-out-alt"></i>

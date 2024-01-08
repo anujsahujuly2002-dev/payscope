@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\LogManagerController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +72,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // Payout Manager Route
         Route::controller(PayoutMangerController::class)->prefix('payout')->name('payout.')->group(function() {
             Route::get('/payout-request','payoutRequest')->name('payout.request');
+        });
+        Route::controller(LogManagerController::class)->prefix('log-manager')->name('log.manager.')->group(function() {
+            Route::get('/login-session','loginSession')->name('login.session');
         });
     });
 });

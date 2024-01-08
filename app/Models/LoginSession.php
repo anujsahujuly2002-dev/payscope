@@ -17,4 +17,8 @@ class LoginSession extends Model
         'is_logged_in',
         'logout_time',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }
