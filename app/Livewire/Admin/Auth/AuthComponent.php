@@ -32,7 +32,13 @@ class AuthComponent extends Component
             $this->validate();
             if(Auth::attempt(['email' => $this->username, 'password' => $this->password])){
                 if(auth()->user()->status =='1'):
-                    // dd($this->checkUserAlreadyLoggedIn());
+                    if($this->checkUserAlreadyLoggedIn() ==='0'):
+                        auth()->logout();
+                        session()->invalidate();
+                        session()->regenerateToken();
+                        session()->flash('error',"Already user logged in.");
+                        return false;
+                    endif;
                     $loginSessionData = [
                         'id'=>auth()->user()->id,
                         'latitude'=>$this->lat,

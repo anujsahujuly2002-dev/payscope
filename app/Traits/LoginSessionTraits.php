@@ -18,6 +18,8 @@ trait LoginSessionTraits {
     }
 
     protected function checkUserAlreadyLoggedIn(){
-        dd(request()->session()->has('last_activity'));
+        $checkUserAlreadyLoggedIn = LoginSession::where(['user_id'=>auth()->user()->id,'is_logged_in'=>'0'])->first();
+        // dd($checkUserAlreadyLoggedIn);
+        return $checkUserAlreadyLoggedIn->is_logged_in ??"1";
     }
 }
