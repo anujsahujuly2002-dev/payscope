@@ -41,7 +41,6 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    console.log(position.coords.latitude);
     @this.dispatch('latitude-longitude',{latitude:position.coords.latitude, longitude:position.coords.longitude}) ;
     // @this.set('latitude',);
     // @this.set('longitude',position.coords.longitude);  

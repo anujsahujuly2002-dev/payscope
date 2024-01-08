@@ -29,6 +29,7 @@ class SessionTimeOutHandleMiddleware
                     'logout_time'=>Carbon::now()->format('Y-m-d H:i:s')
                 ]);
                 auth()->logout();
+                return redirect()->route('admin.login');
             endif;
         endif;
         return $next($request);
