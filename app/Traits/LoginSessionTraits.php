@@ -3,6 +3,9 @@
 namespace App\Traits;
 
 use App\Models\LoginSession;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 trait LoginSessionTraits {
     
@@ -21,5 +24,23 @@ trait LoginSessionTraits {
         $checkUserAlreadyLoggedIn = LoginSession::where(['user_id'=>auth()->user()->id,'is_logged_in'=>'0'])->first();
         // dd($checkUserAlreadyLoggedIn);
         return $checkUserAlreadyLoggedIn->is_logged_in ??"1";
+    }
+
+
+    protected function checkLastUserActivity($email){
+        $userId = User::where('email',$email)->first()->id;
+        $lastActivity = DB::table('sessions')->where('user_id',$userId)->first();
+        if(!is_null($lastActivity)):
+            $lastActivityTime = Carbon::parse($lastActivity->last_activity);
+            if(now()->diffInMinutes($lastActivityTime) >= (config('session.lifetime') - 1)):
+                LoginSession::where('user_id',$userId)->update([
+                    'is_logged_in' => '1',
+                    'logout_time'=>Carbon::now()->format('Y-m-d H:i:s')
+                ]);
+                DB::table('sessions')->where('user_id',$userId)->update([
+                    'user_id'=>NULL,
+                ]);
+            endif;
+        endif;
     }
 }

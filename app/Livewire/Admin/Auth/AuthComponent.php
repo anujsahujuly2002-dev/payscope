@@ -31,6 +31,7 @@ class AuthComponent extends Component
         else:
             $this->validate();
             if(Auth::attempt(['email' => $this->username, 'password' => $this->password])){
+                $this->checkLastUserActivity($this->username);
                 if(auth()->user()->status =='1'):
                     if($this->checkUserAlreadyLoggedIn() ==='0'):
                         auth()->logout();

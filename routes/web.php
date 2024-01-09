@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\LogManagerController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +74,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         });
         Route::controller(LogManagerController::class)->prefix('log-manager')->name('log.manager.')->group(function() {
             Route::get('/login-session','loginSession')->name('login.session');
+        });
+
+        // Scheme Manager Route
+        Route::controller(SchemeManagerController::class)->prefix('resources')->name('resource.')->group(function() {
+            Route::get('/scheme-manager','index')->name('scheme.manager');
         });
     });
 });

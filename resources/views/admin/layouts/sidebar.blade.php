@@ -39,17 +39,21 @@
                         <span>@lang('translation.Dashboard')</span>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="mdi mdi-head-cog"></i>
-                        <span>Resources</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Scheme Manager</a></li>
-                        <li><a href="javascript:void()">Company Manager</a></li>
-                        <li><a href="javascript:void()">Company Profile</a></li>
-                    </ul>
-                </li>
+                @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="mdi mdi-head-cog"></i>
+                            <span>Resources</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
+                                <li><a href="{{route('admin.resource.scheme.manager')}}">Scheme Manager</a></li>
+                            @endcanany
+                            <li><a href="javascript:void()">Company Manager</a></li>
+                            <li><a href="javascript:void()">Company Profile</a></li>
+                        </ul>
+                    </li>
+                @endcanany
                 @canany(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">

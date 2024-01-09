@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Scheme extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'name',
+        'status',
+    ];
 }
