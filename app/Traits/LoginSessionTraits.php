@@ -33,7 +33,7 @@ trait LoginSessionTraits {
         if(!is_null($lastActivity)):
             $lastActivityTime = Carbon::parse($lastActivity->last_activity);
             if(now()->diffInMinutes($lastActivityTime) >= (config('session.lifetime') - 1)):
-                LoginSession::where('user_id',$userId)->update([
+                LoginSession::where(['user_id'=>$userId,'is_logged_in'=>'0'])->update([
                     'is_logged_in' => '1',
                     'logout_time'=>Carbon::now()->format('Y-m-d H:i:s')
                 ]);
@@ -41,6 +41,11 @@ trait LoginSessionTraits {
                     'user_id'=>NULL,
                 ]);
             endif;
+        elseif(is_null($lastActivity)):
+            LoginSession::where(['user_id'=>$userId,'is_logged_in'=>'0'])->update([
+                'is_logged_in' => '1',
+                'logout_time'=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
         endif;
     }
 }

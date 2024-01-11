@@ -85,7 +85,7 @@
                         @endcanany
                     </ul>
                 </li>
-                @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete'])
+                @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="uil-cog"></i>
@@ -94,6 +94,9 @@
                         <ul class="sub-menu" aria-expanded="false">
                             @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete'])
                                 <li><a href="{{route('admin.setup.bank')}}">Bank Account</a></li>
+                            @endcanany
+                            @canany(['operator-list','operator-create','operator-edit','operator-delete'])
+                                <li><a href="{{route('admin.setup.operator.manager')}}">Operator Manager</a></li>
                             @endcanany
                         </ul>
                     </li>

@@ -10,4 +10,8 @@ class SetupToolsController extends Controller
     public function bank (){
         return view('admin.setup-tools.bank');
     }
+
+    public function operatorManger() {
+        return view('admin.setup-tools.operator-manager');
+    }
 }

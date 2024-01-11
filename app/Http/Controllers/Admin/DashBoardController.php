@@ -16,7 +16,7 @@ class DashBoardController extends Controller
     }
     public function logout (Request $request) {
         $user = auth()->user()->id;
-        LoginSession::where('user_id',$user)->update([
+        LoginSession::where(['user_id'=>$user,'is_logged_in'=>'0'])->update([
             'is_logged_in' => '1',
             'logout_time'=>Carbon::now()->format('Y-m-d H:i:s')
         ]);
