@@ -39,11 +39,15 @@ class OperaterManagerComponent extends Component
             'name'=>'required|string|min:3',
             'operator_type'=>'required',
             'api_id'=>'required',
+            'charge_range'=>'required|regex:/^\d+-\d+$/'
         ])->validate();
+        $chargeRange = explode('-',$validateData['charge_range']);
         $operatorManager = OperatorManager::create([
             'name'=>$validateData['name'],
             'operator_type'=>$validateData['operator_type'],
             'api_id'=>$validateData['api_id'],
+            'charge_range_start' =>$chargeRange[0], 
+            'charge_range_end' =>$chargeRange[1], 
             'status'=>'1',
         ]);
         
@@ -83,7 +87,6 @@ class OperaterManagerComponent extends Component
         $this->editFormOperaterManger = true;
         $this->operatorManagerId = $operatorManager->id;
         $this->operatorLists = $operatorManager->toArray();
-        // dd($this->operatorLists);
         $this->dispatch('show-form');
     }
 
@@ -92,11 +95,15 @@ class OperaterManagerComponent extends Component
             'name'=>'required|string|min:3',
             'operator_type'=>'required',
             'api_id'=>'required',
+            'charge_range'=>'required|regex:/^\d+-\d+$/'
         ])->validate();
+        $chargeRange = explode('-',$validateData['charge_range']);
         $operatorManager = OperatorManager::where('id',$this->operatorManagerId)->update([
             'name'=>$validateData['name'],
             'operator_type'=>$validateData['operator_type'],
             'api_id'=>$validateData['api_id'],
+            'charge_range_start' =>$chargeRange[0], 
+            'charge_range_end' =>$chargeRange[1], 
             'status'=>'1',
         ]);
         

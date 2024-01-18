@@ -7,7 +7,7 @@
                         <div id="total-revenue-chart" data-colors='["--bs-primary"]'></div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1">$<span data-plugin="counterup">34,152</span></h4>
+                        <h4 class="mb-1 mt-1">&#x20B9;<span data-plugin="counterup">34,152</span></h4>
                         <p class="text-muted mb-0">Total Revenue</p>
                     </div>
                     <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>2.65%</span> since last week
@@ -88,7 +88,7 @@
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                <h3 class="text-primary">$<span data-plugin="counterup">2,371</span><span class="text-muted d-inline-block font-size-15 ms-3">Income</span></h3>
+                                <h3 class="text-primary">&#x20B9;<span data-plugin="counterup">2,371</span><span class="text-muted d-inline-block font-size-15 ms-3">Income</span></h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
                                 <h3><span data-plugin="counterup">258</span><span class="text-muted d-inline-block font-size-15 ms-3">Sales</span>
@@ -241,7 +241,7 @@
                                             <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Nevada</p>
                                         </td>
                                         <td><span class="badge bg-soft-danger font-size-12">Cancel</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>$250.00</td>
+                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;250.00</td>
                                     </tr>
                                     <tr>
                                         <td><img src="{{asset('/assets/images/users/avatar-5.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -250,7 +250,7 @@
                                             <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Texas</p>
                                         </td>
                                         <td><span class="badge bg-soft-success font-size-12">Success</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>$110.00</td>
+                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>&#x20B9;110.00</td>
                                     </tr>
                                     <tr>
                                         <td><img src="{{asset('/assets/images/users/avatar-6.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -259,7 +259,7 @@
                                             <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> California</p>
                                         </td>
                                         <td><span class="badge bg-soft-info font-size-12">Active</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>$420.00</td>
+                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;420.00</td>
                                     </tr>
                                     <tr>
                                         <td><img src="{{asset('/assets/images/users/avatar-7.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -268,7 +268,7 @@
                                             <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Montana</p>
                                         </td>
                                         <td><span class="badge bg-soft-warning font-size-12">Pending</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>$120.00</td>
+                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>&#x20B9;120.00</td>
                                     </tr>
                                     <tr>
                                         <td><img src="{{asset('/assets/images/users/avatar-8.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -277,7 +277,7 @@
                                             <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Colorado</p>
                                         </td>
                                         <td><span class="badge bg-soft-info font-size-12">Active</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>$112.00</td>
+                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;112.00</td>
                                     </tr>
                                     <tr>
                                         <td><img src="{{asset('/assets/images/users/avatar-2.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -286,7 +286,7 @@
                                             <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Australia</p>
                                         </td>
                                         <td><span class="badge bg-soft-success font-size-12">Success</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>$120.00</td>
+                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>&#x20B9;120.00</td>
                                     </tr>
                                     <tr>
                                         <td><img src="{{asset('/assets/images/users/avatar-1.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -295,7 +295,7 @@
                                             <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> India</p>
                                         </td>
                                         <td><span class="badge bg-soft-danger font-size-12">Cancel</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>$112.00</td>
+                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;112.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -477,7 +477,7 @@
                                         07 Oct, 2019
                                     </td>
                                     <td>
-                                        $400
+                                        &#x20B9;400
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
@@ -506,7 +506,7 @@
                                         07 Oct, 2019
                                     </td>
                                     <td>
-                                        $380
+                                        &#x20B9;380
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill bg-soft-danger font-size-12">Chargeback</span>
@@ -535,7 +535,7 @@
                                         06 Oct, 2019
                                     </td>
                                     <td>
-                                        $384
+                                        &#x20B9;384
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
@@ -563,7 +563,7 @@
                                         05 Oct, 2019
                                     </td>
                                     <td>
-                                        $412
+                                        &#x20B9;412
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
@@ -591,7 +591,7 @@
                                         04 Oct, 2019
                                     </td>
                                     <td>
-                                        $404
+                                        &#x20B9;404
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill bg-soft-warning font-size-12">Refund</span>
@@ -619,7 +619,7 @@
                                         04 Oct, 2019
                                     </td>
                                     <td>
-                                        $392
+                                        &#x20B9;392
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>

@@ -28,7 +28,7 @@ return new class extends Migration
             $table->bigInteger('addhar_card');
             $table->unsignedBigInteger('scheme_id');
             $table->foreign('scheme_id')->references('id')->on('schemes')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->string('website');
+            $table->string('website')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

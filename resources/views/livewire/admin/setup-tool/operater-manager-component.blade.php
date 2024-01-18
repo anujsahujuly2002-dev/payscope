@@ -44,6 +44,7 @@
                                     <th scope="col">Type</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Operator Api</th>
+                                    <th scope="col">Charge Range</th>
                                     @canany(['operator-edit'])
                                         <th scope="col" style="width: 200px;">Action</th>
                                     @endcanany
@@ -63,7 +64,7 @@
                                             </div>
                                         </th>
                                         <td>
-                                            <a href="javascript:void(0)" class="text-body">{{ucfirst(Str_replace('-',' ',$operatorManger->name))}}</a>
+                                            <a href="javascript:void(0)" class="text-body">{{ucfirst(Str_replace('-',' to ',$operatorManger->name))}}</a>
                                         </td>
                                         <td>{{ucfirst(Str_replace('-',' ',$operatorManger->operator_type))}}</td>
                                         <td>
@@ -72,6 +73,9 @@
                                         </td>
                                         <td>
                                             {{ucfirst(Str_replace('-',' ',$operatorManger->api->name))}}
+                                        </td>
+                                        <td>
+                                           {{$operatorManger->charge_range}}
                                         </td>
                                         @canany(['operator-edit'])
                                             <td>
@@ -202,6 +206,15 @@
                                         @endforeach
                                     </select>
                                     @error('api_id')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-0">
+                                    <label for="name" class="form-label">Charge Range</label>
+                                    <input type="text" id="name" class="form-control  @error('charge_range') is-invalid @enderror" placeholder="Enter Charge Range e.g (100-500)" wire:model.lazy='operatorLists.charge_range'/>
+                                    @error('charge_range')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>

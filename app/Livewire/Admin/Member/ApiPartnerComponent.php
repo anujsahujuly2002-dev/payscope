@@ -94,7 +94,7 @@ class ApiPartnerComponent extends Component
                 'pancard_no'=>$validateDate['pancard_number'],
                 'addhar_card'=>$validateDate['adhaarcard_number'],
                 'scheme_id'=>$validateDate['scheme'],
-                'website'=>$validateDate['website'],
+                'website'=>$validateDate['website']??NULL,
             ]);
             $user->assignRole(['api-partner']);
             Wallet::create([

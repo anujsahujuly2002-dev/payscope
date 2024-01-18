@@ -85,11 +85,10 @@
                                                     <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                         <i class="uil uil-ellipsis-v"></i>
                                                     </a>
-    
                                                     <div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 26.6667px, 0px);" data-popper-placement="bottom-end">
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                        <div class="menu-header">Charge</div>
+                                                        <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'dmt')">Money Transfer</a>
+                                                        <a class="dropdown-item" href="javascript:void()">Virtual Account</a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -165,35 +164,86 @@
         </div>
     </div>
     <!--  Large modal example -->
-    <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog modal-lg">
-            <form wire:submit.prevent='{{$editSchemeForm?"update":"store"}}' autocomplete="off">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="myLargeModalLabel">{{$editSchemeForm?"Edit":"Add"}} Scheme</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row g-2">
-                            <div class="col mb-0">
-                                <label for="scheme-name" class="form-label">Scheme Name</label>
-                                <input type="text" id="scheme-name" class="form-control  @error('schemeName') is-invalid @enderror" placeholder="Enter Scheme Name" wire:model.defer='schemeName'/>
-                                @error('schemeName')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+    @if(!$setCommissionForm)
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent='{{$editSchemeForm?"update":"store"}}' autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">{{$editSchemeForm?"Edit":"Add"}} Scheme</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-2">
+                                <div class="col mb-0">
+                                    <label for="scheme-name" class="form-label">Scheme Name</label>
+                                    <input type="text" id="scheme-name" class="form-control  @error('schemeName') is-invalid @enderror" placeholder="Enter Scheme Name" wire:model.defer='schemeName'/>
+                                    @error('schemeName')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">{{$editSchemeForm?"Update":"Save"}} changes</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </form>
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">{{$editSchemeForm?"Update":"Save"}} changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    @else
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent='' autocomplete="off">
+                    <input type="hidden" value="{{$operaterName}}" wire:model.defer='operaterType'>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">{{$commissionTypeTitle}} Charge</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-nowrap mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40%;">Operator</th>
+                                            <th style="width: 30%;">Commission Type</th>
+                                            <th>Commission Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($operaterList as $item)
+                                        <tr>
+                                            <td>{{ucfirst(Str_replace('-',' to ',$item->name))}}</td>
+                                            <td>
+                                                <select name="" id="" class="form-control">
+                                                    <option value="">Select type</option>
+                                                    <option value="0">Percent (%)</option>
+                                                    <option value="1">Flat (Rs)</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="scheme-name" class="form-control  @error('schemeName') is-invalid @enderror" placeholder="Enter Value" wire:model.defer='schemeName'/>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+    @endif
+
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 </div>

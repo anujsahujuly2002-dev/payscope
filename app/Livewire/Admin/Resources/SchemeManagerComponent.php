@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Resources;
 
+use App\Models\OperatorManager;
 use App\Models\Scheme;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,6 +14,10 @@ class SchemeManagerComponent extends Component
     public $schemeName;
     public $editSchemeForm;
     public $schemeId;
+    public $operaterList;
+    public $setCommissionForm = false;
+    public $commissionTypeTitle ;
+    public $operaterName;
     protected $rules = [
         'schemeName' => 'required|string:min:3',
     ];
@@ -27,6 +32,7 @@ class SchemeManagerComponent extends Component
         if(!auth()->user()->can('scheme-manager-create')) 
         throw UnauthorizedException::forPermissions(['scheme-manager-create']);
         $this->editSchemeForm =false;
+        $this->setCommissionForm = false;
         $this->dispatch('show-form');
     }
 
@@ -90,6 +96,17 @@ class SchemeManagerComponent extends Component
             $this->dispatch('hide-form');
             return redirect()->back()->with('enter','Scheme not update, Please try again');
         endif;
+    }
+
+
+    public function getCommission($scheme,$operaterName){
+        $this->setCommissionForm = TRUE;
+        if($operaterName =='dmt'):
+            $this->operaterName = $operaterName;
+            $this->commissionTypeTitle = 'Money Transfer';
+        endif;
+        $this->operaterList = OperatorManager::where('operator_type',$operaterName)->get();
+        $this->dispatch('show-form');
     }
 
 
