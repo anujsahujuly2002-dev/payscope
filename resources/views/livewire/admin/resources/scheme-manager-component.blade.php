@@ -197,8 +197,9 @@
     @else
         <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-lg">
-                <form wire:submit.prevent='' autocomplete="off">
-                    <input type="hidden" value="{{$operaterName}}" wire:model.defer='operaterType'>
+                <form wire:submit.prevent='storeCommission' autocomplete="off">
+                    <input type="hidden" value="{{$operaterName}}" wire:model='operaterType'>
+                    <input type="hidden" value="{{$schemeId}}" wire:model='schemeId'>
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="myLargeModalLabel">{{$commissionTypeTitle}} Charge</h5>
@@ -215,18 +216,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($operaterList as $item)
+                                        @foreach ($operaterList as $key => $item)
                                         <tr>
                                             <td>{{ucfirst(Str_replace('-',' to ',$item->name))}}</td>
+                                            <input type="hidden" type="hidden" wire:model="items" value="{{ $item->id }}">
                                             <td>
-                                                <select name="" id="" class="form-control">
+                                                <select wire:model.defer="slab.{{$key}}.type" class="form-control">
                                                     <option value="">Select type</option>
                                                     <option value="0">Percent (%)</option>
                                                     <option value="1">Flat (Rs)</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" id="scheme-name" class="form-control  @error('schemeName') is-invalid @enderror" placeholder="Enter Value" wire:model.defer='schemeName'/>
+                                                <input type="text" id="scheme-name" class="form-control  @error('schemeName') is-invalid @enderror" placeholder="Enter Value" wire:model='slab.{{$key}}.value'>
                                             </td>
                                         </tr>
                                         @endforeach

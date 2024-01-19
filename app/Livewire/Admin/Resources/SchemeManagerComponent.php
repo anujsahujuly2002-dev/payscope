@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Resources;
 
+use App\Models\Commission;
 use App\Models\OperatorManager;
 use App\Models\Scheme;
 use Livewire\Component;
@@ -18,6 +19,9 @@ class SchemeManagerComponent extends Component
     public $setCommissionForm = false;
     public $commissionTypeTitle ;
     public $operaterName;
+    public $operaterType;
+    public $slab = [];
+    public $items = [];
     protected $rules = [
         'schemeName' => 'required|string:min:3',
     ];
@@ -100,13 +104,48 @@ class SchemeManagerComponent extends Component
 
 
     public function getCommission($scheme,$operaterName){
+        $this->reset();
         $this->setCommissionForm = TRUE;
         if($operaterName =='dmt'):
             $this->operaterName = $operaterName;
             $this->commissionTypeTitle = 'Money Transfer';
         endif;
+        $this->operaterType =$operaterName;
         $this->operaterList = OperatorManager::where('operator_type',$operaterName)->get();
+        $this->items = array_map(fn($operaterList)=>$operaterList->id,iterator_to_array($this->operaterList)); 
+        $this->schemeId = $scheme;
+        $commisions = Commission::where(['operator'=>$operaterName,'scheme_id'=>$this->schemeId])->get();
+        foreach($commisions as $commision):
+            $this->slab[] = [
+                'type'=>$commision->type,
+                'value'=>$commision->value,
+            ];
+        endforeach;
+        // dd($this->slab);
         $this->dispatch('show-form');
+    }
+
+    public function storeCommission() {
+        foreach($this->slab as $key =>$value):
+            $commission = Commission::where(['slab_id'=>$this->items[$key],'scheme_id'=>$this->schemeId])->first();
+            if($commission !=null):
+                $commission->update([
+                    'operator'=> $this->operaterType,
+                    'type'=>$value['type'],
+                    'value'=>$value['value'],
+                ]);
+            else:
+                Commission::create([
+                    'scheme_id'=>$this->schemeId,
+                    'slab_id'=>$this->items[$key],
+                    'operator'=> $this->operaterType,
+                    'type'=>$value['type'],
+                    'value'=>$value['value'],
+                ]);
+            endif;
+        endforeach;
+        $this->dispatch('hide-form');
+        return redirect()->back()->with('success',"Commission Update Successfully");
     }
 
 
