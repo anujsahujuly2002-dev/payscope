@@ -57,7 +57,6 @@ class PayoutRequest extends Component
     }
 
     public function storePayoutNewRequest() {
-        // dd(request()->ip());
         $validateData = Validator::make($this->payoutFormRequest,[
             'account_number'=>'required|numeric|min:5',
             'ifsc_code' =>'required',
@@ -99,7 +98,6 @@ class PayoutRequest extends Component
                 'payout_ref'=>$validateData['payoutid']
             ]);
         } catch (\Exception $e) {
-            // dd($e->getMessage());
             $this->dispatch('hide-form');
             return redirect()->back()->with('error','Duplicate Transaction Not Allowed, Please Check Transaction History');
         }
@@ -126,7 +124,7 @@ class PayoutRequest extends Component
         ]);
 
         $url = "https://api.instantpay.in/payments/payout";
-        $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=13.233.123.53'));
+        $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = [
             "payer" => [
                 "bankProfileId" => "24255428726",
@@ -144,7 +142,6 @@ class PayoutRequest extends Component
             "latitude"           => $new_arr[0]['geoplugin_latitude'],
             "longitude"          => $new_arr[0]['geoplugin_longitude'],
             "remarks"            => 'test',
-            // 'alertEmail'         => auth()->user()->email,
             "purpose"           => "REIMBURSEMENT",
             "otp"                => "",
             "otpReference"       => ""
@@ -154,7 +151,7 @@ class PayoutRequest extends Component
             'X-Ipay-Auth-Code'=>'1',
             'X-Ipay-Client-Id'=>'YWY3OTAzYzNlM2ExZTJlOUWx2c0hIFCZJmVsLIO8Mxw=',
             'X-Ipay-Client-Secret'=>'6252d9bfe8832ff8cd648ed2f4e9cd5820c8e5864bb5ac15217670c74bafd73b',
-            'X-Ipay-Endpoint-Ip'=>'13.233.123.53',
+            'X-Ipay-Endpoint-Ip'=>request()->ip(),
             'Content-Type'=>'application/json'
         ];
 
