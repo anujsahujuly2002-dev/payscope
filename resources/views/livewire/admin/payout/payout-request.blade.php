@@ -89,13 +89,7 @@
                                         <td>
                                             &#x20B9;{{$payoutReq?->payoutTransactionHistories?->charge}}
                                         </td>
-                                        <td>
-                                            @if ($payoutReq->status_id ==3)
-                                                &#x20B9;{{$payoutReq?->payoutTransactionHistories?->balance +($payoutReq->amount+$payoutReq?->payoutTransactionHistories?->charge)}}
-                                            @else
-                                                &#x20B9;{{$payoutReq?->payoutTransactionHistories?->balance -($payoutReq->amount+$payoutReq?->payoutTransactionHistories?->charge)}}
-                                            @endif
-                                            
+                                        <td> &#x20B9;{{$payoutReq?->payoutTransactionHistories?->closing_balnce}}
                                         </td>
                                         <td>
                                             {{$payoutReq->payoutTransactionHistories->remarks}}                                        

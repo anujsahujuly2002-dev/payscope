@@ -70,7 +70,7 @@ class PayoutRequest extends Component
             $this->dispatch('hide-form');
             return redirect()->back()->with('error','One request is already submitted');
         endif;
-        if(auth()->user()->walletAmount->amount < $validateData['amount']):
+        if(auth()->user()->walletAmount->amount < ($validateData['amount']+getCommission("dmt",$validateData['amount']))):
             $this->dispatch('hide-form');
             return redirect()->back()->with('error','Low balance to make this request.');
         endif;
@@ -84,6 +84,7 @@ class PayoutRequest extends Component
         } while (FundRequest::where("payout_id", $validateData['payoutid'])->first() instanceof FundRequest);
         
         try {
+            $openingBalance = auth()->user()->walletAmount->amount;
             $fundRequest=FundRequest::create([
                 'user_id'=>auth()->user()->id,
                 'account_number'=>$validateData['account_number'],
@@ -103,7 +104,7 @@ class PayoutRequest extends Component
         }
 
         Wallet::where('user_id',auth()->user()->id)->update([
-            'amount'=>auth()->user()->walletAmount->amount-$validateData['amount'],
+            'amount'=>auth()->user()->walletAmount->amount-($validateData['amount']+getCommission("dmt",$validateData['amount'])),
         ]);
         $adminId = User::whereHas('roles',function($q){
             $q->where('name','super-admin');
@@ -113,10 +114,11 @@ class PayoutRequest extends Component
             'fund_request_id'=>$fundRequest->id,
             'api_id'=>'1',
             'amount'=>$validateData['amount'],
-            'charge'=>0.00,
+            'charge'=>getCommission("dmt",$validateData['amount']),
             'status_id'=>'1',
             'credited_by'=>$adminId->id,
             'balance'=>auth()->user()->walletAmount->amount,
+            'closing_balnce'=>$openingBalance - ($validateData['amount']+getCommission("dmt",$validateData['amount'])),
             'type'=>"debit",
             'transtype'=>"fund",
             'product'=>'payout',
@@ -137,7 +139,7 @@ class PayoutRequest extends Component
             ], 
 
             "transferMode"       => $validateData['payment_mode']=='1'?"IMPS":"NEFT",
-            "transferAmount"     => $validateData['amount'],
+            "transferAmount"     => $validateData['amount']+getCommission("dmt",$validateData['amount']),
             "externalRef"        =>$validateData['payoutid'],
             "latitude"           => $new_arr[0]['geoplugin_latitude'],
             "longitude"          => $new_arr[0]['geoplugin_longitude'],
@@ -172,9 +174,10 @@ class PayoutRequest extends Component
             ]);
             PayoutRequestHistory::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
+                'closing_balnce'=>$openingBalance
             ]);
             Wallet::where('user_id',auth()->user()->id)->update([
-                'amount'=>auth()->user()->walletAmount->amount,
+                'amount'=>auth()->user()->walletAmount->amount+getCommission("dmt",$validateData['amount']),
             ]);
             $this->dispatch('hide-form');
             return redirect()->back()->with('error','Your '.$res['status']);

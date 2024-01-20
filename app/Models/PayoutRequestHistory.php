@@ -15,6 +15,7 @@ class PayoutRequestHistory extends Model
         'api_id',
         'amount',
         'charge',
+        'closing_balnce',
         'status_id',
         'credited_by',
         'balance',
