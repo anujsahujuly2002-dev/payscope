@@ -79,7 +79,9 @@
                         <li><a href="javascript:void()">Whitelabel</a></li>
                         <li><a href="javascript:void()">Master Distributor</a></li>
                         <li><a href="javascript:void()">Distributor</a></li>
-                        <li><a href="javascript:void()">Retailer</a></li>
+                        @canany(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])
+                            <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
+                        @endcanany
                         @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'])
                             <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
                         @endcanany

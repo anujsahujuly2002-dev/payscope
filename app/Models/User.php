@@ -48,6 +48,9 @@ class User extends Authenticatable
     public function apiPartner(){
        return $this->hasOne(ApiPartner::class,'user_id','id');
     }
+    public function retailer(){
+       return $this->hasOne(Retailer::class,'user_id','id');
+    }
     
     public function getCreatedAtAttribute($value){
         return date('d M y - h:i A', strtotime($value));

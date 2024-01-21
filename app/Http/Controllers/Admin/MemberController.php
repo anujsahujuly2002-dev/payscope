@@ -15,4 +15,8 @@ class MemberController extends Controller
         endif;
         return view('admin.member.api-partner-list');
     }
+
+    public function retailer() {
+        return view('admin.member.retailer');
+    }
 }

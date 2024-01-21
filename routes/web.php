@@ -56,6 +56,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::prefix('api-partner')->name('api.partner.')->group(function() {
                 Route::get('/','apiPartner')->name('list');
             });
+            Route::prefix('retailer')->name('retailer.')->group(function() {
+                Route::get('/','retailer')->name('list');
+            });
         });
 
         // Setup Tools Route
