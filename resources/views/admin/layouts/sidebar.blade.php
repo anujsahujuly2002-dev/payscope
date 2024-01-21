@@ -166,7 +166,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="javascript:void()">Api Manager </a></li>
-                        <li><a href="javascript:void()">Bank Manager </a></li>
+                        {{-- <li><a href="javascript:void()">Bank Manager </a></li> --}}
                         <li><a href="javascript:void()">Complaint Subject  </a></li>
                         <li><a href="javascript:void()">Operator Manager  </a></li>
                         <li><a href="javascript:void()">Portal Setting  </a></li>
@@ -187,7 +187,20 @@
                         </ul>
                     </li>
                 @endcanany
-
+                @canany(['callback-token'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="uil-cog"></i>
+                            <span>Api Setting</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            @can('callback-token')
+                                <li><a href="{{route('admin.api.setting')}}">Callback & Token</a></li>
+                            @endcan
+                            <li><a href="javascript:void()">Operator Code </a></li>
+                        </ul>
+                    </li>
+                @endcanany
                 <li>
                     <a href="{{route('admin.logout')}}">
                         <i class="fas fa-sign-out-alt"></i>

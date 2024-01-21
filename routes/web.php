@@ -81,5 +81,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(SchemeManagerController::class)->prefix('resources')->name('resource.')->group(function() {
             Route::get('/scheme-manager','index')->name('scheme.manager');
         });
+
+        // Api Setting Route
+        Route::controller(ApiSettingController::class)->prefix('api')->name('api.')->group(function() {
+            Route::get('/setting','setting')->name('setting');
+        });
     });
 });
