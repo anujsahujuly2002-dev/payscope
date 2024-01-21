@@ -43,6 +43,8 @@ class ManualRequest extends Component
         $statuses = Status::get();
         $funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
+        })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
+            $query->where('user_id',auth()->user()->id);
         })->latest()->paginate(10);
         return view('livewire.admin.fund.manual-request',compact('statuses','funds'));
     }
@@ -66,11 +68,16 @@ class ManualRequest extends Component
             Storage::putFileAs('public/upload/pay_slip/', $this->paySlip,$image);
         endif;
         $validateData['remark'] = $this->fundNewRequests['remark']??"";
+        if(auth()->user()->getRoleNames()->first()=='api-partner'):
+            $creditedBy =  auth()->user()->apiPartner->added_by;
+        else:
+            $creditedBy =  auth()->user()->retailer->added_by;
+        endif;
         $funds = Fund::create([
             'user_id'=>auth()->user()->id,
             'bank_id'=>$validateData['bank'],
             'payment_mode_id'=>$validateData['payment_mode'],
-            'credited_by' => auth()->user()->apiPartner->added_by,
+            'credited_by' => $creditedBy,
             'amount'=>$validateData['amount'],
             'type'=>'type',
             'pay_date'=>$validateData['pay_date'],

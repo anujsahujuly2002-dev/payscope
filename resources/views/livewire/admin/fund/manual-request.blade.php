@@ -3,7 +3,7 @@
     @include('admin.flash-message.flash-message')
     <div class="row">
         <div class="col-lg-12">
-            @role('api-partner')
+            @role(['api-partner','retailer'] )
                 <div class="row">
                     @if($banks->count()>0)
                         @foreach ($banks as $bank)
