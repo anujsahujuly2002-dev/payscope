@@ -66,9 +66,9 @@ class PayoutRequest extends Component
             'payment_mode'=>'required'
         ])->validate();
        
-        do {
-            $validateData['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
-        } while (FundRequest::where("payout_id", $validateData['payoutid'])->first() instanceof FundRequest);
+        // do {
+        //     $validateData['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
+        // } while (FundRequest::where("payout_id", $validateData['payoutid'])->first() instanceof FundRequest);
         
         $validateData['user_id']= auth()->user()->id;
         $response = $this->payoutApiRequest($validateData);

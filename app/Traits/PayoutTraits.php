@@ -22,7 +22,7 @@ trait PayoutTraits {
 
         // Check Wallet Amount 
         $walletAmount = Wallet::where('user_id',$data['user_id'])->first()->amount;
-        if($data['amount']+getCommission("dmt",$data['amount']) > $walletAmount):
+        if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > $walletAmount):
             return [
                 'status'=>'0002',
                 'msg'=>'Low balance to make this request.'
@@ -37,6 +37,9 @@ trait PayoutTraits {
                 'msg'=>'Next transaction allowed after 1 Min.'
             ];
         endif;
+        do {
+            $data['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
+        } while (FundRequest::where("payout_id", $data['payoutid'])->first() instanceof FundRequest);
         try {
             $fundRequest=FundRequest::create([
                 'user_id'=>$data['user_id'],
@@ -58,22 +61,22 @@ trait PayoutTraits {
             ];
         }
         
-        Wallet::where('user_id',auth()->user()->id)->update([
-            'amount'=>auth()->user()->walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'])),
+        Wallet::where('user_id',$data['user_id'])->update([
+            'amount'=>$walletAmount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
         ]);
         $adminId = User::whereHas('roles',function($q){
             $q->where('name','super-admin');
         })->first();
         $payoutRequestHistories = PayoutRequestHistory::create([
-            'user_id'=>auth()->user()->id,
+            'user_id'=>$data['user_id'],
             'fund_request_id'=>$fundRequest->id,
             'api_id'=>'1',
             'amount'=>$data['amount'],
-            'charge'=>getCommission("dmt",$data['amount']),
+            'charge'=>getCommission("dmt",$data['amount'],$data['user_id']),
             'status_id'=>'1',
             'credited_by'=>$adminId->id,
-            'balance'=>auth()->user()->walletAmount->amount,
-            'closing_balnce'=>$walletAmount - ($data['amount']+getCommission("dmt",$data['amount'])),
+            'balance'=>$walletAmount,
+            'closing_balnce'=>$walletAmount - ($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
             'type'=>"debit",
             'transtype'=>"fund",
             'product'=>'payout',
@@ -93,7 +96,7 @@ trait PayoutTraits {
             ], 
 
             "transferMode"       => $data['payment_mode']=='1'?"IMPS":"NEFT",
-            "transferAmount"     => $data['amount']+getCommission("dmt",$data['amount']),
+            "transferAmount"     => $data['amount']+getCommission("dmt",$data['amount'],$data['user_id']),
             "externalRef"        =>$data['payoutid'],
             "latitude"           => $new_arr[0]['geoplugin_latitude'],
             "longitude"          => $new_arr[0]['geoplugin_longitude'],
@@ -122,7 +125,9 @@ trait PayoutTraits {
             ]);
             return [
                 'status'=>'0005',
-                'msg'=>'Your'.$res['status']
+                'msg'=>'Your'.$res['status'],
+                'txn_id'=>$data['payoutid'],
+                'rrn_no'=>$res['data']['txnReferenceId']
             ];
         else:
             FundRequest::where('id',$fundRequest->id)->update([
@@ -132,12 +137,13 @@ trait PayoutTraits {
                 'status_id'=>'3',
                 'closing_balnce'=>$walletAmount
             ]);
-            Wallet::where('user_id',auth()->user()->id)->update([
-                'amount'=>$walletAmount+getCommission("dmt",$data['amount']),
+            Wallet::where('user_id',$data['user_id'])->update([
+                'amount'=>$walletAmount+getCommission("dmt",$data['amount'],$data['user_id']),
             ]);
             return [
                 'status'=>'0006',
-                'msg'=>'Your'.$res['status']
+                'msg'=>'Your'.$res['status'],
+                'txn_id'=>$data['payoutid']
             ];
         endif;
 
