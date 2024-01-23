@@ -92,7 +92,7 @@
                                         <td> &#x20B9;{{$payoutReq?->payoutTransactionHistories?->closing_balnce}}
                                         </td>
                                         <td>
-                                            {{$payoutReq->payoutTransactionHistories->remarks}}                                        
+                                            {{$payoutReq?->payoutTransactionHistories?->remarks}}                                        
                                         </td>
                                         <td>
                                             {{$payoutReq->created_at}}                                        
