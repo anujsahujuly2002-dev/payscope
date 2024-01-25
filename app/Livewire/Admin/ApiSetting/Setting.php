@@ -17,7 +17,9 @@ class Setting extends Component
     public $tokenId;
     public function render()
     {
-        $apiTokens = ApiToken::where('user_id',auth()->user()->id)->paginate(10);
+        $apiTokens = ApiToken::when(auth()->user()->getRoleNames()->first()=='api-partner',function($q){
+            $q->where('user_id',auth()->user()->id);
+        })->paginate(10);
         return view('livewire.admin.api-setting.setting',compact('apiTokens'));
     }
 

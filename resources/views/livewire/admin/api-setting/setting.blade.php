@@ -40,6 +40,9 @@
                                             <label class="form-check-label" for="contacusercheck">Sr No.</label>
                                         </div>
                                     </th>
+                                    @role('super-admin')
+                                        <th>Api Partner Name</th>
+                                    @endrole
                                     <th scope="col">Ip</th>
                                     <th scope="col">Token</th>
                                     <th scope="col">Domain</th>
@@ -61,6 +64,9 @@
                                                 <label class="form-check-label" for="contacusercheck1">{{$srNo+$loop->iteration}}</label>
                                             </div>
                                         </th>
+                                        @role('super-admin')
+                                            <td>{{$apiToken->user->name}}</td>
+                                        @endrole
                                         <td>
                                             <a href="javascript:void(0)" class="text-body">{{$apiToken->ip_address}}</a>
                                         </td>
