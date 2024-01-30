@@ -89,5 +89,15 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(ApiSettingController::class)->prefix('api')->name('api.')->group(function() {
             Route::get('/setting','setting')->name('setting');
         });
+
+        // Admin Setting Route 
+        Route::controller(AdminSettingController::class)->prefix('admin-setting')->name('admin-setting.')->group(function(){
+            Route::get('api-list','apiList')->name('api.list');
+        });
+
+        // Recharge and bill payments Route
+        Route::controller(RechargeAndBillPaymentsController::class)->prefix('recharge-and-bill-payments')->name('recharge.and.bill.payments')->group(function(){
+            Route::get('/mobile-recharge','mobileRecharge')->name('mobile.recharge');
+        });
     });
 });

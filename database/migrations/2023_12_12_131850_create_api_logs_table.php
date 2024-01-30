@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('api_logs', function (Blueprint $table) {
             $table->id();
             $table->text('url');
-            $table->string('txn_id');
+            $table->string('txn_id')->nullable();
             $table->json('header');
             $table->json('request');
             $table->json('response');

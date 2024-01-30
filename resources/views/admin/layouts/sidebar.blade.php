@@ -39,6 +39,22 @@
                         <span>@lang('translation.Dashboard')</span>
                     </a>
                 </li>
+                
+                @canany(['create','list'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="uil-bolt-alt"></i>
+                            <span>Recharge & Bill Payment</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            @canany(['create','list'])
+                                <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Mobile </a></li>
+                            @endcanany
+                            <li><a href="javascript:void()">DTH</a></li>
+                            <li><a href="javascript:void()">Electricity</a></li>
+                        </ul>
+                    </li>
+                @endcanany
                 @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -161,20 +177,24 @@
                         <li><a href="javascript:void()">Payout Bank</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-cog"></i>
-                        <span> Admin Setting  </span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Api Manager </a></li>
-                        {{-- <li><a href="javascript:void()">Bank Manager </a></li> --}}
-                        <li><a href="javascript:void()">Complaint Subject  </a></li>
-                        <li><a href="javascript:void()">Operator Manager  </a></li>
-                        <li><a href="javascript:void()">Portal Setting  </a></li>
-                        <li><a href="javascript:void()">Quick Link </a></li>
-                    </ul>
-                </li>
+                @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="uil-cog"></i>
+                            <span> Admin Setting  </span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
+                                <li><a href="{{route('admin.admin-setting.api.list')}}">Api Manager </a></li>
+                            @endcanany
+                            {{-- <li><a href="javascript:void()">Bank Manager </a></li> --}}
+                            <li><a href="javascript:void()">Complaint Subject  </a></li>
+                            {{-- <li><a href="javascript:void()">Operator Manager  </a></li> --}}
+                            <li><a href="javascript:void()">Portal Setting  </a></li>
+                            <li><a href="javascript:void()">Quick Link </a></li>
+                        </ul>
+                    </li>
+                @endcanany
                 @canany(['login-session'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">

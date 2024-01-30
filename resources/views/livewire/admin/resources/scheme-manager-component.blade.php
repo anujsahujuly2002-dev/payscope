@@ -86,6 +86,9 @@
                                                         <i class="uil uil-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 26.6667px, 0px);" data-popper-placement="bottom-end">
+                                                        <div class="menu-header">Commission</div>
+                                                        <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'mobile')">Mobile Recharge</a>
+                                                        {{-- <a class="dropdown-item" href="javascript:void()">Virtual Account</a> --}}
                                                         <div class="menu-header">Charge</div>
                                                         <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'dmt')">Money Transfer</a>
                                                         <a class="dropdown-item" href="javascript:void()">Virtual Account</a>

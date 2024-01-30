@@ -67,5 +67,8 @@ function showError(error) {
       break;
   }
 }
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();   
+});
 </script>
 @endsection

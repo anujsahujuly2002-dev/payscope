@@ -39,15 +39,15 @@ class OperaterManagerComponent extends Component
             'name'=>'required|string|min:3',
             'operator_type'=>'required',
             'api_id'=>'required',
-            'charge_range'=>'required|regex:/^\d+-\d+$/'
+            'charge_range'=>'required_if:operator_type,dmt|regex:/^\d+-\d+$/'
         ])->validate();
-        $chargeRange = explode('-',$validateData['charge_range']);
+        $chargeRange = explode('-',$validateData['charge_range']??0);
         $operatorManager = OperatorManager::create([
             'name'=>$validateData['name'],
             'operator_type'=>$validateData['operator_type'],
             'api_id'=>$validateData['api_id'],
-            'charge_range_start' =>$chargeRange[0], 
-            'charge_range_end' =>$chargeRange[1], 
+            'charge_range_start' =>$chargeRange[0]??0, 
+            'charge_range_end' =>$chargeRange[1]??0, 
             'status'=>'1',
         ]);
         
@@ -72,8 +72,7 @@ class OperaterManagerComponent extends Component
             $msg = "Operator Manager Inactive Successfully";
         endif;
         if($statusUpdate):
-            $this->dispatch('hide-form');
-
+            $this->dispatch('hide-form');   
             return redirect()->back()->with('success',$msg);
         else:
             $this->dispatch('hide-form');

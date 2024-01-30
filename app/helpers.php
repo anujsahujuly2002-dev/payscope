@@ -46,3 +46,22 @@ if(!function_exists('getCommission')):
         return $charges;
     }
 endif;
+
+if(!function_exists('getTelecomCircles')):
+    function getTelecomCircles(){
+        $url = "http://api.instantpay.in/marketplace/utilityPayments/telecomCircles";
+        $headers =[
+            "X-Ipay-Auth-Code"=> 1,
+            "X-Ipay-Client-Id"=>"YWY3OTAzYzNlM2ExZTJlOfh549Gzt+5IEcETrD5Yx+Q=",
+            "X-Ipay-Client-Secret"=>"679db35f926b8d0240a8c0d28729528ee8e6d5effa5fa0b20c04454004d2d825",
+            "X-Ipay-Outlet-Id"=> "72762",
+            "X-Ipay-Endpoint-Ip"=> request()->ip()
+        ];
+        $data = [
+            "type" => "MSISDN",
+            "msisdn" =>"941234",
+            "billerId" => ""
+        ];
+        return apiCall($headers,$url,$data,true,NULL);
+    }
+endif;
