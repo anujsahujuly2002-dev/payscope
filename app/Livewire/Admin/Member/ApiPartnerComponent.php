@@ -24,6 +24,9 @@ class ApiPartnerComponent extends Component
     public $value;
     public $end_date;
     public $status;
+    public $schemeForm = false;
+    public $apiPartnerId;
+    public $scheme;
 
     // public function mount(){
     //     $this->apiPartners = User::whereHas('roles',function($q){
@@ -39,7 +42,6 @@ class ApiPartnerComponent extends Component
         if(!Auth::user()->can('api-partner-list')):
             throw UnauthorizedException::forPermissions(['api-partner-list']);
         endif;
-        // dd($this->start_date);
         $states = State::orderBy('name','ASC')->get();
         $schemes = Scheme::where('user_id',auth()->user()->id)->get();
         $apiPartners = User::whereHas('roles',function($q){
@@ -147,7 +149,28 @@ class ApiPartnerComponent extends Component
             $s->where('status',$this->status);
         })
         ->get();
-        // dd($this->apiPartners );
+    }
+
+
+    public function changeScheme(ApiPartner $apiPartner) {
+        $this->schemeForm=true;
+        $this->scheme = $apiPartner->scheme_id;
+        $this->apiPartnerId = $apiPartner->id;
+        $this->dispatch('show-form');
+    }
+
+    public function setScheme() {
+        $updateScheme = ApiPartner::where('id',$this->apiPartnerId)->update([
+            'scheme_id'=>$this->scheme
+        ]);
+        $this->dispatch('hide-form');
+        if($updateScheme):
+            sleep(1);
+            return redirect()->back()->with('success','New scheme Assign Successfully !');
+        else:
+            DB::rollback();
+            return redirect()->back()->with('error','New scheme not assign Please Try again !');
+        endif;
     }
 
 
