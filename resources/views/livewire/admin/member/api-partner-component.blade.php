@@ -95,7 +95,7 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="javascript:void(0)">Permission</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)">Profile</a>
+                                                    <a class="dropdown-item" href="{{route('admin.api.partner.profile',base64_encode($apipartner->id))}}">Profile</a>
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click.prevent="changeScheme({{$apipartner}},'dmt')">Scheme</a>
                                                 </div>
                                             </li>

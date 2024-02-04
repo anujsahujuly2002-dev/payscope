@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApiPartner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -18,5 +19,9 @@ class MemberController extends Controller
 
     public function retailer() {
         return view('admin.member.retailer');
+    }
+
+    public function apiPartnerProfile ($apiPartnerId){
+       return view('admin.member.api-partner-profile');
     }
 }

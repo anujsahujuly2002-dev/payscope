@@ -55,6 +55,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(MemberController::class)->group(function(){
             Route::prefix('api-partner')->name('api.partner.')->group(function() {
                 Route::get('/','apiPartner')->name('list');
+                Route::get('/profile/{id}','apiPartnerProfile')->name('profile');
             });
             Route::prefix('retailer')->name('retailer.')->group(function() {
                 Route::get('/','retailer')->name('list');

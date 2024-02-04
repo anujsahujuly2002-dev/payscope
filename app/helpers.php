@@ -52,8 +52,8 @@ if(!function_exists('getTelecomCircles')):
         $url = "http://api.instantpay.in/marketplace/utilityPayments/telecomCircles";
         $headers =[
             "X-Ipay-Auth-Code"=> 1,
-            "X-Ipay-Client-Id"=>"YWY3OTAzYzNlM2ExZTJlOfh549Gzt+5IEcETrD5Yx+Q=",
-            "X-Ipay-Client-Secret"=>"679db35f926b8d0240a8c0d28729528ee8e6d5effa5fa0b20c04454004d2d825",
+            "X-Ipay-Client-Id"=>"YWY3OTAzYzNlM2ExZTJlOUWx2c0hIFCZJmVsLIO8Mxw=",
+            "X-Ipay-Client-Secret"=>"ea5ffc2fd56497ba413e30fcc43a146d77fd208110bb7533d36de388256120df",
             "X-Ipay-Outlet-Id"=> "72762",
             "X-Ipay-Endpoint-Ip"=> request()->ip()
         ];
@@ -63,5 +63,11 @@ if(!function_exists('getTelecomCircles')):
             "billerId" => ""
         ];
         return apiCall($headers,$url,$data,true,NULL);
+    }
+endif;
+
+if(!function_exists('getPaymentModesId')):
+    function getPaymentModesId ($name) {
+       return $paymentModes = PaymentMode::where('name',$name)->first()->id;
     }
 endif;

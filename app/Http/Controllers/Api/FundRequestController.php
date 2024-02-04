@@ -13,13 +13,14 @@ class FundRequestController extends Controller
 {
     use PayoutTraits;
     public function payout(FundRequestRequest $request) {
-        $checkToken  = ApiToken::where(['ip_address'=>$request->ip_address,'token'=>$request->token])->first();
+        $checkToken  = ApiToken::where(['ip_address'=>$request->input('ip_address'),'token'=>$request->input('token')])->first();
         if(!$checkToken)
         return response()->json([
             'status'=>false,
             'msg'=>"Invalid Api token or ip address your current ip is ".$request->ip_address
         ]);
        $request['user_id'] = $checkToken->user_id;
+       $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
        $response = $this->payoutApiRequest($request);
        return $response;
     }
