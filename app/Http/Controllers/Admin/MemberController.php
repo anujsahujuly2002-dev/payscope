@@ -11,7 +11,7 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 class MemberController extends Controller
 {
     public function apiPartner(){
-        if(!Auth::user()->can('api-partner-list')):
+        if(!Auth::user()->can('api-partner-list') || !checkRecordHasPermission(['api-partner-list'])):
             throw UnauthorizedException::forPermissions(['api-partner-list']);
         endif;
         return view('admin.member.api-partner-list');

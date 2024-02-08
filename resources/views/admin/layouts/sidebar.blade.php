@@ -39,109 +39,146 @@
                         <span>@lang('translation.Dashboard')</span>
                     </a>
                 </li>
-                
-                @canany(['create','list'])
+                @if (checkRecordHasPermission(['create','list']))
+                    @canany(['create','list'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-bolt-alt"></i>
+                                <span>Recharge & Bill Payment</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if (['create','list'])
+                                    @canany(['create','list'])
+                                        <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Mobile </a></li>
+                                    @endcanany
+                                @endif
+                                <li><a href="javascript:void()">DTH</a></li>
+                                <li><a href="javascript:void()">Electricity</a></li>
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
+                @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
+                    @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="mdi mdi-head-cog"></i>
+                                <span>Resources</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
+                                    @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
+                                        <li><a href="{{route('admin.resource.scheme.manager')}}">Scheme Manager</a></li>
+                                    @endcanany
+                                @endif
+                                <li><a href="javascript:void()">Company Manager</a></li>
+                                <li><a href="javascript:void()">Company Profile</a></li>
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
+                @if (checkRecordHasPermission(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete']))
+                    @canany(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-cog"></i>
+                                <span>Role & Permission</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if(checkRecordHasPermission(['role-list', 'role-delete', 'role-create','role-edit']))
+                                    @canany(['role-list', 'role-delete', 'role-create','role-edit'])
+                                        <li><a href="{{route('admin.role.list')}}">Role</a></li>
+                                    @endcan
+                                @endif   
+                                @if (checkRecordHasPermission(['permission-list', 'permssion-create', 'permission-edit','permission-delete']))
+                                    @canany(['permission-list', 'permssion-create', 'permission-edit','permission-delete'])
+                                        <li><a href="{{route('admin.permission.list')}}">Permission</a></li>
+                                    @endcan
+                                @endif
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
+                @if (checkRecordHasPermission(array_merge(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'],['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])))
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-bolt-alt"></i>
-                            <span>Recharge & Bill Payment</span>
+                            <i class="uil-users-alt"></i>
+                            <span>Member</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            @canany(['create','list'])
-                                <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Mobile </a></li>
-                            @endcanany
-                            <li><a href="javascript:void()">DTH</a></li>
-                            <li><a href="javascript:void()">Electricity</a></li>
+                            <li><a href="javascript:void()">Whitelabel</a></li>
+                            <li><a href="javascript:void()">Master Distributor</a></li>
+                            <li><a href="javascript:void()">Distributor</a></li>
+                            @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete']))
+                                @canany(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])
+                                    <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
+                                @endcanany
+                            @endif
+                            @if (checkRecordHasPermission(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete']))
+                                @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'])
+                                    <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
+                                @endcanany
+                            @endif
                         </ul>
                     </li>
-                @endcanany
-                @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="mdi mdi-head-cog"></i>
-                            <span>Resources</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
-                                <li><a href="{{route('admin.resource.scheme.manager')}}">Scheme Manager</a></li>
-                            @endcanany
-                            <li><a href="javascript:void()">Company Manager</a></li>
-                            <li><a href="javascript:void()">Company Profile</a></li>
-                        </ul>
-                    </li>
-                @endcanany
-                @canany(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-cog"></i>
-                            <span>Role & Permission</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            @canany(['role-list', 'role-delete', 'role-create','role-edit'])
-                                <li><a href="{{route('admin.role.list')}}">Role</a></li>
-                            @endcan
-                            @canany(['permission-list', 'permssion-create', 'permission-edit','permission-delete'])
-                                <li><a href="{{route('admin.permission.list')}}">Permission</a></li>
-                            @endcan
-                        </ul>
-                    </li>
-                @endcan
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-users-alt"></i>
-                        <span>Member</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Whitelabel</a></li>
-                        <li><a href="javascript:void()">Master Distributor</a></li>
-                        <li><a href="javascript:void()">Distributor</a></li>
-                        @canany(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])
-                            <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
-                        @endcanany
-                        @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'])
-                            <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
-                        @endcanany
-                    </ul>
-                </li>
-                @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-cog"></i>
-                            <span>Setup Tools</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete'])
-                                <li><a href="{{route('admin.setup.bank')}}">Bank Account</a></li>
-                            @endcanany
-                            @canany(['operator-list','operator-create','operator-edit','operator-delete'])
-                                <li><a href="{{route('admin.setup.operator.manager')}}">Operator Manager</a></li>
-                            @endcanany
-                        </ul>
-                    </li>
-                @endcanany
-                @canany(['fund-manager-manual-request'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-money-insert"></i>
-                            <span>Fund Manager</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{route('admin.fund.manual.request')}}">Request</a></li>
-                            <li><a href="javascript:void()">Transfer / Return </a></li>
-                        </ul>
-                    </li>
-                @endcanany
-                @canany(['payout-request','payout-new-request'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-money-withdrawal"></i>
-                            <span>Payout Manager</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
-                        </ul>
-                    </li>
-                @endcanany
+                @endif
+                @if (checkRecordHasPermission(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete']))
+                    @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-cog"></i>
+                                <span>Setup Tools</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if (checkRecordHasPermission(['bank-create', 'bank-list', 'bank-edit','bank-delete']))
+                                    @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete'])
+                                        <li><a href="{{route('admin.setup.bank')}}">Bank Account</a></li>
+                                    @endcanany
+                                @endif
+                                @if (['operator-list','operator-create','operator-edit','operator-delete'])
+                                    @canany(['operator-list','operator-create','operator-edit','operator-delete'])
+                                        <li><a href="{{route('admin.setup.operator.manager')}}">Operator Manager</a></li>
+                                    @endcanany
+                                @endif
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
+                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request']))
+                    @canany(['fund-manager-manual-request','fund-new-request','	approved-fund-request'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-money-insert"></i>
+                                <span>Fund Manager</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request']))
+                                    @canany(['fund-manager-manual-request','fund-new-request','approved-fund-request'])
+                                        <li><a href="{{route('admin.fund.manual.request')}}">Request</a></li>
+                                    @endcanany
+                                @endif
+                                <li><a href="javascript:void()">Transfer / Return </a></li>
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
+                @if(checkRecordHasPermission(['payout-request','payout-new-request']))
+                    @canany(['payout-request','payout-new-request'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-money-withdrawal"></i>
+                                <span>Payout Manager</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if (['payout-request','payout-new-request'])
+                                    @canany(['payout-request','payout-new-request'])
+                                        <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
+                                    @endcanany
+                                @endif
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-history"></i>
@@ -177,52 +214,62 @@
                         <li><a href="javascript:void()">Payout Bank</a></li>
                     </ul>
                 </li>
-                @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-cog"></i>
-                            <span> Admin Setting  </span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
-                                <li><a href="{{route('admin.admin-setting.api.list')}}">Api Manager </a></li>
-                            @endcanany
-                            {{-- <li><a href="javascript:void()">Bank Manager </a></li> --}}
-                            <li><a href="javascript:void()">Complaint Subject  </a></li>
-                            {{-- <li><a href="javascript:void()">Operator Manager  </a></li> --}}
-                            <li><a href="javascript:void()">Portal Setting  </a></li>
-                            <li><a href="javascript:void()">Quick Link </a></li>
-                        </ul>
-                    </li>
-                @endcanany
-                @canany(['login-session'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="fas fa-book-open"></i>
-                            <span> Log Manager</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="javascript:void()">Api Logs</a></li>
-                            @can('login-session')
-                                <li><a href="{{route('admin.log.manager.login.session')}}">Login Session </a></li>
-                            @endcan
-                        </ul>
-                    </li>
-                @endcanany
-                @canany(['callback-token'])
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-cog"></i>
-                            <span>Api Setting</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            @can('callback-token')
-                                <li><a href="{{route('admin.api.setting')}}">Callback & Token</a></li>
-                            @endcan
-                            <li><a href="javascript:void()">Operator Code </a></li>
-                        </ul>
-                    </li>
-                @endcanany
+                @if(checkRecordHasPermission(['api-create', 'api-list', 'api-change-status','api-edit']))
+                    @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-cog"></i>
+                                <span> Admin Setting  </span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if(checkRecordHasPermission(['api-create', 'api-list', 'api-change-status','api-edit']))
+                                    @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
+                                        <li><a href="{{route('admin.admin-setting.api.list')}}">Api Manager </a></li>
+                                    @endcanany
+                                @endif
+                                {{-- <li><a href="javascript:void()">Bank Manager </a></li> --}}
+                                <li><a href="javascript:void()">Complaint Subject  </a></li>
+                                {{-- <li><a href="javascript:void()">Operator Manager  </a></li> --}}
+                                <li><a href="javascript:void()">Portal Setting  </a></li>
+                                <li><a href="javascript:void()">Quick Link </a></li>
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
+                @if (checkRecordHasPermission(['login-session']))
+                    @canany(['login-session'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="fas fa-book-open"></i>
+                                <span> Log Manager</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="javascript:void()">Api Logs</a></li>
+                                @can('login-session')
+                                    <li><a href="{{route('admin.log.manager.login.session')}}">Login Session </a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
+                @if (checkRecordHasPermission(['callback-token','callback-token-create','callback-token-delete']))
+                    @canany(['callback-token','callback-token-create','callback-token-delete'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-cog"></i>
+                                <span>Api Setting</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if(checkRecordHasPermission(['callback-token','callback-token-create','callback-token-delete']))
+                                    @canany(['callback-token','callback-token-create','callback-token-delete'])
+                                        <li><a href="{{route('admin.api.setting')}}">Callback & Token</a></li>
+                                    @endcanany
+                                @endif
+                                <li><a href="javascript:void()">Operator Code </a></li>
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
                 <li>
                     <a href="{{route('admin.logout')}}">
                         <i class="fas fa-sign-out-alt"></i>

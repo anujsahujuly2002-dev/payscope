@@ -2,18 +2,19 @@
 
 namespace App\Livewire\Admin\Member;
 
-use App\Models\ApiPartner;
-use Livewire\Component;
-use Spatie\Permission\Exceptions\UnauthorizedException;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\State;
 use App\Models\Scheme;
-use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 use App\Models\Wallet;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use Livewire\Component;
+use App\Models\ApiPartner;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ApiPartnerComponent extends Component
 {
@@ -27,6 +28,11 @@ class ApiPartnerComponent extends Component
     public $schemeForm = false;
     public $apiPartnerId;
     public $scheme;
+    public $createApiPartnerForm  = false;
+    public $assignPermissionUserBasedForm = false;
+    public $permission=[];
+    public $permissionsId=[];
+    public $user;
 
     // public function mount(){
     //     $this->apiPartners = User::whereHas('roles',function($q){
@@ -39,7 +45,7 @@ class ApiPartnerComponent extends Component
     // }
     public function render()
     {
-        if(!Auth::user()->can('api-partner-list')):
+        if(!Auth::user()->can('api-partner-list')|| !checkRecordHasPermission(['api-partner-list'])):
             throw UnauthorizedException::forPermissions(['api-partner-list']);
         endif;
         $states = State::orderBy('name','ASC')->get();
@@ -56,9 +62,14 @@ class ApiPartnerComponent extends Component
 
     // This Method Api Partner Create Method
     public function createApiPartner() {
-        if(!Auth::user()->can('api-partner-create')):
+    
+        if(!Auth::user()->can('api-partner-create') || !checkRecordHasPermission('api-partner-create')):
             throw UnauthorizedException::forPermissions(['api-partner-create']);
         endif;
+        $this->reset();
+        $this->createApiPartnerForm = true;
+        $this->assignPermissionUserBasedForm = false;
+        $this->schemeForm=false;
         $this->dispatch('show-form');
     }
 
@@ -116,7 +127,6 @@ class ApiPartnerComponent extends Component
     }
 
     public function statusUpdate($userId,$status){
-        // dd($userId,$status);
         $statusUpdate = User::findOrFail($userId)->update([
             'status'=>$status==0?1:0,
         ]);
@@ -125,7 +135,6 @@ class ApiPartnerComponent extends Component
 
     }
     public function search() {
-        // dd($this->value);
        $this->apiPartners = User::whereHas('roles',function($q){
             $q->where('name','api-partner');
         })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
@@ -152,10 +161,14 @@ class ApiPartnerComponent extends Component
     }
 
 
-    public function changeScheme(ApiPartner $apiPartner) {
+    public function changeScheme($id) {
+        $this->reset();
+        $this->createApiPartnerForm = false;
+        $this->assignPermissionUserBasedForm = false;
         $this->schemeForm=true;
-        $this->scheme = $apiPartner->scheme_id;
-        $this->apiPartnerId = $apiPartner->id;
+        $partner = ApiPartner::where('user_id',$id)->first();
+        $this->scheme = $partner->scheme_id;
+        $this->apiPartnerId = $partner->id;
         $this->dispatch('show-form');
     }
 
@@ -170,6 +183,38 @@ class ApiPartnerComponent extends Component
         else:
             DB::rollback();
             return redirect()->back()->with('error','New scheme not assign Please Try again !');
+        endif;
+    }
+
+    public function assignPermissionUserBassed($id) {
+        $this->reset();
+        $this->createApiPartnerForm = false;
+        $this->schemeForm=false;
+        $this->assignPermissionUserBasedForm = true;
+        $groups = Permission::distinct()->pluck('group');
+        foreach($groups as $group) {
+            $this->permission[$group] = Permission::where('group', $group)->get();
+        }
+        $this->user = User::find($id);
+        $roleId = $this->user->roles()->first()->id;
+        $roleHasPermissionCount=DB::table("model_has_permissions")->where("model_has_permissions.model_id", $this->user->id)->count();
+        if($roleHasPermissionCount >0):
+            $this->permissionsId = DB::table("model_has_permissions")->where("model_has_permissions.model_id", $this->user->id)->pluck('model_has_permissions.permission_id')->toArray();
+        else:
+            $this->permissionsId = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $roleId)->pluck('role_has_permissions.permission_id')->toArray();
+        endif;
+        $this->dispatch('show-form');
+    }
+
+    public function userBasedSyncPermission() {
+        $upadtePermission = $this->user->syncPermissions([$this->permissionsId]);
+        $this->dispatch('hide-form');
+        if($upadtePermission):
+            sleep(1);
+            return redirect()->back()->with('success','New Permission Assign Successfully !');
+        else:
+            DB::rollback();
+            return redirect()->back()->with('error','New Permission not assign Please Try again !');
         endif;
     }
 

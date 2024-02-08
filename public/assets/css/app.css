@@ -4607,3 +4607,8 @@ a.mb-5.d-block.auth-logo img {
     height: 100%;
     width:20%;
 }
+
+.modal.fade:not(.in).right .modal-dialog {
+    -webkit-transform: translate3d(25%, 0, 0);
+    transform: translate3d(25%, 0, 0);
+}

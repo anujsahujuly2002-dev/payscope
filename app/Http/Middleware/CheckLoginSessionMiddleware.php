@@ -17,15 +17,19 @@ class CheckLoginSessionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // dd(auth()->user()->id);
-        if(auth()->check()):
-            $loginUserCount = LoginSession::where(['user_id'=>auth()->user()->id,'is_logged_in'=>'0'])->get();
-            if($loginUserCount->count() <=0):
-                session()->invalidate();
-                session()->regenerateToken();
-                return redirect()->route('admin.login');
+       try {
+            if(auth()->check()):
+                $loginUserCount = LoginSession::where(['user_id'=>auth()->user()->id,'is_logged_in'=>'0'])->get();
+                if($loginUserCount->count() <=0):
+                    session()->invalidate();
+                    session()->regenerateToken();
+                    return redirect()->route('admin.login');
+                endif;
             endif;
-        endif;
-        return $next($request);
+            return $next($request);
+       } catch (\Exception  $th) {
+            dd($th->getMessgae());
+       }
+        
     }
 }

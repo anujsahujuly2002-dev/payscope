@@ -1,10 +1,11 @@
 <?php
 
 use App\Models\ApiLog;
+use App\Models\Scheme;
 use App\Models\ApiPartner;
 use App\Models\Commission;
 use App\Models\OperatorManager;
-use App\Models\Scheme;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 if(!function_exists('apiCall')):
@@ -69,5 +70,26 @@ endif;
 if(!function_exists('getPaymentModesId')):
     function getPaymentModesId ($name) {
        return $paymentModes = PaymentMode::where('name',$name)->first()->id;
+    }
+endif;
+
+if(!function_exists('checkRecordHasPermission')):
+    function checkRecordHasPermission($permission) {
+        $userHasPermissionCount=DB::table("model_has_permissions")->where("model_has_permissions.model_id", auth()->user()->id)->count();
+        if($userHasPermissionCount >0){
+            if(is_array($permission)){
+                $permissionId = DB::table('permissions')->whereIn('name',$permission)->pluck('id')->toArray();
+            }else{
+                $permissionId = DB::table('permissions')->whereIn('name',$permission)->pluck('id')->toArray();
+            }
+            $checkPermissonCount = DB::table("model_has_permissions")->whereIn("model_has_permissions.permission_id", $permissionId)->count();
+            if($checkPermissonCount >0):
+                return true;
+            else:
+                return false;
+            endif;
+        }else{
+            return true;
+        }
     }
 endif;
