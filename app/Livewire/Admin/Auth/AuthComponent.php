@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Admin\Auth;
 
-use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
-use App\Traits\LoginSessionTraits;
 use Carbon\Carbon;
+use App\Models\User;
+use Livewire\Component;
+use App\Traits\LoginSessionTraits;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthComponent extends Component
 {
@@ -30,48 +32,80 @@ class AuthComponent extends Component
             return false;
         else:
             $this->validate();
-            if(Auth::attempt(['email' => $this->username, 'password' => $this->password])){
-                $this->checkLastUserActivity($this->username);
-                if(auth()->user()->status =='1'):
-                    if($this->checkUserAlreadyLoggedIn() ==='0'):
+            $user = User::where('email',$this->username)->first();
+            $this->checkLastUserActivity($this->username);
+            if(!$user || !Hash::check($this->password, $user->password??"")):
+                $this->username='';
+                $this->password='';
+                session()->flash('error','Given Credentials invalid Please try again !');
+                return false;
+            endif;
+            if($user->status =="0"):
+                $this->username='';
+                $this->password='';
+                session()->invalidate();
+                session()->regenerateToken();
+                session()->flash('error',"You're account has been not approved, Please Contact a admin");
+                return false;
+            endif;
+            // dd(now()->diffInMinutes($user->expire_at));
+            if(now()->diffInHours($user->verified_at) >=24 || $user->verified_at ==null):
+                if(now()->diffInMinutes($user->expire_at) >=120 || $user->verified_at ==null):
+                    $otp = rand(1234, 9999);
+                else:
+                    $otp = $user->otp;
+                endif;
+                sendOtp($user->mobile_no,$otp);
+                $user->update([
+                    'otp'=>$otp,
+                    'expire_at'=>now()->addMinutes(120)
+                ]);
+                return to_route('admin.otp.vrification')->with('mobile_no',str_repeat('*',6).substr($user->mobile_no,-4));
+            else:
+                if(Auth::attempt(['email' => $this->username, 'password' => $this->password])):
+                    if(auth()->user()->status =='1'):
+                        if($this->checkUserAlreadyLoggedIn() ==='0'):
+                            auth()->logout();
+                            session()->invalidate();
+                            session()->regenerateToken();
+                            session()->flash('error',"Already user logged in.");
+                            return false;
+                        endif;
+                        $loginSessionData = [
+                            'id'=>auth()->user()->id,
+                            'latitude'=>$this->lat,
+                            'logitude'=>$this->long,
+                            'ip_address'=>request()->ip(),
+                            'login_time'=>Carbon::now()->format('Y-m-d H:i:s'),
+                            'is_logged_in'=>'0',
+                        ];
+                        $this->loginSessionStore($loginSessionData);
+                        sleep(1);
+                        return to_route('admin.dashboard');
+                    else:
                         auth()->logout();
                         session()->invalidate();
                         session()->regenerateToken();
-                        session()->flash('error',"Already user logged in.");
+                        session()->flash('error',"You're account has been not approved, Please Contact a admin");
                         return false;
                     endif;
-                    $loginSessionData = [
-                        'id'=>auth()->user()->id,
-                        'latitude'=>$this->lat,
-                        'logitude'=>$this->long,
-                        'ip_address'=>request()->ip(),
-                        'login_time'=>Carbon::now()->format('Y-m-d H:i:s'),
-                        'is_logged_in'=>'0',
-                    ];
-                    $this->loginSessionStore($loginSessionData);
-                    sleep(1);
-                    return to_route('admin.dashboard');
                 else:
-                    auth()->logout();
-                    session()->invalidate();
-                    session()->regenerateToken();
-                    session()->flash('error',"You're account has been not approved, Please Contact a admin");
+                    session()->flash('error','Given Credentials invalid Please try again !');
                     return false;
                 endif;
-               
-            }else{
-                session()->flash('error','Given Credentials invalid Please try again !');
-                return false;
-            }
+            endif;
+
         endif;
     }
 
     public function setLatitudeLongitude($latitude,$longitude) {
-        // dd("Test");
         $this->lat = $latitude;
         $this->long = $longitude;
-        // dd($latitude,$longitude);
+        session()->put('lat',$latitude);
+        session()->put('long',$longitude);
     }
+
+
 
 
 }

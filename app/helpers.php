@@ -93,3 +93,14 @@ if(!function_exists('checkRecordHasPermission')):
         }
     }
 endif;
+
+
+if(!function_exists('sentOtp')):
+    function sendOtp($mobile_no,$otp){
+        $content = "Dear Partner, your login OTP for Grow Scope is {$otp} , please do not share otp with anyone. Regards, Payscope";
+        $response = Http::get("https://instantalerts.co/api/web/send?apikey=".env('SMS_API_KEY')."&sender=".env('SENDER_ID')."&to=".$mobile_no."&message=".urlencode($content));
+        if($response->successful()):
+            return "success";
+        endif;  
+    }
+endif;

@@ -21,11 +21,12 @@ class SessionTimeOutHandleMiddleware
     {
         try {
             if(auth()->check() && auth()->user()->id >= 1):
+                // dd(auth()->user()->id);
                 $lastActivityTime = DB::table('sessions')->where('user_id',auth()->user()->id)->first();
                 $lastActivity = Carbon::parse($lastActivityTime->last_activity);
                 // dd(now(),now()->diffInMinutes($lastActivity),(config('session.lifetime') - 1));
                 if(now()->diffInMinutes($lastActivity) >= (config('session.lifetime') - 1)):
-                    $user = auth()->user()->id;
+                    $userId = auth()->user()->id;
                     LoginSession::where(['user_id'=>$userId,'is_logged_in'=>'0'])->update([
                         'is_logged_in' => '1',
                         'logout_time'=>Carbon::now()->format('Y-m-d H:i:s')

@@ -60,6 +60,7 @@ class RetailerComponent extends Component
             'name'=>$validateDate['name'],
             'email'=>$validateDate['email'],
             'password'=>Hash::make($validateDate['mobile_number']),
+            'mobile_no'=>$validateDate['mobile_number'],
         ]);
         if($user):
             $apiPartner =Retailer::create([

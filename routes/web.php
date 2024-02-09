@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('cache-clear',function(){
-    Artisan::call('route:clear');
-    Artisan::call('cache:clear');
-    
+    sendOtp("9305238392",'3421');
     echo "Cache Cleared !";
 });
 
@@ -29,9 +27,13 @@ Route::get('migrate',function(){
 Route::get('/',function (){
     return to_route('admin.login');
 });
+
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::namespace('Auth')->middleware(['guest'])->controller(AuthController::class)->group(function() {
         Route::get('/','login')->name('login');
+        Route::get('/otp-verification',function() {
+            return view('admin.auth.otp-verification');
+        })->name('otp.vrification');
     });
     Route::middleware(['auth'])->group(function() {
 
