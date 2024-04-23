@@ -98,7 +98,15 @@ class PayoutRequest extends Component
 
 
     public function export() {
-        return Excel::download(new PayoutRequestExport, time().'.xlsx');
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first()!='api-partner'?$this->agentId:NULL,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'status'=>$this->status,
+            'value'=>$this->value
+        ];
+        // dd($data);
+        return Excel::download(new PayoutRequestExport($data), time().'.xlsx');
     }
 
 

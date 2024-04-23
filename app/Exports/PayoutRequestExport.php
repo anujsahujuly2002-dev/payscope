@@ -9,14 +9,37 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PayoutRequestExport implements FromCollection,WithHeadings
 {
+    public $data;
+    public function __construct($data){
+        $this->data = $data;
+
+    }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
         $fundRequestArray = [];
-        $fundRequests =  FundRequest::get();
-        foreach($fundRequests as $fundRequest):
+        $fundRequests = new FundRequest;
+        if($this->data['user_id'] !=null):
+            $fundRequests = $fundRequests->where('user_id',$this->data['user_id']);
+        endif;
+        if($this->data['user_id'] !=null):
+            $fundRequests = $fundRequests->where('user_id',$this->data['user_id']);
+        endif;
+        if($this->data['start_date'] !=null):
+            $fundRequests = $fundRequests->whereDate('created_at',$this->data['start_date']);
+        endif;
+        if($this->data['start_date'] !=null && $this->data['end_date'] !=null):
+            $fundRequests = $fundRequests->whereDate('created_at','>=',$this->data['start_date'])->whereDate("created_at","<=",$this->data['end_date']);
+        endif;
+        if($this->data['value'] !=null):
+            $fundRequests = $fundRequests->where('payout_ref', 'like', '%'.$this->data['value'].'%')->orWhere('payout_id','like','%'.$this->data['value'].'%');
+        endif;
+        if($this->data['status'] !=null):
+            $fundRequests = $fundRequests->where('status_id',$this->data['status']);
+        endif;
+        foreach($fundRequests->get() as $fundRequest):
             $fundRequestArray[]=[
                 $fundRequest->user->name,
                 $fundRequest->payout_id,
