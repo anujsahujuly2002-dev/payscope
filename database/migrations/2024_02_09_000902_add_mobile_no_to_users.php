@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('mobile_no')->after('status')->nullable();
-            $table->dateTime('verified_at')->after('mobile_no')->nullable();
-            $table->string('otp')->after('verified_at')->nullable();
-            $table->timestamp('expire_at')->after('otp')->nullable();
         });
     }
 

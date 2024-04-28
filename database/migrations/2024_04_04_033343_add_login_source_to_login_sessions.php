@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('login_sessions', function (Blueprint $table) {
             $table->enum('login_source',['0','1'])->comment('0=Web,1=Mobile')->default('0')->after('is_logged_in');
-            $table->integer('login_device')->default('0')->after('login_source');
         });
     }
 

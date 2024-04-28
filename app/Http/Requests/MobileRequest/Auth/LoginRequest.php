@@ -27,6 +27,7 @@ class LoginRequest extends FormRequest
             'password'=>'required',
             'latitude'=>'required',
             'logitude'=>'required',
+            'ip_address'=>'required|ipv4'
         ];
     }
 
