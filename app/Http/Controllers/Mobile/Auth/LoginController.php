@@ -17,12 +17,20 @@ class LoginController extends Controller
         $this->loginRepo = $loginRepository;
     }
     public function login(LoginRequest $request) {
+
         $userDetails = [
             'username'=> $request->input('username'),
             'password'=>$request->input('password'),
-            'type'=>"Api",
+            'type'=>"mobile_api",
         ];
         $user = $this->loginRepo->login($userDetails);
-
+        if($user):
+            return response()->json($user);
+        else:
+            return response()->json([
+                'status'=>false,
+                "message"=>"Request can not be complete",
+            ],500);
+        endif;
     }
 }

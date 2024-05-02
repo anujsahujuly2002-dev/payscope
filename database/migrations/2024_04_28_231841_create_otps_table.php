@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->dateTime('verified_at');
+            $table->dateTime('verified_at')->nullable();
             $table->string('otp');
             $table->timestamp('expire_at');
             $table->timestamps();
