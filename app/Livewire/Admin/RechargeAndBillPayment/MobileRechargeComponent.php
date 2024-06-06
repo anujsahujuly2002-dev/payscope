@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\RechargeAndBillPayment;
 
+use App\Models\MobileOpertor;
 use App\Models\OperatorManager;
 use Livewire\Component;
 
@@ -11,9 +12,7 @@ class MobileRechargeComponent extends Component
     public function render()
     {
         
-        $telecomeCicles = getTelecomCircles();
-        dd($telecomeCicles);
-        $operators = OperatorManager::where(['operator_type'=>'mobile','status'=>'1'])->get();
+        $operators = MobileOpertor::get();
         return view('livewire.admin.recharge-and-bill-payment.mobile-recharge-component',compact('operators'));
     }
 

@@ -138,7 +138,6 @@ endif;
 
 if(!function_exists('getSettingValue')):
     function getSettingValue($settingKey) {
-        // dd($settingKey);
         $settingRec = Setting::where('key', $settingKey)->first();
         return ($settingRec) ? $settingRec->value : null;
     }

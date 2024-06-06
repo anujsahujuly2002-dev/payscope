@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Mobile\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MobileRequest\Auth\LoginRequest;
-use App\Repository\AuthRepository\LoginRepository;
-use App\Traits\LoginSessionTraits;
 use Illuminate\Http\Request;
+use App\Traits\LoginSessionTraits;
+use App\Http\Controllers\Controller;
+use App\Repository\AuthRepository\LoginRepository;
+use App\Http\Requests\MobileRequest\Auth\LoginRequest;
+use App\Http\Requests\MobileRequest\Auth\OtpVerifyRequest;
+use App\Http\Requests\MobileRequest\Auth\ResendOtpRequest;
 
 class LoginController extends Controller
 {
@@ -17,20 +19,23 @@ class LoginController extends Controller
         $this->loginRepo = $loginRepository;
     }
     public function login(LoginRequest $request) {
-
         $userDetails = [
             'username'=> $request->input('username'),
             'password'=>$request->input('password'),
             'type'=>"mobile_api",
         ];
         $user = $this->loginRepo->login($userDetails);
-        if($user):
-            return response()->json($user);
-        else:
-            return response()->json([
-                'status'=>false,
-                "message"=>"Request can not be complete",
-            ],500);
-        endif;
+        return response()->json($user);
+    }
+
+
+    public function otpVerify(OtpVerifyRequest $request) {
+        $otpVerify = $this->loginRepo->otpVerify($request->input('otp'),'mobile_api');
+        return  response()->json($otpVerify);
+    }
+
+    public function resendOtp(ResendOtpRequest $request) {
+        $resendOtp = $this->loginRepo->resendOtp($request->input('email'),'mobile_api');
+        return  response()->json($resendOtp);
     }
 }

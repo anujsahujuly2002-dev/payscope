@@ -39,7 +39,7 @@
                         <span>@lang('translation.Dashboard')</span>
                     </a>
                 </li>
-               {{--  @if (checkRecordHasPermission(['create','list']))
+                @if (checkRecordHasPermission(['create','list']))
                     @canany(['create','list'])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -52,12 +52,12 @@
                                         <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Mobile </a></li>
                                     @endcanany
                                 @endif
-                                <li><a href="javascript:void()">DTH</a></li>
-                                <li><a href="javascript:void()">Electricity</a></li>
+                                {{-- <li><a href="javascript:void()">DTH</a></li>
+                                <li><a href="javascript:void()">Electricity</a></li> --}}
                             </ul>
                         </li>
                     @endcanany
-                @endif --}}
+                @endif
                 @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
                     @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
                         <li>
@@ -100,27 +100,29 @@
                     @endcanany
                 @endif
                 @if (checkRecordHasPermission(array_merge(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'],['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])))
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="uil-users-alt"></i>
-                            <span>Member</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                          {{--   <li><a href="javascript:void()">Whitelabel</a></li>
-                            <li><a href="javascript:void()">Master Distributor</a></li>
-                            <li><a href="javascript:void()">Distributor</a></li> --}}
-                            @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete']))
-                                @canany(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])
-                                    <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
-                                @endcanany
-                            @endif
-                            @if (checkRecordHasPermission(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete']))
-                                @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'])
-                                    <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
-                                @endcanany
-                            @endif
-                        </ul>
-                    </li>
+                    @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete','retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-users-alt"></i>
+                                <span>Member</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                            {{--   <li><a href="javascript:void()">Whitelabel</a></li>
+                                <li><a href="javascript:void()">Master Distributor</a></li>
+                                <li><a href="javascript:void()">Distributor</a></li> --}}
+                                @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete']))
+                                    @canany(['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])
+                                        <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
+                                    @endcanany
+                                @endif
+                                @if (checkRecordHasPermission(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete']))
+                                    @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'])
+                                        <li><a href="{{route('admin.api.partner.list')}}">Api Partner</a></li>
+                                    @endcanany
+                                @endif
+                            </ul>
+                        </li>
+                    @endcanany
                 @endif
                 @if (checkRecordHasPermission(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete']))
                     @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete'])
@@ -267,11 +269,15 @@
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if(checkRecordHasPermission(['api-logs']))
+                                 @can('api-logs')
                                     <li><a href="{{route('admin.log.manager.api.logs')}}">Api Logs</a></li>
-                                @endif
-                                @can('login-session')
-                                    <li><a href="{{route('admin.log.manager.login.session')}}">Login Session </a></li>
                                 @endcan
+                                @endif
+                                @if(checkRecordHasPermission(['login-session']))
+                                    @can('login-session')
+                                        <li><a href="{{route('admin.log.manager.login.session')}}">Login Session </a></li>
+                                    @endcan
+                                @endif
                             </ul>
                         </li>
                     @endcanany

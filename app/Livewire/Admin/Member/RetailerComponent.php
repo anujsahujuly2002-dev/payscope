@@ -81,6 +81,7 @@ class RetailerComponent extends Component
             $user->assignRole(['retailer']);
             Wallet::create([
                 'user_id'=>$user->id,
+                'locked_amuont'=>"0",
             ]);
             $this->dispatch('hide-form');
             if($apiPartner):
