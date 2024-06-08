@@ -69,6 +69,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(SetupToolsController::class)->prefix('setup')->name('setup.')->group(function(){
             Route::get('/bank','bank')->name('bank');
             Route::get('/opertator-manager','operatorManger')->name('operator.manager');
+            Route::get('/benificiary-manage','benificiaryManage')->name('benificiary.manage');
         });
 
         // Fund Manage Route

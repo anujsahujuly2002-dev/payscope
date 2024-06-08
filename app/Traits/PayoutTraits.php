@@ -86,8 +86,8 @@ trait PayoutTraits {
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = [
             "payer" => [
-                "bankProfileId" => "24255428726",
-                "accountNumber" => "123263400000200"
+                "bankProfileId" => "24148428726",
+                "accountNumber" => "923020061652668"
             ],
             "payee"   => [
                 "name"           => $data['account_holder_name'],

@@ -124,8 +124,8 @@
                         </li>
                     @endcanany
                 @endif
-                @if (checkRecordHasPermission(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete']))
-                    @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete'])
+                @if (checkRecordHasPermission(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete','benificiary-list','benificiary-create']))
+                    @canany(['bank-create', 'bank-list', 'bank-edit','bank-delete','operator-list','operator-create','operator-edit','operator-delete','benificiary-list','benificiary-create'])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-cog"></i>
@@ -137,9 +137,14 @@
                                         <li><a href="{{route('admin.setup.bank')}}">Bank Account</a></li>
                                     @endcanany
                                 @endif
-                                @if (['operator-list','operator-create','operator-edit','operator-delete'])
+                                @if (checkRecordHasPermission(['operator-list','operator-create','operator-edit','operator-delete']))
                                     @canany(['operator-list','operator-create','operator-edit','operator-delete'])
                                         <li><a href="{{route('admin.setup.operator.manager')}}">Slab Manage</a></li>
+                                    @endcanany
+                                @endif
+                                @if (checkRecordHasPermission(['benificiary-list','benificiary-create']))
+                                    @canany(['benificiary-list','benificiary-create'])
+                                        <li><a href="{{route('admin.setup.benificiary.manage')}}">Benificiary Manage</a></li>
                                     @endcanany
                                 @endif
                             </ul>
