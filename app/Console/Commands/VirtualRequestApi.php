@@ -2,6 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Livewire\Admin\Payout\PayoutRequest;
+use App\Models\ApiLog;
+use App\Models\FundRequest;
+use App\Models\PayoutRequestHistory;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Wallet;
@@ -29,7 +33,7 @@ class VirtualRequestApi extends Command
      */
     public function handle()
     {
-        $url="https://indusapi.indusind.com/indusapi/prod/iec/etender/getTenderId";
+        /* $url="https://indusapi.indusind.com/indusapi/prod/iec/etender/getTenderId";
         do{
             $transactionId = "NE".rand(11111111111,99999999999);
         }while(VirtualRequest::where('reference_number',$transactionId)->first() instanceOf VirtualRequest);
@@ -85,6 +89,41 @@ class VirtualRequestApi extends Command
                     'amount'=>$transaction['amount']+$openingBalence
                 ]);
             endforeach;
-        endif;
+        endif; */
+       /*  $poutuid =[];
+        $fundRequests = FundRequest::orderBy('id','ASC')->get();
+        foreach($fundRequests as $fundRequest):
+            $checkFundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->get();
+            if($checkFundRequestHistory->count() >0):
+                echo "This record exist payout request history table fund_request_id:-".$fundRequest->id.PHP_EOL;
+            else:
+                echo "This record exist payout request history table fund_request_id:-".$fundRequest->id.PHP_EOL;
+                $checkApiLog = ApiLog::where('txn_id',$fundRequest->payout_id)->first();
+                if(is_null($checkApiLog)):
+                    $poutuid []=$fundRequest->payout_id;
+                    echo "This transaction not hit api trnsaction id:-".$fundRequest->payout_id.PHP_EOL;
+                else:
+                    echo "This transaction hit api trnsaction id:-".$fundRequest->id.PHP_EOL;
+                endif;
+            endif;
+        endforeach;
+        echo implode(',',$poutuid); */
+
+        $f_pointer=fopen("/var/www/payout.csv",'r');
+        $i =0;
+        while(! feof($f_pointer)){
+            $arr=fgetcsv($f_pointer);
+            if($i !=0):
+                $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
+                // dd($fundRequests);
+                $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
+                    'closing_balnce'=>$arr['6'],
+                    'balance'=>$arr['3'],
+                ]);
+            endif;
+            $i++;
+        }
+       
+
     }
 }
