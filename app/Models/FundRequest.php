@@ -20,6 +20,7 @@ class FundRequest extends Model
         'pay_type',
         'payout_id',
         'payout_ref',
+        'utr_number',
     ];
 
     public function user () {
@@ -35,6 +36,6 @@ class FundRequest extends Model
     }
 
     public function getCreatedAtAttribute($value){
-        return date('d M y - h:i A', strtotime($value));
+        return date('d M y - h:i:s A', strtotime($value));
     }
 }

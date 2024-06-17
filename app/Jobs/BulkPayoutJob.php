@@ -55,9 +55,7 @@ class BulkPayoutJob implements ShouldQueue
                 "secret-key-timestamp"=>$secret_key_timestamp,
                 "Content-Type"=>"application/x-www-form-urlencoded"
             );
-            do {
-                $userInfo['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
-            } while (FundRequest::where("payout_id", $userInfo['payoutid'])->first() instanceof FundRequest);
+           
             try{
                 $fundRequest=FundRequest::create([
                     'user_id'=>$userInfo['user_id'],
@@ -79,8 +77,7 @@ class BulkPayoutJob implements ShouldQueue
             $main_amount = $walletAmount->amount;
             $closing_balance = $walletAmount->amount-($userInfo['amount']+getCommission("dmt",$userInfo['amount'],$userInfo['user_id']));
             Wallet::where('user_id',$userInfo['user_id'])->update([
-                // 'amount'=>$walletAmount->amount-($userInfo['amount']+getCommission("dmt",$userInfo['amount'],$userInfo['user_id'])),
-                'amount'=>$closing_balance ,
+                'amount'=>$walletAmount->amount-($userInfo['amount']+getCommission("dmt",$userInfo['amount'],$userInfo['user_id'])),
             ]);
     
             $adminId = User::whereHas('roles',function($q){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Wallet;
 use App\Models\ApiToken;
 use App\Jobs\BulkPayoutJob;
+use App\Models\FundRequest;
 use App\Traits\PayoutTraits;
 use Illuminate\Http\Request;
 use App\Traits\EkoPayoutTrait;
@@ -42,6 +43,9 @@ class FundRequestController extends Controller
         $orderAmount  = 0;
         $commissionAmount = 0;
         $userDetails = [];
+        do {
+            $request['payoutid'] = 'GROBU'.rand(111111111111, 999999999999);
+        } while (FundRequest::where("payout_id", $request['payoutid'])->first() instanceof FundRequest);
         foreach($request->input('userInformation') as $userInformation):
             $orderAmount +=$userInformation['amount'];
             $commissionAmount +=getCommission("dmt",$userInformation['amount'],$request['user_id']);
@@ -52,6 +56,7 @@ class FundRequestController extends Controller
                 'amount'=>$userInformation['amount'],
                 'user_id'=>$request['user_id'],
                 'payment_mode'=>$request['payment_mode'],
+                'payoutid'=>$request['payoutid'],
             ];
         endforeach;
         $walletAmount = Wallet::where('user_id',$request['user_id'])->first();
@@ -66,6 +71,7 @@ class FundRequestController extends Controller
         
         return response()->json([
             'status'=>true,
+            'transaction_id'=> $request['payoutid'],
             'msg'=>"Transaction Complete successfully"
         ],200);
     }

@@ -101,7 +101,8 @@
                                         <td>
                                             Account No. -{{ucfirst($payoutReq->account_number)}}<br>Account Holder Name - {{$payoutReq->account_holder_name}}<br>Ifsc Code - {{strtoupper($payoutReq->ifsc_code)}}                                        </td>
                                         <td>
-                                            Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}}
+                                            Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}} <br>
+                                            UTR Number :-{{$payoutReq->utr_number}}
                                         </td>
                                         <td class="fw-bolder">
                                             &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->balance)}}</td>
