@@ -66,7 +66,6 @@ class FundRequestController extends Controller
                 'msg'=>"Low balance to make this request."
             ],422);
         endif;
-        // dd($userDetails);
         dispatch(new BulkPayoutJob($userDetails));
         
         return response()->json([

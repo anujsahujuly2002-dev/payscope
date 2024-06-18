@@ -21,6 +21,7 @@ class FundRequest extends Model
         'payout_id',
         'payout_ref',
         'utr_number',
+        'payment_type',
     ];
 
     public function user () {

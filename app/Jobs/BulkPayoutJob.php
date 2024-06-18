@@ -34,9 +34,7 @@ class BulkPayoutJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // dd("dsd",$this->user);
         foreach($this->user as $userInfo):
-            // dd($userInfo);
             $ekoPaymentMode = [
                 "imps"=> "5",
                 "neft"=>"4",
@@ -68,7 +66,8 @@ class BulkPayoutJob implements ShouldQueue
                     'type'=>'Bank',
                     'pay_type'=>'payout',
                     'payout_id'=>$userInfo['payoutid'],
-                    'payout_ref'=>$userInfo['payoutid']
+                    'payout_ref'=>$userInfo['payoutid'],
+                    'payment_type'=>"1",
                 ]);
             }catch (Exception $e){
                Log::error([ 'status'=>'0004', 'msg'=>$e->getMessage()]);

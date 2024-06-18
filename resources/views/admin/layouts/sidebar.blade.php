@@ -61,10 +61,10 @@
                 @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
                     @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
                         <li>
-                            {{-- <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="mdi mdi-head-cog"></i>
                                 <span>Resources</span>
-                            </a> --}}
+                            </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
                                     @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
