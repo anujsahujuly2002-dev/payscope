@@ -332,12 +332,12 @@
                                         Rowland</span></p>
                             </div>
                         </li> --}}
-                        @foreach ($data as $v )
+                        @foreach ($loginActivities as $loginActivity )
                         <li class="feed-item">
                             {{-- <p class="text-muted mb-1 font-size-13">{{$v->login_time}}<small class="d-inline-block ms-1">12:36 pm</small></p> --}}
-                            <p class="mb-0"><span class="text-primary">{{$v->user?->name}}</span></p>
-                            <p class="mb-0">Login Time: {{$v->login_time}}</p>
-                            <p class="mb-0">Logout time: {{$v->logout_time}}</p>
+                            <p class="mb-0"><span class="text-primary">{{$loginActivity->user?->name}}</span></p>
+                            <p class="mb-0">Login Time: {{$loginActivity->login_time}}</p>
+                            <p class="mb-0">Logout time: {{$loginActivity->logout_time}}</p>
                         </li>
                         @endforeach
                     </ol>
