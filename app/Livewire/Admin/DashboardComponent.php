@@ -8,7 +8,7 @@ class DashboardComponent extends Component
 {
     public function render()
     {
-        $data['data'] = LoginSession::with('user')->orderBy('created_at', 'desc')->get();
-        return view('livewire.admin.dashboard-component',$data);
+        $loginActivities = LoginSession::with('user')->orderBy('created_at', 'desc')->take(10)->get();
+        return view('livewire.admin.dashboard-component',compact('loginActivities'));
     }
 }
