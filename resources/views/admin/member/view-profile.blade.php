@@ -14,7 +14,7 @@ View Profile
                     <div class="text-center">
                         <div class="clearfix"></div>
                         <div>
-                            <img src="{{ URL::asset('/assets/images/users/avatar-4.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                            <img src="{{ asset('assets/images/.users/profile.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
                         </div>
                         <h5 class="mt-3 mb-1">{{$user?->name}}</h5>
                         <p class="text-muted">{{ucwords(str_replace('-',' ',$user->roles->first()->name))}}</p>

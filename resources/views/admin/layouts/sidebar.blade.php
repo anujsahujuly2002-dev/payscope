@@ -213,6 +213,11 @@
                                     <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
                                 @endcanany
                              @endif
+                            @if (['payout-request','payout-new-request'])
+                                @canany(['payout-request','payout-new-request'])
+                                    <li><a href="{{route('admin.payout.payout.request')}}">Bulg Payout Request </a></li>
+                                @endcanany
+                             @endif
                            {{--  <li><a href="javascript:void()">Aeps </a></li>
                             <li><a href="javascript:void()">Aadhar Pay  </a></li>
                             <li><a href="javascript:void()">Bill Payment  </a></li>
@@ -243,8 +248,8 @@
                         <li><a href="javascript:void()">Payout Bank</a></li>
                     </ul>
                 </li> --}}
-                @if(checkRecordHasPermission(['api-create', 'api-list', 'api-change-status','api-edit']))
-                    @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
+                @if(checkRecordHasPermission(['api-create', 'api-list','setting-create', 'api-change-status','api-edit']))
+                    @canany(['api-create', 'api-list', 'setting-create', 'api-change-status','api-edit'])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-cog"></i>
@@ -261,6 +266,11 @@
                                         <li><a href="{{route('admin.admin-setting.manage.service')}}">Service Manage</a></li>
                                     @endcanany
                                 @endif
+                                {{-- @if(checkRecordHasPermission(['manage-setting','setting-create']))
+                                   @canany(['manage-setting','setting-create']) --}}
+                                   {{-- @endcan
+                                @endif --}}
+                                <li><a href="{{route('admin.admin-setting.setting')}}">Setting</a></li>
                             </ul>
                         </li>
                     @endcanany

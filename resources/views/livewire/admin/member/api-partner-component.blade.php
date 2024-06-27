@@ -98,7 +98,7 @@
                                                     <i class="uil uil-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="assignPermissionUserBassed({{$apipartner->id}})">Permission</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="assignPermissionUserBassed({{$apipartner->id}})">Permissions</a>
                                                     @if(checkRecordHasPermission(['view-profile']))
                                                         @can('view-profile')
                                                             <a class="dropdown-item" href="{{route('admin.view.profile',base64_encode($apipartner->id))}}">Profile</a>

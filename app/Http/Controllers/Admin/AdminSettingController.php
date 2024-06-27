@@ -14,4 +14,8 @@ class AdminSettingController extends Controller
     public function manageService() {
         return view('admin.admin-setting.manage-service');
     }
+    
+    public function manageSetting() {
+        return view('admin.admin-setting.settings');
+    }
 }
