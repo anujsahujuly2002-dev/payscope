@@ -14,7 +14,7 @@ View Profile
                     <div class="text-center">
                         <div class="clearfix"></div>
                         <div>
-                            <img src="{{ asset('assets/images/.users/profile.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                            <img src="{{ asset('assets/images/.users/user1.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
                         </div>
                         <h5 class="mt-3 mb-1">{{$user?->name}}</h5>
                         <p class="text-muted">{{ucwords(str_replace('-',' ',$user->roles->first()->name))}}</p>
@@ -222,9 +222,9 @@ View Profile
                                 <h3 class="card-title">KYC Details</h3>
                             </div>
                             <div class="card-body">
-                                
+
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="tab-pane @if($tab =='password manager') active show @endif" id="messages" role="tabpanel">
                         <div class="card">
