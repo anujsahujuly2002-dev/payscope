@@ -20,6 +20,7 @@ trait PayoutTraits {
             ];
         endif; */
 
+<<<<<<< HEAD
         $checkServiceActive = User::findOrFail($data['user_id'])->services;
         if($checkServiceActive =='0'):
             return [
@@ -28,6 +29,8 @@ trait PayoutTraits {
             ];
         endif;
 
+=======
+>>>>>>> bde5cc6 (again setup)
         // Check Wallet Amount
         $walletAmount = Wallet::where('user_id',$data['user_id'])->first();
         if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > $walletAmount->amount-$walletAmount->locked_amuont):
@@ -37,8 +40,11 @@ trait PayoutTraits {
             ];
         endif;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bde5cc6 (again setup)
         // Check previous transaction time
         $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id'],'account_number'=>$data['account_number'],'amount'=>$data['amount']])->whereBetween('created_at',[Carbon::now()->subSeconds(30)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(30)->format('Y-m-d H:i:s')])->count();
         if($previousTransactionTimeCheck > 0):
@@ -96,8 +102,13 @@ trait PayoutTraits {
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = [
             "payer" => [
+<<<<<<< HEAD
                 "bankProfileId" => "24148428726",
                 "accountNumber" => "923020061652668"
+=======
+                "bankProfileId" => "24255428726",
+                "accountNumber" => "123263400000200"
+>>>>>>> bde5cc6 (again setup)
             ],
             "payee"   => [
                 "name"           => $data['account_holder_name'],

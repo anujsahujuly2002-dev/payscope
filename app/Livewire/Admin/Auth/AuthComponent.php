@@ -64,7 +64,11 @@ class AuthComponent extends Component
             else:
                 if(Auth::attempt(['email' => $this->username, 'password' => $this->password])):
                     if(auth()->user()->status =='1'):
+<<<<<<< HEAD
                         if(!$this->checkUserAlreadyLoggedIn()):
+=======
+                        if($this->checkUserAlreadyLoggedIn() ==='0'):
+>>>>>>> bde5cc6 (again setup)
                             auth()->logout();
                             session()->invalidate();
                             session()->regenerateToken();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+<<<<<<< HEAD
 use App\Models\Wallet;
 use App\Models\ApiToken;
 use App\Jobs\BulkPayoutJob;
@@ -13,6 +14,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Api\FundRequestRequest;
 use App\Models\User;
+=======
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\FundRequestRequest;
+use App\Models\ApiToken;
+use App\Traits\PayoutTraits;
+use App\Traits\EkoPayoutTrait;
+use Illuminate\Support\Facades\Validator;
+>>>>>>> bde5cc6 (again setup)
 
 class FundRequestController extends Controller
 {
@@ -30,6 +40,7 @@ class FundRequestController extends Controller
        $response = $this->ekoPayoutApi($request);;
        return $response;
     }
+<<<<<<< HEAD
 
 
     public function bulkPayout(Request $request) {
@@ -125,4 +136,6 @@ class FundRequestController extends Controller
             'data'=>$response
         ],200);
     }
+=======
+>>>>>>> bde5cc6 (again setup)
 }

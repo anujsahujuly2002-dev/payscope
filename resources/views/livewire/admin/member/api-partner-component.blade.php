@@ -50,7 +50,10 @@
                                     <th scope="col">Locked Amount</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
+<<<<<<< HEAD
                                     <th scope="col">Service</th>
+=======
+>>>>>>> bde5cc6 (again setup)
                                     <th scope="col" style="width: 200px;">Action</th>
                                 </tr>
                             </thead>
@@ -93,10 +96,13 @@
                                             <label for="switch{{$apipartner->id}}" data-on-label="Active" data-off-label="Inactive"></label>
                                         </td>
                                         <td>
+<<<<<<< HEAD
                                             <input type="checkbox" id="switch_{{$apipartner->id}}" switch="bool"  @if($apipartner->services==1) checked @endif wire:change='serviceUpdate({{$apipartner->id}},{{$apipartner->services}})' />
                                             <label for="switch_{{$apipartner->id}}" data-on-label="Active" data-off-label="Inactive"></label>
                                         </td>
                                         <td>
+=======
+>>>>>>> bde5cc6 (again setup)
                                             <li class="list-inline-item dropdown">
                                                 <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)"
                                                     role="button" data-bs-toggle="dropdown" aria-haspopup="true">

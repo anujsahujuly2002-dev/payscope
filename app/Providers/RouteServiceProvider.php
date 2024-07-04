@@ -20,6 +20,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
     protected $nameSpace = "App\Http\Controllers\Admin";
     protected $nameSpaceApi = 'App\Http\Controllers\Api';
+    protected $mobileApiNamespace = "App\Http\Controllers\Mobile";
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
@@ -34,6 +35,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->nameSpaceApi)
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
+            Route::middleware('api')
+                ->namespace($this->mobileApiNamespace)
+                ->prefix('mobile-api')
+                ->group(base_path('routes/mobile.php'));
 
             Route::middleware('web')
                 ->namespace($this->nameSpace)

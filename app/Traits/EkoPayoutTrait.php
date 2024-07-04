@@ -30,6 +30,7 @@ trait EkoPayoutTrait {
             "secret-key-timestamp"=>$secret_key_timestamp,
             "Content-Type"=>"application/x-www-form-urlencoded"
         );
+<<<<<<< HEAD
         $checkServiceActive = User::findOrFail($data['user_id'])->services;
         if($checkServiceActive =='0'):
             return [
@@ -37,6 +38,9 @@ trait EkoPayoutTrait {
                 'msg'=>"This service has been down, Please try again after sometimes",
             ];
         endif;
+=======
+
+>>>>>>> bde5cc6 (again setup)
         $walletAmount = Wallet::where('user_id',$data['user_id'])->first();
         if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > ($walletAmount->amount-$walletAmount->locked_amuont)):
             return [
@@ -45,11 +49,19 @@ trait EkoPayoutTrait {
             ];
         endif;
         // Check previous transaction time
+<<<<<<< HEAD
         $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id']])->whereBetween('created_at',[Carbon::now()->subSeconds(10)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(10)->format('Y-m-d H:i:s')])->count();
         if($previousTransactionTimeCheck > 0):
             return [
                 'status'=>'0003',
                 'msg'=>'Next transaction allowed after 4 sec.'
+=======
+        $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id'],'account_number'=>$data['account_number'],'amount'=>$data['amount']])->whereBetween('created_at',[Carbon::now()->subSeconds(30)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(30)->format('Y-m-d H:i:s')])->count();
+        if($previousTransactionTimeCheck > 0):
+            return [
+                'status'=>'0003',
+                'msg'=>'Next transaction allowed after 1 Min.'
+>>>>>>> bde5cc6 (again setup)
             ];
         endif;
         do {
@@ -75,6 +87,7 @@ trait EkoPayoutTrait {
                 'msg'=>$e->getMessage(),
             ];
         }
+<<<<<<< HEAD
         $main_amount = $walletAmount->amount;
         $closing_balance = $walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']));
         Wallet::where('user_id',$data['user_id'])->update([
@@ -82,6 +95,12 @@ trait EkoPayoutTrait {
             'amount'=>$closing_balance ,
         ]);
 
+=======
+
+        Wallet::where('user_id',$data['user_id'])->update([
+            'amount'=>$walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
+        ]);
+>>>>>>> bde5cc6 (again setup)
         $adminId = User::whereHas('roles',function($q){
             $q->where('name','super-admin');
         })->first();
@@ -93,10 +112,15 @@ trait EkoPayoutTrait {
             'charge'=>getCommission("dmt",$data['amount'],$data['user_id']),
             'status_id'=>'1',
             'credited_by'=>$adminId->id,
+<<<<<<< HEAD
             // 'balance'=>$walletAmount->amount,
             'balance'=>$main_amount,
             // 'closing_balnce'=>$walletAmount->amount - ($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
             'closing_balnce'=>$closing_balance ,
+=======
+            'balance'=>$walletAmount->amount,
+            'closing_balnce'=>$walletAmount->amount - ($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
+>>>>>>> bde5cc6 (again setup)
             'type'=>"debit",
             'transtype'=>"fund",
             'product'=>'payout',
@@ -106,6 +130,7 @@ trait EkoPayoutTrait {
         $requestParameter = 'initiator_id=9519035604&amount='.$data['amount'].'&payment_mode='.$ekoPaymentMode[$this->getPaymentModesName($data['payment_mode'])].'&client_ref_id='.$data['payoutid'].'&recipient_name='.$data['account_holder_name'].'&ifsc='.$data['ifsc_code'].'&account='.$data['account_number'].'&service_code=45&sender_name=test&source=NEWCONNECT&tag=Logistic&beneficiary_account_type=1';
         $res = apiCallWitBody($header,$apiUrl,$requestParameter,true,$data['payoutid']);
         if($res['data'] != ""){
+<<<<<<< HEAD
             if(isset($res['status']) && $res['status']=='0' && $res['response_status_id']=='0'):
                 if($res['data']['tx_status']=='0'):
                     FundRequest::where('id',$fundRequest->id)->update([
@@ -138,18 +163,42 @@ trait EkoPayoutTrait {
                         'rrn_no'=>$res['data']['bank_ref_num']
                     ];
                 endif;                
+=======
+            $response = $res['data'];
+            if(isset($res['status']) && $res['status']=='0' && $res['response_status_id']=='0'):
+                FundRequest::where('id',$fundRequest->id)->update([
+                    'status_id'=>'2',
+                    'payout_ref' =>$res['data']['tid'],
+                ]);
+                PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                    'status_id'=>'2',
+                ]);
+                return [
+                    'status'=>'0005',
+                    'msg'=>'Your'.$res['message'],
+                    'txn_id'=>$data['payoutid'],
+                    'rrn_no'=>$res['data']['bank_ref_num']
+                ];
+>>>>>>> bde5cc6 (again setup)
             else:
                 FundRequest::where('id',$fundRequest->id)->update([
                     'status_id'=>'3',
                 ]);
                 PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                     'status_id'=>'3',
+<<<<<<< HEAD
                     // 'closing_balnce'=>$walletAmount->amount
                     'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id']),
                 ]);
                 Wallet::where('user_id',$data['user_id'])->update([
                     // 'amount'=>$walletAmount->amount,
                     'amount'=>$main_amount,
+=======
+                    'closing_balnce'=>$walletAmount->amount
+                ]);
+                Wallet::where('user_id',$data['user_id'])->update([
+                    'amount'=>$walletAmount->amount,
+>>>>>>> bde5cc6 (again setup)
                 ]);
                 return [
                     'status'=>'0006',
@@ -163,12 +212,19 @@ trait EkoPayoutTrait {
             ]);
             PayoutRequestHistory::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
+<<<<<<< HEAD
                 // 'closing_balnce'=>$walletAmount->amount
                 'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])
             ]);
             Wallet::where('user_id',$data['user_id'])->update([
                 // 'amount'=>$walletAmount->amount,
                 'amount'=>$main_amount,
+=======
+                'closing_balnce'=>$walletAmount->amount
+            ]);
+            Wallet::where('user_id',$data['user_id'])->update([
+                'amount'=>$walletAmount->amount,
+>>>>>>> bde5cc6 (again setup)
             ]);
             return [
                 'status'=>'0007',

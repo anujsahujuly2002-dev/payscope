@@ -24,7 +24,11 @@ class ApiPartnerComponent extends Component
     // public $apiPartners;
     public $value;
     public $end_date;
+<<<<<<< HEAD
     // public $status;
+=======
+    public $status;
+>>>>>>> bde5cc6 (again setup)
     public $schemeForm = false;
     public $apiPartnerId;
     public $scheme;
@@ -132,6 +136,7 @@ class ApiPartnerComponent extends Component
         $statusUpdate = User::findOrFail($userId)->update([
             'status'=>$status==0?1:0,
         ]);
+<<<<<<< HEAD
         $msg = $status==1?"Account has been deactivated":"Account has been activated";
         return redirect()->back()->with('success',$msg);
 
@@ -147,6 +152,13 @@ class ApiPartnerComponent extends Component
 
     }
     /* public function search() {
+=======
+
+        return redirect()->back()->with('success','Your Status has been updated');
+
+    }
+    public function search() {
+>>>>>>> bde5cc6 (again setup)
        $this->apiPartners = User::whereHas('roles',function($q){
             $q->where('name','api-partner');
         })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
@@ -169,10 +181,16 @@ class ApiPartnerComponent extends Component
         })->when($this->status !=null,function($s){
             $s->where('status',$this->status);
         })
+<<<<<<< HEAD
         ->get(); 
     }
 
 */
+=======
+        ->get();
+    }
+
+>>>>>>> bde5cc6 (again setup)
 
     public function changeScheme($id) {
         $this->reset();

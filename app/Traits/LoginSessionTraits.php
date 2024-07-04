@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 trait LoginSessionTraits {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> bde5cc6 (again setup)
     protected function loginSessionStore($data = array()) {
         LoginSession::create([
             'user_id'=>$data['id'],
@@ -21,6 +25,7 @@ trait LoginSessionTraits {
     }
 
     protected function checkUserAlreadyLoggedIn(){
+<<<<<<< HEAD
         $checkUserAlreadyLoggedIn = LoginSession::where(['user_id'=>auth()->user()->id,'is_logged_in'=>'0'])->get();
         if($checkUserAlreadyLoggedIn->count() ==4):
             return false;
@@ -29,6 +34,11 @@ trait LoginSessionTraits {
         endif;
         // dd($checkUserAlreadyLoggedIn);
         // return $checkUserAlreadyLoggedIn->is_logged_in ??"1";
+=======
+        $checkUserAlreadyLoggedIn = LoginSession::where(['user_id'=>auth()->user()->id,'is_logged_in'=>'0'])->first();
+        // dd($checkUserAlreadyLoggedIn);
+        return $checkUserAlreadyLoggedIn->is_logged_in ??"1";
+>>>>>>> bde5cc6 (again setup)
     }
 
 
@@ -53,4 +63,8 @@ trait LoginSessionTraits {
             ]);
         endif;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> bde5cc6 (again setup)

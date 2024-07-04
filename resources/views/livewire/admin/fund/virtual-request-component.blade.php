@@ -32,6 +32,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
+<<<<<<< HEAD
                         <div class="col-md-12">
                             <div class="row mb-2">
                                 <div class="col-md-2">
@@ -67,6 +68,18 @@
                                         <div class="col-md-12">
                                             <div class="mb-3 d-flex">
                                                 <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
+=======
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-inline float-md-end mb-3">
+                                        <div class="search-box ms-2">
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control rounded bg-light border-0"  placeholder="Search...">
+                                                <i class="mdi mdi-magnify search-icon"></i>
+>>>>>>> bde5cc6 (again setup)
                                             </div>
                                         </div>
                                     </div>
