@@ -70,7 +70,8 @@ class LoginRepository {
             endif;
             $checkOtp->update([
                 'otp'=>$otp,
-                'expire_at'=>now()->addMinutes(120)
+                'expire_at'=>now()->addMinutes(120),
+                'verified_at'=>null,
             ]);
         else:
             $otp = $this->generateOtp();

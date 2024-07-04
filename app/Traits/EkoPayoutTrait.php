@@ -30,10 +30,14 @@ trait EkoPayoutTrait {
             "secret-key-timestamp"=>$secret_key_timestamp,
             "Content-Type"=>"application/x-www-form-urlencoded"
         );
-        // dd($data);
+        $checkServiceActive = User::findOrFail($data['user_id'])->services;
+        if($checkServiceActive =='0'):
+            return [
+                'status'=>'0008',
+                'msg'=>"This service has been down, Please try again after sometimes",
+            ];
+        endif;
         $walletAmount = Wallet::where('user_id',$data['user_id'])->first();
-        // dd($walletAmount);
-        // dd($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']));
         if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > ($walletAmount->amount-$walletAmount->locked_amuont)):
             return [
                 'status'=>'0002',
@@ -41,7 +45,7 @@ trait EkoPayoutTrait {
             ];
         endif;
         // Check previous transaction time
-        $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id']])->whereBetween('created_at',[Carbon::now()->subSeconds(2)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(2)->format('Y-m-d H:i:s')])->count();
+        $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id']])->whereBetween('created_at',[Carbon::now()->subSeconds(10)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(10)->format('Y-m-d H:i:s')])->count();
         if($previousTransactionTimeCheck > 0):
             return [
                 'status'=>'0003',
@@ -103,20 +107,37 @@ trait EkoPayoutTrait {
         $res = apiCallWitBody($header,$apiUrl,$requestParameter,true,$data['payoutid']);
         if($res['data'] != ""){
             if(isset($res['status']) && $res['status']=='0' && $res['response_status_id']=='0'):
-                FundRequest::where('id',$fundRequest->id)->update([
-                    'status_id'=>'2',
-                    'payout_ref' =>$res['data']['tid'],
-                    'utr_number' =>$res['data']['bank_ref_num'],
-                ]);
-                PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
-                    'status_id'=>'2',
-                ]);
-                return [
-                    'status'=>'0005',
-                    'msg'=>'Your'.$res['message'],
-                    'txn_id'=>$data['payoutid'],
-                    'rrn_no'=>$res['data']['bank_ref_num']
-                ];
+                if($res['data']['tx_status']=='0'):
+                    FundRequest::where('id',$fundRequest->id)->update([
+                        'status_id'=>'2',
+                        'payout_ref' =>$res['data']['tid'],
+                        'utr_number' =>$res['data']['bank_ref_num'],
+                    ]);
+                    PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                        'status_id'=>'2',
+                    ]);
+                    return [
+                        'status'=>'0005',
+                        'msg'=>'Your'.$res['message'],
+                        'txn_id'=>$data['payoutid'],
+                        'rrn_no'=>$res['data']['bank_ref_num']
+                    ];
+                else:
+                    FundRequest::where('id',$fundRequest->id)->update([
+                        'status_id'=>'1',
+                        'payout_ref' =>$res['data']['tid'],
+                        'utr_number' =>$res['data']['bank_ref_num'],
+                    ]);
+                    PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                        'status_id'=>'1',
+                    ]);
+                    return [
+                        'status'=>'0009',
+                        'msg'=>'Your'.$res['message'],
+                        'txn_id'=>$data['payoutid'],
+                        'rrn_no'=>$res['data']['bank_ref_num']
+                    ];
+                endif;                
             else:
                 FundRequest::where('id',$fundRequest->id)->update([
                     'status_id'=>'3',
@@ -124,7 +145,7 @@ trait EkoPayoutTrait {
                 PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                     'status_id'=>'3',
                     // 'closing_balnce'=>$walletAmount->amount
-                    'closing_balnce'=>$closing_balance,
+                    'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id']),
                 ]);
                 Wallet::where('user_id',$data['user_id'])->update([
                     // 'amount'=>$walletAmount->amount,
@@ -143,7 +164,7 @@ trait EkoPayoutTrait {
             PayoutRequestHistory::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
                 // 'closing_balnce'=>$walletAmount->amount
-                'closing_balnce'=>$closing_balance
+                'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])
             ]);
             Wallet::where('user_id',$data['user_id'])->update([
                 // 'amount'=>$walletAmount->amount,

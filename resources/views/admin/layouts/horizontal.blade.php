@@ -44,7 +44,11 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-search-dropdown">
+<<<<<<< HEAD
                     
+=======
+
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                     <form class="p-3">
                         <div class="m-0">
                             <div class="input-group">
@@ -239,7 +243,7 @@
                         <a href="" class="text-reset notification-item">
                             <div class="d-flex align-items-start">
                             <div class="flex-shrink-0 me-3">
-                                <img src="{{ URL::asset('/assets/images/users/avatar-4.jpg') }}"
+                                <img src="{{ URL::asset('/assets/images/users/profile.jpg') }}"
                                     class="rounded-circle avatar-xs" alt="user-pic">
                                     </div>
                                 <div class="flex-1">
@@ -265,7 +269,7 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ URL::asset('/assets/images/users/avatar-4.jpg') }}"
+                    <img class="rounded-circle header-profile-user" src="{{ URL::asset('/assets/images/users/profile.jpg') }}"
                         alt="Header Avatar">
                     <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{Str::ucfirst(Auth::user()->name)}}</span>
                     <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
@@ -288,14 +292,12 @@
                     <i class="uil-cog"></i>
                 </button>
             </div>
-            
         </div>
     </div>
     <div class="container-fluid">
         <div class="topnav">
 
             <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
-    
                 <div class="collapse navbar-collapse" id="topnav-menu-content">
                     <ul class="navbar-nav">
 
@@ -304,7 +306,6 @@
                                 <i class="uil-home-alt me-2"></i> @lang('translation.Dashboard')
                             </a>
                         </li>
-    
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement" role="button">
                                 <i class="uil-flask me-2"></i>@lang('translation.UI_Elements') <div class="arrow-down"></div>
@@ -353,7 +354,6 @@
 
                             </div>
                         </li>
-    
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
                                 <i class="uil-apps me-2"></i>@lang('translation.Apps') <div class="arrow-down"></div>
@@ -399,7 +399,6 @@
                                         <a href="invoices-detail" class="dropdown-item">@lang('translation.Invoice_Detail')</a>
                                     </div>
                                 </div>
-                                
                                 <div class="dropdown">
                                     <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-contact"
                                         role="button">
@@ -413,7 +412,6 @@
                                 </div>
                             </div>
                         </li>
-    
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button"
                                >
@@ -560,7 +558,6 @@
                                 </div>
                             </div>
                         </li>
-    
                     </ul>
                 </div>
             </nav>

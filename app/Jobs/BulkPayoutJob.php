@@ -34,7 +34,17 @@ class BulkPayoutJob implements ShouldQueue
      */
     public function handle(): void
     {
+<<<<<<< HEAD
         foreach($this->user as $userInfo):
+=======
+<<<<<<< HEAD
+        foreach($this->user as $userInfo):
+=======
+        // dd("dsd",$this->user);
+        foreach($this->user as $userInfo):
+            // dd($userInfo);
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
+>>>>>>> eca7b91e5730bb2ce7e5e46095a9e47db2c71814
             $ekoPaymentMode = [
                 "imps"=> "5",
                 "neft"=>"4",
@@ -66,8 +76,17 @@ class BulkPayoutJob implements ShouldQueue
                     'type'=>'Bank',
                     'pay_type'=>'payout',
                     'payout_id'=>$userInfo['payoutid'],
+<<<<<<< HEAD
                     'payout_ref'=>$userInfo['payoutid'],
                     'payment_type'=>"1",
+=======
+<<<<<<< HEAD
+                    'payout_ref'=>$userInfo['payoutid'],
+                    'payment_type'=>"0",
+=======
+                    'payout_ref'=>$userInfo['payoutid']
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
+>>>>>>> eca7b91e5730bb2ce7e5e46095a9e47db2c71814
                 ]);
             }catch (Exception $e){
                Log::error([ 'status'=>'0004', 'msg'=>$e->getMessage()]);

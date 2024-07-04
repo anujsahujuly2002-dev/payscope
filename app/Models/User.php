@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -28,7 +28,8 @@ class User extends Authenticatable
         'otp',
         'expire_at',
         'verified_at',
-        'virtual_account_number'
+        'virtual_account_number',
+        'services'
     ];
 
     /**

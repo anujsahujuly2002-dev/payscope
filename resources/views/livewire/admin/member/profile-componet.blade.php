@@ -10,7 +10,11 @@
                             <a class="text-body dropdown-toggle font-size-18" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                                 <i class="uil uil-ellipsis-v"></i>
                             </a>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#">Edit</a>
                                 <a class="dropdown-item" href="#">Action</a>
@@ -19,19 +23,33 @@
                         </div> --}}
                         <div class="clearfix"></div>
                         <div>
+<<<<<<< HEAD
                             <img src="{{ URL::asset('/assets/images/users/avatar-4.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
                         </div>
                         <h5 class="mt-3 mb-1">{{$user?->name}}</h5>
                         <p class="text-muted">{{ucwords(str_replace('-',' ',$user->roles->first()->name))}}</p>
     
+=======
+                            <img src="{{ URL::asset('/assets/images/users/profile.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                        </div>
+                        <h5 class="mt-3 mb-1">{{$user?->name}}</h5>
+                        <p class="text-muted">{{ucwords(str_replace('-',' ',$user->roles->first()->name))}}</p>
+
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                             {{-- <div class="mt-4">
                                 <button type="button" class="btn btn-light btn-sm"><i class="uil uil-envelope-alt me-2"></i>
                                     Message</button>
                             </div> --}}
                     </div>
+<<<<<<< HEAD
     
                     <hr class="my-4">
     
+=======
+
+                    <hr class="my-4">
+
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                     <div class="text-muted">
                         {{-- <h5 class="font-size-16">About</h5>
                         <p>Hi I'm Marcus,has been the industry's standard dummy text To an English person, it will seem like
@@ -175,9 +193,15 @@
                                 <h3 class="card-title">KYC Details</h3>
                             </div>
                             <div class="card-body">
+<<<<<<< HEAD
                                 
                             </div>
                         </div> 
+=======
+
+                            </div>
+                        </div>
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                     </div> --}}
                     <div class="tab-pane @if($tab =='password manager') active show @endif" id="messages" role="tabpanel">
                         <div class="card">

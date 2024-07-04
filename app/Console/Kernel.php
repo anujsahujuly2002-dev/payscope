@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\VirtualRequestApi;
+use App\Console\Commands\CheckPaymentStatusCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,12 +14,21 @@ class Kernel extends ConsoleKernel
      */
     protected $commands =[
         VirtualRequestApi::class,
+        CheckPaymentStatusCommand::class,
     ];
 
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('app:virtual-request-api')->everyFifteenMinutes();
+        $schedule->command('app:check-payment-status-command')->everyFifteenMinutes()->onSuccess(function () {
+            $msg = "Check Payment Status Api Initiate Successfully";
+
+            // use wordwrap() if lines are longer than 70 characters
+            $msg = wordwrap($msg,70);
+    
+            // send email
+            mail("programmeranuj930@gmail.com","Check Payment Status",$msg);
+        });
     }
 
     /**

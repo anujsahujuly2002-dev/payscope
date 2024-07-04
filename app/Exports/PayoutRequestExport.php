@@ -9,25 +9,42 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PayoutRequestExport implements FromCollection,WithHeadings
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
     public $data;
     public function __construct($data){
         $this->data = $data;
 
     }
+<<<<<<< HEAD
+=======
+>>>>>>> 10a8825 (Payout Request Export)
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
         $fundRequestArray = [];
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
         $fundRequests = new FundRequest;
         if($this->data['user_id'] !=null):
             $fundRequests = $fundRequests->where('user_id',$this->data['user_id']);
         endif;
+<<<<<<< HEAD
+        if($this->data['start_date'] !=null && $this->data['end_date'] ==null):
+=======
         if($this->data['user_id'] !=null):
             $fundRequests = $fundRequests->where('user_id',$this->data['user_id']);
         endif;
         if($this->data['start_date'] !=null):
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
             $fundRequests = $fundRequests->whereDate('created_at',$this->data['start_date']);
         endif;
         if($this->data['start_date'] !=null && $this->data['end_date'] !=null):
@@ -40,6 +57,13 @@ class PayoutRequestExport implements FromCollection,WithHeadings
             $fundRequests = $fundRequests->where('status_id',$this->data['status']);
         endif;
         foreach($fundRequests->get() as $fundRequest):
+<<<<<<< HEAD
+=======
+        $fundRequests =  FundRequest::get();
+        foreach($fundRequests as $fundRequest):
+>>>>>>> 10a8825 (Payout Request Export)
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
             $fundRequestArray[]=[
                 $fundRequest->user->name,
                 $fundRequest->payout_id,
