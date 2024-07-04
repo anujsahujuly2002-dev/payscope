@@ -10,17 +10,12 @@
                             </div>
                             <div style="margin-left: 120px;">
                                 <label class="switch">
-                                    <input type="checkbox" id="switch" switch="bool" wire:change="OtpEnabled('otp-verification',{{$otpEnabled}})" @if($otpEnabled=="true") checked @endif />
+                                    <input type="checkbox" id="switch" switch="bool" wire:change="OtpEnabled('otp verification','{{$otpEnabled->value}}')" @if($otpEnabled->value=="yes") checked @endif />
                                     <label for="switch" data-on-label="Enable" data-off-label="Disable"></label>
                                 </label>
                             </div>
                             
                         </div>
-                        @if ($otpEnabled)
-                            <p>OTP Status: {{ $otpEnabled }}</p>
-                        @else
-                            <p>OTP Status not found.</p>
-                        @endif
                     </div>
                     <div class="col-md-6 ">
                     {{-- <div class="d-flex juistify-content-left">
