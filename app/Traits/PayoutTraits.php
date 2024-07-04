@@ -20,6 +20,14 @@ trait PayoutTraits {
             ];
         endif; */
 
+        $checkServiceActive = User::findOrFail($data['user_id'])->services;
+        if($checkServiceActive =='0'):
+            return [
+                'status'=>'0008',
+                'msg'=>"This service has been down, Please try again after sometimes",
+            ];
+        endif;
+
         // Check Wallet Amount
         $walletAmount = Wallet::where('user_id',$data['user_id'])->first();
         if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > $walletAmount->amount-$walletAmount->locked_amuont):
@@ -28,6 +36,8 @@ trait PayoutTraits {
                 'msg'=>'Low balance to make this request.'
             ];
         endif;
+
+
 
         // Check previous transaction time
         $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id'],'account_number'=>$data['account_number'],'amount'=>$data['amount']])->whereBetween('created_at',[Carbon::now()->subSeconds(30)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(30)->format('Y-m-d H:i:s')])->count();

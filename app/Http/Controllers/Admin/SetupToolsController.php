@@ -18,4 +18,4 @@ class SetupToolsController extends Controller
     public function benificiaryManage() {
         return view('admin.setup-tools.benificiary');
     }
-}
+    }

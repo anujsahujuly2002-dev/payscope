@@ -48,6 +48,7 @@ class AuthComponent extends Component
                 session()->flash('error',"You're account has been not approved, Please Contact a admin");
                 return false;
             endif;
+            // dd(getSettingValue('otp verification'));
             if((now()->diffInHours($user->verified_at) >=24 && getSettingValue('otp verification')=='yes') || ($user->verified_at ==null && getSettingValue('otp verification')=='yes')):
                 if(now()->diffInMinutes($user->expire_at) >=120 || $user->verified_at ==null):
                     $otp = rand(1234, 9999);
@@ -63,7 +64,7 @@ class AuthComponent extends Component
             else:
                 if(Auth::attempt(['email' => $this->username, 'password' => $this->password])):
                     if(auth()->user()->status =='1'):
-                        if($this->checkUserAlreadyLoggedIn() ==='0'):
+                        if(!$this->checkUserAlreadyLoggedIn()):
                             auth()->logout();
                             session()->invalidate();
                             session()->regenerateToken();

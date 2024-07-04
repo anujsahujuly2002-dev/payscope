@@ -161,7 +161,11 @@
         <!--  Large modal example -->
         <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-lg">
+<<<<<<< HEAD
+                <form wire:submit.prevent="StoreApiPartner" autocomplete="off">
+=======
                 <form wire:submit.prevent="makeRecharge" autocomplete="off">
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="myLargeModalLabel">Mobile Recharge</h5>
@@ -169,12 +173,29 @@
                         </div>
                         <div class="modal-body">
                             <div class="row g-2">
+<<<<<<< HEAD
+                                <div class="col-md-4 mb-0">
+                                    <label for="mobile_number" class="form-label">Mobile Number</label>
+                                    <input type="text" id="mobile_number" class="form-control  @error('mobile_number') is-invalid @enderror" placeholder="Enter Mobile Number" wire:model.defer='state.mobile_number'/>
+                                    @error('mobile_number')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4 mb-0">
+=======
                                 <div class="col-md-6 mb-0">
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                                     <label for="mobile_operator" class="form-label">Mobile Operator</label>
                                     <select name="" id="" class="form-control">
                                         <option value="">Select Mobile Operator</option>
                                         @foreach ($operators as $operator)
+<<<<<<< HEAD
+                                            <option value="{{$operator->id}}">{{$operator->name}}</option>
+=======
                                             <option value="{{$operator->sp_key}}">{{$operator->operator_name}}</option>
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                                         @endforeach
                                     </select>
                                     @error('mobile_operator')
@@ -183,6 +204,9 @@
                                         </div>
                                     @enderror
                                 </div>
+<<<<<<< HEAD
+                                <div class="col-md-4 mb-0">
+=======
                                 <div class="col-md-6 mb-0">
                                     <label for="mobile_number" class="form-label">Mobile Number</label>
                                     <input type="text" id="mobile_number" class="form-control  @error('mobile_number') is-invalid @enderror" placeholder="Enter Mobile Number" wire:model.defer='state.mobile_number'/>
@@ -194,6 +218,7 @@
                                 </div>
                                
                                 {{-- <div class="col-md-4 mb-0">
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                                     <label for="mobile_number" class="form-label">Operator Circle</label>
                                     <select name="" id="" class="form-control" wire:change="getPlan($event.target.value)">
                                         <option value="">Select Operator Circle</option>
@@ -203,10 +228,17 @@
                                         {{$message}}
                                         </div>
                                     @enderror
+<<<<<<< HEAD
+                                </div>
+                                <div class="col-md-12 mb-0">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="Enter Address" wire:model.defer='state.address'/>
+=======
                                 </div> --}}
                                 <div class="col-md-12 mb-0">
                                     <label for="address" class="form-label">Amount</label>
                                     <input type="text" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="Enter Amount" wire:model.defer='state.amount'/>
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                                     @error('address')
                                     <div class="invalid-feedback">
                                         {{$message}}
@@ -219,7 +251,11 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+<<<<<<< HEAD
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+=======
                             <button type="submit" class="btn btn-primary">Recharge</button>
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                         </div>
                     </div><!-- /.modal-content -->
                 </form>

@@ -2,6 +2,17 @@
 
 namespace App\Repository\AuthRepository;
 
+<<<<<<< HEAD
+class LoginRepository {
+
+    // private $credentials;
+
+   /*  public function __construct(array $credentials){
+        $this->credentials = $credentials;
+    } */
+    public function login (array $userDetails) {
+        dd($userDetails);
+=======
 use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -152,5 +163,6 @@ class LoginRepository {
             "message"=>'Otp send successfully',
         ];
         
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
     }
 }

@@ -20,5 +20,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::controller(FundRequestController::class)->group(function() {
-    Route::any('/payout','payout');
+    Route::post('/payout','payout');
+    Route::post('/bulk-payout','bulkPayout');
+    Route::post("/check-status","checkStatus"); 
 });

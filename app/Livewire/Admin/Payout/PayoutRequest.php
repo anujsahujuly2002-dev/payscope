@@ -85,7 +85,8 @@ class PayoutRequest extends Component
         ])->validate();
 
         $validateData['user_id']= auth()->user()->id;
-        $response = $this->ekoPayoutApi($validateData);
+        // $response = $this->payoutApiRequest($validateData);
+        $response = $this->ekoPayoutApi($validateData);;
         $this->dispatch('hide-form');
         if($response['status']=='0005'):
             return redirect()->back()->with('success',$response['msg']);
@@ -105,7 +106,7 @@ class PayoutRequest extends Component
             'status'=>$this->status,
             'value'=>$this->value
         ];
-        // dd($data);
+         //dd($data);
         return Excel::download(new PayoutRequestExport($data), time().'.xlsx');
     }
 

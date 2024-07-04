@@ -24,7 +24,7 @@ class ApiPartnerComponent extends Component
     // public $apiPartners;
     public $value;
     public $end_date;
-    public $status;
+    // public $status;
     public $schemeForm = false;
     public $apiPartnerId;
     public $scheme;
@@ -132,11 +132,21 @@ class ApiPartnerComponent extends Component
         $statusUpdate = User::findOrFail($userId)->update([
             'status'=>$status==0?1:0,
         ]);
-
-        return redirect()->back()->with('success','Your Status has been updated');
+        $msg = $status==1?"Account has been deactivated":"Account has been activated";
+        return redirect()->back()->with('success',$msg);
 
     }
-    public function search() {
+    public function serviceUpdate($userId,$status){
+        // dd($userId,$status);
+        $serviceUpdate = User::findOrFail($userId)->update([
+            'services'=>$status==0?"1":"0",
+        ]);
+        // dd($serviceUpdate);
+        $msg = $status==0?"Service has been acctivated":"Service has been deactivated";
+        return redirect()->back()->with('success',$msg);
+
+    }
+    /* public function search() {
        $this->apiPartners = User::whereHas('roles',function($q){
             $q->where('name','api-partner');
         })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
@@ -159,9 +169,10 @@ class ApiPartnerComponent extends Component
         })->when($this->status !=null,function($s){
             $s->where('status',$this->status);
         })
-        ->get();
+        ->get(); 
     }
 
+*/
 
     public function changeScheme($id) {
         $this->reset();

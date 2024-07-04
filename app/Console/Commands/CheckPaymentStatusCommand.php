@@ -8,6 +8,7 @@ use App\Models\FundRequest;
 use Illuminate\Console\Command;
 use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CheckPaymentStatusCommand extends Command
 {
@@ -30,9 +31,8 @@ class CheckPaymentStatusCommand extends Command
      */
     public function handle()
     {
-        $pendingRequests = FundRequest::where('status_id','1')->where('user_id','9')->orderBy('id','ASC')->get();
-        // dd($pendingRequests->count());
-
+        Log::info("Check Payment Status Api Execute");
+        $pendingRequests = FundRequest::where('status_id','1')->whereIn('user_id',['10',"9"])->orderBy('id','ASC')->get();
         foreach ($pendingRequests as $key1 => $pendingPaymentRequest) :
             $checkApi = ApiLog::where('txn_id',$pendingPaymentRequest->payout_id)->first();
             if(!is_null($checkApi)):
@@ -62,11 +62,12 @@ class CheckPaymentStatusCommand extends Command
                         'response'=>json_encode($res)
                     ]);
                     if($res['data']['tx_status']=='4'):
-                        $fundRequest=Fundrequest::where('payout_id',$res['data']['client_ref_id'])->first();
+                        $fundRequest=Fundrequest::where(['payout_id'=>$res['data']['client_ref_id'],'account_number'=>$res['data']['account'] ])->first();
                         $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
                         Fundrequest::where('id',$fundRequest->id)->update([
                             'status_id'=>'4',
-                            'payout_ref'=>$res['data']['tid']
+                            'payout_ref'=>$res['data']['tid'],
+                            'utr_number'=>$res['data']['bank_ref_num']
                         ]);
                         PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                             'status_id'=>'4',
@@ -78,7 +79,7 @@ class CheckPaymentStatusCommand extends Command
                             'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount
                         ]);
                     elseif($res['data']['tx_status']=='1'):
-                        $fundRequest=Fundrequest::where('payout_id',$checkApi->txn_id)->first();
+                        $fundRequest=Fundrequest::where(['payout_id'=>$checkApi->txn_id,'account_number'=>$res['data']['account'] ])->first();
                         $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
                         Fundrequest::where('id',$fundRequest->id)->update([
                             'status_id'=>'3',
@@ -94,10 +95,11 @@ class CheckPaymentStatusCommand extends Command
                             'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount
                         ]);
                     elseif($res['data']['tx_status']=='0'):
-                        $fundRequest=Fundrequest::where('payout_id',$checkApi->txn_id)->first();
+                        $fundRequest=Fundrequest::where(['payout_id'=>$checkApi->txn_id,'account_number'=>$res['data']['account'] ])->first();
                         Fundrequest::where('id',$fundRequest->id)->update([
                             'status_id'=>'2',
-                            'payout_ref'=>$res['data']['tid']
+                            'payout_ref'=>$res['data']['tid'],
+                            'utr_number'=>$res['data']['bank_ref_num']
                         ]);
                         PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                             'status_id'=>'2',
@@ -106,10 +108,10 @@ class CheckPaymentStatusCommand extends Command
                 endif;
             else:
                 $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$pendingPaymentRequest->id)->first();
-                $fundRequest=Fundrequest::where('payout_id',$pendingPaymentRequest->payout_id)->first();
+                $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
                 Fundrequest::where('id',$fundRequest->id)->update([
                     'status_id'=>'3',
-                    'payout_ref'=>$pendingPaymentRequest->txnpayout_id_id,
+                    'payout_ref'=>$pendingPaymentRequest->payout_id,
                 ]);
                 PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                     'status_id'=>'3',
@@ -122,6 +124,8 @@ class CheckPaymentStatusCommand extends Command
                 ]);
             endif;
         endforeach;
+        // the message
+       
     }
 
     private function url($url) {
