@@ -76,7 +76,6 @@
                             <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="fw-semibold">Sort By:</span> <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
                                 <a class="dropdown-item" href="#">Monthly</a>
                                 <a class="dropdown-item" href="#">Yearly</a>
@@ -85,22 +84,19 @@
                         </div>
                     </div>
                     <h4 class="card-title mb-4">Sales Analytics</h4>
-
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
                                 <h3 class="text-primary">&#x20B9;<span data-plugin="counterup">{{$payout}}</span><span class="text-muted d-inline-block font-size-15 ms-3">Income</span></h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
-                                <h3><span data-plugin="counterup">0</span><span class="text-muted d-inline-block font-size-15 ms-3">Sales</span>
-                                </h3>
+                                <h3><span data-plugin="counterup">0</span><span class="text-muted d-inline-block font-size-15 ms-3">Sales</span></h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
                                 <h3><span data-plugin="counterup">0</span>%<span class="text-muted d-inline-block font-size-15 ms-3">Conversation Ratio</span></h3>
                             </li>
                         </ul>
                     </div>
-
                     <div class="mt-3">
                         <div id="sales-analytics-chart" data-colors='["--bs-primary", "#dfe2e6", "--bs-warning"]' class="apex-charts" dir="ltr"></div>
                     </div>
@@ -146,7 +142,7 @@
                     <h4 class="card-title mb-4">Top Selling Products</h4>
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-primary me-2"></i> Desktops </p>
+                            <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-primary me-2"></i>Total payout </p>
                         </div>
 
                         <div class="col-sm-9">

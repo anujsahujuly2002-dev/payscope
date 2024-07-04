@@ -134,7 +134,7 @@ if (RadialchartOrdersChartColors) {
   };
   var chart = new ApexCharts(document.querySelector("#orders-chart"), options);
   chart.render();
-} // 
+} //
 // Customers Chart
 //
 
@@ -175,7 +175,7 @@ if (RadialchartCustomersColors) {
   };
   var chart = new ApexCharts(document.querySelector("#customers-chart"), options);
   chart.render();
-} // 
+} //
 // Growth Chart
 //
 
@@ -257,15 +257,15 @@ if (LinechartsalesColors) {
     },
     colors: LinechartsalesColors,
     series: [{
-      name: 'Desktops',
+      name: 'Total payout',
       type: 'column',
       data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
     }, {
-      name: 'Laptops',
+      name: 'Total Commission',
       type: 'area',
       data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
     }, {
-      name: 'Tablets',
+      name: 'Total Rejected',
       type: 'line',
       data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
     }],
