@@ -31,11 +31,11 @@ class ManualRequest extends Component
     public $value;
     public $agentId;
 
-    // public function mount() {
-    //     $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-    //         $query->where('user_id',auth()->user()->id);
-    //     })->latest()->paginate(10);
-    // }
+    public function updated() {
+        $this->resetPage();
+    }
+
+
     public function render()
     {
         $this->banks = Bank::where('status','1')->get();
@@ -45,6 +45,20 @@ class ManualRequest extends Component
             $query->where('user_id',auth()->user()->id);
         })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
             $query->where('user_id',auth()->user()->id);
+        })->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })
+        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
+            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })
+        ->when($this->status !=null,function($u){
+            $u->where('status_id',$this->status);
+        })
+        ->when($this->agentId !=null,function($u){
+            $u->where('user_id',$this->agentId);
+        })
+        ->when($this->value !=null,function($u){
+            $u->where('references_no',$this->value);
         })->latest()->paginate(10);
         return view('livewire.admin.fund.manual-request',compact('statuses','funds'));
     }
@@ -52,6 +66,7 @@ class ManualRequest extends Component
     public function fundNewRequest() {
         if(!auth()->user()->can('fund-new-request'))
         throw UnauthorizedException::forPermissions(['fund-new-request']);
+        $this->reset();
         $this->dispatch('show-form');
     }
 
@@ -73,6 +88,7 @@ class ManualRequest extends Component
         else:
             $creditedBy =  auth()->user()->retailer->added_by;
         endif;
+        // $lastClos
         $funds = Fund::create([
             'user_id'=>auth()->user()->id,
             'bank_id'=>$validateData['bank'],
@@ -103,18 +119,24 @@ class ManualRequest extends Component
         $this->status = $fund->status->id;
         $this->remark = $fund->remark;
         $this->approvedForm = true;
+
         $this->dispatch('show-form');
     }
 
     public function updateFundRequest(){
+        $openingBalnace = Wallet::where('user_id', $this->fund->user_id)->first()->amount;
+        // dd($openingBalnace);
         if($this->status=='2'):
             $wallets = Wallet::where('user_id', $this->fund->user_id)->first()->amount;
             Wallet::where('user_id', $this->fund->user_id)->update([
                 'amount' => $wallets+ $this->fund->amount
             ]);
         endif;
+
         $updateFundRequest = $this->fund->update([
             'status_id'=> $this->status,
+            'opening_amount'=> $openingBalnace,
+            'closing_amount'=>$openingBalnace +(float)$this->fund->amount,
             'remark'=>$this->remark
         ]);
         if($updateFundRequest):
@@ -127,25 +149,5 @@ class ManualRequest extends Component
         endif;
     }
 
-    public function search() {
-        $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })
-        ->when($this->start_date !=null && $this->end_date ==null,function($u){
-            $u->whereDate('created_at',$this->start_date);
-        })
-        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
-            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
-        })
-        ->when($this->status !=null,function($u){
-            $u->where('status_id',$this->status);
-        })
-        ->when($this->agentId !=null,function($u){
-            $u->where('user_id',$this->agentId);
-        })
-        ->when($this->value !=null,function($u){
-            $u->where('references_no',$this->value);
-        })
-        ->get();
-    }
+   
 }

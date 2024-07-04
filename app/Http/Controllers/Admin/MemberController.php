@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\ApiPartner;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
@@ -22,6 +23,11 @@ class MemberController extends Controller
     }
 
     public function apiPartnerProfile ($apiPartnerId){
-       return view('admin.member.api-partner-profile');
+       return view('admin.member.profile');
+    }
+
+    public function viewProfile ($id) {
+        $user =User::find(base64_decode($id));
+        return view('admin.member.view-profile',compact('user'));
     }
 }

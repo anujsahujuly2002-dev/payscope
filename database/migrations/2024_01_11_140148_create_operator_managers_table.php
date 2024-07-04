@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('operator_type');
             $table->unsignedBigInteger('api_id');
             $table->foreign('api_id')->references('id')->on('apis')->onDelete('cascade')->onDelete('cascade');
-            $table->string('charge_range_start');
-            $table->string('charge_range_end');
+            $table->float('charge_range_start',10,2);
+            $table->float('charge_range_end',10,2);
             $table->enum('status',['0','1'])->comment('0=Inactive,1=active');
             $table->timestamps();
         });

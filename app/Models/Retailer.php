@@ -26,4 +26,11 @@ class Retailer extends Model
     public function parentDetails() {
         return $this->belongsTo(User::class,'added_by','id');
     }
+
+    public function state(){
+        return $this->belongsTo(State::class,'state_id','id');
+    }
+    public function scheme() {
+        return $this->belongsTo(Scheme::class,'scheme_id','id');
+    }
 }

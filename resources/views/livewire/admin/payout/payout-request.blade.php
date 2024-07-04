@@ -2,30 +2,52 @@
     <div wire:loading  class="loading"></div>
     @include('admin.flash-message.flash-message')
     <div class="row">
+        <div class="col-md-12">
+            <div class="mb-3 d-flex justify-content-end">
+                @can('payout-new-request')
+                    <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-end" wire:click.prevent='payoutRequest'><i class="mdi mdi-plus me-2"></i>Add New</a>
+                @endcan
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-md-6">
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date' >
+                            </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-2">
+                            <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date' >
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="References No" wire:model.live="value">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id / Parent Id" wire:model.live='agentId'>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <select class="form-control  rounded bg-light border-0" wire:model.live="status">
+                                    <option value="">Status</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{$status->id}}">{!!$status->name!!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
                             <div class="row">
-                                <div class="@if(!auth()->user()->can('fund-new-request')) col-md-12 @else col-md-6 @endif">
-                                    <div class="form-inline float-md-end mb-3">
-                                        <div class="search-box ms-2">
-                                            <div class="position-relative">
-                                                <input type="text" class="form-control rounded bg-light border-0"
-                                                    placeholder="Search...">
-                                                <i class="mdi mdi-magnify search-icon"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3 d-flex justify-content-center">
-                                        @can('payout-new-request')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='payoutRequest'><i class="mdi mdi-plus me-2"></i> Add New</a>
-                                        @endcan
+                                <div class="col-md-12">
+                                    <div class="mb-3 d-flex">
+                                        <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
                                     </div>
                                 </div>
                             </div>
@@ -75,27 +97,28 @@
                                             <a href="javascript:void(0)" class="text-body">{{$payoutReq->id}}</a>
                                         </td>
                                         <td>
-                                            {{ucfirst($payoutReq->user->name)}}<br> {{$payoutReq->user->apiPartner->mobile_no}}</td>
+                                            {{ucfirst($payoutReq->user->name)}}<br> {{$payoutReq?->user?->mobile_no}}</td>
                                         <td>
                                             Account No. -{{ucfirst($payoutReq->account_number)}}<br>Account Holder Name - {{$payoutReq->account_holder_name}}<br>Ifsc Code - {{strtoupper($payoutReq->ifsc_code)}}                                        </td>
                                         <td>
-                                            Transaction Id:-{{$payoutReq->payout_id}} <br> Payout Id:-{{$payoutReq->payout_id}}
+                                            Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}} <br>
+                                            UTR Number :-{{$payoutReq->utr_number}}
+                                        </td>
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->balance)}}</td>
+                                        <td class="fw-bolder">
+                                            <span class="text-danger fw-bolder">&#8722;</span> &#x20B9;{{moneyFormatIndia($payoutReq->amount)}}
+                                        </td>
+                                        <td class="fw-bolder">
+                                            <span class="text-danger fw-bolder">&#8722;</span>&#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->charge)}}
+                                        </td>
+                                        <td class="fw-bolder"> &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->closing_balnce)}}
                                         </td>
                                         <td>
-                                            &#x20B9;{{$payoutReq?->payoutTransactionHistories?->balance}}</td>
-                                        <td>
-                                            <span class="text-danger">&#8722;</span> &#x20B9;{{$payoutReq->amount}}
+                                            {{$payoutReq?->payoutTransactionHistories?->remarks}}
                                         </td>
                                         <td>
-                                            &#x20B9;{{$payoutReq?->payoutTransactionHistories?->charge}}
-                                        </td>
-                                        <td> &#x20B9;{{$payoutReq?->payoutTransactionHistories?->closing_balnce}}
-                                        </td>
-                                        <td>
-                                            {{$payoutReq?->payoutTransactionHistories?->remarks}}                                        
-                                        </td>
-                                        <td>
-                                            {{$payoutReq->created_at}}                                        
+                                            {{$payoutReq->created_at}}
                                         </td>
                                         <td>{!!$payoutReq->status->name!!}</td>
                                     </tr>
@@ -134,7 +157,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $payoutRequestData->lastPage()) as $i)
-                                            @if ($i >=$payoutRequestData->currentPage()-2 && $i <=$payoutRequestData->currentPage()) 
+                                            @if ($i >=$payoutRequestData->currentPage()-2 && $i <=$payoutRequestData->currentPage())
                                                 <li class="page-item @if($payoutRequestData->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -148,7 +171,7 @@
                                         @if($payoutRequestData->currentPage() < $payoutRequestData->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $payoutRequestData->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $payoutRequestData->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($payoutRequestData->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
@@ -223,12 +246,10 @@
                                     @enderror
                                 </div>
                             </div>
-                                
-                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Pay Now</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </form>

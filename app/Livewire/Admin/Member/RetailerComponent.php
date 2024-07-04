@@ -45,7 +45,7 @@ class RetailerComponent extends Component
         $validateDate = Validator::make($this->state,[
             'name'=>'required|string|min:3',
             'email'=>'required|email|unique:users,email',
-            'mobile_number'=>'required|numeric|digits:10',
+            'mobile_number'=>'required|numeric|digits:10|unique:users,mobile_no',
             'address'=>'required',
             'state_name'=>'required',
             'city'=>'required|string',
@@ -61,6 +61,7 @@ class RetailerComponent extends Component
             'email'=>$validateDate['email'],
             'password'=>Hash::make($validateDate['mobile_number']),
             'mobile_no'=>$validateDate['mobile_number'],
+            'virtual_account_number' =>"ZGROSC".$validateDate['mobile_number'],
         ]);
         if($user):
             $apiPartner =Retailer::create([

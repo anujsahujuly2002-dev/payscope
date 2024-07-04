@@ -10,7 +10,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-inline float-md-end mb-3">
                                         <div class="search-box ms-2">
                                             <div class="position-relative">
@@ -22,11 +22,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="mb-3 d-flex justify-content-center">
-                                        @can('api-partner-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='createApiPartner'><i class="mdi mdi-plus me-2"></i> Add New</a>
-                                        @endcan
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -124,7 +120,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $loginSessions->lastPage()) as $i)
-                                            @if ($i >=$loginSessions->currentPage()-2 && $i <=$loginSessions->currentPage()) 
+                                            @if ($i >=$loginSessions->currentPage()-2 && $i <=$loginSessions->currentPage())
                                                 <li class="page-item @if($loginSessions->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -138,7 +134,7 @@
                                         @if($loginSessions->currentPage() < $loginSessions->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $loginSessions->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $loginSessions->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($loginSessions->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">

@@ -63,7 +63,7 @@
                                             </div>
                                         </th>
                                         <td>
-                                            <a href="#" class="text-body">{{ucfirst(Str_replace('-',' ',$permission->group))}}</a>
+                                            <a href="#" class="text-body">{{ucwords(Str_replace('-',' ',$permission->group))}}</a>
                                         </td>
                                         <td>
                                             {{$permission->name}}
@@ -72,7 +72,7 @@
                                         @canany(['permission-edit', 'permission-delete'])
                                             <td>
                                                 <ul class="list-inline mb-0">
-                                                    @can('role-edit') 
+                                                    @can('role-edit')
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='editPermission({{$permission}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -133,7 +133,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $permissions->lastPage()) as $i)
-                                            @if ($i >=$permissions->currentPage()-2 && $i <=$permissions->currentPage()) 
+                                            @if ($i >=$permissions->currentPage()-2 && $i <=$permissions->currentPage())
                                                 <li class="page-item @if($permissions->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -147,7 +147,7 @@
                                         @if($permissions->currentPage() < $permissions->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $permissions->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $permissions->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($permissions->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">

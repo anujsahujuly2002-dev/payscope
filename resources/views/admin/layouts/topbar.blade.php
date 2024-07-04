@@ -152,11 +152,19 @@
             </div> --}}
 
             <div class="dropdown d-none d-lg-inline-block ms-1">
+                @if(auth()->user()->getRoleNames()->first() !=='super-admin')
+                <button type="button" class="btn header-item noti-icon waves-effect">
+                    {{-- <i class="uil-wallet"></i> --}}
+                    <i class="fas fa-user-lock"></i>
+                    <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15 fw-bolder">&#x20B9;{{moneyFormatIndia(auth()->user()->walletAmount->locked_amuont)}}</span>
+                </button>
+                @endif
+
                 <button type="button" class="btn header-item noti-icon waves-effect">
                     <i class="uil-wallet"></i>
-                    <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">&#x20B9;{{auth()->user()->walletAmount->amount}}</span>
+                    <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15 fw-bolder">&#x20B9;{{auth()->user()->getRoleNames()->first() !=='super-admin'?moneyFormatIndia(auth()->user()->walletAmount->amount):moneyFormatIndia(getAllWalletBalances())}}</span>
                 </button>
-                
+
             </div>
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
@@ -265,9 +273,16 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    {{-- <a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">@lang('translation.View_Profile')</span></a>
-                    <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.My_Wallet')</span></a>
-                    <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Settings')</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
+                    {{-- @dd(auth()->user()->getRoleNames()->first()); --}}
+                    @if (auth()->user()->getRoleNames()->first() !=='super-admin')
+                        <a class="dropdown-item" href="{{route('admin.api.partner.profile',base64_encode(auth()->user()->id))}}">
+                            <i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i>
+                            <span class="align-middle">@lang('translation.View_Profile')</span>
+                        </a>
+                    @endif
+
+                    {{-- <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.My_Wallet')</span></a> --}}
+                    {{-- <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Settings')</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
                     <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Lock_screen')</span></a> --}}
                     <a class="dropdown-item" href="{{route('admin.logout')}}"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Sign_out')</span></a>
                 </div>

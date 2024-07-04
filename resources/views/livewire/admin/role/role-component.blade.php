@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
-                                        @can('role-create') 
+                                        @can('role-create')
                                             <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='createRole'><i class="mdi mdi-plus me-2"></i> Add New</a>
                                         @endcan
                                     </div>
@@ -66,15 +66,18 @@
                                             <a href="#" class="text-body">{{ucfirst(Str_replace('-',' ',$role->name))}}</a>
                                         </td>
                                         <td>
-                                            @foreach ($role->permissions as $permissions)
-                                                <span class="badge rounded-pill bg-secondary">{{str_replace('-',' ',$permissions->name)}}</span>
+                                            @foreach ($role->permissions as $key=> $permissions)
+                                                @if(($key+1)%4 == 0)
+                                                    <span class="badge rounded-pill bg-secondary">{{ucwords(str_replace('-',' ',$permissions->name))}}</span></br>
+                                                @else
+                                                    <span class="badge rounded-pill bg-secondary">{{ucwords(str_replace('-',' ',$permissions->name))}}</span>
+                                                @endif
                                             @endforeach
                                         </td>
-                                        {{-- <td>SimonRyles@minible.com</td> --}}
                                         @canany(['role-edit', 'role-delete'])
                                             <td>
                                                 <ul class="list-inline mb-0">
-                                                    @can('role-edit') 
+                                                    @can('role-edit')
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='editRole({{$role}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -84,18 +87,6 @@
                                                             <a href="javascript:void(0);" class="px-2 text-danger" wire:click.prevent='deleteConfirmation({{$role->id}})'><i class="uil uil-trash-alt font-size-18"></i></a>
                                                         </li>
                                                     @endcan
-                                                    {{-- <li class="list-inline-item dropdown">
-                                                        <a class="text-muted dropdown-toggle font-size-18 px-2" href="#"
-                                                            role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                            <i class="uil uil-ellipsis-v"></i>
-                                                        </a>
-
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">Action</a>
-                                                            <a class="dropdown-item" href="#">Another action</a>
-                                                            <a class="dropdown-item" href="#">Something else here</a>
-                                                        </div>
-                                                    </li> --}}
                                                 </ul>
                                             </td>
                                         @endcanany
@@ -163,14 +154,14 @@
                                 @foreach ($permission as $key=> $permissionGroup)
                                     <div class="col-md-6">
                                         <h5 class="font-size-14 mb-3">
-                                            <i class="mdi mdi-arrow-right text-primary me-1"></i>{{ ucfirst($key) }}
+                                            <i class="mdi mdi-arrow-right text-primary me-1"></i>{{ ucwords($key) }}
                                         </h5>
                                         <div class="vstack gap-2">
                                             @foreach ($permissionGroup as $key1=> $per)
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="formCheck{{$per->id}}"  value="{{ $per->id }}" wire.key="{{ $per->id}}" wire:model.lazy='permissionsId'>
                                                     <label class="form-check-label" for="formCheck{{$per->id}}">
-                                                        {{ ucfirst(str_replace("-"," ",$per->name)) }}
+                                                        {{ucwords(str_replace("-"," ",$per->name)) }}
                                                     </label>
                                                 </div>
                                             @endforeach

@@ -14,6 +14,8 @@ class Fund extends Model
         'payment_mode_id',
         'credited_by',
         'amount',
+        'opening_amount',
+        'closing_amount',
         'type',
         'pay_date',
         'pay_slip',
@@ -32,5 +34,9 @@ class Fund extends Model
 
     public function status() {
         return $this->belongsTo(Status::class,'status_id','id');
+    }
+
+    public function user () {
+        return $this->belongsTo(User::class,'user_id','id');
     }
 }

@@ -12,22 +12,32 @@ trait PayoutTraits {
 
     protected function payoutApiRequest($data =array()) {
         //check pending fund request
-        $checkPendingRequest  = FundRequest::where(['user_id'=>$data['user_id'],'status_id'=>'1'])->count();
+       /*  $checkPendingRequest  = FundRequest::where(['user_id'=>$data['user_id'],'status_id'=>'1'])->count();
         if($checkPendingRequest >0):
-            return [ 
+            return [
                 'status'=>'0001',
                 'msg'=>'One request is already submitted'
             ];
+        endif; */
+
+        $checkServiceActive = User::findOrFail($data['user_id'])->services;
+        if($checkServiceActive =='0'):
+            return [
+                'status'=>'0008',
+                'msg'=>"This service has been down, Please try again after sometimes",
+            ];
         endif;
 
-        // Check Wallet Amount 
-        $walletAmount = Wallet::where('user_id',$data['user_id'])->first()->amount;
-        if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > $walletAmount):
+        // Check Wallet Amount
+        $walletAmount = Wallet::where('user_id',$data['user_id'])->first();
+        if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > $walletAmount->amount-$walletAmount->locked_amuont):
             return [
                 'status'=>'0002',
                 'msg'=>'Low balance to make this request.'
             ];
         endif;
+
+
 
         // Check previous transaction time
         $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id'],'account_number'=>$data['account_number'],'amount'=>$data['amount']])->whereBetween('created_at',[Carbon::now()->subSeconds(30)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(30)->format('Y-m-d H:i:s')])->count();
@@ -60,9 +70,9 @@ trait PayoutTraits {
                 'msg'=>$e->getMessage(),
             ];
         }
-        
+
         Wallet::where('user_id',$data['user_id'])->update([
-            'amount'=>$walletAmount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
+            'amount'=>$walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
         ]);
         $adminId = User::whereHas('roles',function($q){
             $q->where('name','super-admin');
@@ -75,8 +85,8 @@ trait PayoutTraits {
             'charge'=>getCommission("dmt",$data['amount'],$data['user_id']),
             'status_id'=>'1',
             'credited_by'=>$adminId->id,
-            'balance'=>$walletAmount,
-            'closing_balnce'=>$walletAmount - ($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
+            'balance'=>$walletAmount->amount,
+            'closing_balnce'=>$walletAmount->amount - ($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
             'type'=>"debit",
             'transtype'=>"fund",
             'product'=>'payout',
@@ -86,17 +96,17 @@ trait PayoutTraits {
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = [
             "payer" => [
-                "bankProfileId" => "24255428726",
-                "accountNumber" => "123263400000200"
+                "bankProfileId" => "24148428726",
+                "accountNumber" => "923020061652668"
             ],
             "payee"   => [
                 "name"           => $data['account_holder_name'],
                 "accountNumber"  => $data['account_number'],
                 "bankIfsc"       => $data['ifsc_code']
-            ], 
+            ],
 
             "transferMode"       => $data['payment_mode']=='1'?"IMPS":"NEFT",
-            "transferAmount"     => $data['amount']+getCommission("dmt",$data['amount'],$data['user_id']),
+            "transferAmount"     => $data['amount'],
             "externalRef"        =>$data['payoutid'],
             "latitude"           => $new_arr[0]['geoplugin_latitude'],
             "longitude"          => $new_arr[0]['geoplugin_longitude'],
@@ -109,7 +119,7 @@ trait PayoutTraits {
         $headers = [
             'X-Ipay-Auth-Code'=>'1',
             'X-Ipay-Client-Id'=>'YWY3OTAzYzNlM2ExZTJlOUWx2c0hIFCZJmVsLIO8Mxw=',
-            'X-Ipay-Client-Secret'=>'6252d9bfe8832ff8cd648ed2f4e9cd5820c8e5864bb5ac15217670c74bafd73b',
+            'X-Ipay-Client-Secret'=>'051093090b6671f1be11b91eed4091a220c37c51d321f064a25260f6a697114f',
             'X-Ipay-Endpoint-Ip'=>request()->ip(),
             'Content-Type'=>'application/json'
         ];
@@ -120,7 +130,7 @@ trait PayoutTraits {
                 'status_id'=>'2',
                 'payout_ref' =>$res['data']['txnReferenceId'],
             ]);
-            PayoutRequestHistory::where('id',$fundRequest->id)->update([
+            PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                 'status_id'=>'2',
             ]);
             return [
@@ -133,12 +143,12 @@ trait PayoutTraits {
             FundRequest::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
             ]);
-            PayoutRequestHistory::where('id',$fundRequest->id)->update([
+            PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                 'status_id'=>'3',
-                'closing_balnce'=>$walletAmount
+                'closing_balnce'=>$walletAmount->amount
             ]);
             Wallet::where('user_id',$data['user_id'])->update([
-                'amount'=>$walletAmount+getCommission("dmt",$data['amount'],$data['user_id']),
+                'amount'=>$walletAmount->amount,
             ]);
             return [
                 'status'=>'0006',

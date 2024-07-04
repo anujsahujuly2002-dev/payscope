@@ -62,10 +62,10 @@
                                                 <label class="form-check-label" for="contacusercheck1">{{$srNo+$loop->iteration}}</label>
                                             </div>
                                         </th>
-                                        <td>{{$api->name}}</td>
-                                        <td>{{$api->type}}</td>
+                                        <td>{{ucwords($api->name)}}</td>
+                                        <td>{{ucwords($api->type)}}</td>
                                         <td>
-                                            <a href="javascript:void()" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-title="{{$api->name}}" data-bs-content="Url :-{{$api->url}} <br>Username:- {{$api->username}} <br> Password :- {{$api->password}} <br> Optional:-{{$api->optional}}">Api Credentials </a>                                        
+                                            <a href="javascript:void()" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-title="{{$api->name}}" data-bs-content="Url :-{{$api->url}} <br>Username:- {{$api->username}} <br> Password :- {{$api->password}} <br> Optional:-{{$api->optional}}">Api Credentials </a>
                                         </td>
                                         <td>
                                             <input type="checkbox" id="switch{{$api->id}}" switch="bool"  @if($api->status==1) checked @endif wire:change='statusUpdate({{$api->id}},{{$api->status}})' />
@@ -117,7 +117,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $apiLists->lastPage()) as $i)
-                                            @if ($i >=$apiLists->currentPage()-2 && $i <=$apiLists->currentPage()) 
+                                            @if ($i >=$apiLists->currentPage()-2 && $i <=$apiLists->currentPage())
                                                 <li class="page-item @if($apiLists->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -131,7 +131,7 @@
                                         @if($apiLists->currentPage() < $apiLists->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $apiLists->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $apiLists->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($apiLists->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">

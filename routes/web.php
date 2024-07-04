@@ -62,17 +62,20 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::prefix('retailer')->name('retailer.')->group(function() {
                 Route::get('/','retailer')->name('list');
             });
+            Route::get('view-profile/{id}','viewProfile')->name('view.profile');
         });
 
         // Setup Tools Route
         Route::controller(SetupToolsController::class)->prefix('setup')->name('setup.')->group(function(){
             Route::get('/bank','bank')->name('bank');
             Route::get('/opertator-manager','operatorManger')->name('operator.manager');
+            Route::get('/benificiary-manage','benificiaryManage')->name('benificiary.manage');
         });
 
         // Fund Manage Route
         Route::controller(FundController::class)->prefix('fund')->name('fund.')->group(function(){
             Route::get('/manual-request','manualRequest')->name('manual.request');
+            Route::get('/virtul-request','virtualRequest')->name('virtual.request');
         });
 
         // Payout Manager Route
@@ -81,6 +84,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         });
         Route::controller(LogManagerController::class)->prefix('log-manager')->name('log.manager.')->group(function() {
             Route::get('/login-session','loginSession')->name('login.session');
+            Route::get('/api-logs','apiLogs')->name('api.logs');
         });
 
         // Scheme Manager Route
@@ -93,9 +97,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/setting','setting')->name('setting');
         });
 
-        // Admin Setting Route 
+        // Admin Setting Route
         Route::controller(AdminSettingController::class)->prefix('admin-setting')->name('admin-setting.')->group(function(){
             Route::get('api-list','apiList')->name('api.list');
+            Route::get('manage-service','manageService')->name('manage.service');
         });
 
         // Recharge and bill payments Route

@@ -10,4 +10,8 @@ class LogManagerController extends Controller
     public function loginSession() {
         return view('admin.log-manager.login-session');
     }
+
+    public function apiLogs() {
+        return view('admin.log-manager.api-logs');
+    }
 }

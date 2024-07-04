@@ -1,15 +1,20 @@
 <?php
 
+
 use App\Models\ApiLog;
 use App\Models\Scheme;
+use App\Models\Wallet;
+use App\Models\Setting;
+use App\Models\Retailer;
 use App\Models\ApiPartner;
 use App\Models\Commission;
+use App\Models\PaymentMode;
 use App\Models\OperatorManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 if(!function_exists('apiCall')):
-    function apiCall($headers,$url,$prameter,$log=false,$txn_id) {
+    function apiCall($headers,$url,$prameter,$log=false,$txn_id=null,$headerType='') {
         try {
             $response = Http::retry(3, 100)->withHeaders($headers)->post($url,$prameter);
             $res = $response->getBody()->getContents();
@@ -24,9 +29,32 @@ if(!function_exists('apiCall')):
             endif;
             return json_decode($res,true);
         } catch (\Exception $e) {
+            dd($e);
             return $e->getMessage();
         }
-        
+
+    }
+endif;
+if(!function_exists('apiCallWitBody')):
+    function apiCallWitBody($headers,$url,$prameter,$log=false,$txn_id=null) {
+        try {
+                $response = Http::withHeaders($headers)->withBody($prameter, 'application/x-www-form-urlencoded')->post($url);
+                $res = $response->json();
+            if($log):
+                ApiLog::create([
+                    'url'=>$url,
+                    'txn_id'=>$txn_id,
+                    'header'=>json_encode($headers),
+                    'request'=>json_encode($prameter),
+                    'response'=> json_encode($response->json()),
+                ]);
+            endif;
+            return $res;
+        } catch (\Exception $e) {
+            dd($e);
+            return $e->getMessage();
+        }
+
     }
 endif;
 
@@ -34,9 +62,12 @@ endif;
 if(!function_exists('getCommission')):
     function getCommission ($operaterType,$amount,$user_id) {
         $charges = 0.00;
-        $schemeId = ApiPartner::where('user_id',$user_id)->first()->scheme_id;
+        $commission = null;
+        $schemeId = ApiPartner::where('user_id',$user_id)->first()->scheme_id??Retailer::where('user_id',$user_id)->first()->scheme_id;
         $scheme = OperatorManager::where('operator_type',$operaterType)->where('charge_range_start','<=',$amount)->where('charge_range_end','>=',$amount)->where('status','1')->first();
-        $commission = Commission::where(['slab_id'=>$scheme->id,'scheme_id'=>$schemeId])->first();
+        if(!is_null($scheme) && !is_null($schemeId)):
+            $commission = Commission::where(['slab_id'=>$scheme->id,'scheme_id'=>$schemeId])->first();
+        endif;
         if($commission !=null):
             if($commission->type =='0'):
                 $charges = $amount*$commission->value/100;
@@ -101,6 +132,38 @@ if(!function_exists('sentOtp')):
         $response = Http::get("https://instantalerts.co/api/web/send?apikey=".env('SMS_API_KEY')."&sender=".env('SENDER_ID')."&to=".$mobile_no."&message=".urlencode($content));
         if($response->successful()):
             return "success";
-        endif;  
+        endif;
     }
+endif;
+
+if(!function_exists('getSettingValue')):
+    function getSettingValue($settingKey) {
+        // dd($settingKey);
+        $settingRec = Setting::where('key', $settingKey)->first();
+        return ($settingRec) ? $settingRec->value : null;
+    }
+endif;
+
+if(!function_exists('getAllWalletBalances')):
+    function getAllWalletBalances() {
+        return Wallet::sum('amount');
+    }
+endif;
+
+if(!function_exists('moneyFormatIndia')):
+    function moneyFormatIndia($amount) {
+        list ($number, $decimal) = explode('.', sprintf('%.2f', floatval($amount)));
+
+    $sign = $number < 0 ? '-' : '';
+
+    $number = abs($number);
+
+    for ($i = 3; $i < strlen($number); $i += 3)
+    {
+        $number = substr_replace($number, ',', -$i, 0);
+    }
+
+    return $sign . $number . '.' . $decimal;
+}
+
 endif;

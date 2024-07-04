@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center">
-                        <a href="{{ url('index') }}" class="mb-5 d-block auth-logo">
+                        <a href="{{route('admin.login') }}" class="mb-5 d-block auth-logo">
                             <img src="{{ asset('/assets/images/logo1.jpeg') }}" alt="" height="22" class="logo logo-dark">
                             <img src="{{asset('/assets/images/logo1.jpeg') }}" alt="" height="22" class="logo logo-light">
                         </a>

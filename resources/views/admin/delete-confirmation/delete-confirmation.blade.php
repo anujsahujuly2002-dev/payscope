@@ -24,7 +24,7 @@
             )
         });
 
-        $('.startdate').change(function(e) {
+        $('.start_date').change(function(e) {
             @this.set('start_date', $(this).val())
         })
         $('.end-date').change(function(e) {
@@ -45,7 +45,7 @@
                 longitude: position.coords.longitude
             });
             // @this.set('latitude',);
-            // @this.set('longitude',position.coords.longitude);  
+            // @this.set('longitude',position.coords.longitude);
         }
 
         $(document).ready(function() {

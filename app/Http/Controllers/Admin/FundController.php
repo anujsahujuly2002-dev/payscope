@@ -10,4 +10,9 @@ class FundController extends Controller
     public function manualRequest() {
         return view('admin.fund-manager.manual-request');
     }
+
+    public function virtualRequest () {
+        return view('admin.fund-manager.virtual-request');
+    }
+
 }

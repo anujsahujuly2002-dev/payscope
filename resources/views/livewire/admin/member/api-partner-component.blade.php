@@ -47,8 +47,10 @@
                                     <th scope="col">Parent Details</th>
                                     <th scope="col">Company Profile</th>
                                     <th scope="col">Wallet Amount</th>
+                                    <th scope="col">Locked Amount</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Service</th>
                                     <th scope="col" style="width: 200px;">Action</th>
                                 </tr>
                             </thead>
@@ -77,8 +79,11 @@
                                         <td>
                                             {{ucfirst($apipartner?->apiPartner?->shop_name)}}<br>{{$apipartner?->apiPartner?->website}}
                                         </td>
-                                        <td>
-                                            {{$apipartner->walletAmount->amount}}
+                                        <td  class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($apipartner->walletAmount->amount,)}}
+                                        </td>
+                                        <td  class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($apipartner->walletAmount->locked_amuont)}}
                                         </td>
                                         <td>
                                             {{$apipartner->created_at}}
@@ -88,6 +93,10 @@
                                             <label for="switch{{$apipartner->id}}" data-on-label="Active" data-off-label="Inactive"></label>
                                         </td>
                                         <td>
+                                            <input type="checkbox" id="switch_{{$apipartner->id}}" switch="bool"  @if($apipartner->services==1) checked @endif wire:change='serviceUpdate({{$apipartner->id}},{{$apipartner->services}})' />
+                                            <label for="switch_{{$apipartner->id}}" data-on-label="Active" data-off-label="Inactive"></label>
+                                        </td>
+                                        <td>
                                             <li class="list-inline-item dropdown">
                                                 <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)"
                                                     role="button" data-bs-toggle="dropdown" aria-haspopup="true">
@@ -95,7 +104,11 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="assignPermissionUserBassed({{$apipartner->id}})">Permission</a>
-                                                    <a class="dropdown-item" href="{{route('admin.api.partner.profile',base64_encode($apipartner->id))}}">Profile</a>
+                                                    @if(checkRecordHasPermission(['view-profile']))
+                                                        @can('view-profile')
+                                                            <a class="dropdown-item" href="{{route('admin.view.profile',base64_encode($apipartner->id))}}">Profile</a>
+                                                        @endcan
+                                                    @endif
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{$apipartner->id}},'dmt')">Scheme</a>
                                                 </div>
                                             </li>
@@ -136,7 +149,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $apiPartners->lastPage()) as $i)
-                                            @if ($i >=$apiPartners->currentPage()-2 && $i <=$apiPartners->currentPage()) 
+                                            @if ($i >=$apiPartners->currentPage()-2 && $i <=$apiPartners->currentPage())
                                                 <li class="page-item @if($apiPartners->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -150,7 +163,7 @@
                                         @if($apiPartners->currentPage() < $apiPartners->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $apiPartners->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $apiPartners->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($apiPartners->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
@@ -362,7 +375,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endforeach 
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

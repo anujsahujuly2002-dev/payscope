@@ -31,6 +31,7 @@ class ApiListComponent extends Component
     }
 
     public function store() {
+        // dd($this->state);
         $validateData = Validator::make($this->state,[
             'api_name'=>'required',
             'api_code'=>'required',
@@ -38,6 +39,9 @@ class ApiListComponent extends Component
             'username'=>'required',
             'product_type'=>'required',
         ])->validate();
+        $validateData['password'] = $this->state['password'];
+        $validateData['optional1'] = $this->state['optional1'];
+        // dd($validateData);
         $api = Api::create([
             'name'=>$validateData['api_name'],
             'code'=>$validateData['api_code'],
