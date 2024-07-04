@@ -13,7 +13,6 @@ use App\Models\PayoutRequestHistory;
 trait EkoPayoutTrait {
 
     protected function ekoPayoutApi($data=array()) {
-        dd($data);
         $ekoPaymentMode = [
             "imps"=> "5",
             "neft"=>"4",
