@@ -13,9 +13,13 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "maatwebsite/excel": "3.*",
 =======
 >>>>>>> bde5cc6 (again setup)
+=======
+        "maatwebsite/excel": "3.*",
+>>>>>>> 10a8825 (Payout Request Export)
         "spatie/laravel-permission": "^5.11"
     },
     "require-dev": {

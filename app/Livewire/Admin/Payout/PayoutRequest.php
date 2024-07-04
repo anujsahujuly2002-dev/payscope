@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Models\FundRequest;
 use App\Models\PaymentMode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Traits\PayoutTraits;
 use Livewire\WithPagination;
 use App\Traits\EkoPayoutTrait;
@@ -21,9 +22,19 @@ use Maatwebsite\Excel\Facades\Excel;
 use Livewire\WithPagination;
 use App\Models\PayoutRequestHistory;
 use App\Traits\EkoPayoutTrait;
+=======
+>>>>>>> 10a8825 (Payout Request Export)
 use App\Traits\PayoutTraits;
+use Livewire\WithPagination;
+use App\Traits\EkoPayoutTrait;
+use App\Exports\PayoutRequestExport;
+use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Http;
+<<<<<<< HEAD
 >>>>>>> bde5cc6 (again setup)
+=======
+use Maatwebsite\Excel\Facades\Excel;
+>>>>>>> 10a8825 (Payout Request Export)
 use Illuminate\Support\Facades\Validator;
 use Psy\CodeCleaner\AssignThisVariablePass;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -35,15 +46,19 @@ class PayoutRequest extends Component
     public $payoutFormRequest = [];
     public $statuses = [];
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     // public $payoutRequestData;
 >>>>>>> bde5cc6 (again setup)
+=======
+>>>>>>> 10a8825 (Payout Request Export)
     public $start_date;
     public $end_date;
     public $value;
     public $agentId;
     public $status;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     // public function mount() {
@@ -53,6 +68,8 @@ class PayoutRequest extends Component
     // }
 
 >>>>>>> bde5cc6 (again setup)
+=======
+>>>>>>> 10a8825 (Payout Request Export)
     public function updated() {
         $this->resetPage();
     }
@@ -106,6 +123,7 @@ class PayoutRequest extends Component
         ])->validate();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         $validateData['user_id']= auth()->user()->id;
         // $response = $this->payoutApiRequest($validateData);
         $response = $this->ekoPayoutApi($validateData);;
@@ -114,11 +132,15 @@ class PayoutRequest extends Component
         //     $validateData['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
         // } while (FundRequest::where("payout_id", $validateData['payoutid'])->first() instanceof FundRequest);
 
+=======
+>>>>>>> 10a8825 (Payout Request Export)
         $validateData['user_id']= auth()->user()->id;
-        // $response = $this->payoutApiRequest($validateData);
         $response = $this->ekoPayoutApi($validateData);
+<<<<<<< HEAD
 
 >>>>>>> bde5cc6 (again setup)
+=======
+>>>>>>> 10a8825 (Payout Request Export)
         $this->dispatch('hide-form');
         if($response['status']=='0005'):
             return redirect()->back()->with('success',$response['msg']);
@@ -129,6 +151,7 @@ class PayoutRequest extends Component
 
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     public function export() {
@@ -164,6 +187,11 @@ class PayoutRequest extends Component
         })
         ->get();
 >>>>>>> bde5cc6 (again setup)
+=======
+
+    public function export() {
+        return Excel::download(new PayoutRequestExport, time().'.xlsx');
+>>>>>>> 10a8825 (Payout Request Export)
     }
 
 

@@ -9,17 +9,21 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PayoutRequestExport implements FromCollection,WithHeadings
 {
+<<<<<<< HEAD
     public $data;
     public function __construct($data){
         $this->data = $data;
 
     }
+=======
+>>>>>>> 10a8825 (Payout Request Export)
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
         $fundRequestArray = [];
+<<<<<<< HEAD
         $fundRequests = new FundRequest;
         if($this->data['user_id'] !=null):
             $fundRequests = $fundRequests->where('user_id',$this->data['user_id']);
@@ -37,6 +41,10 @@ class PayoutRequestExport implements FromCollection,WithHeadings
             $fundRequests = $fundRequests->where('status_id',$this->data['status']);
         endif;
         foreach($fundRequests->get() as $fundRequest):
+=======
+        $fundRequests =  FundRequest::get();
+        foreach($fundRequests as $fundRequest):
+>>>>>>> 10a8825 (Payout Request Export)
             $fundRequestArray[]=[
                 $fundRequest->user->name,
                 $fundRequest->payout_id,
