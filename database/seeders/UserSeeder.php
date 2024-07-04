@@ -37,6 +37,7 @@ class UserSeeder extends Seeder
         // print_r(Permission::all());
         // die;
 <<<<<<< HEAD
+<<<<<<< HEAD
         $role = Role::findOrFail(1);
         $role->givePermissionTo(Permission::all());
         $user = User::create([
@@ -46,6 +47,8 @@ class UserSeeder extends Seeder
             'virtual_account_number'=>'ZGROSC9519035604',
             'mobile_no'=>'9519035604'
 =======
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
         /* $role = Role::findOrFail(1);
         $role->givePermissionTo(Permission::all());
  */
@@ -53,12 +56,16 @@ class UserSeeder extends Seeder
             'name'=>'Admin',
             'email'=>'payscope@admin.com',
             'password'=>Hash::make('Payscope@123#')
+<<<<<<< HEAD
 >>>>>>> bde5cc6 (again setup)
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
         ]); 
 
         $user->assignRole('super-admin');
         Wallet::create([
             'user_id'=>$user->id
+<<<<<<< HEAD
 <<<<<<< HEAD
         ]);
 
@@ -72,6 +79,8 @@ class UserSeeder extends Seeder
         //     'name'=>'rejected'
         // ]);
 =======
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
         ]); */
 
         Status::create([
@@ -83,6 +92,9 @@ class UserSeeder extends Seeder
         Status::create([
             'name'=>'rejected'
         ]);
+<<<<<<< HEAD
 >>>>>>> bde5cc6 (again setup)
+=======
+>>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
     }
 }

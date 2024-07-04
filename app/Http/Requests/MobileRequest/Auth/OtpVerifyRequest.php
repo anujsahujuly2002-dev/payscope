@@ -5,7 +5,8 @@ namespace App\Http\Requests\MobileRequest\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-class LoginRequest extends FormRequest
+
+class OtpVerifyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +24,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username'=>'required|email|exists:users,email',
-            'password'=>'required',
-            'latitude'=>'required',
-            'logitude'=>'required',
-<<<<<<< HEAD
-=======
-            'ip_address'=>'required|ipv4'
->>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
+            
+            'otp'=>'required|digits:4',
         ];
     }
 

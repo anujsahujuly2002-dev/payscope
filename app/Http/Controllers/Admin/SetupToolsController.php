@@ -14,11 +14,8 @@ class SetupToolsController extends Controller
     public function operatorManger() {
         return view('admin.setup-tools.operator-manager');
     }
-<<<<<<< HEAD
 
     public function benificiaryManage() {
         return view('admin.setup-tools.benificiary');
     }
-=======
->>>>>>> bde5cc6 (again setup)
-}
+    }

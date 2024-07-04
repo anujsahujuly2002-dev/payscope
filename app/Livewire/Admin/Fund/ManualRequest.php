@@ -31,14 +31,11 @@ class ManualRequest extends Component
     public $value;
     public $agentId;
 
-<<<<<<< HEAD
     public function updated() {
         $this->resetPage();
     }
 
 
-=======
->>>>>>> bde5cc6 (again setup)
     public function render()
     {
         $this->banks = Bank::where('status','1')->get();
@@ -48,7 +45,6 @@ class ManualRequest extends Component
             $query->where('user_id',auth()->user()->id);
         })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
             $query->where('user_id',auth()->user()->id);
-<<<<<<< HEAD
         })->when($this->start_date !=null && $this->end_date ==null,function($u){
             $u->whereDate('created_at',$this->start_date);
         })
@@ -63,8 +59,6 @@ class ManualRequest extends Component
         })
         ->when($this->value !=null,function($u){
             $u->where('references_no',$this->value);
-=======
->>>>>>> bde5cc6 (again setup)
         })->latest()->paginate(10);
         return view('livewire.admin.fund.manual-request',compact('statuses','funds'));
     }
@@ -155,29 +149,5 @@ class ManualRequest extends Component
         endif;
     }
 
-<<<<<<< HEAD
    
-=======
-    public function search() {
-        $this->funds = Fund::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })
-        ->when($this->start_date !=null && $this->end_date ==null,function($u){
-            $u->whereDate('created_at',$this->start_date);
-        })
-        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
-            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
-        })
-        ->when($this->status !=null,function($u){
-            $u->where('status_id',$this->status);
-        })
-        ->when($this->agentId !=null,function($u){
-            $u->where('user_id',$this->agentId);
-        })
-        ->when($this->value !=null,function($u){
-            $u->where('references_no',$this->value);
-        })
-        ->get();
-    }
->>>>>>> bde5cc6 (again setup)
 }

@@ -47,7 +47,7 @@
                                 <span>Recharge & Bill Payment</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                @if (['create','list'])
+                                @if (checkRecordHasPermission(['create','list']))
                                     @canany(['create','list'])
                                         <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Mobile </a></li>
                                     @endcanany

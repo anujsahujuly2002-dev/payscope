@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Admin\Fund;
 
-<<<<<<< HEAD
 use App\Models\Status;
-=======
->>>>>>> bde5cc6 (again setup)
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\VirtualRequest;
 
 class VirtualRequestComponent extends Component
 {
-<<<<<<< HEAD
     use  WithPagination;
     public $statuses = [];
     public $start_date;
@@ -44,13 +40,6 @@ class VirtualRequestComponent extends Component
         })
         ->when($this->value !=null,function($u){
             $u->where('reference_number', 'like', '%'.$this->value.'%')->orWhere('remitter_utr','like','%'.$this->value.'%');
-=======
-   use  WithPagination;
-    public function render()
-    {
-        $virtualRequests  = VirtualRequest::when(auth()->user()->getRoleNames()->first() !='super-admin',function($reports){
-            $reports->where('user_id',auth()->user()->id);
->>>>>>> bde5cc6 (again setup)
         })->latest()->latest()->paginate(10);
 
         return view('livewire.admin.fund.virtual-request-component',compact('virtualRequests'));

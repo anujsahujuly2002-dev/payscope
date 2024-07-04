@@ -47,15 +47,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 d-flex">
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
-=======
-                                        <a href="javascript:void(0);" class="btn btn-primary waves-effect waves-light align-self-center" wire:click.prevent=''><i class="fas fa-file-excel me-2"></i>Export</a>
->>>>>>> bde5cc6 (again setup)
-=======
-                                        <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
->>>>>>> 10a8825 (Payout Request Export)
                                     </div>
                                 </div>
                             </div>
@@ -109,12 +101,8 @@
                                         <td>
                                             Account No. -{{ucfirst($payoutReq->account_number)}}<br>Account Holder Name - {{$payoutReq->account_holder_name}}<br>Ifsc Code - {{strtoupper($payoutReq->ifsc_code)}}                                        </td>
                                         <td>
-<<<<<<< HEAD
                                             Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}} <br>
                                             UTR Number :-{{$payoutReq->utr_number}}
-=======
-                                            Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}}
->>>>>>> bde5cc6 (again setup)
                                         </td>
                                         <td class="fw-bolder">
                                             &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->balance)}}</td>

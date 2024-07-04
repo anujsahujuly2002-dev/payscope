@@ -17,15 +17,7 @@ class Status extends Model
         elseif($value=='approved'):
             $status = '<span class="badge rounded-pill bg-success" style="background-color:#49FF00;">Success</span>';
         elseif($value=='refunded'):
-<<<<<<< HEAD
-<<<<<<< HEAD
             $status = '<span class="badge rounded-pill" style="background-color:#1C1678;">Refunded</span>';
-=======
-            $status = '<span class="badge rounded-pill bg-success" style="background-color:#49FF00;">Success</span>';
->>>>>>> bde5cc6 (again setup)
-=======
-            $status = '<span class="badge rounded-pill" style="background-color:#1C1678;">Refunded</span>';
->>>>>>> 10a8825 (Payout Request Export)
         endif;
         return $status;
     }
