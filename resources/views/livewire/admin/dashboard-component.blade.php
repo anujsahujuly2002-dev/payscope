@@ -7,6 +7,7 @@
                         <div id="growth-chart" data-colors='["--bs-warning"]'></div>
                     </div>
                     <div>
+                        {{-- {{dd(Auth::user()->id)}} --}}
                         <h4 class="mb-1 mt-1"> &#x20B9; <span data-plugin="counterup">{{$payout}}</span></h4>
                         <p class="text-muted mb-0">Total Payout</p>
                     </div>
@@ -409,7 +410,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-3 text-center">
                         <a href="#" class="text-primary font-size-14 fw-medium">View All Sources <i class="mdi mdi-chevron-right"></i></a>
                     </div>
