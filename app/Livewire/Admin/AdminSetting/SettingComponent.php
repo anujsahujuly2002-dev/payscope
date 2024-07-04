@@ -8,27 +8,21 @@ use Illuminate\Support\Facades\DB;
 class SettingComponent extends Component
 {
 
-    public $otpEnabled ;
     
     public function OtpEnabled($key,$value){
-     
-        Setting::where('key','otp-verification')->update([
+        Setting::where('key',$key)->update([
             'key' => $key,
-            'value' => $value ? 'false' : 'true',
+            'value' => $value=='no' ? 'yes' : 'no',
        ]);
     //    dd($value,$key);
-    }
-
-    public function mount()
-    {
-        $this->otpEnabled = DB::table('settings')->where('key', 'otp-verification')->value('value');
     }
 
     
 
     public function render()
     {
-        return view('livewire.admin.admin-setting.setting-component');
+        $otpEnabled = Setting::where('key', 'otp verification')->first(['value']);
+        return view('livewire.admin.admin-setting.setting-component',compact('otpEnabled'));
     }
 
 }

@@ -101,6 +101,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(AdminSettingController::class)->prefix('admin-setting')->name('admin-setting.')->group(function(){
             Route::get('api-list','apiList')->name('api.list');
             Route::get('manage-service','manageService')->name('manage.service');
+            Route::get('setting','manageSetting')->name('setting');
         });
 
         // Recharge and bill payments Route

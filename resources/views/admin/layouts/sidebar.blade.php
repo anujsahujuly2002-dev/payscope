@@ -244,7 +244,7 @@
                         <li><a href="javascript:void()">Payout Bank</a></li>
                     </ul>
                 </li> --}}
-                @if(checkRecordHasPermission(['api-create', 'api-list', 'api-change-status','api-edit']))
+                @if(checkRecordHasPermission(['api-create', 'api-list', 'api-change-status','api-edit','manage-setting','setting-update']))
                     @canany(['api-create', 'api-list', 'api-change-status','api-edit'])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -261,6 +261,12 @@
                                     @canany(['manage-service','service-create'])
                                         <li><a href="{{route('admin.admin-setting.manage.service')}}">Service Manage</a></li>
                                     @endcanany
+                                @endif
+
+                                  @if(checkRecordHasPermission(['manage-setting','setting-update']))
+                                   @canany(['manage-setting','setting-create'])
+                                     <li><a href="{{route('admin.admin-setting.setting')}}">Setting</a></li>
+                                   @endcan
                                 @endif
                             </ul>
                         </li>
