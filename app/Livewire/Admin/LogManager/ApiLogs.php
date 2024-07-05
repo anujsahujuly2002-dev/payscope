@@ -34,7 +34,8 @@ class ApiLogs extends Component
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
 
         }) ->when($this->transaction_id !=null,function($u){
-            $u->where('txn_id',$this->transaction_id);
+            $u->where('txn_id', 'like', '%'.$this->transaction_id.'%');
+            // $u->where('txn_id',$this->transaction_id);
 
         })->latest()->paginate(10);
         return view('livewire.admin.log-manager.api-logs',compact('apiLogs'));
