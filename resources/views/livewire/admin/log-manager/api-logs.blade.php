@@ -8,21 +8,27 @@
                     <div class="row mb-2">
                         <div class="col-md-6">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-inline float-md-end mb-3">
-                                        <div class="search-box ms-2">
-                                            <div class="position-relative">
-                                                <input type="text" class="form-control rounded bg-light border-0"
-                                                    placeholder="Search...">
-                                                <i class="mdi mdi-magnify search-icon"></i>
-                                            </div>
-                                        </div>
+                                <div class="col-md-3">
+                                    <div class="form-group mb-10">
+                                        <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date' >
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-
+                                <div class="col-md-3">
+                                    <div class="form-group mb-10">
+                                        <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date' >
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control  rounded bg-light border-0" placeholder="Transaction Id" wire:model.live="transaction_id">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

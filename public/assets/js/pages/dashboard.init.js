@@ -66,7 +66,7 @@ if (BarchartTotalReveueColors) {
         columnWidth: '50%'
       }
     },
-    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    labels: [6],
     xaxis: {
       crosshairs: {
         width: 1
@@ -134,7 +134,7 @@ if (RadialchartOrdersChartColors) {
   };
   var chart = new ApexCharts(document.querySelector("#orders-chart"), options);
   chart.render();
-} // 
+} //
 // Customers Chart
 //
 
@@ -175,7 +175,7 @@ if (RadialchartCustomersColors) {
   };
   var chart = new ApexCharts(document.querySelector("#customers-chart"), options);
   chart.render();
-} // 
+} //
 // Growth Chart
 //
 

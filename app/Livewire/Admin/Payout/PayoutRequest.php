@@ -93,8 +93,6 @@ class PayoutRequest extends Component
         else:
             return redirect()->back()->with('error',$response['msg']);
         endif;
-
-
     }
 
 
@@ -106,7 +104,7 @@ class PayoutRequest extends Component
             'status'=>$this->status,
             'value'=>$this->value
         ];
-         //dd($data);
+        //  dd($data);
         return Excel::download(new PayoutRequestExport($data), time().'.xlsx');
     }
 

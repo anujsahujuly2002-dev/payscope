@@ -24,7 +24,7 @@ class LoginController extends Controller
             'password'=>$request->input('password'),
             'type'=>"mobile_api",
         ];
-        $user = $this->loginRepo->login($userDetails);
+        $user = $this->loginRepo->loggiin($userDetails);
         return response()->json($user);
     }
 
