@@ -10,9 +10,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 class PayoutRequestExport implements FromCollection,WithHeadings
 {
     public $data;
+
     public function __construct($data){
         $this->data = $data;
-
     }
     /**
     * @return \Illuminate\Support\Collection

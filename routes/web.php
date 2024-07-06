@@ -1,7 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Admin\FundController;
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\RoleAndPermissions;
+use App\Http\Controllers\Admin\Auth\AuthController;
+use App\Http\Controllers\Admin\DashBoardController;
+use App\Http\Controllers\Admin\ApiSettingController;
+use App\Http\Controllers\Admin\LogManagerController;
+use App\Http\Controllers\Admin\SetupToolsController;
+use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\Admin\PayoutMangerController;
+use App\Http\Controllers\Admin\SchemeManagerController;
+use App\Http\Controllers\Admin\RechargeAndBillPaymentsController;
 
 /*
 |--------------------------------------------------------------------------
