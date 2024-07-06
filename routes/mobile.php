@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Mobile\DashboardController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
