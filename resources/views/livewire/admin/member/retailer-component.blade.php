@@ -42,16 +42,16 @@
                                             <label class="form-check-label" for="contacusercheck">Sr No.</label>
                                         </div>
                                     </th>
-                                    <th scope="col">id</th>
+                                    <th scope="col">Id</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Parent Details</th>
                                     <th scope="col">Company Profile</th>
                                     <th scope="col">Wallet Amount</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
-                                    {{-- @canany(['permission-edit', 'permission-delete'])
+                                    {{-- @canany(['permission-edit', 'permission-delete']) --}}
                                         <th scope="col" style="width: 200px;">Action</th>
-                                    @endcanany --}}
+                                    {{-- @endcanany --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,6 +89,23 @@
                                             <input type="checkbox" id="switch{{$retailer->id}}" switch="bool"  @if($retailer->status==1) checked @endif wire:change='statusUpdate({{$retailer->id}},{{$retailer->status}})' />
                                             <label for="switch{{$retailer->id}}" data-on-label="Active" data-off-label="Inactive"></label>
                                         </td>
+                                        <td>
+                                            <li class="list-inline-item dropdown">
+                                                <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)"
+                                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                                                    <i class="uil uil-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="assignPermissionUserBassed({{$retailer->id}})">Permission</a>
+                                                     {{-- @if(checkRecordHasPermission(['view-profile'])) --}}
+                                                        {{-- @can('view-profile') --}}
+                                                        <a class="dropdown-item" href="{{route('admin.view.profile',base64_encode($retailer->id))}}">Profile</a>
+                                                        {{-- @endcan --}}
+                                                    {{-- @endif --}}
+                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{$retailer->id}},'dmt')">Scheme</a>
+                                                </div>
+                                            </li>
+                                        </td>
                                     </tr>
                                 @endforeach
 
@@ -125,7 +142,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $retailers->lastPage()) as $i)
-                                            @if ($i >=$retailers->currentPage()-2 && $i <=$retailers->currentPage()) 
+                                            @if ($i >=$retailers->currentPage()-2 && $i <=$retailers->currentPage())
                                                 <li class="page-item @if($retailers->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -139,7 +156,7 @@
                                         @if($retailers->currentPage() < $retailers->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $retailers->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $retailers->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($retailers->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
@@ -161,6 +178,7 @@
         </div>
     </div>
         <!--  Large modal example -->
+        @if($createRetailerForm)
         <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-lg">
                 <form wire:submit.prevent="store" autocomplete="off">
@@ -315,6 +333,90 @@
                 </form>
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        @elseif($assignPermissionUserBasedForm)
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent="userBasedSyncPermission" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">Change Permission</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-nowrap mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40%;">Permission Group</th>
+                                            <th style="width: 60%;">Permission Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($permission as $keys => $permissions)
+                                            <tr>
+                                                <td>{{ucfirst($keys)}}</td>
+                                                <td>
+                                                    <div class="vstack gap-2">
+                                                        @foreach ($permissions as $key1=> $per)
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="formCheck{{$per->id}}"  value="{{ $per->id }}" wire.key="{{ $per->id}}" wire:model.lazy='permissionsId'>
+                                                                <label class="form-check-label" for="formCheck{{$per->id}}">
+                                                                    {{ ucfirst(str_replace("-"," ",$per->name)) }}
+                                                                </label>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+        @else
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent="setScheme" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">Change Scheme</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 mb-0 mt-2">
+                                    <label for="scheme" class="form-label">Scheme</label>
+                                    <select type="text" id="scheme" class="form-control @error('scheme') is-invalid @enderror" wire:model.defer='scheme'>
+                                        <option value="">Select Scheme</option>
+                                        @foreach ($schemes as $scheme)
+                                            <option value="{{$scheme->id}}">{{$scheme->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('scheme')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+    @endif
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 </div>
