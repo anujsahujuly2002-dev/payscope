@@ -30,8 +30,6 @@ class RetailerComponent extends Component
 
 
 
-
-
     public function render()
     {
         if(!auth()->user()->can('retailer-list'))
@@ -117,7 +115,30 @@ class RetailerComponent extends Component
         return redirect()->back()->with('success','Your Status has been updated');
     }
 
+    public function changeScheme($id) {
+        $this->reset();
+        $this->createRetailerForm = false;
+        $this->assignPermissionUserBasedForm = false;
+        $this->schemeForm=true;
+        $retailer = Retailer::where('user_id',$id)->first();
+        $this->scheme = $retailer->scheme_id;
+        $this->retailerId = $retailer->id;
+        $this->dispatch('show-form');
+    }
 
+    public function setScheme() {
+        $updateScheme = Retailer::where('id',$this->retailerId)->update([
+            'scheme_id'=>$this->scheme
+        ]);
+        $this->dispatch('hide-form');
+        if($updateScheme):
+            sleep(1);
+            return redirect()->back()->with('success','New scheme Assign Successfully !');
+        else:
+            DB::rollback();
+            return redirect()->back()->with('error','New scheme not assign Please Try again !');
+        endif;
+    }
 
     public function assignPermissionUserBassed($id) {
         $this->reset();
