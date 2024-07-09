@@ -10,6 +10,8 @@ use Livewire\Component;
 use App\Models\PaymentMode;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use App\Exports\ManualRequestExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -149,5 +151,17 @@ class ManualRequest extends Component
         endif;
     }
 
-   
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first()!='api-partner'?$this->agentId:NULL,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'status'=>$this->status,
+            'value'=>$this->value
+        ];
+        //  dd($data);
+        return Excel::download(new ManualRequestExport($data), time().'.xlsx');
+    }
+
+
 }

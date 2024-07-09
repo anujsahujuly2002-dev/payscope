@@ -57,7 +57,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1">&#x20B9;<span data-plugin="counterup">{{moneyFormatIndia($commission)}}</span></h4>
-                        <p class="text-muted mb-0">Total Comission:</p>
+                        <p class="text-muted mb-0">Total Payout Charges:</p>
                     </div>
                     <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
                     </p>

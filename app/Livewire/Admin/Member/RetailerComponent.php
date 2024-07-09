@@ -8,16 +8,28 @@ use App\Models\Scheme;
 use App\Models\Wallet;
 use Livewire\Component;
 use App\Models\Retailer;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
-use Livewire\WithPagination;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class RetailerComponent extends Component
 {
     use WithPagination;
     public $state = [];
+    public $createRetailerForm  = false;
+    public $assignPermissionUserBasedForm = false;
+    public $schemeForm = false;
+    public $retailerId;
+    public $scheme;
+    public $permission=[];
+    public $permissionsId=[];
+    public $user;
+
+
+
     public function render()
     {
         if(!auth()->user()->can('retailer-list'))
@@ -27,7 +39,7 @@ class RetailerComponent extends Component
         $retailers = User::whereHas('roles',function($q){
             $q->where('name','retailer');
         })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-            $query->whereHas('apiPartner',function ($p){
+            $query->whereHas('retailer',function ($p){
                 $p->where('added_by',auth()->user()->id);
             });
         })->latest()->paginate(10);
@@ -64,7 +76,7 @@ class RetailerComponent extends Component
             'virtual_account_number' =>"ZGROSC".$validateDate['mobile_number'],
         ]);
         if($user):
-            $apiPartner =Retailer::create([
+            $retailer =Retailer::create([
                 'user_id'=>$user->id,
                 'added_by'=>auth()->user()->id,
                 'mobile_no'=>$validateDate['mobile_number'],
@@ -84,7 +96,7 @@ class RetailerComponent extends Component
                 'locked_amuont'=>"0",
             ]);
             $this->dispatch('hide-form');
-            if($apiPartner):
+            if($retailer):
                 sleep(1);
                 return redirect()->back()->with('success','Retailer Created Successfully !');
             else:
@@ -101,5 +113,62 @@ class RetailerComponent extends Component
             'status'=>$status==0?1:0,
         ]);
         return redirect()->back()->with('success','Your Status has been updated');
+    }
+
+    public function changeScheme($id) {
+        $this->reset();
+        $this->createRetailerForm = false;
+        $this->assignPermissionUserBasedForm = false;
+        $this->schemeForm=true;
+        $retailer = Retailer::where('user_id',$id)->first();
+        $this->scheme = $retailer->scheme_id;
+        $this->retailerId = $retailer->id;
+        $this->dispatch('show-form');
+    }
+
+    public function setScheme() {
+        $updateScheme = Retailer::where('id',$this->retailerId)->update([
+            'scheme_id'=>$this->scheme
+        ]);
+        $this->dispatch('hide-form');
+        if($updateScheme):
+            sleep(1);
+            return redirect()->back()->with('success','New scheme Assign Successfully !');
+        else:
+            DB::rollback();
+            return redirect()->back()->with('error','New scheme not assign Please Try again !');
+        endif;
+    }
+
+    public function assignPermissionUserBassed($id) {
+        $this->reset();
+        $this->createRetailerForm = false;
+        $this->schemeForm=false;
+        $this->assignPermissionUserBasedForm = true;
+        $groups = Permission::distinct()->pluck('group');
+        foreach($groups as $group) {
+            $this->permission[$group] = Permission::where('group', $group)->get();
+        }
+        $this->user = User::find($id);
+        $roleId = $this->user->roles()->first()->id;
+        $roleHasPermissionCount=DB::table("model_has_permissions")->where("model_has_permissions.model_id", $this->user->id)->count();
+        if($roleHasPermissionCount >0):
+            $this->permissionsId = DB::table("model_has_permissions")->where("model_has_permissions.model_id", $this->user->id)->pluck('model_has_permissions.permission_id')->toArray();
+        else:
+            $this->permissionsId = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $roleId)->pluck('role_has_permissions.permission_id')->toArray();
+        endif;
+        $this->dispatch('show-form');
+    }
+
+    public function userBasedSyncPermission() {
+        $upadtePermission = $this->user->syncPermissions([$this->permissionsId]);
+        $this->dispatch('hide-form');
+        if($upadtePermission):
+            sleep(1);
+            return redirect()->back()->with('success','New Permission Assign Successfully !');
+        else:
+            DB::rollback();
+            return redirect()->back()->with('error','New Permission not assign Please Try again !');
+        endif;
     }
 }

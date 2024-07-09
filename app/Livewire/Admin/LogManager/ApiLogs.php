@@ -15,13 +15,13 @@ class ApiLogs extends Component
     use WithPagination;
     public $start_date;
     public $end_date;
+    public $value;
+    public $status;
     public $transaction_id;
 
     public function render()
     {
-        // if(!auth()->user()->can('log-manager')):
-        //     throw UnauthorizedException::forPermissions(['log-manager']);
-        // endif;
+
         $apiLogs = ApiLog::when(auth()->user()->getRoleNames()->first()=='api-logs',function($query){
             $query->where('user_id',auth()->user()->id);
         })->when(auth()->user()->getRoleNames()->first()=='login-session',function($query){
@@ -37,6 +37,8 @@ class ApiLogs extends Component
             $u->where('txn_id', 'like', '%'.$this->transaction_id.'%');
             // $u->where('txn_id',$this->transaction_id);
 
+        })->when($this->value !=null,function($u){
+            $u->where('payout_ref', 'like', '%'.$this->value.'%')->orWhere('payout_id','like','%'.$this->value.'%');
         })->latest()->paginate(10);
         return view('livewire.admin.log-manager.api-logs',compact('apiLogs'));
     }
@@ -46,7 +48,10 @@ class ApiLogs extends Component
         $data = [
             'user_id'=>auth()->user()->getRoleNames()->first()!='api-logs'?$this->transaction_id:NULL,
             'start_date'=>$this->start_date,
-            'end_date'=>$this->end_date
+            'end_date'=>$this->end_date,
+            'value'=>$this->value,
+            'status'=>$this->status
+
         ];
         //  dd($data);
         return Excel::download(new PayoutRequestExport($data), time().'.xlsx');

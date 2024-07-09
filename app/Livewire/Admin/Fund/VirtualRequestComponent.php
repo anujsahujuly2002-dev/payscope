@@ -6,6 +6,8 @@ use App\Models\Status;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\VirtualRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\VirtualRequestExport;
 
 class VirtualRequestComponent extends Component
 {
@@ -16,7 +18,7 @@ class VirtualRequestComponent extends Component
     public $value;
     public $agentId;
     public $status;
-    
+
     public function updated() {
         $this->resetPage();
     }
@@ -43,5 +45,17 @@ class VirtualRequestComponent extends Component
         })->latest()->latest()->paginate(10);
 
         return view('livewire.admin.fund.virtual-request-component',compact('virtualRequests'));
+    }
+
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first()!='super-admin'?$this->agentId:NULL,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'status'=>$this->status,
+            'value'=>$this->value
+        ];
+        //  dd($data);
+        return Excel::download(new VirtualRequestExport($data), time().'.xlsx');
     }
 }
