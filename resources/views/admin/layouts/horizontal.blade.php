@@ -45,7 +45,7 @@
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-search-dropdown">
 <<<<<<< HEAD
-                    
+
 =======
 
 >>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
@@ -83,7 +83,7 @@
                     @endswitch
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-                    
+
                     <!-- item-->
                     <a href="{{ url('index/en') }}" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('assets/images/flags/us.jpg')}}" alt="user-image" class="me-1" height="12"> <span class="align-middle">English</span>
@@ -209,7 +209,7 @@
                         <a href="" class="text-reset notification-item">
                             <div class="d-flex align-items-start">
                              <div class="flex-shrink-0 me-3">
-                                <img src="{{ URL::asset('/assets/images/users/avatar-3.jpg') }}"
+                                <img src="{{ URL::asset('/assets/images/users/vector-team.png') }}"
                                     class="rounded-circle avatar-xs" alt="user-pic">
                                 </div>
                                 <div class="flex-grow-1">
@@ -243,7 +243,7 @@
                         <a href="" class="text-reset notification-item">
                             <div class="d-flex align-items-start">
                             <div class="flex-shrink-0 me-3">
-                                <img src="{{ URL::asset('/assets/images/users/profile.jpg') }}"
+                                <img src="{{ URL::asset('/assets/images/users/vector-team.png') }}"
                                     class="rounded-circle avatar-xs" alt="user-pic">
                                     </div>
                                 <div class="flex-1">
@@ -269,7 +269,7 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ URL::asset('/assets/images/users/profile.jpg') }}"
+                    <img class="rounded-circle header-profile-user" src="{{ URL::asset('/assets/images/users/vector-team.png') }}"
                         alt="Header Avatar">
                     <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{Str::ucfirst(Auth::user()->name)}}</span>
                     <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
@@ -486,14 +486,14 @@
                                 </div>
                             </div>
                         </li>
-    
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button"
                                >
                                 <i class="uil-copy me-2"></i>@lang('translation.Extra_pages') <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-more">
-                                
+
                                 <div class="dropdown">
                                     <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth"
                                         role="button">

@@ -115,11 +115,11 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="javascript:void(0)"  wire:click="assignPermissionUserBassed({{ $apipartner->id }})">Permission</a>
-                                                    {{-- @if (checkRecordHasPermission(['view-profile'])) --}}
-                                                    {{-- @can('view-profile') --}}
+                                                    {{-- @if (checkRecordHasPermission(['view-profile']))
+                                                    @can('view-profile') --}}
                                                     <a class="dropdown-item"  href="{{ route('admin.view.profile', base64_encode($apipartner->id)) }}">Profile</a>
-                                                    {{-- @endcan --}}
-                                                    {{-- @endif --}}
+                                                    {{-- @endcan
+                                                    @endif --}}
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
                                                 </div>
                                             </li>
