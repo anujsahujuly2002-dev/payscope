@@ -5,13 +5,16 @@ namespace App\Livewire\Admin\Member;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Scheme;
+use App\Models\Status;
 use App\Models\Wallet;
 use Livewire\Component;
 use App\Models\ApiPartner;
 use Livewire\WithPagination;
+use App\Exports\ApiPartnerExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -33,6 +36,9 @@ class ApiPartnerComponent extends Component
     public $permission=[];
     public $permissionsId=[];
     public $user;
+    public $agentId;
+
+
 
     // public function mount(){
     //     $this->apiPartners = User::whereHas('roles',function($q){
@@ -56,13 +62,29 @@ class ApiPartnerComponent extends Component
             $query->whereHas('apiPartner',function ($p){
                 $p->where('added_by',auth()->user()->id);
             });
+        })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })
+        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
+            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })
+        // ->when($this->status !=null,function($u){
+        //     $u->where('status_id',$this->status);
+        // })
+        ->when($this->agentId !=null,function($u){
+            $u->where('user_id',$this->agentId);
+        })
+        ->when($this->value !=null,function($u){
+            $u->where('mobile_no',$this->value);
         })->latest()->paginate(10);
         return view('livewire.admin.member.api-partner-component',compact('states','schemes','apiPartners'));
     }
 
     // This Method Api Partner Create Method
     public function createApiPartner() {
-    
+
         if(!Auth::user()->can('api-partner-create') || !checkRecordHasPermission('api-partner-create')):
             throw UnauthorizedException::forPermissions(['api-partner-create']);
         endif;
@@ -169,7 +191,7 @@ class ApiPartnerComponent extends Component
         })->when($this->status !=null,function($s){
             $s->where('status',$this->status);
         })
-        ->get(); 
+        ->get();
     }
 
 */
@@ -229,6 +251,18 @@ class ApiPartnerComponent extends Component
             DB::rollback();
             return redirect()->back()->with('error','New Permission not assign Please Try again !');
         endif;
+    }
+
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first()!='api-partner'?$this->agentId:NULL,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            // 'status'=>$this->status,
+            'value'=>$this->value
+        ];
+        //  dd($data);
+        return Excel::download(new ApiPartnerExport($data), time().'.xlsx');
     }
 
 

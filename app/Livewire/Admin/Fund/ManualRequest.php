@@ -37,7 +37,6 @@ class ManualRequest extends Component
         $this->resetPage();
     }
 
-
     public function render()
     {
         $this->banks = Bank::where('status','1')->get();

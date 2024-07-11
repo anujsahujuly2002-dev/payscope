@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-2">
+                    {{-- <div class="row mb-2">
                         <div class="col-md-6">
                         </div>
                         <div class="col-md-6">
@@ -29,6 +29,51 @@
                                 </div>
                             </div>
                         </div>
+                    </div> --}}
+
+                    <div class="row mb-2">
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date' >
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date' >
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="IP Address" wire:model.live="value">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id / Parent Id" wire:model.live='agentId'>
+                            </div>
+                        </div>
+                        {{-- <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Api Partner Name" wire:model.live='agentName'>
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <select class="form-control  rounded bg-light border-0" wire:model.live="status">
+                                    <option value="">Status</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{$status->id}}">{!!$status->name!!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-md-2 mb-10">
+                             <div class="mb-3 d-flex justify-content-center">
+                                 @can('callback-token-create')
+                                        <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                 @endcan
+                             </div>
+                        </div>
+
                     </div>
                     <!-- end row -->
                     <div class="table-responsive mb-4">
@@ -121,7 +166,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $apiTokens->lastPage()) as $i)
-                                            @if ($i >=$apiTokens->currentPage()-2 && $i <=$apiTokens->currentPage()) 
+                                            @if ($i >=$apiTokens->currentPage()-2 && $i <=$apiTokens->currentPage())
                                                 <li class="page-item @if($apiTokens->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -135,7 +180,7 @@
                                         @if($apiTokens->currentPage() < $apiTokens->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $apiTokens->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $apiTokens->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($apiTokens->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">

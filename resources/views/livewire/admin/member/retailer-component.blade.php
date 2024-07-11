@@ -31,6 +31,50 @@
                             </div>
                         </div>
                     </div>
+                    {{-- <div class="row mb-2">
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date' >
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date' >
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Mobile No." wire:model.live="value">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id / Parent Id" wire:model.live='agentId'>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <select class="form-control  rounded bg-light border-0" wire:model.live="status">
+                                    <option value="">Status</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{$status->id}}">{!!$status->name!!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="row">
+                                <div class="col-md-12  d-flex justify-content-center">
+                                    <div class="mb-3 d-flex">
+                                        <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
+                                    </div>
+                                    <div class="mb-3 ms-3 d-flex justify-content-center">
+                                        @can('retailer-create')
+                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i></a>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
                     <!-- end row -->
                     <div class="table-responsive mb-4">
                         <table class="table table-centered table-nowrap mb-0">
@@ -49,6 +93,7 @@
                                     <th scope="col">Wallet Amount</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Service</th>
                                     {{-- @canany(['permission-edit', 'permission-delete']) --}}
                                         <th scope="col" style="width: 200px;">Action</th>
                                     {{-- @endcanany --}}
@@ -88,6 +133,13 @@
                                         <td>
                                             <input type="checkbox" id="switch{{$retailer->id}}" switch="bool"  @if($retailer->status==1) checked @endif wire:change='statusUpdate({{$retailer->id}},{{$retailer->status}})' />
                                             <label for="switch{{$retailer->id}}" data-on-label="Active" data-off-label="Inactive"></label>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="switch_{{ $retailer->id }}" switch="bool"
+                                                @if ($retailer->services == 1) checked @endif
+                                                wire:change='serviceUpdate({{ $retailer->id }},{{ $retailer->services }})' />
+                                            <label for="switch_{{ $retailer->id }}" data-on-label="Active"
+                                                data-off-label="Inactive"></label>
                                         </td>
                                         <td>
                                             <li class="list-inline-item dropdown">
