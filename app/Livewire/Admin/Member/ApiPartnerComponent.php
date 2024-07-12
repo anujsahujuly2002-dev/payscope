@@ -27,7 +27,7 @@ class ApiPartnerComponent extends Component
     // public $apiPartners;
     public $value;
     public $end_date;
-    // public $status;
+    public $status;
     public $schemeForm = false;
     public $apiPartnerId;
     public $scheme;
@@ -70,9 +70,9 @@ class ApiPartnerComponent extends Component
         ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
         })
-        // ->when($this->status !=null,function($u){
-        //     $u->where('status_id',$this->status);
-        // })
+        ->when($this->status !== null, function ($query){
+            return $query->where('status', $this->status);
+        })
         ->when($this->agentId !=null,function($u){
             $u->where('user_id',$this->agentId);
         })

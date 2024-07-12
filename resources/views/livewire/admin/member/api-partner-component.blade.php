@@ -57,9 +57,8 @@
                             <div class="form-group">
                                 <select class="form-control  rounded bg-light border-0" wire:model.live="status">
                                     <option value="">Status</option>
-                                    {{-- @foreach ($statuses as $status)
-                                        <option value="{{$status->id}}">{!!$status->name!!}</option>
-                                    @endforeach --}}
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
                                 </select>
                             </div>
                         </div>

@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-md-2 mb-10">
                             <div class="form-group">
-                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id / Parent Id" wire:model.live='agentId'>
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id" wire:model.live='agentId'>
                             </div>
                         </div>
                         {{-- <div class="col-md-2 mb-10">
