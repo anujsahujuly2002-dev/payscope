@@ -95,6 +95,7 @@ class ApiPartnerComponent extends Component
         $this->dispatch('show-form');
     }
 
+
     // This Method Api Partner Store
     public function StoreApiPartner() {
         $validateDate = Validator::make($this->state,[

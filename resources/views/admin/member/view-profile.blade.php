@@ -14,7 +14,11 @@ View Profile
                     <div class="text-center">
                         <div class="clearfix"></div>
                         <div>
+<<<<<<< HEAD
                             <img src="{{ URL::asset('/assets/images/users/vector-team.png') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+=======
+                            <img src="{{ URL::asset('/assets/images/users/avatar-4.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+>>>>>>> 115e84c6ec576870fb2f39addc64c568278493cc
                         </div>
                         <h5 class="mt-3 mb-1">{{$user?->name}}</h5>
                         <p class="text-muted">{{ucwords(str_replace('-',' ',$user->roles->first()->name))}}</p>
@@ -222,9 +226,15 @@ View Profile
                                 <h3 class="card-title">KYC Details</h3>
                             </div>
                             <div class="card-body">
+<<<<<<< HEAD
 
                             </div>
                         </div>
+=======
+                                
+                            </div>
+                        </div> 
+>>>>>>> 115e84c6ec576870fb2f39addc64c568278493cc
                     </div>
                     <div class="tab-pane @if($tab =='password manager') active show @endif" id="messages" role="tabpanel">
                         <div class="card">
@@ -273,4 +283,7 @@ View Profile
         </div>
     </div>
 @endsection
+<<<<<<< HEAD
 
+=======
+>>>>>>> 115e84c6ec576870fb2f39addc64c568278493cc
