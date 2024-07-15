@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Bank;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Fund extends Model
 {
@@ -23,6 +25,16 @@ class Fund extends Model
         'remark',
         'status_id',
     ];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    // public function banks()
+    // {
+    //     return $this->belongsTo(Bank::class);
+    // }
 
     public function bank() {
         return $this->belongsTo(Bank::class,'bank_id','id');
