@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Mobile\Manual;
 
 use App\Models\Bank;
 use App\Models\Fund;
-use App\Models\Status;
-use App\Models\PaymentMode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
