@@ -13,8 +13,6 @@ class ManualRequestController extends Controller
 public $banks;
 
     public function manualRequest(){
-
-
         $data = Fund::with(['users', 'bank'])->get();
         foreach ($data as $fund){
 
@@ -28,8 +26,6 @@ public $banks;
                     'ifsc_code' => $fund->bank->ifsc_code,
                 ];
             }
-
-            // Return the transformed data as a JSON response
             return response()->json([
                 'status' => true,
                 'message' => 'Manual Funds have been successfully.',
