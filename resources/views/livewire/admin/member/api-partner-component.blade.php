@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-2">
+                    {{-- <div class="row mb-2">
                         <div class="col-md-6">
                         </div>
                         <div class="col-md-6">
@@ -28,6 +28,51 @@
                                                 class="btn btn-success waves-effect waves-light align-self-center"
                                                 wire:click.prevent='createApiPartner'><i class="mdi mdi-plus me-2"></i> Add
                                                 New</a>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="row mb-2">
+                        <div class="col-md-2">
+                            <div class="form-group mb-10">
+                                <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date' >
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date' >
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Mobile No." wire:model.live="value">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id / Parent Id" wire:model.live='agentId'>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="form-group">
+                                <select class="form-control  rounded bg-light border-0" wire:model.live="status">
+                                    <option value="">Status</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="row">
+                                <div class="col-md-12  d-flex justify-content-center">
+                                    <div class="mb-3 d-flex">
+                                        <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
+                                    </div>
+                                    <div class="mb-3 ms-3">
+                                        @can('api-partner-create')
+                                            <a href="javascript:void(0);"
+                                                class="btn btn-success waves-effect waves-light align-self-center"
+                                                wire:click.prevent='createApiPartner'><i class="mdi mdi-plus me-2"></i></a>
                                         @endcan
                                     </div>
                                 </div>
@@ -115,11 +160,11 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="javascript:void(0)"  wire:click="assignPermissionUserBassed({{ $apipartner->id }})">Permission</a>
-                                                    {{-- @if (checkRecordHasPermission(['view-profile'])) --}}
-                                                    {{-- @can('view-profile') --}}
+                                                    {{-- @if (checkRecordHasPermission(['view-profile']))
+                                                    @can('view-profile') --}}
                                                     <a class="dropdown-item"  href="{{ route('admin.view.profile', base64_encode($apipartner->id)) }}">Profile</a>
-                                                    {{-- @endcan --}}
-                                                    {{-- @endif --}}
+                                                    {{-- @endcan
+                                                    @endif --}}
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
                                                 </div>
                                             </li>

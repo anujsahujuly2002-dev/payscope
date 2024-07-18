@@ -6,7 +6,7 @@
                     <div class="col-md-6">
                         <div class="d-flex">
                             <div class="text-end">
-                                <p>OTP Setting :</p> 
+                                <p>OTP Setting :</p>
                             </div>
                             <div style="margin-left: 120px;">
                                 <label class="switch">
@@ -14,13 +14,13 @@
                                     <label for="switch" data-on-label="Enable" data-off-label="Disable"></label>
                                 </label>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="col-md-6 ">
                     {{-- <div class="d-flex juistify-content-left">
                         <div>
-                            <p>OTP Setting :</p> 
+                            <p>OTP Setting :</p>
                         </div>
                         <div class="ms-3">
                             <label class="switch">
@@ -29,7 +29,7 @@
                             </label>
                         </div>
                     </div> --}}
-                  
+
                 </div>
             </div>
         </div>

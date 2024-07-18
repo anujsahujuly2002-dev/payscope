@@ -9,8 +9,10 @@ use App\Models\Wallet;
 use Livewire\Component;
 use App\Models\Retailer;
 use Livewire\WithPagination;
+use App\Exports\RetailerExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -18,7 +20,10 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 class RetailerComponent extends Component
 {
     use WithPagination;
-    public $state = [];
+    public $state=[];
+    public $start_date;
+    public $value;
+    public $end_date;
     public $createRetailerForm  = false;
     public $assignPermissionUserBasedForm = false;
     public $schemeForm = false;
@@ -27,6 +32,7 @@ class RetailerComponent extends Component
     public $permission=[];
     public $permissionsId=[];
     public $user;
+    public $agentId;
 
 
 
@@ -42,6 +48,22 @@ class RetailerComponent extends Component
             $query->whereHas('retailer',function ($p){
                 $p->where('added_by',auth()->user()->id);
             });
+        })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })
+        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
+            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })
+        // ->when($this->status !=null,function($u){
+        //     $u->where('status_id',$this->status);
+        // })
+        ->when($this->agentId !=null,function($u){
+            $u->where('user_id',$this->agentId);
+        })
+        ->when($this->value !=null,function($u){
+            $u->where('mobile_no',$this->value);
         })->latest()->paginate(10);
         return view('livewire.admin.member.retailer-component',compact('states','schemes','retailers'));
     }
@@ -113,6 +135,17 @@ class RetailerComponent extends Component
             'status'=>$status==0?1:0,
         ]);
         return redirect()->back()->with('success','Your Status has been updated');
+    }
+
+    public function serviceUpdate($userId,$status){
+        // dd($userId,$status);
+        $serviceUpdate = User::findOrFail($userId)->update([
+            'services'=>$status==0?"1":"0",
+        ]);
+        // dd($serviceUpdate);
+        $msg = $status==0?"Service has been acctivated":"Service has been deactivated";
+        return redirect()->back()->with('success',$msg);
+
     }
 
     public function changeScheme($id) {

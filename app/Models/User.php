@@ -3,12 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Bank;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Fund;
 
 class User extends Authenticatable
 {
@@ -31,6 +33,17 @@ class User extends Authenticatable
         'virtual_account_number',
         'services'
     ];
+
+    public function banks()
+    {
+        return $this->hasMany(Bank::class);
+    }
+
+    public function funds()
+    {
+        return $this->hasMany(Fund::class);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,7 +71,7 @@ class User extends Authenticatable
     public function retailer(){
        return $this->hasOne(Retailer::class,'user_id','id');
     }
-    
+
     public function getCreatedAtAttribute($value){
         return date('d M y - h:i A', strtotime($value));
     }
@@ -73,7 +86,7 @@ class User extends Authenticatable
         else:
             return $this->retailer?->state_id;
         endif;
-       
+
     }
     public function getCityAttribute() {
         if(auth()->user()->getRoleNames()->first() =='api-partner'):

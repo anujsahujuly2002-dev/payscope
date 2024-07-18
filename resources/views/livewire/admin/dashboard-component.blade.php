@@ -8,7 +8,7 @@
                     </div>
                     <div>
                         {{-- {{dd(Auth::user()->id)}} --}}
-                        <h4 class="mb-1 mt-1"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($payout,)}}</span></h4>
+                        <h4 class="mb-1 mt-1"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($payout)}}</span></h4>
                         <p class="text-muted mb-0">Total Payout</p>
                     </div>
                     <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week

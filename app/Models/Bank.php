@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Fund;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Bank extends Model
 {
@@ -16,4 +18,16 @@ class Bank extends Model
         'branch_name',
         'status'
     ];
-}
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function funds()
+    {
+        return $this->hasMany(Fund::class);
+    }
+    }
+
