@@ -13,7 +13,8 @@ class ManualRequestController extends Controller
 public $banks;
 
     public function manualRequest(){
-        $data = Fund::where('user_id',auth()->user->id)->get();
+        dd(auth()->user());
+        $data = Fund::where('user_id',auth()->user()->id)->get();
         foreach ($data as $fund){
 
                 $result[] = [
