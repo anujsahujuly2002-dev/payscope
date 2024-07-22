@@ -13,10 +13,10 @@ class ManualRequestController extends Controller
 public $banks;
 
     public function manualRequest(){
-        dd(auth()->user());
-        $data = Fund::where('user_id',auth()->user()->id)->get();
-        foreach ($data as $fund){
-
+        $data = Fund::where('user_id',auth()->user()->id)->with(['users', 'bank'])->get();
+        $result = [];
+        if($data->count() >0):
+            foreach ($data as $fund){
                 $result[] = [
                     'id' => $fund->id,
                     'user_name'  => $fund->user->name,
@@ -27,10 +27,12 @@ public $banks;
                     'ifsc_code' => $fund->bank->ifsc_code,
                 ];
             }
-            return response()->json([
-                'status' => true,
-                'message' => 'Manual Funds have been successfully.',
-                'data' => $result,
-            ],200);
+        endif;
+        return response()->json([
+            'status' => true,
+            'message' => 'Manual Funds have been successfully.',
+            'data' => $result,
+        ],200);
+
         }
     }
