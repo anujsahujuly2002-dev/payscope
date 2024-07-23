@@ -47,12 +47,6 @@ class ManualRequestController extends Controller
             'reference_number' => 'required|unique:funds,references_no'
         ])->validate();
 
-        // Assuming paySlip is a file uploaded with the request
-        // if ($request->hasFile('paySlip')) {
-        //     $image = time() . '.' . $request->file('paySlip')->getClientOriginalExtension();
-        //     Storage::putFileAs('public/upload/pay_slip/', $request->file('paySlip'), $image);
-        // }
-
         $funds = Fund::create([
             'user_id' => auth()->user()->id,
             'bank_id' => $request->bank,
@@ -63,6 +57,13 @@ class ManualRequestController extends Controller
             'references_no' => $request->reference_number,
             'status_id' => 1,
         ]);
+
+        return response()->json([
+            'status' => false,
+            'message' => 'error',
+            'data' => $validateData,
+        ],401);
+
 
         return response()->json([
             'status' => true,
