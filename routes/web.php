@@ -88,6 +88,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(FundController::class)->prefix('fund')->name('fund.')->group(function(){
             Route::get('/manual-request','manualRequest')->name('manual.request');
             Route::get('/virtul-request','virtualRequest')->name('virtual.request');
+            Route::get('/qr-request','qrRequest')->name('qr.request');
         });
 
         // Payout Manager Route
