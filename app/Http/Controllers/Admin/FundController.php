@@ -15,4 +15,11 @@ class FundController extends Controller
         return view('admin.fund-manager.virtual-request');
     }
 
+    public function qrRequest() {
+        return view('admin.fund-manager.qr-request');
+    }
+
+
+    
+
 }
