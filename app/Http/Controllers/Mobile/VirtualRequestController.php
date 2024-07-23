@@ -61,8 +61,8 @@ class VirtualRequestController extends Controller
                     'virtual_account_number' => $virtual->bank->user?->virtual_account_number,
                     'remitter_name' => $virtual->remitter_name,
                     'account_number' => $virtual->bank->account_number,
-                    'remitter_account_number' => $virtual->bank->remitter_account_number,
-                    'remitter_ifsc_code' => $virtual->bank->remitter_ifsc_code,
+                    // 'remitter_account_number' => $virtual->bank->remitter_account_number,
+                    // 'remitter_ifsc_code' => $virtual->bank->remitter_ifsc_code,
                 ];
             }
             endif;
