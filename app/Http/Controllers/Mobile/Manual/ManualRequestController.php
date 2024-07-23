@@ -47,6 +47,7 @@ class ManualRequestController extends Controller
             'reference_number' => 'required|unique:funds,references_no'
         ])->validate();
 
+
         $funds = Fund::create([
             'user_id' => auth()->user()->id,
             'bank_id' => $request->bank,

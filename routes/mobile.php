@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Mobile\DashboardController;
+use App\Http\Controllers\Mobile\VirtualRequestController;
 use App\Http\Controllers\Mobile\Manual\ManualRequestController;
 
 Route::controller(Auth\LoginController::class)->group(function() {
@@ -18,7 +19,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::controller(ManualRequestController::class)->prefix('fund')->group(function(){
         Route::get('/manual-request','manualRequest');
         Route::post('/create-manualRequest','createManualRequest');
-        // Route::get('/virtul-request','virtualRequest')->name('virtual.request');
+    });
+
+    Route::controller(VirtualRequestController::class)->prefix('fund')->group(function(){
+        Route::get('/virtul-request','virtualRequest');
     });
 });
 

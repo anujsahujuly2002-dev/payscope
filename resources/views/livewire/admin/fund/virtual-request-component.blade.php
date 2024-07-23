@@ -6,6 +6,7 @@
             @role(['api-partner','retailer'] )
                 <div class="row">
                     @if(auth()->user()->virtual_account_number !='')
+                    {{-- @foreach($virtuals as $virtual) --}}
                         <div class="col-sm-6">
                             <div class="card mb-3">
                                 <div class="card-body">
@@ -26,6 +27,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- @endforeach --}}
                     @endif
                 </div>
             @endrole
@@ -97,7 +99,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($virtualRequests as $key =>$virtualRequest)
+                                @foreach ($virtualRequests as $key => $virtualRequest)
                                     @php
                                         $currentPage = $virtualRequests->currentPage() !=1?$virtualRequests->perPage():1;
                                         $srNo  =($virtualRequests->currentPage()-1)*$currentPage;
