@@ -6,6 +6,7 @@ use App\Models\Fund;
 use App\Models\Status;
 use Illuminate\Http\Request;
 // use App\Models\VirtualRequest;
+use App\Models\VirtualRequest;
 use App\Http\Controllers\Controller;
 
 class VirtualRequestController extends Controller
@@ -13,18 +14,19 @@ class VirtualRequestController extends Controller
 
     public function virtualRequest()
     {
-        $virtualRequest = Fund::where('user_id', auth()->user()->id)->with(['user', 'bank'])->get();
+        $virtualRequest = VirtualRequest::where('user_id', auth()->user()->id)->with(['user', 'bank','fund'])->get();
         $result = [];
         if ($virtualRequest->count() > 0) :
             foreach ($virtualRequest as $virtual) {
                 $result[] = [
                     'id' => $virtual->id,
-                    'user_name' => $virtual->user->name,
-                    'virtual_account_number' => $virtual->bank->user?->virtual_account_number,
+                    'credit_time' => $virtual->credit_time,
                     'remitter_name' => $virtual->remitter_name,
-                    'account_number' => $virtual->bank->account_number,
-                    // 'remitter_account_number' => $virtual->bank->remitter_account_number,
-                    // 'remitter_ifsc_code' => $virtual->bank->remitter_ifsc_code,
+                    'order_amount' => $virtual->bank->credit_amount,
+                    'remitter_account_number' => $virtual->bank->remitter_account_number,
+                    'reference_number' => $virtual->bank->reference_number,
+                    'remitter_ifsc_code' => $virtual->bank->remitter_ifsc_code,
+                    'remitter_utr' => $virtual->bank->remitter_utr,
                 ];
             }
             endif;
@@ -33,8 +35,7 @@ class VirtualRequestController extends Controller
             'status' => true,
             'message' => 'Virtual Funds have been successfully.',
             'data' => $result,
-            // 'statuses' => $statuses,
-            // 'virtualRequests' => $virtualRequests
+
         ]);
     }
 

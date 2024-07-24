@@ -24,28 +24,12 @@
                                 <div class="col-md-2">
                                     <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date'>
                                 </div>
-                                <!-- Other Filters -->
-                                {{-- <div class="col-md-2 mb-10">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control rounded bg-light border-0" placeholder="References No" wire:model.live="value">
-                                    </div>
-                                </div> --}}
+
                                 <div class="col-md-2 mb-10">
                                     <div class="form-group">
                                         <input type="text" class="form-control rounded bg-light border-0" placeholder="Order Id" wire:model.live='orderId'>
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-2 mb-10">
-                                    <div class="form-group">
-                                        <select class="form-control rounded bg-light border-0" wire:model.live="status">
-                                            <option value="">Status</option> --}}
-                                            {{-- Populate statuses dynamically --}}
-                                            {{-- @foreach ($statuses as $status)
-                                                <option value="{{$status->id}}">{!!$status->name!!}</option>
-                                            @endforeach --}}
-                                        {{-- </select>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-2">
                                     <div class="row">
                                         <div class="col-md-12">

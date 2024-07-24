@@ -54,8 +54,6 @@ class QRRequestComponent extends Component
     }
 
 
-
-
     public function walletLoad() {
         $this->reset();
         $this->dispatch('show-form');

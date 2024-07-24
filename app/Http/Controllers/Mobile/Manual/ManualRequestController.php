@@ -7,7 +7,7 @@ use App\Models\Fund;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator; // Correct facade
+use Illuminate\Support\Facades\Validator;
 
 class ManualRequestController extends Controller
 {
@@ -28,13 +28,13 @@ class ManualRequestController extends Controller
                     'branch_name' => $fund->bank->branch_name,
                     'ifsc_code' => $fund->bank->ifsc_code,
                 ];
-        }
-    endif;
-        return response()->json([
+             }
+        endif;
+             return response()->json([
             'status' => true,
             'message' => 'Manual Funds have been successfully.',
             'data' => $result,
-        ], 200);
+             ], 200);
     }
 
     public function createManualRequest(Request $request)

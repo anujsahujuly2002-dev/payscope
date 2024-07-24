@@ -42,7 +42,7 @@ class VirtualRequestComponent extends Component
         })
         ->when($this->value !=null,function($u){
             $u->where('reference_number', 'like', '%'.$this->value.'%')->orWhere('remitter_utr','like','%'.$this->value.'%');
-        })->latest()->latest()->paginate(10);
+        })->latest()->paginate(10);
 
         return view('livewire.admin.fund.virtual-request-component',compact('virtualRequests'));
     }
