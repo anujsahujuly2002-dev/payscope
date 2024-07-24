@@ -2,23 +2,58 @@
 
 namespace App\Livewire\Admin\Fund;
 
+use App\Models\Bank;
+use App\Models\Fund;
 use Razorpay\Api\Api;
-use Livewire\Component;
-use App\Models\QRRequest;
+use App\Models\Status;
 use App\Models\Wallet;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
+use App\Models\QRRequest;
+use App\Models\PaymentMode;
 use Illuminate\Support\Facades\Validator;
 use Razorpay\Api\Errors\SignatureVerificationError;
 
 class QRRequestComponent extends Component
 {
+    use WithFileUploads,WithPagination;
+    public $start_date;
+    public $end_date;
+    public $status;
+    public $banks;
+    public $orderId;
+    public $qr_requests;
+    public $paymentModes;
     public $payment =[];
     public $listeners = [
         'updateRequest' => 'updateRazorpay'
     ];
+
     public function render()
     {
-        return view('livewire.admin.fund.q-r-request-component');
+        $this->qr_requests = QRRequest::with('user', 'status')->get();
+        // $this->banks = Bank::where('status','1')->get();
+        // $this->paymentModes = PaymentMode::get();
+        $statuses = Status::get();
+        $qr_requests = QRRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })
+        ->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })
+        ->when($this->orderId !=null,function($u){
+            $u->where('user_id',$this->orderId);
+        })
+        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
+            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })->latest()->paginate(10);
+        return view('livewire.admin.fund.q-r-request-component',compact('statuses','qr_requests'));
     }
+
+
 
 
     public function walletLoad() {
@@ -35,7 +70,7 @@ class QRRequestComponent extends Component
         do {
             $validateData['order_id'] = 'GROSC'.rand(111111111111, 999999999999);
         } while (QRRequest::where("order_id", $validateData['order_id'])->first() instanceof QRRequest);
-    
+
         $orders = $api->order->create([
             'receipt'         => $validateData['order_id'],
             'amount'          =>($validateData['amount']*100), // Amount in paisa
@@ -97,6 +132,6 @@ class QRRequestComponent extends Component
             ]);
             session()->flash('error',$error);
         }
-       
+
     }
 }
