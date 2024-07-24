@@ -78,7 +78,7 @@
                         </li>
                     @endcanany
                 @endif
-                {{-- @if (checkRecordHasPermission(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete']))
+                @if (checkRecordHasPermission(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete']))
                     @canany(['role-list', 'role-delete', 'role-create','role-edit','permission-list','permssion-create','permission-edit','permission-delete'])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -99,7 +99,7 @@
                             </ul>
                         </li>
                     @endcanany
-                @endif --}}
+                @endif
                 @if (checkRecordHasPermission(array_merge(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete'],['retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])))
                     @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit','api-partner-delete','retailer-list', 'retailer-create', 'retailer-edit','retailer-delete'])
                         <li>
@@ -223,6 +223,7 @@
                                     <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
                                 @endcanany
                             @endif
+                            <li><a href="{{route('admin.fund.qr.request')}}">QR Request</a></li>
                             <li><a href="javascript:void()">Bulk Payout</a></li>
                             <li><a href="javascript:void()">Schedule Payout</a></li>
                             <li><a href="javascript:void()">Payout Links</a></li>

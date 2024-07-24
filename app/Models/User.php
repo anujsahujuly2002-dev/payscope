@@ -34,16 +34,6 @@ class User extends Authenticatable
         'services'
     ];
 
-    public function banks()
-    {
-        return $this->hasMany(Bank::class);
-    }
-
-    public function funds()
-    {
-        return $this->hasMany(Fund::class);
-    }
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -108,5 +98,15 @@ class User extends Authenticatable
         else:
             return $this->retailer?->address;
         endif;
+    }
+
+    public function banks()
+    {
+        return $this->hasMany(Bank::class);
+    }
+
+    public function funds()
+    {
+        return $this->hasMany(Fund::class);
     }
 }
