@@ -2,22 +2,53 @@
 
 namespace App\Livewire\Admin\Fund;
 
+use App\Models\Bank;
+use App\Models\Fund;
 use Razorpay\Api\Api;
+use App\Models\Status;
+use App\Models\Wallet;
 use Livewire\Component;
 use App\Models\QRRequest;
-use App\Models\Wallet;
+use App\Models\PaymentMode;
+use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Validator;
 use Razorpay\Api\Errors\SignatureVerificationError;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class QRRequestComponent extends Component
 {
+    use WithFileUploads,WithPagination;
+    public $start_date;
+    public $end_date;
+    public $status;
+    public $banks;
+    public $orderId;
+    public $paymentModes;
     public $payment =[];
     public $listeners = [
         'updateRequest' => 'updateRazorpay'
     ];
+
     public function render()
     {
-        return view('livewire.admin.fund.q-r-request-component');
+        if(!auth()->user()->can('qr-request-list'))
+        throw UnauthorizedException::forPermissions(['qr-request-list']);
+        $qr_requests = QRRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
+            $query->where('user_id',auth()->user()->id);
+        })
+        ->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at',$this->start_date);
+        })
+        ->when($this->orderId !=null,function($u){
+            $u->where('user_id',$this->orderId);
+        })
+        ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
+            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })->latest()->paginate(10);
+        return view('livewire.admin.fund.q-r-request-component',compact('qr_requests'));
     }
 
 
@@ -27,7 +58,8 @@ class QRRequestComponent extends Component
     }
 
     public function makePayment() {
-        // dd($this->payment);
+        if(!auth()->user()->can('qr-request-add-fund'))
+        throw UnauthorizedException::forPermissions(['qr-request-add-fund']);
         $validateData = Validator::make($this->payment,[
             'amount'=>'required|numeric|min:1',
         ])->validate();
@@ -35,7 +67,7 @@ class QRRequestComponent extends Component
         do {
             $validateData['order_id'] = 'GROSC'.rand(111111111111, 999999999999);
         } while (QRRequest::where("order_id", $validateData['order_id'])->first() instanceof QRRequest);
-    
+
         $orders = $api->order->create([
             'receipt'         => $validateData['order_id'],
             'amount'          =>($validateData['amount']*100), // Amount in paisa
@@ -97,6 +129,6 @@ class QRRequestComponent extends Component
             ]);
             session()->flash('error',$error);
         }
-       
+
     }
 }
