@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    {{-- <div class="row mb-2">
+                    <div class="row mb-2">
                         <div class="col-md-6">
                         </div>
                         <div class="col-md-6">
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="row mb-2">
                         <div class="col-md-2">
                             <div class="form-group mb-10">
@@ -68,13 +68,7 @@
                                     <div class="mb-3 d-flex">
                                         <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
                                     </div>
-                                    <div class="mb-3 ms-3">
-                                        @can('api-partner-create')
-                                            <a href="javascript:void(0);"
-                                                class="btn btn-success waves-effect waves-light align-self-center"
-                                                wire:click.prevent='createApiPartner'><i class="mdi mdi-plus me-2"></i></a>
-                                        @endcan
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
