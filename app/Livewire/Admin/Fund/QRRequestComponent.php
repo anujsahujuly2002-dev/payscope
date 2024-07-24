@@ -8,12 +8,13 @@ use Razorpay\Api\Api;
 use App\Models\Status;
 use App\Models\Wallet;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 use App\Models\QRRequest;
 use App\Models\PaymentMode;
+use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Validator;
 use Razorpay\Api\Errors\SignatureVerificationError;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class QRRequestComponent extends Component
 {
@@ -23,7 +24,6 @@ class QRRequestComponent extends Component
     public $status;
     public $banks;
     public $orderId;
-    public $qr_requests;
     public $paymentModes;
     public $payment =[];
     public $listeners = [
@@ -32,10 +32,8 @@ class QRRequestComponent extends Component
 
     public function render()
     {
-        $this->qr_requests = QRRequest::with('user', 'status')->get();
-        // $this->banks = Bank::where('status','1')->get();
-        // $this->paymentModes = PaymentMode::get();
-        $statuses = Status::get();
+        if(!auth()->user()->can('qr-request-list'))
+        throw UnauthorizedException::forPermissions(['qr-request-list']);
         $qr_requests = QRRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
         })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
@@ -50,7 +48,7 @@ class QRRequestComponent extends Component
         ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
         })->latest()->paginate(10);
-        return view('livewire.admin.fund.q-r-request-component',compact('statuses','qr_requests'));
+        return view('livewire.admin.fund.q-r-request-component',compact('qr_requests'));
     }
 
 
@@ -60,7 +58,8 @@ class QRRequestComponent extends Component
     }
 
     public function makePayment() {
-        // dd($this->payment);
+        if(!auth()->user()->can('qr-request-add-fund'))
+        throw UnauthorizedException::forPermissions(['qr-request-add-fund']);
         $validateData = Validator::make($this->payment,[
             'amount'=>'required|numeric|min:1',
         ])->validate();

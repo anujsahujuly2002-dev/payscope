@@ -210,8 +210,8 @@
                     </li>
                 @endif
 
-                @if(checkRecordHasPermission(['payout-request','payout-new-request']))
-                @canany(['payout-request','payout-new-request'])
+                @if(checkRecordHasPermission(['payout-request','payout-new-request','qr-request-add-fund','qr-request-add-list']))
+                @canany(['payout-request','payout-new-request','qr-request-add-fund','qr-request-add-list'])
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="uil-money-withdrawal"></i>
@@ -223,7 +223,12 @@
                                     <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
                                 @endcanany
                             @endif
-                            <li><a href="{{route('admin.fund.qr.request')}}">QR Request</a></li>
+                            @if (['qr-request-add-fund','qr-request-add-list'])
+                                @canany(['qr-request-add-fund','qr-request-list'])
+                                    <li><a href="{{route('admin.fund.qr.request')}}">QR Request</a></li>
+                                @endcanany
+                            @endif
+
                             <li><a href="javascript:void()">Bulk Payout</a></li>
                             <li><a href="javascript:void()">Schedule Payout</a></li>
                             <li><a href="javascript:void()">Payout Links</a></li>

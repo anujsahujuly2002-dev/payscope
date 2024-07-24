@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mb-3 d-flex justify-content-end">
-                @can('fund-new-request')
+                @can('qr-request-add-fund')
                     <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-end" wire:click.prevent='walletLoad'><i class="mdi mdi-plus me-2"></i>Wallet Load</a>
                 @endcan
             </div>
@@ -16,16 +16,16 @@
                         <div class="col-md-12">
                             <div class="row mb-2">
                                 <!-- Date Filters -->
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group mb-10">
                                         <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date'>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date'>
                                 </div>
 
-                                <div class="col-md-2 mb-10">
+                                <div class="col-md-3 mb-10">
                                     <div class="form-group">
                                         <input type="text" class="form-control rounded bg-light border-0" placeholder="Order Id" wire:model.live='orderId'>
                                     </div>
@@ -120,11 +120,11 @@
                     <div class="row mt-4">
                         <div class="col-sm-6">
                             <div>
-                                {{-- <p class="mb-sm-0">Showing 1 to 10 of {{$qr_requests->total()}} entries</p> --}}
+                                <p class="mb-sm-0">Showing 1 to 10 of {{$qr_requests->total()}} entries</p>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                                {{-- @if ($qr_requests->hasPages())
+                                @if ($qr_requests->hasPages())
                                     <div class="float-sm-end">
                                         <ul class="pagination mb-sm-0">
                                             @if ($qr_requests->onFirstPage())
@@ -174,7 +174,7 @@
                                             @endif
                                         </ul>
                                     </div>
-                                @endif --}}
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -212,8 +212,6 @@
             </form>
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    {{-- @include('admin.delete-confirmation.delete-confirmation') --}}
-    {{-- @if($order) --}}
-    @include('admin.razorpay.razorpay');
-    {{-- @endif --}}
+   
+    @include('admin.razorpay.razorpay')
 </div>
