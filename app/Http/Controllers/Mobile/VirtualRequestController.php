@@ -14,7 +14,7 @@ class VirtualRequestController extends Controller
 
     public function virtualRequest()
     {
-        // $data = VirtualRequest::where('user_id', auth()->user()->id)->with(['user', 'bank','fund'])->get();
+        // $data = VirtualRequest::where('user_id', auth()->user()->id)->with(['user', 'bank'])->get();
         $data = VirtualRequest::all();
         $result = [];
         if ($data->count() > 0) :
