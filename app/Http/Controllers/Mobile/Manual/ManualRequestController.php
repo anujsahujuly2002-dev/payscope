@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mobile\Manual;
 use App\Models\Bank;
 use App\Models\Fund;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -39,37 +40,42 @@ class ManualRequestController extends Controller
 
     public function createManualRequest(Request $request)
     {
-        $validateData = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'bank' => 'required',
-            'amount' => 'required|numeric|min:100',
+            'amount' => 'required',
             'payment_mode' => 'required',
             'pay_date' => 'required',
-            'reference_number' => 'required|unique:funds,references_no'
-        ])->validate();
+            'reference_number' => 'required'
+        ]);
 
-
-        $funds = Fund::create([
-            'user_id' => auth()->user()->id,
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error',
+                'data' => $validator->errors(),
+            ], 401);
+        }
+        $userId = auth()->user()->id;
+        if(auth()->user()->getRoleNames()->first()=='api-partner'):
+            $creditedBy =  auth()->user()->apiPartner->added_by;
+        else:
+            $creditedBy =  auth()->user()->retailer->added_by;
+        endif;
+        $fund = Fund::create([
+            'user_id' => $userId,
             'bank_id' => $request->bank,
             'payment_mode_id' => $request->payment_mode,
             'amount' => $request->amount,
             'type' => 'type',
+            'credited_by' => $creditedBy,
             'pay_date' => $request->pay_date,
             'references_no' => $request->reference_number,
             'status_id' => 1,
         ]);
-
-        return response()->json([
-            'status' => false,
-            'message' => 'error',
-            'data' => $validateData,
-        ],401);
-
-
         return response()->json([
             'status' => true,
             'message' => 'Manual Funds created successfully.',
-            'data' => $funds,
+            'data' => $fund,
         ], 200);
     }
 }
