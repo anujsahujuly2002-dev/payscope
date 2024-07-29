@@ -1,11 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Mobile;
-
-use App\Models\Fund;
-use App\Models\Status;
-use Illuminate\Http\Request;
-// use App\Models\VirtualRequest;
 use App\Models\VirtualRequest;
 use App\Http\Controllers\Controller;
 
@@ -14,8 +9,8 @@ class VirtualRequestController extends Controller
 
     public function virtualRequest()
     {
-        // $data = VirtualRequest::where('user_id', auth()->user()->id)->get();
-        $data = VirtualRequest::all();
+        $data = VirtualRequest::where('user_id', auth()->user()->id)->get();
+        // $data = VirtualRequest::all();
         $result = [];
         if ($data->count() > 0) :
             foreach ($data as $virtual) {

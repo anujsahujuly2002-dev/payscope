@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Admin\AepsController;
 use App\Http\Controllers\Admin\FundController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\RoleAndPermissions;
@@ -115,6 +116,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('api-list','apiList')->name('api.list');
             Route::get('manage-service','manageService')->name('manage.service');
             Route::get('setting','manageSetting')->name('setting');
+        });
+
+        //AEPS Route
+        Route::controller(AepsController::class)->group(function(){
+            Route::get('aeps-system','aepsServices')->name('aeps.system');
         });
 
         // Recharge and bill payments Route
