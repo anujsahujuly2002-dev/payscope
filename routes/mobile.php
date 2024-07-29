@@ -18,7 +18,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     });
     Route::controller(ManualRequestController::class)->prefix('fund')->group(function(){
         Route::get('/manual-request','manualRequest');
-        Route::post('/create-manualRequest','createManualRequest');
+        Route::post('/create-manual-request','createManualRequest');
     });
 
     Route::controller(VirtualRequestController::class)->prefix('fund')->group(function(){
