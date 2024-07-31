@@ -39,7 +39,7 @@
                         <span>@lang('translation.Dashboard')</span>
                     </a>
                 </li>
-                {{-- @if (checkRecordHasPermission(['create', 'list']))
+                @if (checkRecordHasPermission(['create', 'list']))
                     @canany(['create', 'list'])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -57,7 +57,7 @@
                             </ul>
                         </li>
                     @endcanany
-                @endif --}}
+                @endif
                 @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
 
                     @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
@@ -379,23 +379,22 @@
                         </li>
                     @endcanany
                 @endif --}}
-                {{--
-                @if (checkRecordHasPermission(['aeps-system']))
-                @can('aeps-system') --}}
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-cog"></i>
-                        <span>AEPS Service</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('admin.aeps.system') }}">
-                                <span>AEPS</span>
-                            </a></li>
-                    </ul>
 
-                    {{-- @endcanany --}}
-                </li>
-                {{-- @endif --}}
+                @if (checkRecordHasPermission(['aepsservice']))
+                    @can('aepsservice')
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-cog"></i>
+                                <span>AEPS Service</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.aeps.system') }}">
+                                        <span>AEPS</span>
+                                    </a></li>
+                            </ul>
+                        @endcanany
+                    </li>
+                @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-cog"></i>
