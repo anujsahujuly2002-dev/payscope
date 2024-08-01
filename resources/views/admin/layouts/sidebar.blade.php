@@ -49,10 +49,10 @@
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission(['create', 'list']))
                                     @canany(['create', 'list'])
-                                        <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Mobile </a></li>
+                                        <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Recharge </a></li>
                                     @endcanany
                                 @endif
-                                <li><a href="javascript:void()">DTH</a></li>
+                                {{-- <li><a href="javascript:void()">DTH</a></li> --}}
                                 <li><a href="javascript:void()">Electricity</a></li>
                             </ul>
                         </li>

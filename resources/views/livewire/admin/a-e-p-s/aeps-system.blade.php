@@ -22,19 +22,11 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="background-color: rgb(234, 225, 225);">
                     @if ($currentForm === 'form1')
                         <div>
                             <form>
                                 <div>
-                                    {{-- <label for="bank">Bank</label>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <select id="bank" wire:model="selectedBank">
-                                        <option value="">Select</option>
-                                             @foreach ($banks as $bank)
-                                            <option value="{{ $bank['id'] }}">{{ $bank['name'] }}</option>
-                                        @endforeach
-                                        </select> --}}
                                     <label for="bank">Bank</label>
                                     <select class="form-select" aria-label="Default select example">
                                         <option value="">Select</option>
