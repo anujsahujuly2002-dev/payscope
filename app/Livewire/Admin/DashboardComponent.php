@@ -12,6 +12,8 @@ class DashboardComponent extends Component
     public function render()
     {
         $data['loginActivities'] = LoginSession::with('user')->orderBy('created_at', 'desc')->take(10)->get();
+
+
         $data['payout'] = PayoutRequestHistory::when(auth()->user()->getRoleNames()->first() !='super-admin',function($q){
             $q->where('user_id',auth()->user()->id);
         })->where('status_id',2)->sum('amount');

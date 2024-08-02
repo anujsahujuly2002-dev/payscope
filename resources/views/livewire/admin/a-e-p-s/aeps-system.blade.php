@@ -22,7 +22,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card-body" style="background-color: rgb(234, 225, 225);">
+                <div class="card-body" style="background-color: #E7ECF2;">
                     @if ($currentForm === 'form1')
                         <div>
                             <form>

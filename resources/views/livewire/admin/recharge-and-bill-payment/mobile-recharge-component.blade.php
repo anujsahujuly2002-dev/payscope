@@ -8,7 +8,6 @@
 
         .card {
             margin-right: 20px;
-            /* Adjust as needed */
             cursor: pointer;
         }
 
@@ -21,7 +20,6 @@
         }
     </style>
     <div>
-        <!-- Card -->
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
@@ -48,7 +46,6 @@
                         </div>
                     </div>
                 </div>
-
                 @if ($showModal)
                     <div class="col-md-9">
                         <div class="card">
