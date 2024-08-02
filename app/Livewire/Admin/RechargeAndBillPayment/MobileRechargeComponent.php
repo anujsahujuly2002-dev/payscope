@@ -16,13 +16,13 @@ class MobileRechargeComponent extends Component
     }
         public $showModal = false;
         public $showModal1 = false;
-        public $showModalEle = false;
+        public $showModal2 = false;
 
     public function openModal()
     {
         $this->showModal = true;
         $this->showModal1 = false;
-        $this->showModalEle = false;
+        $this->showModal2 = false;
     }
 
     public function closeModal()
@@ -33,24 +33,24 @@ class MobileRechargeComponent extends Component
     {
         $this->showModal1 = true;
         $this->showModal = false;
-        $this->showModalEle = false;
+        $this->showModal2 = false;
     }
 
     public function closeModal1()
     {
         $this->showModal1 = false;
     }
-    public function openModalEle()
+    public function openModal2()
     {
-        $this->showModalEle = true;
+        $this->showModal2 = true;
         $this->showModal = false;
         $this->showModal1 = false;
 
     }
 
-    public function closeModalEle()
+    public function closeModal2()
     {
-        $this->showModalEle = false;
+        $this->showModal2 = false;
     }
 
     public function render()
