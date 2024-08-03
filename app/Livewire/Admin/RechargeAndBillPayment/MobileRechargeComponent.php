@@ -8,50 +8,26 @@ use Livewire\Component;
 class MobileRechargeComponent extends Component
 {
 
-    public $currentForm = 'form1';
+    public $currentFormCard1 = 'form1';
+    public $currentFormCard2 = 'form1';
 
-    public function showForm($form)
+    public function showFormCard1($form)
     {
-        $this->currentForm = $form;
-    }
-        public $showModal = false;
-        public $showModal1 = false;
-        public $showModal2 = false;
-
-    public function openModal()
-    {
-        $this->showModal = true;
-        $this->showModal1 = false;
-        $this->showModal2 = false;
+        $this->currentFormCard1 = $form;
     }
 
-    public function closeModal()
+    public function showFormCard2($form)
     {
-        $this->showModal = false;
-    }
-    public function openModal1()
-    {
-        $this->showModal1 = true;
-        $this->showModal = false;
-        $this->showModal2 = false;
+        $this->currentFormCard2 = $form;
     }
 
-    public function closeModal1()
-    {
-        $this->showModal1 = false;
-    }
-    public function openModal2()
-    {
-        $this->showModal2 = true;
-        $this->showModal = false;
-        $this->showModal1 = false;
 
-    }
+    public $recharges = [
+        ['amount' => 199, 'validity' => '28 Days', 'description' => '1.5GB/day, Unlimited Calls'],
+        ['amount' => 399, 'validity' => '56 Days', 'description' => '2GB/day, Unlimited Calls, 100 SMS/day'],
+        ['amount' => 599, 'validity' => '84 Days', 'description' => '3GB/day, Unlimited Calls, 100 SMS/day'],
+    ];
 
-    public function closeModal2()
-    {
-        $this->showModal2 = false;
-    }
 
     public function render()
     {
