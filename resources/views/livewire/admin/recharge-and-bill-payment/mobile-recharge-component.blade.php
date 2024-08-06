@@ -56,7 +56,7 @@
                                 <input type="text" class="form-control" id="amount"
                                     placeholder="Enter Your Amount">
                             </div>
-                            <button type="submit" class="btn btn-primary mt-2">Proceed</button>
+                            <button type="submit" class="btn mt-2" style="background-color: rgb(53, 53, 199); color:white">Proceed</button>
                         </form>
                     @elseif ($currentForm === 'form2')
                     <form>
@@ -91,7 +91,7 @@
                             <input type="text" class="form-control" id="amount"
                                 placeholder="Enter Your Amount">
                         </div>
-                        <button type="submit" class="btn btn-primary mt-2">Proceed</button>
+                        <button type="submit" class="btn mt-2" style="background-color: rgb(24, 24, 167); color:white">Proceed</button>
                     </form>
                     @elseif ($currentForm === 'form3')
                     <form>
@@ -128,7 +128,7 @@
                             <input type="text" class="form-control" id="amount"
                                 placeholder="Enter Your Amount">
                         </div>
-                        <button type="submit" class="btn btn-primary mt-2">Proceed</button>
+                        <button type="submit" class="btn mt-2" style="background-color: rgb(24, 24, 167); color:white">Proceed</button>
                     </form>
                     @elseif ($currentForm === 'form4')
                     <form>
@@ -164,7 +164,7 @@
                             <input type="text" class="form-control" id="amount"
                                 placeholder="Enter Your Amount">
                         </div>
-                        <button type="submit" class="btn btn-primary mt-2">Proceed</button>
+                        <button type="submit" class="btn mt-2" style="background-color: rgb(24, 24, 167); color:white">Proceed</button>
                     </form>
                     @endif
                 </div>

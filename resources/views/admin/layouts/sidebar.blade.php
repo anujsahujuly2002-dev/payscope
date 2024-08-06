@@ -124,11 +124,11 @@
                                 {{--   <li><a href="javascript:void()">Whitelabel</a></li>
                                 <li><a href="javascript:void()">Master Distributor</a></li>
                                 <li><a href="javascript:void()">Distributor</a></li> --}}
-                                {{-- @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete']))
+                                @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete']))
                                     @canany(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete'])
                                         <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
                                     @endcanany
-                                @endif --}}
+                                @endif
                                 @if (checkRecordHasPermission(['api-partner-create', 'api-partner-list', 'api-partner-edit', 'api-partner-delete']))
                                     @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit',
                                         'api-partner-delete'])
