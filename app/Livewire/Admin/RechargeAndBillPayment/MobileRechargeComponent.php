@@ -29,9 +29,6 @@ class MobileRechargeComponent extends Component
         $this->currentForm1 = $form;
     }
 
-
-
-
     public function render()
     {
         return view('livewire.admin.recharge-and-bill-payment.mobile-recharge-component');

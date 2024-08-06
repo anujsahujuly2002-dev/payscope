@@ -51,8 +51,7 @@ class ManualRequestController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'Validation Error',
-                'data' => $validator->errors(),
+                'errors' => $validator->errors(),
             ], 401);
         }
         $userId = auth()->user()->id;
