@@ -9,14 +9,18 @@ use App\Models\PayoutRequestHistory;
 
 class DashboardComponent extends Component
 {
+
     public function render()
     {
+
         // $data['loginActivities'] = LoginSession::with('user')->orderBy('created_at', 'desc')->take(10)->get();
+        // $data['loginActivities'] = LoginSession::with('user')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->take(10)->get();
+
 
         if (auth()->user()->hasRole('admin')) {
-            $data['loginActivities'] = LoginSession::with('user')->orderBy('created_at', 'desc')->get();
+            $data['loginActivities'] = LoginSession::with('user')->orderBy('created_at', 'desc')->take(10)->get();
         } else {
-            $data['loginActivities'] = LoginSession::with('user')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+            $data['loginActivities'] = LoginSession::with('user')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->take(10)->get();
         }
 
         $data['payout'] = PayoutRequestHistory::when(auth()->user()->getRoleNames()->first() !='super-admin',function($q){
