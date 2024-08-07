@@ -222,15 +222,9 @@ View Profile
                                 <h3 class="card-title">KYC Details</h3>
                             </div>
                             <div class="card-body">
-<<<<<<< HEAD
 
                             </div>
                         </div>
-=======
-
-                            </div>
-                        </div>
->>>>>>> 115e84c6ec576870fb2f39addc64c568278493cc
                     </div>
                     <div class="tab-pane @if($tab =='password manager') active show @endif" id="messages" role="tabpanel">
                         <div class="card">
@@ -279,7 +273,3 @@ View Profile
         </div>
     </div>
 @endsection
-<<<<<<< HEAD
-
-=======
->>>>>>> 115e84c6ec576870fb2f39addc64c568278493cc
