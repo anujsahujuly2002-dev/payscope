@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::controller(VirtualRequestController::class)->prefix('fund')->group(function(){
         Route::get('/virtul-request','virtualRequest');
     });
+
+    Route::get('payment-modes', [CommonController::class, 'index']);
 });
 
 

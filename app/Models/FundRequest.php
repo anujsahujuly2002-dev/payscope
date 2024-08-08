@@ -39,4 +39,5 @@ class FundRequest extends Model
     public function getCreatedAtAttribute($value){
         return date('d M y - h:i:s A', strtotime($value));
     }
+
 }
