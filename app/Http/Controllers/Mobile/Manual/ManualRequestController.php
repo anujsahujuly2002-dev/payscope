@@ -72,11 +72,7 @@ class ManualRequestController extends Controller
             'references_no' => $request->reference_number,
             'status_id' => 1,
         ]);
-        // return response()->json([
-        //     'status' => true,
-        //     'message' => 'Manual Funds created successfully.',
-        //     'data' => $fund,
-        // ], 200);
+
 
         if ($validator->fails()) {
             return response()->json([

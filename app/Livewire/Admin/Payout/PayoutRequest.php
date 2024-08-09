@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Payout;
 
 use Carbon\Carbon;
+use App\Models\Bank;
 use App\Models\User;
 use App\Models\Status;
 use App\Models\Wallet;
@@ -31,6 +32,7 @@ class PayoutRequest extends Component
     public $value;
     public $agentId;
     public $status;
+    public $banks;
 
     public function updated() {
         $this->resetPage();
@@ -42,6 +44,7 @@ class PayoutRequest extends Component
             throw UnauthorizedException::forPermissions(['payout-request']);
         endif;
         $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
+        $this->banks = Bank::get();
         $this->statuses =  Status::get();
         $payoutRequestData = FundRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
