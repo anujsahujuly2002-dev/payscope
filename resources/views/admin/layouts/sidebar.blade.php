@@ -135,6 +135,7 @@
                                         <li><a href="{{ route('admin.api.partner.list') }}">Api Partner</a></li>
                                     @endcanany
                                 @endif
+                                <li><a href="javascript:void()">White Wallet</a></li>
                             </ul>
                         </li>
                     @endcanany
