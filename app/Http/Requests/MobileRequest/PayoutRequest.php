@@ -30,9 +30,6 @@ class PayoutRequest extends FormRequest
             'account_holder_name' => 'required',
             'amount' => 'required',
             'payment_mode' => 'required',
-            'bank_name' => 'required',
-            'branch_name' => 'required',
-            'remark' => 'required',
         ];
     }
 
