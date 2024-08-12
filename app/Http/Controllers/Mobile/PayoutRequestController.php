@@ -14,7 +14,7 @@ class PayoutRequestController extends Controller
 
   public function payoutRequest()
     {
-        $data = FundRequest::where('user_id', auth()->user()->id)->with(['user', 'bank'])->get();
+        $data = FundRequest::where('user_id', auth()->user()->id)->get();
         $result = [];
         if ($data->count() > 0) :
             foreach ($data as $fundRequest) {
@@ -22,13 +22,11 @@ class PayoutRequestController extends Controller
                 [
                     'id' => $fundRequest->id,
                     'user_name' => $fundRequest->user->name,
-                    'bank_id' => $fundRequest->bank_id,
                     'amount' => $fundRequest->amount,
                     'account_number' => $fundRequest->account_number,
                     'account_holder_name' => $fundRequest->account_holder_name,
                     'ifsc_code' => $fundRequest->ifsc_code,
                     'payment_mode_id' =>$fundRequest->payment_mode_id,
-                    'remark' => 'remark'
                 ];
              }
         endif;
@@ -48,8 +46,6 @@ class PayoutRequestController extends Controller
             'account_holder_name'=>'required',
             'amount'=>'required',
             'payment_mode'=>'required',
-            'bank_name'=>'required',
-            'remark'=>'required',
         ]);
 
         $validateData['user_id']= auth()->user()->id;
