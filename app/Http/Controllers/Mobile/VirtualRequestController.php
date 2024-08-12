@@ -31,7 +31,6 @@ class VirtualRequestController extends Controller
             'status' => true,
             'message' => 'Virtual Funds have been successfully.',
             'data' => $result,
-
         ]);
     }
 

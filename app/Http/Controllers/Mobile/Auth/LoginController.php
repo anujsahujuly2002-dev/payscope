@@ -15,9 +15,11 @@ class LoginController extends Controller
 
     use LoginSessionTraits;
     private $loginRepo;
+
     public function __construct(LoginRepository $loginRepository) {
         $this->loginRepo = $loginRepository;
     }
+
     public function login(LoginRequest $request) {
         $userDetails = [
             'username'=> $request->input('username'),

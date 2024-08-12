@@ -7,6 +7,7 @@ use App\Models\FundRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\MobileRequest\PayoutRequest;
 
 class PayoutRequestController extends Controller
 {
@@ -14,7 +15,6 @@ class PayoutRequestController extends Controller
   public function payoutRequest()
     {
         $data = FundRequest::where('user_id', auth()->user()->id)->with(['user', 'bank'])->get();
-        // $data = FundRequest::with(['bank'])->get();
         $result = [];
         if ($data->count() > 0) :
             foreach ($data as $fundRequest) {
@@ -22,13 +22,12 @@ class PayoutRequestController extends Controller
                 [
                     'id' => $fundRequest->id,
                     'user_name' => $fundRequest->user->name,
-                    'bank_id' => $fundRequest->bank,
+                    'bank_id' => $fundRequest->bank_id,
                     'amount' => $fundRequest->amount,
                     'account_number' => $fundRequest->account_number,
                     'account_holder_name' => $fundRequest->account_holder_name,
-                    'branch_name' => $fundRequest->branch_name,
                     'ifsc_code' => $fundRequest->ifsc_code,
-                    'payment_mode_id' =>$fundRequest->payment_mode,
+                    'payment_mode_id' =>$fundRequest->payment_mode_id,
                     'remark' => 'remark'
                 ];
              }
@@ -40,8 +39,9 @@ class PayoutRequestController extends Controller
              ], 200);
     }
 
-    public function createPayoutNewRequest(Request $request)
+    public function createPayoutNewRequest(PayoutRequest $request)
      {
+
         $validator = Validator::make($request->all(),[
             'account_number'=>'required',
             'ifsc_code' =>'required',
@@ -52,15 +52,7 @@ class PayoutRequestController extends Controller
             'remark'=>'required',
         ]);
 
-        // $validateData['user_id']= auth()->user()->id;
-        // // $response = $this->payoutApiRequest($validateData);
-        // $response = $this->ekoPayoutApi($validateData);;
-        // $this->dispatch('hide-form');
-        // if($response['status']=='0005'):
-        //     return redirect()->back()->with('success',$response['msg']);
-        // else:
-        //     return redirect()->back()->with('error',$response['msg']);
-        // endif;
+        $validateData['user_id']= auth()->user()->id;
 
         if ($validator->fails()) {
             return response()->json([
@@ -71,7 +63,7 @@ class PayoutRequestController extends Controller
             return response()->json([
            'status' => true,
            'message' => 'Payout created successfully.',
-       ], 200);
+         ], 200);
        }
      }
 }

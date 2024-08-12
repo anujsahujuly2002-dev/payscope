@@ -1,13 +1,13 @@
 <?php
 
-use Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Mobile\CommonController;
 use App\Http\Controllers\Mobile\DashboardController;
+use App\Http\Controllers\Mobile\Auth\LoginController;
+use App\Http\Controllers\Mobile\PayoutRequestController;
 use App\Http\Controllers\Mobile\VirtualRequestController;
 use App\Http\Controllers\Mobile\Manual\ManualRequestController;
-use App\Http\Controllers\Mobile\PayoutRequestController;
 
 Route::controller(LoginController::class)->group(function() {
     Route::post('/login','login');

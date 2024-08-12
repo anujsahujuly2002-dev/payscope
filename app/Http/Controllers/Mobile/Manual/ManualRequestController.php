@@ -83,7 +83,7 @@ class ManualRequestController extends Controller
              return response()->json([
             'status' => true,
             'message' => 'Manual Funds created successfully.',
-            'data' => $fund,
+            // 'data' => $fund,
         ], 200);
         }
     }
