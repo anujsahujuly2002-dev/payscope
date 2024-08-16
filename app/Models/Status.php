@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
+
     public function getNameAttribute($value){
         $status = '';
         if($value =='pending'):
@@ -21,4 +22,19 @@ class Status extends Model
         endif;
         return $status;
     }
+
+
+    // public function statusApi($value)
+    // {
+    //     if ($value == 'pending') {
+    //         return 'Pending';
+    //     } elseif ($value == 'rejected') {
+    //         return 'Rejected';
+    //     } elseif ($value == 'approved') {
+    //         return 'Success';
+    //     } elseif ($value == 'refunded') {
+    //         return 'Refunded';
+    //     }
+    //     return $value;
+    // }
 }

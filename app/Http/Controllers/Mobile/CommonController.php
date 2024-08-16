@@ -22,10 +22,18 @@ class CommonController extends Controller
         return response()->json($banks, 200);
     }
 
-    public function statusList()
+    public function getStatusList()
     {
         $statuses = Status::all();
-        return response()->json($statuses, 200);
+        $statusList = $statuses->map(function($status) {
+            return [
+                'id' => $status->id,
+                'name' => strip_tags($status->name),
+                'created_at' => $status->created_at,
+                'updated_at' => $status->updated_at,
+            ];
+        });
+        return response()->json($statusList);
     }
 }
 

@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('payment-modes', [CommonController::class, 'paymentModeList']);
     Route::get('bank-list', [CommonController::class, 'bankList']);
-    Route::get('status-list', [CommonController::class, 'statusList']);
+    Route::get('status-list', [CommonController::class, 'getStatusList']);
 });
 
 
