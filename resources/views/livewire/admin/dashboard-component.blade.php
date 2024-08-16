@@ -207,7 +207,7 @@
 
     <div class="row">
         <div class="col-xl-4">
-             {{-- <div class="card">
+             <div class="card">
                 <div class="card-body">
                     <div class="float-end">
                         <div class="dropdown">
@@ -296,7 +296,7 @@
                         </div> <!-- enbd table-responsive-->
                     </div> <!-- data-sidebar-->
                 </div><!-- end card-body-->
-            </div> <!-- end card--> --}}
+            </div> <!-- end card-->
         </div><!-- end col -->
 
         <div class="col-xl-4">
@@ -328,7 +328,6 @@
                         </li> --}}
                         @foreach ($loginActivities as $loginActivity )
                         <li class="feed-item">
-                            {{-- <p class="text-muted mb-1 font-size-13">{{$v->login_time}}<small class="d-inline-block ms-1">12:36 pm</small></p> --}}
                             <p class="mb-0"><span class="text-primary">{{$loginActivity->user?->name}}</span></p>
                             <p class="mb-0">Login Time: {{$loginActivity->login_time}}</p>
                             <p class="mb-0">Logout time: {{$loginActivity->logout_time}}</p>
@@ -415,7 +414,7 @@
     </div>
     <!-- end row -->
 
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -617,6 +616,6 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- end row -->
 </div>

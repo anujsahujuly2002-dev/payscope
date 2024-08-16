@@ -72,6 +72,9 @@ class RetailerComponent extends Component
         if(!auth()->user()->can('retailer-create'))
         throw UnauthorizedException::forPermissions(['retailer-create']);
         $this->reset();
+        $this->createRetailerForm = true;
+        $this->assignPermissionUserBasedForm = false;
+        $this->schemeForm=false;
         $this->dispatch('show-form');
     }
 
@@ -150,7 +153,7 @@ class RetailerComponent extends Component
 
     public function changeScheme($id) {
         $this->reset();
-        $this->createRetailerForm = false;
+        $this->createRetailerForm = true;
         $this->assignPermissionUserBasedForm = false;
         $this->schemeForm=true;
         $retailer = Retailer::where('user_id',$id)->first();

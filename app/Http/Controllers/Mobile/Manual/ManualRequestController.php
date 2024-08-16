@@ -16,7 +16,7 @@ class ManualRequestController extends Controller
 
     public function manualRequest()
     {
-        $data = Fund::where('user_id', auth()->user()->id)->with(['user', 'bank'])->get();
+        $data = Fund::where('user_id', auth()->user()->id)->with(['user', 'bank','status'])->get();
         $result = [];
         if ($data->count() > 0) :
             foreach ($data as $fund) {
@@ -28,6 +28,7 @@ class ManualRequestController extends Controller
                     'account_number' => $fund->bank->account_number,
                     'branch_name' => $fund->bank->branch_name,
                     'ifsc_code' => $fund->bank->ifsc_code,
+                    'status' => strip_tags($fund->status->name),
                 ];
              }
         endif;
@@ -51,8 +52,7 @@ class ManualRequestController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'Validation Error',
-                'data' => $validator->errors(),
+                'errors' => $validator->errors(),
             ], 401);
         }
         $userId = auth()->user()->id;
@@ -72,10 +72,19 @@ class ManualRequestController extends Controller
             'references_no' => $request->reference_number,
             'status_id' => 1,
         ]);
-        return response()->json([
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+            ], 401);
+        }
+        else{
+             return response()->json([
             'status' => true,
             'message' => 'Manual Funds created successfully.',
-            'data' => $fund,
+            // 'data' => $fund,
         ], 200);
+        }
     }
 }

@@ -39,4 +39,11 @@ class FundRequest extends Model
     public function getCreatedAtAttribute($value){
         return date('d M y - h:i:s A', strtotime($value));
     }
+
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class,'bank_id','id');
+    }
+
+
 }

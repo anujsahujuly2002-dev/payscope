@@ -363,7 +363,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4 mb-0 mt-2">
+                                        {{-- <div class="col-md-4 mb-0 mt-2">
                                             <label for="website" class="form-label">Website</label>
                                             <input type="text" id="website" class="form-control @error('website') is-invalid @enderror" placeholder="Enter Website" wire:model.defer='state.website'/>
                                             @error('website')
@@ -371,7 +371,7 @@
                                                     {{$message}}
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

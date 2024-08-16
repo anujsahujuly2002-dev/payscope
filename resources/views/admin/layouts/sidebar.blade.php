@@ -39,7 +39,7 @@
                         <span>@lang('translation.Dashboard')</span>
                     </a>
                 </li>
-                {{-- @if (checkRecordHasPermission(['create', 'list']))
+                @if (checkRecordHasPermission(['create', 'list']))
                     @canany(['create', 'list'])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -49,15 +49,15 @@
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission(['create', 'list']))
                                     @canany(['create', 'list'])
-                                        <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Mobile </a></li>
+                                        <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Recharge </a></li>
                                     @endcanany
                                 @endif
-                                <li><a href="javascript:void()">DTH</a></li>
+                                {{-- <li><a href="javascript:void()">DTH</a></li> --}}
                                 <li><a href="javascript:void()">Electricity</a></li>
                             </ul>
                         </li>
                     @endcanany
-                @endif --}}
+                @endif
                 @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
 
                     @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
@@ -124,17 +124,18 @@
                                 {{--   <li><a href="javascript:void()">Whitelabel</a></li>
                                 <li><a href="javascript:void()">Master Distributor</a></li>
                                 <li><a href="javascript:void()">Distributor</a></li> --}}
-                                {{-- @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete']))
+                                @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete']))
                                     @canany(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete'])
                                         <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
                                     @endcanany
-                                @endif --}}
+                                @endif
                                 @if (checkRecordHasPermission(['api-partner-create', 'api-partner-list', 'api-partner-edit', 'api-partner-delete']))
                                     @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit',
                                         'api-partner-delete'])
                                         <li><a href="{{ route('admin.api.partner.list') }}">Api Partner</a></li>
                                     @endcanany
                                 @endif
+                                <li><a href="javascript:void()">White Wallet</a></li>
                             </ul>
                         </li>
                     @endcanany
@@ -379,23 +380,22 @@
                         </li>
                     @endcanany
                 @endif --}}
-                {{--
-                @if (checkRecordHasPermission(['aeps-system']))
-                @can('aeps-system') --}}
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-cog"></i>
-                        <span>AEPS Service</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('admin.aeps.system') }}">
-                                <span>AEPS</span>
-                            </a></li>
-                    </ul>
 
-                    {{-- @endcanany --}}
-                </li>
-                {{-- @endif --}}
+                @if (checkRecordHasPermission(['aepsservice']))
+                    @can('aepsservice')
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-cog"></i>
+                                <span>AEPS Service</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.aeps.system') }}">
+                                        <span>AEPS</span>
+                                    </a></li>
+                            </ul>
+                        @endcanany
+                    </li>
+                @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-cog"></i>
