@@ -1,65 +1,65 @@
 <div>
     <div class="row">
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
                         <div id="customers-chart" data-colors='["--bs-primary"]'> </div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($paymentIn)}}</span></h4>
-                        <p class="text-muted mb-0">Total Payment In</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($paymentIn)}}</span></h4>
+                        <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
-                    <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
         </div> <!-- end col-->
 
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color:#fc0800;">
                 <div class="card-body">
                     <div class="float-end mt-2">
                         <div id="growth-chart" data-colors='["--bs-warning"]'></div>
                     </div>
                     <div>
                         {{-- {{dd(Auth::user()->id)}} --}}
-                        <h4 class="mb-1 mt-1"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($payout)}}</span></h4>
-                        <p class="text-muted mb-0">Total Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($payout)}}</span></h4>
+                        <p class="text-white mb-0">Total Payout</p>
                     </div>
-                    <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
         </div> <!-- end col-->
 
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="customers-chart" data-colors='["--bs-primary"]'> </div>
+                        <div id="growth-chart" data-colors='["--bs-primary"]'> </div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($rejectedPayment)}}</span></h4>
-                        <p class="text-muted mb-0">Total Rejected Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($rejectedPayment)}}</span></h4>
+                        <p class="text-white mb-0">Total Rejected Payout</p>
                     </div>
-                    <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
         </div> <!-- end col-->
 
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color:#ff0800">
                 <div class="card-body">
                     <div class="float-end mt-2">
                         <div id="orders-chart" data-colors='["--bs-success"]'> </div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1">&#x20B9;<span data-plugin="counterup">{{moneyFormatIndia($commission)}}</span></h4>
-                        <p class="text-muted mb-0">Total Payout Charges:</p>
+                        <h4 class="mb-1 mt-1 text-white">&#x20B9;<span data-plugin="counterup">{{moneyFormatIndia($commission)}}</span></h4>
+                        <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
-                    <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
@@ -73,38 +73,38 @@
                     <div class="float-end">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold">Sort By:</span> <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span class="fw-semibold" style="color: #0a1d56">Sort By:</span> <span style="color:#0a1d56">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5" style="color: #0a1d56">
                                 <a class="dropdown-item" href="#">Monthly</a>
                                 <a class="dropdown-item" href="#">Yearly</a>
                                 <a class="dropdown-item" href="#">Weekly</a>
                             </div>
                         </div>
                     </div>
-                    <h4 class="card-title mb-4">Sales Analytics</h4>
+                    <h4 class="card-title mb-4" style="color: #0a1d56">Sales Analytics</h4>
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                <h3 class="text-primary">&#x20B9;<span data-plugin="counterup">{{moneyFormatIndia($payout)}}</span><span class="text-muted d-inline-block font-size-15 ms-3">Income</span></h3>
+                                <h3 style="color: #0a1d56">&#x20B9;<span data-plugin="counterup">{{moneyFormatIndia($payout)}}</span><span class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Income</span></h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
-                                <h3><span data-plugin="counterup">0</span><span class="text-muted d-inline-block font-size-15 ms-3">Sales</span></h3>
+                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span><span class="d-inline-block font-size-15 ms-3" style="color: #0a1d56" >Sales</span></h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
-                                <h3><span data-plugin="counterup">0</span>%<span class="text-muted d-inline-block font-size-15 ms-3">Conversation Ratio</span></h3>
+                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span>%<span class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Conversation Ratio</span></h3>
                             </li>
                         </ul>
                     </div>
                     <div class="mt-3">
-                        <div id="sales-analytics-chart" data-colors='["--bs-primary", "#dfe2e6", "--bs-warning"]' class="apex-charts" dir="ltr"></div>
+                        <div id="sales-analytics-chart" data-colors='["#0a1d56", "#dfe2e6", "#ff0800"]' class="apex-charts" dir="ltr"></div>
                     </div>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
 
         <div class="col-xl-4">
-            <div class="card bg-primary">
+            <div class="card" style="background-color: #0a1d56">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-sm-8">
@@ -127,13 +127,13 @@
                     <div class="float-end">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold">Sort By:</span> <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span class="fw-semibold">Sort By:</span> <span style="color: #0a1d56;">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                <a class="dropdown-item" href="#">Monthly</a>
-                                <a class="dropdown-item" href="#">Yearly</a>
-                                <a class="dropdown-item" href="#">Weekly</a>
+                                <a class="dropdown-item" style="color: #0a1d56" href="#">Monthly</a>
+                                <a class="dropdown-item" style="color: #0a1d56" href="#">Yearly</a>
+                                <a class="dropdown-item" style="color: #0a1d56" href="#">Weekly</a>
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                     <h4 class="card-title mb-4">Top Selling Products</h4>
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-primary me-2"></i>Total payout </p>
+                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-primary me-2"></i>Total payout </p>
                         </div>
 
                         <div class="col-sm-9">
@@ -154,7 +154,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> iPhones </p>
+                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> iPhones </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
@@ -166,7 +166,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-success me-2"></i> Android </p>
+                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-success me-2"></i> Android </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
@@ -178,7 +178,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> Tablets </p>
+                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> Tablets </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
@@ -190,7 +190,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> Cables </p>
+                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> Cables </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
@@ -212,17 +212,17 @@
                     <div class="float-end">
                         <div class="dropdown">
                             <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted">All Members<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span style="color: #0a1d56">All Members<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                                <a class="dropdown-item" href="#">Locations</a>
-                                <a class="dropdown-item" href="#">Revenue</a>
-                                <a class="dropdown-item" href="#">Join Date</a>
+                                <a class="dropdown-item"  style="color: #0a1d56" href="#">Locations</a>
+                                <a class="dropdown-item" style="color: #0a1d56" href="#">Revenue</a>
+                                <a class="dropdown-item"  style="color: #0a1d56" href="#">Join Date</a>
                             </div>
                         </div>
                     </div>
-                    <h4 class="card-title mb-4">Top Users</h4>
+                    <h4 class="card-title mb-4"  style="color: #0a1d56">Top Users</h4>
 
                     <div data-simplebar style="max-height: 339px;">
                         <div class="table-responsive">
@@ -305,17 +305,17 @@
                     <div class="float-end">
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted">Recent<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span  style="color: #0a1d56" >Recent<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
-                                <a class="dropdown-item" href="#">Recent</a>
-                                <a class="dropdown-item" href="#">By Users</a>
+                                <a class="dropdown-item" href="#"  style="color: #0a1d56">Recent</a>
+                                <a class="dropdown-item" href="#"  style="color: #0a1d56">By Users</a>
                             </div>
                         </div>
                     </div>
 
-                    <h4 class="card-title mb-4">Recent Activity</h4>
+                    <h4 class="card-title mb-4"  style="color: #0a1d56">Recent Activity</h4>
 
                     <ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 339px;">
                         {{-- <li class="feed-item">
@@ -327,7 +327,7 @@
                             </div>
                         </li> --}}
                         @foreach ($loginActivities as $loginActivity )
-                        <li class="feed-item">
+                        <li class="feed-item" >
                             <p class="mb-0"><span class="text-primary">{{$loginActivity->user?->name}}</span></p>
                             <p class="mb-0">Login Time: {{$loginActivity->login_time}}</p>
                             <p class="mb-0">Logout time: {{$loginActivity->logout_time}}</p>
@@ -341,22 +341,21 @@
         <div class="col-xl-4">
             <div class="card">
                 <div class="card-body">
-
                     <div class="float-end">
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span style="color: #0a1d56">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton4">
-                                <a class="dropdown-item" href="#">Yearly</a>
-                                <a class="dropdown-item" href="#">Monthly</a>
-                                <a class="dropdown-item" href="#">Weekly</a>
+                                <a class="dropdown-item" href="#" style="color: #0a1d56">Yearly</a>
+                                <a class="dropdown-item" href="#" style="color: #0a1d56">Monthly</a>
+                                <a class="dropdown-item" href="#" style="color: #0a1d56">Weekly</a>
                             </div>
                         </div>
                     </div>
 
-                    <h4 class="card-title">Social Source</h4>
+                    <h4 class="card-title" style="color: #0a1d56">Social Source</h4>
 
                     <div class="text-center">
                         <div class="avatar-sm mx-auto mb-4">
@@ -365,7 +364,7 @@
                             </span>
                         </div>
                         <p class="font-16 text-muted mb-2"></p>
-                        <h5><a href="#" class="text-dark">Facebook - <span class="text-muted font-16">125 sales</span> </a></h5>
+                        <h5><a href="#" class="text-dark">Facebook - <span class="font-16" style="color: #0a1d56;">125 sales</span> </a></h5>
                         <p class="text-muted">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus tincidunt.</p>
                         <a href="#" class="text-reset font-16">Learn more <i class="mdi mdi-chevron-right"></i></a>
                     </div>
@@ -418,11 +417,11 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Latest Transaction</h4>
+                    <h4 class="card-title mb-4" style="color: #0a1d56">Latest Transaction</h4>
                     <div class="table-responsive">
                         <table class="table table-centered table-nowrap mb-0">
                             <thead class="table-light">
-                                <tr>
+                                <tr style="color: #0a1d56">
                                     <th style="width: 20px;">
                                         <div class="form-check font-size-16">
                                             <input type="checkbox" class="form-check-input" id="customCheck1">

@@ -36,7 +36,7 @@
                     <a href="{{ route('admin.dashboard') }}">
                         <i class="uil-home-alt"></i>
                         {{-- <span class="badge rounded-pill bg-primary float-end">01</span> --}}
-                        <span>@lang('translation.Dashboard')</span>
+                        <span style="color: #0a1d56">@lang('translation.Dashboard')</span>
                     </a>
                 </li>
                 @if (checkRecordHasPermission(['create', 'list']))
@@ -44,16 +44,16 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-bolt-alt"></i>
-                                <span>Recharge & Bill Payment</span>
+                                <span style="color: #0a1d56;">Recharge & Bill Payment</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission(['create', 'list']))
                                     @canany(['create', 'list'])
-                                        <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}">Recharge </a></li>
+                                        <li><a href="{{route('admin.recharge.and.bill.paymentsmobile.recharge')}}" style="color: #0a1d56;">Recharge </a></li>
                                     @endcanany
                                 @endif
                                 {{-- <li><a href="javascript:void()">DTH</a></li> --}}
-                                <li><a href="javascript:void()">Electricity</a></li>
+                                <li><a href="javascript:void()" style="color: #0a1d56;">Electricity</a></li>
                             </ul>
                         </li>
                     @endcanany
@@ -64,16 +64,16 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="mdi mdi-head-cog"></i>
-                                <span>Resources</span>
+                                <span style="color: #0a1d56;">Resources</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit']))
                                     @canany(['scheme-manager-list', 'scheme-manager-create', 'scheme-manager-edit'])
-                                        <li><a href="{{ route('admin.resource.scheme.manager') }}">Scheme Manager</a></li>
+                                        <li><a href="{{ route('admin.resource.scheme.manager') }}" style="color: #0a1d56;">Scheme Manager</a></li>
                                     @endcanany
                                 @endif
-                                <li><a href="javascript:void()">Company Manager</a></li>
-                                <li><a href="javascript:void()">Company Profile</a></li>
+                                <li><a href="javascript:void()" style="color: #0a1d56;">Company Manager</a></li>
+                                <li><a href="javascript:void()" style="color: #0a1d56;">Company Profile</a></li>
                             </ul>
                         </li>
                     @endcanany
@@ -93,17 +93,17 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-cog"></i>
-                                <span>Role & Permission</span>
+                                <span style="color: #0a1d56;">Role & Permission</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission(['role-list', 'role-delete', 'role-create', 'role-edit']))
                                     @canany(['role-list', 'role-delete', 'role-create', 'role-edit'])
-                                        <li><a href="{{ route('admin.role.list') }}">Role</a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.role.list') }}">Role</a></li>
                                     @endcan
                                 @endif
                                 @if (checkRecordHasPermission(['permission-list', 'permssion-create', 'permission-edit', 'permission-delete']))
                                     @canany(['permission-list', 'permssion-create', 'permission-edit', 'permission-delete'])
-                                        <li><a href="{{ route('admin.permission.list') }}">Permission</a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.permission.list') }}">Permission</a></li>
                                     @endcan
                                 @endif
                             </ul>
@@ -118,7 +118,7 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-users-alt"></i>
-                                <span>Member</span>
+                                <span style="color: #0a1d56;">Member</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 {{--   <li><a href="javascript:void()">Whitelabel</a></li>
@@ -126,13 +126,13 @@
                                 <li><a href="javascript:void()">Distributor</a></li> --}}
                                 @if (checkRecordHasPermission(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete']))
                                     @canany(['retailer-list', 'retailer-create', 'retailer-edit', 'retailer-delete'])
-                                        <li><a href="{{route('admin.retailer.list')}}">Retailer</a></li>
+                                        <li><a style="color: #0a1d56;" href="{{route('admin.retailer.list')}}">Retailer</a></li>
                                     @endcanany
                                 @endif
                                 @if (checkRecordHasPermission(['api-partner-create', 'api-partner-list', 'api-partner-edit', 'api-partner-delete']))
                                     @canany(['api-partner-create', 'api-partner-list', 'api-partner-edit',
                                         'api-partner-delete'])
-                                        <li><a href="{{ route('admin.api.partner.list') }}">Api Partner</a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.api.partner.list') }}">Api Partner</a></li>
                                     @endcanany
                                 @endif
                                 <li><a href="javascript:void()">White Wallet</a></li>
@@ -202,20 +202,20 @@
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="uil-history"></i>
-                            <span>Fund Manager</span>
+                            <span style="color: #0a1d56;">Fund Manager</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             @if (checkRecordHasPermission(['fund-manager-manual-request', 'fund-new-request', 'approved-fund-request']))
                                 @canany(['fund-manager-manual-request', 'fund-new-request', 'approved-fund-request'])
-                                    <li><a href="{{ route('admin.fund.manual.request') }}">Manual Request</a></li>
+                                    <li><a style="color: #0a1d56;" href="{{ route('admin.fund.manual.request') }}">Manual Request</a></li>
                                 @endcanany
                             @endif
                             @if (checkRecordHasPermission(['virtual-list']))
                                 @canany(['virtual-list'])
-                                    <li><a href="{{ route('admin.fund.virtual.request') }}">Virtual Request</a></li>
+                                    <li><a style="color: #0a1d56;" href="{{ route('admin.fund.virtual.request') }}">Virtual Request</a></li>
                                 @endcanany
                             @endif
-                            <li><a href="javascript:void()">Transfer Return</a></li>
+                            <li><a href="javascript:void()" style="color: #0a1d56;">Transfer Return</a></li>
                             {{-- @if (['payout-request', 'payout-new-request'])
                                 @canany(['payout-request', 'payout-new-request'])
                                     <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
@@ -237,23 +237,23 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-money-withdrawal"></i>
-                                <span>Payout Manager</span>
+                                <span style="color: #0a1d56;">Payout Manager</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (['payout-request', 'payout-new-request'])
                                     @canany(['payout-request', 'payout-new-request'])
-                                        <li><a href="{{ route('admin.payout.payout.request') }}">Payout Request </a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.payout.payout.request') }}">Payout Request </a></li>
                                     @endcanany
                                 @endif
                                 @if (['qr-request-add-fund', 'qr-request-add-list'])
                                     @canany(['qr-request-add-fund', 'qr-request-list'])
-                                        <li><a href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
                                     @endcanany
                                 @endif
 
-                                <li><a href="javascript:void()">Bulk Payout</a></li>
-                                <li><a href="javascript:void()">Schedule Payout</a></li>
-                                <li><a href="javascript:void()">Payout Links</a></li>
+                                <li><a href="javascript:void()" style="color: #0a1d56;">Bulk Payout</a></li>
+                                <li><a href="javascript:void()" style="color: #0a1d56;">Schedule Payout</a></li>
+                                <li><a href="javascript:void()" style="color: #0a1d56;">Payout Links</a></li>
                             </ul>
                         </li>
                     @endcanany
@@ -261,11 +261,11 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-book-open"></i>
-                        <span>Wallet Statement</span>
+                        <span style="color: #0a1d56;">Wallet Statement</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Main Wallet</a></li>
-                        <li><a href="javascript:void()">Api Wallet</a></li>
+                        <li><a href="javascript:void()" style="color: #0a1d56;">Main Wallet</a></li>
+                        <li><a href="javascript:void()" style="color: #0a1d56;">Api Wallet</a></li>
                     </ul>
                 </li>
                 {{-- <li>
@@ -290,7 +290,7 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-cog"></i>
-                                <span>Setup Tools</span>
+                                <span style="color: #0a1d56;">Setup Tools</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission([
@@ -306,23 +306,23 @@
                                     ]))
                                     @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'login-session',
                                         'api-logs', 'callback-token', 'callback-token-create', 'callback-token-delete'])
-                                        <li><a href="{{ route('admin.admin-setting.api.list') }}">Api Manager </a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.admin-setting.api.list') }}">Api Manager </a></li>
                                     @endcanany
                                 @endif
                                 <li><a href="javascript:void()">Operator Manager</a></li>
                                 @if (checkRecordHasPermission(['api-logs']))
                                     @can('api-logs')
-                                        <li><a href="{{ route('admin.log.manager.api.logs') }}">Api Logs</a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.api.logs') }}">Api Logs</a></li>
                                     @endcan
                                 @endif
                                 @if (checkRecordHasPermission(['login-session']))
                                     @can('login-session')
-                                        <li><a href="{{ route('admin.log.manager.login.session') }}">Login Session </a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.login.session') }}">Login Session </a></li>
                                     @endcan
                                 @endif
                                 @if (checkRecordHasPermission(['callback-token', 'callback-token-create', 'callback-token-delete']))
                                     @canany(['callback-token', 'callback-token-create', 'callback-token-delete'])
-                                        <li><a href="{{ route('admin.api.setting') }}">Callback & Token</a></li>
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.api.setting') }}">Callback & Token</a></li>
                                     @endcanany
                                 @endif
                                 {{-- @if (checkRecordHasPermission(['manage-service', 'service-create']))
@@ -386,11 +386,11 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-cog"></i>
-                                <span>AEPS Service</span>
+                                <span style="color: #0a1d56;">AEPS Service</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('admin.aeps.system') }}">
-                                        <span>AEPS</span>
+                                        <span style="color: #0a1d56;">AEPS</span>
                                     </a></li>
                             </ul>
                         @endcanany
@@ -399,19 +399,19 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-cog"></i>
-                        <span>Portal Setting</span>
+                        <span style="color: #0a1d56;">Portal Setting</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()">Login OTP</a></li>
-                        <li><a href="javascript:void()">Wallect Lock</a></li>
+                        <li><a style="color: #0a1d56;" href="javascript:void()">Login OTP</a></li>
+                        <li><a style="color: #0a1d56;" href="javascript:void()">Wallect Lock</a></li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.logout') }}">
+                    <a style="color: #0a1d56;" href="{{ route('admin.logout') }}">
                         <i class="fas fa-sign-out-alt"></i>
                         {{-- <span class="badge rounded-pill bg-primary float-end">01</span> --}}
-                        <span>Logout</span>
+                        <span style="color: #0a1d56;">Logout</span>
                     </a>
                 </li>
 

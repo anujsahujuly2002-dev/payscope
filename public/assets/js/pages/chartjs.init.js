@@ -287,8 +287,4 @@ function ($) {
   $.ChartJs.init();
 }(window.jQuery);
 /******/ })()
-<<<<<<< HEAD
 ;
-=======
-;
->>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
