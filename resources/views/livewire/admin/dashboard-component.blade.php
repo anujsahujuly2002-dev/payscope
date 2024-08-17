@@ -20,7 +20,7 @@
             <div class="card" style="background-color:#fc0800;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="growth-chart" data-colors='["--bs-warning"]'></div>
+                        <div id="growth-chart" data-colors='["--bs-success"]'></div>
                     </div>
                     <div>
                         {{-- {{dd(Auth::user()->id)}} --}}

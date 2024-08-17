@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Mobile\Auth\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Mobile\CommonController;
@@ -14,6 +15,10 @@ Route::controller(LoginController::class)->group(function() {
     Route::post('/otp-verify','otpVerify');
     Route::post('/resend-otp','resendOtp');
 });
+
+
+Route::post('/forgot-password', [ForgetPasswordController::class, 'sendResetLinkEmail']);
+// Route::post('/reset-password', [ForgetPasswordController::class, 'reset'])->name('password.reset');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::controller(DashboardController::class)->group(function(){
