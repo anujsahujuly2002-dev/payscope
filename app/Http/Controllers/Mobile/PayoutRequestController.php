@@ -37,29 +37,39 @@ class PayoutRequestController extends Controller
              ], 200);
     }
 
-    public function createPayoutNewRequest(PayoutRequest $request)
-     {
+    // public function createPayoutNewRequest(PayoutRequest $request)
+    //  {
 
-        $validator = Validator::make($request->all(),[
-            'account_number'=>'required',
-            'ifsc_code' =>'required',
-            'account_holder_name'=>'required',
-            'amount'=>'required',
-            'payment_mode'=>'required',
-        ]);
+    //     $validator = Validator::make($request->all(),[
+    //         'account_number'=>'required',
+    //         'ifsc_code' =>'required',
+    //         'account_holder_name'=>'required',
+    //         'amount'=>'required',
+    //         'payment_mode'=>'required',
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'errors' => $validator->errors(),
+    //         ], 401);
+    //     }else{
+    //         return response()->json([
+    //        'status' => true,
+    //        'message' => 'Payout created successfully.',
+    //      ], 200);
+    //    }
+    //  }
 
-        // $validateData['user_id']= auth()->user()->id;
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors(),
-            ], 401);
-        }else{
-            return response()->json([
-           'status' => true,
-           'message' => 'Payout created successfully.',
-         ], 200);
-       }
-     }
+    public function createPayoutNewRequest(PayoutRequest $request) {
+        $userDetails = [
+            'account_number'=> $request->account_number,
+            'ifsc_code'=>$request->ifsc_code,
+            'account_holder_name'=>$request->account_holder_name,
+            'amount'=>$request->amount,
+            'payment_mode'=>$request->payment_mode,
+            'type'=>"mobile_api",
+        ];
+        $user = $this->$userDetails;
+        return response()->json($user);
+    }
 }
