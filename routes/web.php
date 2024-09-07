@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\RoleAndPermissions;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\DashBoardController;
+use App\Http\Controllers\Admin\ApiPartnerController;
 use App\Http\Controllers\Admin\ApiSettingController;
 use App\Http\Controllers\Admin\LogManagerController;
 use App\Http\Controllers\Admin\SetupToolsController;
@@ -130,5 +131,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(RechargeAndBillPaymentsController::class)->prefix('recharge-and-bill-payments')->name('recharge.and.bill.payments')->group(function(){
             Route::get('/mobile-recharge','mobileRecharge')->name('mobile.recharge');
         });
+
+        Route::post('/generate-outlet/{id}', [ApiPartnerController::class, 'generateOutlet'])->name('generate.outlet');
     });
 });

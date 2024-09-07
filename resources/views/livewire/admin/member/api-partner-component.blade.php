@@ -138,7 +138,7 @@
                                                     {{-- @endcan
                                                     @endif --}}
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="change">Generate Outlet Id</a>
+                                                    <a class="dropdown-item" href="{{ route('generate.outlet', ['id' => $apipartner->id]) }}">Generate Outlet ID</a>
                                                 </div>
                                             </li>
                                         </td>

@@ -7,6 +7,7 @@ use App\Models\ApiPartner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class MemberController extends Controller
@@ -21,6 +22,7 @@ class MemberController extends Controller
     public function retailer() {
         return view('admin.member.retailer');
     }
+
     public function dmt() {
         return view('admin.member.dmt');
     }
