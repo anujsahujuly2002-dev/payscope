@@ -132,6 +132,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/mobile-recharge','mobileRecharge')->name('mobile.recharge');
         });
 
-        Route::post('/generate-outlet/{id}', [ApiPartnerController::class, 'generateOutlet'])->name('generate.outlet');
+        Route::post('generate-outlet/{id}', [ApiPartnerController::class, 'generateOutlet'])->name('generate.outlet');
     });
 });

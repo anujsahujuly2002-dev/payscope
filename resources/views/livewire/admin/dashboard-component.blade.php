@@ -7,8 +7,8 @@
                         <div id="growth-chart" data-colors='["--bs-success"]'></div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup"
-                                >{{ $paymentIn['amount']}}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
+                                class="counterup">{{ $paymentIn['amount'] }}</span></h4>
                         <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
@@ -18,15 +18,14 @@
             </div>
         </div> <!-- end col-->
 
-        {{-- <div class="col-md-6 col-xl-3">
+        <div class="col-md-6 col-xl-3">
             <div class="card" style="background-color:#fc0800;">
                 <div class="card-body">
                     <div class="float-end mt-2">
                         <div id="growth-chart1" data-colors='["--bs-success"]'></div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup"
-                                data-plugin="{{ $payout }}">{{ $payout }}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount'] }}</span></h4>
                         <p class="text-white mb-0">Total Payout</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
@@ -34,9 +33,9 @@
                     </p>
                 </div>
             </div>
-        </div> <!-- end col--> --}}
+        </div> <!-- end col-->
 
-        {{-- <div class="col-md-6 col-xl-3">
+        <div class="col-md-6 col-xl-3">
             <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
@@ -44,7 +43,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                data-plugin="{{ $rejectedPayment }}">{{ $rejectedPayment }}</span></h4>
+                                class="counterup">{{ $rejectedPayment['amount'] }}</span></h4>
                         <p class="text-white mb-0">Total Rejected Payout</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -52,7 +51,7 @@
                     </p>
                 </div>
             </div>
-        </div> <!-- end col--> --}}
+        </div> <!-- end col-->
 
         <div class="col-md-6 col-xl-3">
             <div class="card" style="background-color:#ff0800">
@@ -61,8 +60,8 @@
                         <div id="growth-chart3" data-colors='["--bs-success"]'> </div>
                     </div>
                     <div>
-                        {{-- <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
-                                data-plugin="{{ $commission }}">{{ $commission }}</span></h4> --}}
+                        <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
+                                class="counterup">{{ $commission['amount'] }}</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -96,10 +95,9 @@
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                {{-- <h3 style="color: #0a1d56">&#x20B9;<span
-                                        data-plugin="{{ $payout }}">{{ $payout }}</span><span
+                                <h3 style="color: #0a1d56">&#x20B9;<span class="counterup">{{ $payout ['amount']}}</span><span
                                         class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Income</span>
-                                </h3> --}}
+                                </h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
                                 <h3><span data-plugin="counterup" style="color: #0a1d56">0</span><span
@@ -152,7 +150,6 @@
                                 <span class="fw-semibold">Sort By:</span> <span style="color: #0a1d56;">Yearly<i
                                         class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <a class="dropdown-item" style="color: #0a1d56" href="#">Monthly</a>
                                 <a class="dropdown-item" style="color: #0a1d56" href="#">Yearly</a>
@@ -459,7 +456,7 @@
                                             <span class="">{{ strip_tags($transactions->status->name) }}</span>
                                         </td>
                                         <td>
-                                            <i class="fab fa-cc-mastercard me-1"></i>  {{ $transactions->type }}
+                                            <i class="fab fa-cc-mastercard me-1"></i> {{ $transactions->type }}
                                         </td>
                                         <td>
                                             <div class="mb-3 d-flex justify-content-center">
@@ -480,13 +477,13 @@
         </div>
     </div>
     <!-- end row -->
-        <div>
-            <div wire:ignore.self class="modal fade bs-example-modal-lg" id="form" tabindex="-1"
-                role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    @if ($selectedTransaction)
-                        <div class="modal-content">
-                            <div id="transaction-details">
+    <div>
+        <div wire:ignore.self class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                @if ($selectedTransaction)
+                    <div class="modal-content">
+                        <div id="transaction-details">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -519,7 +516,8 @@
                                         <div class="mb-3">
                                             <p class="mb-0">Mode:</p>
                                             <p class="mb-0">
-                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong></p>
+                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -555,7 +553,8 @@
                                             <div class="mb-3">
                                                 <p class="mb-0">Beneficiary Name:</p>
                                                 <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->user->name }}</strong></p>
+                                                    <strong>{{ $selectedTransaction->user->name }}</strong>
+                                                </p>
                                             </div>
                                             <div class="mb-3">
                                                 <p class="mb-0">IFSC:</p>
@@ -574,21 +573,22 @@
                                             <div class="mb-3">
                                                 <p class="mb-0">Beneficiary Type:</p>
                                                 <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->transtype }}</strong></p>
+                                                    <strong>{{ $selectedTransaction->transtype }}</strong>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer p-0 m-0 mt-0">
                                     <button type="button" class="btn btn-secondary"
-                                    onclick="downloadPdf()">Download</button>
+                                        onclick="downloadPdf()">Download</button>
                                 </div>
                             </div>
                         </div>
-                        </div>
-                    @else
-                        <p>No transaction selected.</p>
-                    @endif
-                </div>
+                    </div>
+                @else
+                    <p>No transaction selected.</p>
+                @endif
             </div>
         </div>
+    </div>

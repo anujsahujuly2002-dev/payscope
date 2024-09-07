@@ -177,14 +177,17 @@ if (!function_exists('formatAmount')) {
                 "amount"=>number_format($amount / 10000000, 2),
             ];
         } elseif ($amount >= 100000) {
-            return number_format($amount / 100000, 2) . ' L';
+            return [
+                "unit"=>"L",
+                "amount"=>number_format($amount / 100000, 2),
+            ];
         } elseif ($amount >= 1000) {
-            return number_format($amount / 1000, 2) . ' K';
+            return[
+                "unit"=>"K",
+                "amount"=> number_format($amount / 1000, 2),
+            ];
         } else {
             return $amount;
         }
     }
 }
-
-
-

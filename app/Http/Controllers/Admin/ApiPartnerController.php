@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 class ApiPartnerController extends Controller
 {
-    public function generateOutlet($id)
+    public function generateOutlet($id='')
     {
         $user = User::find($id);
 
