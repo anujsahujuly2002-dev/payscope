@@ -7,8 +7,8 @@
                         <div id="growth-chart" data-colors='["--bs-success"]'></div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class=""
-                                data-plugin="{{ $paymentIn }}">{{ $paymentIn }}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup"
+                                >{{ $paymentIn['amount']}}</span></h4>
                         <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
@@ -18,7 +18,7 @@
             </div>
         </div> <!-- end col-->
 
-        <div class="col-md-6 col-xl-3">
+        {{-- <div class="col-md-6 col-xl-3">
             <div class="card" style="background-color:#fc0800;">
                 <div class="card-body">
                     <div class="float-end mt-2">
@@ -34,9 +34,9 @@
                     </p>
                 </div>
             </div>
-        </div> <!-- end col-->
+        </div> <!-- end col--> --}}
 
-        <div class="col-md-6 col-xl-3">
+        {{-- <div class="col-md-6 col-xl-3">
             <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
@@ -52,7 +52,7 @@
                     </p>
                 </div>
             </div>
-        </div> <!-- end col-->
+        </div> <!-- end col--> --}}
 
         <div class="col-md-6 col-xl-3">
             <div class="card" style="background-color:#ff0800">
@@ -61,8 +61,8 @@
                         <div id="growth-chart3" data-colors='["--bs-success"]'> </div>
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
-                                data-plugin="{{ $commission }}">{{ $commission }}</span></h4>
+                        {{-- <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
+                                data-plugin="{{ $commission }}">{{ $commission }}</span></h4> --}}
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -96,10 +96,10 @@
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                <h3 style="color: #0a1d56">&#x20B9;<span
+                                {{-- <h3 style="color: #0a1d56">&#x20B9;<span
                                         data-plugin="{{ $payout }}">{{ $payout }}</span><span
                                         class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Income</span>
-                                </h3>
+                                </h3> --}}
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
                                 <h3><span data-plugin="counterup" style="color: #0a1d56">0</span><span

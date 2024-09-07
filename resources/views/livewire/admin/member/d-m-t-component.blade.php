@@ -68,49 +68,39 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">DMT</h5>
+                        <div class="row g-2">
+                            <div class="col-md-6 mb-0">
+                                <label for="mobile_number" class="form-label">Mobile Number</label>
+                                <input type="text" id="mobile_number"
+                                    class="form-control @error('mobile_number') is-invalid @enderror"
+                                    placeholder="Enter Mobile Number" wire:model.defer='mobile_number' />
+                                @error('mobile_number')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            <div class="card-body">
-                                <div class="row g-2">
-
-                                    <div class="col-md-6 mb-0">
-                                        <label for="mobile_number" class="form-label">Mobile Number</label>
-                                        <input type="text" id="mobile_number"
-                                            class="form-control @error('mobile_number') is-invalid @enderror"
-                                            placeholder="Enter Mobile Number" wire:model.defer='mobile_number' />
-                                        @error('mobile_number')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                            <div class="col-md-6 mb-0">
+                                <label for="otp" class="form-label">OTP</label>
+                                <input type="text" id="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    placeholder="Enter OTP" wire:model.defer='otp' />
+                                @error('otp')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
                                     </div>
-
-                                    <div class="col-md-6 mb-0">
-                                        <label for="otp" class="form-label">OTP</label>
-                                        <input type="text" id="email"
-                                            class="form-control @error('email') is-invalid @enderror"
-                                            placeholder="Enter OTP" wire:model.defer='otp' />
-                                        @error('otp')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
-                </div>
+                </div><!-- /.modal-content -->
             </form>
-        </div>
-    </div>
-    {{-- @endif --}}
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 </div>

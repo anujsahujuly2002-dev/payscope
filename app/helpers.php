@@ -172,7 +172,10 @@ endif;
 if (!function_exists('formatAmount')) {
   function formatAmount($amount) {
         if ($amount >= 10000000) {
-            return number_format($amount / 10000000, 2) . ' Cr';
+            return [
+                "unit"=>"Cr",
+                "amount"=>number_format($amount / 10000000, 2),
+            ];
         } elseif ($amount >= 100000) {
             return number_format($amount / 100000, 2) . ' L';
         } elseif ($amount >= 1000) {
@@ -182,27 +185,6 @@ if (!function_exists('formatAmount')) {
         }
     }
 }
-
-// if (!function_exists('formatAmount')) {
-//     function formatAmount($amount) {
-//         $units = ['Cr' => 10000000, 'L' => 100000, 'K' => 1000];
-//         $formattedAmounts = [];
-
-//         foreach ($units as $unit => $value) {
-//             $formattedAmounts[] = [
-//                 'amount' => number_format($amount / $value, 2),
-//                 'unit' => $unit
-//             ];
-//         }
-
-//         return $formattedAmounts;
-//     }
-// }
-// $amount = 15000000;
-// $formattedAmounts = formatAmount($amount);
-// foreach ($formattedAmounts as $formattedValue) {
-//     echo "Amount: " . $formattedValue['amount'] . " " . $formattedValue['unit'] . "\n";
-// }
 
 
 
