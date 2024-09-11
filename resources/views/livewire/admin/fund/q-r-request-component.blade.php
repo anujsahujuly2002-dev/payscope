@@ -27,7 +27,7 @@
 
                                 <div class="col-md-3 mb-10">
                                     <div class="form-group">
-                                        <input type="text" class="form-control rounded bg-light border-0" placeholder="Order Id" wire:model.live='orderId'>
+                                        <input type="text" class="form-control rounded bg-light border-0" placeholder="Order Id" wire:model.live='value'>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -212,6 +212,6 @@
             </form>
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-   
+
     @include('admin.razorpay.razorpay')
 </div>

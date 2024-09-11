@@ -12,6 +12,7 @@ use App\Models\QRRequest;
 use App\Models\PaymentMode;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Razorpay\Api\Errors\SignatureVerificationError;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -23,7 +24,7 @@ class QRRequestComponent extends Component
     public $end_date;
     public $status;
     public $banks;
-    public $orderId;
+    public $value;
     public $paymentModes;
     public $payment =[];
     public $listeners = [
@@ -32,18 +33,20 @@ class QRRequestComponent extends Component
 
     public function render()
     {
-        if(!auth()->user()->can('qr-request-list'))
-        throw UnauthorizedException::forPermissions(['qr-request-list']);
+        if(!Auth::user()->can('qr-request-list')):
+          throw UnauthorizedException::forPermissions(['qr-request-list']);
+        endif;
+
         $qr_requests = QRRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
         })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
             $query->where('user_id',auth()->user()->id);
         })
         ->when($this->start_date !=null && $this->end_date ==null,function($u){
-            $u->whereDate('created_at',$this->start_date);
+            $u->whereDate('created_at','>=',$this->start_date);
         })
-        ->when($this->orderId !=null,function($u){
-            $u->where('user_id',$this->orderId);
+        ->when($this->value !=null,function($u){
+            $u->where('order_id',$this->value);
         })
         ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
