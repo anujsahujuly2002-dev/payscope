@@ -16,19 +16,35 @@
                         <div class="col-md-12">
                             <div class="row mb-2">
                                 <!-- Date Filters -->
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group mb-10">
                                         <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date'>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date'>
                                 </div>
 
-                                <div class="col-md-3 mb-10">
+                                <div class="col-md-2 mb-10">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control rounded bg-light border-0" placeholder="User Id" wire:model.live='agentId'>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 mb-10">
                                     <div class="form-group">
                                         <input type="text" class="form-control rounded bg-light border-0" placeholder="Order Id" wire:model.live='value'>
                                     </div>
+                                </div>
+                                <div class="col-md-2 mb-10">
+                                    <div class="form-group">
+                                        <select class="form-control  rounded bg-light border-0" wire:model.live="status">
+                                            <option value="">Status</option>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{$status->id}}">{!!$status->name!!}</option>
+                                            @endforeach
+                                        </select>
+                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="row">
