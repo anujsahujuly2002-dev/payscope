@@ -75,7 +75,7 @@
                                     <div class="row">
                                         <div class="col-md-12 d-flex">
                                             <div class="mb-3 d-flex">
-                                                <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Excel</a>
+                                                <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
                                             </div>
                                             <div class="mb-3 ms-2 d-flex">
                                                 {{-- <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click="exportAsPdf('pdf')"><i class="fas fa-file-excel me-2"></i>PDF</a> --}}

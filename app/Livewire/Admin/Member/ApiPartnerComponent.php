@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Member;
 
+use App\Models\Fund;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Scheme;
@@ -12,6 +13,7 @@ use App\Models\ApiPartner;
 use Livewire\WithPagination;
 use App\Exports\ApiPartnerExport;
 use Illuminate\Support\Facades\DB;
+use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,10 +37,12 @@ class ApiPartnerComponent extends Component
     public $assignPermissionUserBasedForm = false;
     public $permission=[];
     public $permissionsId=[];
+    public $apiPartnerSlip=null;
     public $user;
+    public $banks;
+    public $statuses;
     public $agentId;
-
-
+    public $selectedTransaction;
 
     // public function mount(){
     //     $this->apiPartners = User::whereHas('roles',function($q){
@@ -79,7 +83,9 @@ class ApiPartnerComponent extends Component
         ->when($this->value !=null,function($u){
             $u->where('mobile_no',$this->value);
         })->latest()->paginate(10);
+
         return view('livewire.admin.member.api-partner-component',compact('states','schemes','apiPartners'));
+
     }
 
     // This Method Api Partner Create Method
@@ -266,5 +272,17 @@ class ApiPartnerComponent extends Component
         return Excel::download(new ApiPartnerExport($data), time().'.xlsx');
     }
 
+    public function selectTransaction($id)
+    {
+        $this->selectedTransaction = User::find($id);
+    }
 
+    public function transaction($id)
+    {
+    //   $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
+      $this->banks = fund::get();
+      $this->statuses =  Status::get();
+       $this->selectedTransaction = User::with('status','funds')->findOrFail($id);
+       $this->dispatch('show-form');
+    }
 }

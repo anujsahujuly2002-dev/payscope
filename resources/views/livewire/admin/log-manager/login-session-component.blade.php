@@ -56,6 +56,15 @@
                                 <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id" wire:model.live='agentId'>
                             </div>
                         </div>
+                        <div class="col-md-2 mb-10">
+                            <div class="row">
+                                <div class="col-md-12  d-flex justify-content-center">
+                                    <div class="mb-3 d-flex">
+                                        <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- end row -->
                     <div class="table-responsive mb-4">

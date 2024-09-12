@@ -8,18 +8,18 @@
     <div class="navbar-brand-box">
         <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('/assets/images/logo1.jpeg') }}" alt="" height="22">
+                <img src="{{ URL::asset('/assets/images/logos.svg') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('/assets/images/logo1.jpeg') }}" alt="" height="20">
+                <img src="{{ URL::asset('/assets/images/logos.svg') }}" alt="" height="22">
             </span>
         </a>
         <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('/assets/images/logo1.jpeg') }}" alt="" height="22">
+                <img src="{{ URL::asset('/assets/images/logos.svg') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('/assets/images/logo1.jpeg') }}" alt="" height="20">
+                <img src="{{ URL::asset('/assets/images/logos.svg') }}" alt="" height="22">
             </span>
         </a>
     </div>

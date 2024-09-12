@@ -132,14 +132,16 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="javascript:void(0)"  wire:click="assignPermissionUserBassed({{ $apipartner->id }})">Permission</a>
-                                                    {{-- @if (checkRecordHasPermission(['view-profile']))
-                                                    @can('view-profile') --}}
-                                                    <a class="dropdown-item"  href="{{ route('admin.view.profile', base64_encode($apipartner->id)) }}">Profile</a>
-                                                    {{-- @endcan
-                                                    @endif --}}
+                                                    @if (checkRecordHasPermission(['view-profile']))
+                                                      @can('view-profile')
+                                                        <a class="dropdown-item"  href="{{ route('admin.view.profile', base64_encode($apipartner->id)) }}">Profile</a>
+                                                      @endcan
+                                                    @endif
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
                                                     <a class="dropdown-item" href="{{ route('admin.generate.outlet', ['id' => $apipartner->id]) }}">Generate Outlet ID</a>
-                                                </div>
+                                                    <a href="javascript:void(0);" class="dropdown-item btn btn-success waves-effect waves-light align-self-end"
+                                                    wire:click.prevent="selectTransaction({{ $apipartner->id }})"><i>Slip</a>
+                                                 </div>
                                             </li>
                                         </td>
                                     </tr>
@@ -503,6 +505,122 @@
             </div><!-- /.modal-dialog -->
         </div>
     @endif
+    <div>
+        <div wire:ignore.self class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            {{-- <div class="modal-dialog modal-lg">
+                @if ($selectedTransaction)
+                    <div class="modal-content">
+                        <div id="transaction-details">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <p class="mb-0">Transaction ID:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ $selectedTransaction->fund_request?->payout_ref }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Payment Amount:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ moneyFormatIndia($selectedTransaction->amount) }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Transaction Type:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->type }}</strong></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">UTR:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->utr_number }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Mode:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <p class="mb-0">Status:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ strip_tags($selectedTransaction->status->name) }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Date/Time:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->created_at }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Description:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->remarks }}</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myLargeModalLabel">Beneficiary Detail</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <p class="mb-0">Name as per Bank:</p>
+                                                <p class="mb-0"><strong></strong></p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="mb-0">Beneficiary Name:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ $selectedTransaction->user->name }}</strong>
+                                                </p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="mb-0">IFSC:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ strtoupper($selectedTransaction->bank?->ifsc_code) }}</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <p class="mb-0">Account Number:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ $selectedTransaction->user->account_number }}</strong>
+                                                </p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="mb-0">Beneficiary Type:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ $selectedTransaction->transtype }}</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer p-0 m-0 mt-0">
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="downloadPdf()">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <p>No transaction selected.</p>
+                @endif
+            </div> --}}
+        </div>
+    </div>
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 </div>
+

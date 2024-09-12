@@ -41,13 +41,9 @@ class ApiPartnerExport implements FromCollection,WithHeadings
              ->orWhere('pancard_number','like','%'.$this->data['value'].'%')
              ->orWhere('adhaarcard_number','like','%'.$this->data['value'].'%');
         endif;
-        // if($this->data['status'] !=null):
-        //     $partner = $partner->where('status_id',$this->data['status']);
-        // endif;
-
 
         foreach($partner->get() as $partners):
-            $partnerArray[]=[
+            $apiPartnerArray[]=[
                 $partners->name,
                 $partners->mobile_no,
                 ucfirst($partners->getRoleNames()->first()),
@@ -60,7 +56,7 @@ class ApiPartnerExport implements FromCollection,WithHeadings
             ];
         endforeach;
 
-        return collect($partnerArray);
+        return collect($apiPartnerArray);
     }
 
     /**

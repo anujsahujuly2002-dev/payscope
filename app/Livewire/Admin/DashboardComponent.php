@@ -64,7 +64,6 @@ class DashboardComponent extends Component
                     ->get();
             }
 
-
             $data['paymentIn'] = $this->paymentIn;
             $data['payout'] = $this->payout;
             $data['rejectedPayment'] = $this->rejectedPayment;

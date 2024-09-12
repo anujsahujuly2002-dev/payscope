@@ -12,7 +12,10 @@ use App\Models\QRRequest;
 use App\Models\PaymentMode;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use App\Exports\QRRequestExport;
+use App\Exports\ApiPartnerExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Razorpay\Api\Errors\SignatureVerificationError;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -141,6 +144,16 @@ class QRRequestComponent extends Component
             ]);
             session()->flash('error',$error);
         }
-
     }
+
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first() =='super-admin'?$this->agentId:auth()->user()->id,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'value'=>$this->value
+        ];
+        return Excel::download(new QRRequestExport($data), time().'.xlsx');
+    }
+
 }
