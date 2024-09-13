@@ -8,7 +8,7 @@
     <div class="navbar-brand-box">
         <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('/assets/images/logo1.jpeg') }}" alt="" height="22">
+                <img src="{{ asset('/assets/images/small_logo.png') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
                 <img src="{{ asset('/assets/images/logo1.jpeg') }}" alt="" height="20">

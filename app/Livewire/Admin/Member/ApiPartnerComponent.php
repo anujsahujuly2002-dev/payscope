@@ -5,12 +5,12 @@ namespace App\Livewire\Admin\Member;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Scheme;
-use App\Models\Status;
 use App\Models\Wallet;
 use Livewire\Component;
 use App\Models\ApiPartner;
 use Livewire\WithPagination;
 use App\Exports\ApiPartnerExport;
+use App\Traits\eKYCTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,12 +19,12 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
+
 class ApiPartnerComponent extends Component
 {
-    use WithPagination;
+    use WithPagination,eKYCTrait;
     public $state=[];
     public $start_date;
-    // public $apiPartners;
     public $value;
     public $end_date;
     public $status;
@@ -33,22 +33,20 @@ class ApiPartnerComponent extends Component
     public $scheme;
     public $createApiPartnerForm  = false;
     public $assignPermissionUserBasedForm = false;
+    public $ekycForm = false;
+    public $ekycFormData = [];
+    public $otp= false;
     public $permission=[];
     public $permissionsId=[];
     public $user;
     public $agentId;
-
-
-
-    // public function mount(){
-    //     $this->apiPartners = User::whereHas('roles',function($q){
-    //         $q->where('name','api-partner');
-    //     })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-    //         $query->whereHas('apiPartner',function ($p){
-    //             $p->where('added_by',auth()->user()->id);
-    //         });
-    //     })->latest()->paginate(10);
-    // }
+    public $ekyApiPartnerId;
+    public $otpReferenceID;
+    public $hash;
+    public $otp_code;
+    protected $rules = [
+        'otp_code' => 'required|integer',
+    ];
     public function render()
     {
         if(!Auth::user()->can('api-partner-list')|| !checkRecordHasPermission(['api-partner-list'])):
@@ -160,42 +158,14 @@ class ApiPartnerComponent extends Component
 
     }
     public function serviceUpdate($userId,$status){
-        // dd($userId,$status);
         $serviceUpdate = User::findOrFail($userId)->update([
             'services'=>$status==0?"1":"0",
         ]);
-        // dd($serviceUpdate);
         $msg = $status==0?"Service has been acctivated":"Service has been deactivated";
         return redirect()->back()->with('success',$msg);
 
     }
-    /* public function search() {
-       $this->apiPartners = User::whereHas('roles',function($q){
-            $q->where('name','api-partner');
-        })->when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
-            $query->whereHas('apiPartner',function ($p){
-                $p->where('added_by',auth()->user()->id)
-                ->when($this->value !=null,function($d){
-                    $d->where('mobile_no',$this->value);
-                });
-            });
-        })
-        ->when($this->value !=null,function($d){
-            $d->whereHas('apiPartner',function ($p){
-                    $p->where('mobile_no',$this->value);
-                });
-            })
-        ->when($this->start_date !=null && $this->end_date ==null,function($u){
-            $u->whereDate('created_at',$this->start_date);
-        })->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
-            $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
-        })->when($this->status !=null,function($s){
-            $s->where('status',$this->status);
-        })
-        ->get();
-    }
 
-*/
 
     public function changeScheme($id) {
         $this->reset();
@@ -259,11 +229,62 @@ class ApiPartnerComponent extends Component
             'user_id'=>auth()->user()->getRoleNames()->first()!='api-partner'?$this->agentId:NULL,
             'start_date'=>$this->start_date,
             'end_date'=>$this->end_date,
-            // 'status'=>$this->status,
             'value'=>$this->value
         ];
-        //  dd($data);
         return Excel::download(new ApiPartnerExport($data), time().'.xlsx');
+    }
+
+
+    public function generateOutletId($id) {
+        $this->reset();
+        $this->ekyApiPartnerId = $id;
+        $this->ekycForm =true;
+        $this->dispatch('show-form');
+    }
+
+    public function eKycFormData() {
+        $validateData = Validator::make($this->ekycFormData,[
+            'pancard_number'=>'required|string|regex:/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/',
+            'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
+            'account_number'=>'required|numeric|min_digits:10',
+            'ifsc_code'=>'required',
+           
+
+        ])->validate();
+        $validateData ['agent_id']= $this->ekyApiPartnerId;
+        $response = $this->signUpEkycInitiate($validateData);
+        if($response['status']):
+            $this->otp =true;
+            $this->otpReferenceID = $response['data']['otpReferenceID'];
+            $this->hash = $response['data']['hash'];
+        else:
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('error',$response['msg']);
+        endif;
+    }
+
+
+    public function eKycValidate() {
+        $this->validate();
+        $data = [
+            'otpReferenceID'=>$this->otpReferenceID,
+            'hash'=>$this->hash,
+            'otp'=>$this->otp_code,
+        ];
+        $response = $this->signUpEkycInitiateValidate($data);
+        if($response['status']):
+            
+            User::find()->update([
+                'outlet_id'=>$response['data']['outletId'],
+            ]);
+            $this->reset();
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('success',$response['msg']);
+        else:
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('error',$response['msg']);
+        endif;
+
     }
 
 

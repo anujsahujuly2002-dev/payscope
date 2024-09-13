@@ -160,6 +160,7 @@
                                                     {{-- @endcan
                                                     @endif --}}
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="generateOutletId({{ $apipartner->id }})">Generate Outlet Id</a>
                                                 </div>
                                             </li>
                                         </td>
@@ -479,6 +480,75 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+    @elseif($ekycForm)
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"  aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent="@if($otp) eKycValidate @else eKycFormData @endif" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">EKyc Form</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-0">
+                                    <label for="adhaarcard_number" class="form-label">AdhaarCard Number</label>
+                                    <input type="text" id="adhaarcard_number"class="form-control @error('adhaarcard_number') is-invalid @enderror"  placeholder="Enter Adhaar Card Number" wire:model.defer='ekycFormData.adhaarcard_number' />
+                                    @error('adhaarcard_number')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-0">
+                                    <label for="pancard_number" class="form-label">Pan card Number</label>
+                                    <input type="text" id="pancard_number" class="form-control @error('pancard_number') is-invalid @enderror" placeholder="Enter Pan card number" wire:model.defer='ekycFormData.pancard_number' />
+                                    @error('pancard_number')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-0">
+                                    <label for="account_number" class="form-label">Account Number</label>
+                                    <input type="text" id="account_number"  class="form-control @error('account_number') is-invalid @enderror" placeholder="Enter Account Number" wire:model.defer='ekycFormData.account_number' />
+                                    @error('account_number')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-0">
+                                    <label for="ifsc_code" class="form-label">Ifsc Code </label>
+                                    <input type="text" id="ifsc_code" class="form-control @error('ifsc_code') is-invalid @enderror"   placeholder="Enter Ifsc Code"  wire:model.defer='ekycFormData.ifsc_code' />
+                                    @error('ifsc_code')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                @if($otp)
+                                    <div class="col-md-6 mb-0">
+                                        <label for="otp_code" class="form-label">OTP Code </label>
+                                        <input type="text" id="otp_code" class="form-control @error('otp_code') is-invalid @enderror"  placeholder="Enter Otp Code"  wire:model.defer='otp_code' />
+                                        @error('otp_code')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </div>
                     </div><!-- /.modal-content -->
                 </form>
