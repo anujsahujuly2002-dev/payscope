@@ -8,20 +8,26 @@
                     <div class="row mb-2">
                         <div class="col-md-2">
                             <div class="form-group mb-10">
-                                <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date' >
+                                <input type="text"
+                                    class="form-control start-date startdate rounded bg-light border-0 start_date"
+                                    placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date'>
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control start-date startdate rounded bg-light border-0 end_date" placeholder="End Date" id="datepicker-basic" wire:model.live='end_date' >
+                            <input type="text"
+                                class="form-control start-date startdate rounded bg-light border-0 end_date"
+                                placeholder="End Date" id="datepicker-basic" wire:model.live='end_date'>
                         </div>
                         <div class="col-md-2 mb-10">
                             <div class="form-group">
-                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Mobile No." wire:model.live="value">
+                                <input type="text" class="form-control  rounded bg-light border-0"
+                                    placeholder="Mobile No." wire:model.live="value">
                             </div>
                         </div>
                         <div class="col-md-2 mb-10">
                             <div class="form-group">
-                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Agent Id / Parent Id" wire:model.live='agentId'>
+                                <input type="text" class="form-control  rounded bg-light border-0"
+                                    placeholder="Agent Id / Parent Id" wire:model.live='agentId'>
                             </div>
                         </div>
                         <div class="col-md-2 mb-10">
@@ -37,16 +43,21 @@
                             <div class="row">
                                 <div class="col-md-12  d-flex justify-content-center">
                                     <div class="mb-3 d-flex">
-                                        <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
+                                        <a href="javascript:void(0);"
+                                            class="btn  waves-effect waves-light align-self-center"
+                                            style="background-color:#FE7A36;font-color:white"
+                                            wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
                                     </div>
                                     <div class="ms-3">
                                         @can('api-partner-create')
-                                        <a href="javascript:void(0);"
-                                            class="btn btn-success waves-effect waves-light align-self-center"
-                                            wire:click.prevent='createApiPartner'><i class="mdi mdi-plus me-2"></i></a>
-                                    @endcan
+                                            <a href="javascript:void(0);"
+                                                class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                                style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                                                wire:click.prevent='createApiPartner'>
+                                                <i class="mdi mdi-plus"></i>
+                                            </a>
+                                        @endcan
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -131,17 +142,20 @@
                                                     <i class="uil uil-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="javascript:void(0)"  wire:click="assignPermissionUserBassed({{ $apipartner->id }})">Permission</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        wire:click="assignPermissionUserBassed({{ $apipartner->id }})">Permission</a>
                                                     @if (checkRecordHasPermission(['view-profile']))
-                                                      @can('view-profile')
-                                                        <a class="dropdown-item"  href="{{ route('admin.view.profile', base64_encode($apipartner->id)) }}">Profile</a>
-                                                      @endcan
+                                                        @can('view-profile')
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.view.profile', base64_encode($apipartner->id)) }}">Profile</a>
+                                                        @endcan
                                                     @endif
-                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
-                                                    <a class="dropdown-item" href="{{ route('admin.generate.outlet', ['id' => $apipartner->id]) }}">Generate Outlet ID</a>
-                                                    <a href="javascript:void(0);" class="dropdown-item btn btn-success waves-effect waves-light align-self-end"
-                                                    wire:click.prevent="selectTransaction({{ $apipartner->id }})"><i>Slip</a>
-                                                 </div>
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('admin.generate.outlet', ['id' => $apipartner->id]) }}">Generate
+                                                        Outlet ID</a>
+                                                </div>
                                             </li>
                                         </td>
                                     </tr>
@@ -243,7 +257,7 @@
                                 <div class="card-body">
                                     <div class="row g-2">
                                         <div class="col-md-4 mb-0">
-                                            <label for="name" class="form-label">Name</label>
+                                            <label for="name" class="form-label">Name<span style="color: red;">*</span></label>
                                             <input type="text" id="name"
                                                 class="form-control  @error('name') is-invalid @enderror"
                                                 placeholder="Enter Name" wire:model.defer='state.name' />
@@ -254,18 +268,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="email" class="form-label">Email Id</label>
-                                            <input type="text" id="email"
-                                                class="form-control @error('email') is-invalid @enderror"
-                                                placeholder="Enter Email Id" wire:model.defer='state.email' />
-                                            @error('email')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-4 mb-0">
-                                            <label for="mobile_number" class="form-label">Mobile Number</label>
+                                            <label for="mobile_number" class="form-label">Mobile Number<span style="color: red;">*</span></label>
                                             <input type="text" id="mobile_number"
                                                 class="form-control @error('mobile_number') is-invalid @enderror"
                                                 placeholder="Enter Mobile Number"
@@ -276,11 +279,64 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="email" class="form-label">Email Id<span style="color: red;">*</span></label>
+                                            <input type="text" id="email"
+                                                class="form-control @error('email') is-invalid @enderror"
+                                                placeholder="Enter Email Id" wire:model.defer='state.email' />
+                                            @error('email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="scheme" class="form-label">Scheme<span style="color: red;">*</span></label>
+                                            <select type="text" id="scheme"
+                                                class="form-control @error('scheme') is-invalid @enderror"
+                                                wire:model.defer='state.scheme'>
+                                                <option value="">Select Scheme</option>
+                                                @foreach ($schemes as $scheme)
+                                                    <option value="{{ $scheme->id }}">{{ $scheme->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('scheme')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="adhaarcard_number" class="form-label">AdhaarCard
+                                                Number<span style="color: red;">*</span></label>
+                                            <input type="text" id="adhaarcard_number"
+                                                class="form-control @error('adhaarcard_number') is-invalid @enderror"
+                                                placeholder="Enter Adhaar Card Number"
+                                                wire:model.defer='state.adhaarcard_number' />
+                                            @error('adhaarcard_number')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="pancard_number" class="form-label">Pancard Number<span style="color: red;">*</span></label>
+                                            <input type="text" id="pancard_number"
+                                                class="form-control @error('pancard_number') is-invalid @enderror"
+                                                placeholder="Enter Pancard Number"
+                                                wire:model.defer='state.pancard_number' />
+                                            @error('pancard_number')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
                                         <div class="col-md-12 mb-0">
-                                            <label for="address" class="form-label">Address</label>
+                                            <label for="address" class="form-label">Residential Address<span style="color: red;">*</span></label>
                                             <input type="text" id="address"
                                                 class="form-control @error('address') is-invalid @enderror"
-                                                placeholder="Enter Address" wire:model.defer='state.address' />
+                                                placeholder="Enter Residential Address" wire:model.defer='state.address' />
                                             @error('address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -288,7 +344,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="state" class="form-label">State</label>
+                                            <label for="state" class="form-label">State<span style="color: red;">*</span></label>
                                             <select id="state_name"
                                                 class="form-control @error('state_name') is-invalid @enderror"
                                                 placeholder="Enter State" wire:model.lazy='state.state_name'>
@@ -305,7 +361,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="city" class="form-label">City</label>
+                                            <label for="city" class="form-label">City<span style="color: red;">*</span></label>
                                             <input type="text" id="city"
                                                 class="form-control @error('city') is-invalid @enderror"
                                                 placeholder="Enter City" wire:model.defer='state.city' />
@@ -316,7 +372,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="pincode" class="form-label">Pincode</label>
+                                            <label for="pincode" class="form-label">Pincode<span style="color: red;">*</span></label>
                                             <input type="text" id="pincode"
                                                 class="form-control @error('pincode') is-invalid @enderror"
                                                 placeholder="Enter Pincode" wire:model.defer='state.pincode' />
@@ -326,6 +382,7 @@
                                                 </div>
                                             @enderror
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -334,65 +391,122 @@
                                     <h5 class="card-title"> Buisness Information</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
+                                    <div class="row g-2">
                                         <div class="col-md-4 mb-0">
-                                            <label for="shop_name" class="form-label">Shop Name</label>
-                                            <input type="text" id="shop_name"
-                                                class="form-control @error('shop_name') is-invalid @enderror"
-                                                placeholder="Enter Shop Name" wire:model.defer='state.shop_name' />
-                                            @error('shop_name')
+                                            <label for="company_name" class="form-label"> Company Name<span style="color: red;">*</span></label>
+                                            <input type="text" id="company_name"
+                                                class="form-control @error('company_name') is-invalid @enderror"
+                                                placeholder="Enter Company Name" wire:model.defer='state.company_name' />
+                                            @error('company_name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="pancard_number" class="form-label">Pancard Number</label>
+                                            <label for="brand_name" class="form-label">Brand Name<span style="color: red;">*</span></label>
+                                            <input type="text" id="brand_name"
+                                                class="form-control @error('brand_name') is-invalid @enderror"
+                                                placeholder="Enter Brand Name" wire:model.defer='state.brand_name' />
+                                            @error('brand_name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-4 mb-0">
+                                            <label for="website" class="form-label">Website<span style="color: red;">*</span></label>
+                                            <input type="text" id="website"
+                                                class="form-control @error('website') is-invalid @enderror"
+                                                placeholder="Enter Website" wire:model.defer='state.website' />
+                                            @error('website')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="company_pan" class="form-label">Company PAN<span style="color: red;">*</span></label>
                                             <input type="text" id="pancard_number"
                                                 class="form-control @error('pancard_number') is-invalid @enderror"
-                                                placeholder="Enter Pancard Number"
-                                                wire:model.defer='state.pancard_number' />
+                                                placeholder="Enter Company PAN" wire:model.defer='state.pancard_number' />
                                             @error('pancard_number')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4 mb-0">
-                                            <label for="adhaarcard_number" class="form-label">AdhaarCard
-                                                Number</label>
-                                            <input type="text" id="adhaarcard_number"
-                                                class="form-control @error('adhaarcard_number') is-invalid @enderror"
-                                                placeholder="Enter Adhaar Card Number"
-                                                wire:model.defer='state.adhaarcard_number' />
-                                            @error('adhaarcard_number')
+
+                                        <div class="col-md-4 mb-0 ">
+                                            <label for="cin_number" class="form-label">CIN Number<span style="color: red;">*</span></label>
+                                            <input type="text" id="cin_number"
+                                                class="form-control @error('cin_number') is-invalid @enderror"
+                                                placeholder="Enter CIN Number  " wire:model.defer='state.cin_number' />
+                                            @error('cin_number')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4 mb-0 mt-2">
-                                            <label for="scheme" class="form-label">Scheme</label>
-                                            <select type="text" id="scheme"
-                                                class="form-control @error('scheme') is-invalid @enderror"
-                                                wire:model.defer='state.scheme'>
-                                                <option value="">Select Scheme</option>
-                                                @foreach ($schemes as $scheme)
-                                                    <option value="{{ $scheme->id }}">{{ $scheme->name }}</option>
+
+                                        <div class="col-md-4 mb-0">
+                                            <label for="gst" class="form-label">GSTIN<span style="color: red;">*</span></label>
+                                            <input type="text" id="gst"
+                                                class="form-control @error('gst') is-invalid @enderror"
+                                                placeholder="Enter GST Number" wire:model.defer='state.gst' />
+                                            @error('gst')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-12 mb-0">
+                                            <label for="company_address" class="form-label">Company Address<span style="color: red;">*</span></label>
+                                            <input type="text" id="company_address"
+                                                class="form-control @error('company_address') is-invalid @enderror"
+                                                placeholder="Enter Company Address" wire:model.defer='state.company_address' />
+                                            @error('company_address')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="state" class="form-label">State<span style="color: red;">*</span></label>
+                                            <select id="state_name"
+                                                class="form-control @error('state_name') is-invalid @enderror"
+                                                placeholder="Enter State" wire:model.lazy='state.state_name'>
+                                                <option value="">Select State</option>
+                                                @foreach ($states as $state)
+                                                    <option value="{{ $state->id }}">{{ ucfirst($state->name) }}
+                                                    </option>
                                                 @endforeach
                                             </select>
-                                            @error('scheme')
+                                            @error('state_name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4 mb-0 mt-2">
-                                            <label for="website" class="form-label">Website</label>
-                                            <input type="text" id="website"
-                                                class="form-control @error('website') is-invalid @enderror"
-                                                placeholder="Enter Website" wire:model.defer='state.website' />
-                                            @error('website')
+                                        <div class="col-md-4 mb-0">
+                                            <label for="city" class="form-label">City<span style="color: red;">*</span></label>
+                                            <input type="text" id="city"
+                                                class="form-control @error('city') is-invalid @enderror"
+                                                placeholder="Enter City" wire:model.defer='state.city' />
+                                            @error('city')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <label for="pincode" class="form-label">Pincode<span style="color: red;">*</span></label>
+                                            <input type="text" id="pincode"
+                                                class="form-control @error('pincode') is-invalid @enderror"
+                                                placeholder="Enter Pincode" wire:model.defer='state.pincode' />
+                                            @error('pincode')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -505,122 +619,7 @@
             </div><!-- /.modal-dialog -->
         </div>
     @endif
-    <div>
-        <div wire:ignore.self class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
-            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            {{-- <div class="modal-dialog modal-lg">
-                @if ($selectedTransaction)
-                    <div class="modal-content">
-                        <div id="transaction-details">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <p class="mb-0">Transaction ID:</p>
-                                            <p class="mb-0">
-                                                <strong>{{ $selectedTransaction->fund_request?->payout_ref }}</strong>
-                                            </p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="mb-0">Payment Amount:</p>
-                                            <p class="mb-0">
-                                                <strong>{{ moneyFormatIndia($selectedTransaction->amount) }}</strong>
-                                            </p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="mb-0">Transaction Type:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->type }}</strong></p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="mb-0">UTR:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->utr_number }}</strong>
-                                            </p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="mb-0">Mode:</p>
-                                            <p class="mb-0">
-                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <p class="mb-0">Status:</p>
-                                            <p class="mb-0">
-                                                <strong>{{ strip_tags($selectedTransaction->status->name) }}</strong>
-                                            </p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="mb-0">Date/Time:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->created_at }}</strong>
-                                            </p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="mb-0">Description:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->remarks }}</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="myLargeModalLabel">Beneficiary Detail</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <p class="mb-0">Name as per Bank:</p>
-                                                <p class="mb-0"><strong></strong></p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <p class="mb-0">Beneficiary Name:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->user->name }}</strong>
-                                                </p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <p class="mb-0">IFSC:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ strtoupper($selectedTransaction->bank?->ifsc_code) }}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <p class="mb-0">Account Number:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->user->account_number }}</strong>
-                                                </p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <p class="mb-0">Beneficiary Type:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->transtype }}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer p-0 m-0 mt-0">
-                                    <button type="button" class="btn btn-secondary"
-                                        onclick="downloadPdf()">Download</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <p>No transaction selected.</p>
-                @endif
-            </div> --}}
-        </div>
-    </div>
+
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 </div>
-

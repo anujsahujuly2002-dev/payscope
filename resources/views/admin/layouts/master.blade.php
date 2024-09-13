@@ -48,6 +48,7 @@
         });
     </script>
 
+
 <script>
     function downloadPdf() {
         var element = document.getElementById('transaction-details'); // Select the modal content

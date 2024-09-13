@@ -42,7 +42,6 @@ class ApiPartnerComponent extends Component
     public $banks;
     public $statuses;
     public $agentId;
-    public $selectedTransaction;
 
     // public function mount(){
     //     $this->apiPartners = User::whereHas('roles',function($q){
@@ -109,10 +108,15 @@ class ApiPartnerComponent extends Component
             'email'=>'required|email|unique:users,email',
             'mobile_number'=>'required|numeric|digits:10|unique:users,mobile_no',
             'address'=>'required',
+            'company_address'=>'required',
             'state_name'=>'required',
             'city'=>'required|string',
             'pincode'=>'required|numeric|min_digits:6|digits:6',
-            'shop_name'=>'required|string|min:3',
+            'company_name'=>'required|string|min:3',
+            'brand_name'=>'required|string|min:3',
+            'gst'=>'required|string|min:3',
+            'cin_number'=>'required|string|min:3',
+            'company_pan'=>'required|string|min:3',
             'pancard_number'=>'required|string',
             'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
             'scheme'=>'required',
@@ -134,8 +138,13 @@ class ApiPartnerComponent extends Component
                 'state_id'=>$validateDate['state_name'],
                 'city'=>$validateDate['city'],
                 'pincode'=>$validateDate['pincode'],
-                'shop_name'=>$validateDate['shop_name'],
+                'company_name'=>$validateDate['company_name'],
+                'brand_name'=>$validateDate['brand_name'],
                 'pancard_no'=>$validateDate['pancard_number'],
+                'gst'=>$validateDate['gst'],
+                'cin_number'=>$validateDate['cin_number'],
+                'company_pan'=>$validateDate['company_pan'],
+                'company_address'=>$validateDate['company_address'],
                 'addhar_card'=>$validateDate['adhaarcard_number'],
                 'scheme_id'=>$validateDate['scheme'],
                 'website'=>$validateDate['website']??NULL,
@@ -270,19 +279,5 @@ class ApiPartnerComponent extends Component
         ];
         //  dd($data);
         return Excel::download(new ApiPartnerExport($data), time().'.xlsx');
-    }
-
-    public function selectTransaction($id)
-    {
-        $this->selectedTransaction = User::find($id);
-    }
-
-    public function transaction($id)
-    {
-    //   $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
-      $this->banks = fund::get();
-      $this->statuses =  Status::get();
-       $this->selectedTransaction = User::with('status','funds')->findOrFail($id);
-       $this->dispatch('show-form');
     }
 }

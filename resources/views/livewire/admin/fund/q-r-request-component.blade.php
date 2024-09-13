@@ -5,7 +5,9 @@
         <div class="col-md-12">
             <div class="mb-3 d-flex justify-content-end">
                 @can('qr-request-add-fund')
-                    <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-end" wire:click.prevent='walletLoad'><i class="mdi mdi-plus me-2"></i>Wallet Load</a>
+                    <a href="javascript:void(0);" style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                    class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                    wire:click.prevent='walletLoad'><i class="mdi mdi-plus"></i></a>
                 @endcan
             </div>
         </div>
@@ -210,7 +212,7 @@
                     <div class="modal-body">
                         <div class="row g-2">
                             <div class="col-md-12 mb-0">
-                                <label for="amount" class="form-label">Amount</label>
+                                <label for="amount" class="form-label">Amount<span style="color: red;">*</span></label>
                                 <input type="text" id="amount" class="form-control @error('amount') is-invalid @enderror" placeholder="Enter Amount" wire:model.defer='payment.amount'/>
                                 @error('amount')
                                 <div class="invalid-feedback">

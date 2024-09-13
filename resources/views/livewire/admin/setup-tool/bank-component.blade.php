@@ -23,7 +23,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('bank-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='bankCreate'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);"  style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                                            class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                            wire:click.prevent='bankCreate'><i class="mdi mdi-plus "></i></a>
                                         @endcan
                                     </div>
                                 </div>
@@ -79,7 +81,7 @@
                                         @canany(['bank-edit', 'bank-delete'])
                                             <td>
                                                 <ul class="list-inline mb-0">
-                                                    @can('bank-edit') 
+                                                    @can('bank-edit')
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='edit({{$bank}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -140,7 +142,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $banks->lastPage()) as $i)
-                                            @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage()) 
+                                            @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage())
                                                 <li class="page-item @if($banks->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -154,7 +156,7 @@
                                         @if($banks->currentPage() < $banks->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $banks->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $banks->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($banks->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
@@ -187,7 +189,7 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col-md-6 mb-0">
-                                    <label for="name" class="form-label"> Name</label>
+                                    <label for="name" class="form-label"> Name<span style="color: red;">*</span></label>
                                     <input type="text" id="name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Bank Name" wire:model.lazy='state.name'/>
                                     @error('name')
                                         <div class="invalid-feedback">
@@ -196,7 +198,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="account_number" class="form-label"> Account Number</label>
+                                    <label for="account_number" class="form-label"> Account Number<span style="color: red;">*</span></label>
                                     <input type="text" id="account_number" class="form-control  @error('account_number') is-invalid @enderror" placeholder="Enter Account Number" wire:model.lazy='state.account_number'/>
                                     @error('account_number')
                                         <div class="invalid-feedback">
@@ -205,7 +207,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="ifsc" class="form-label">Ifsc</label>
+                                    <label for="ifsc" class="form-label">Ifsc<span style="color: red;">*</span></label>
                                     <input type="text" id="ifsc" class="form-control  @error('ifsc_code') is-invalid @enderror" placeholder="Enter Ifsc Code" wire:model.lazy='state.ifsc_code'/>
                                     @error('ifsc_code')
                                         <div class="invalid-feedback">
@@ -214,7 +216,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="branch_name" class="form-label">Branch</label>
+                                    <label for="branch_name" class="form-label">Branch<span style="color: red;">*</span></label>
                                     <input type="text" id="branch_name" class="form-control  @error('branch_name') is-invalid @enderror" placeholder="Enter Branch" wire:model.lazy='state.branch_name'/>
                                     @error('branch_name')
                                         <div class="invalid-feedback">

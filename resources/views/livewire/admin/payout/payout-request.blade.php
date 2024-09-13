@@ -5,7 +5,9 @@
         <div class="col-md-12">
             <div class="mb-3 d-flex justify-content-end">
                 @can('payout-new-request')
-                    <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-end" wire:click.prevent='payoutRequest'><i class="mdi mdi-plus me-2"></i>Add New</a>
+                    <a href="javascript:void(0);" style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                    class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                    wire:click.prevent='payoutRequest'><i class="mdi mdi-plus"></i></a>
                 @endcan
             </div>
         </div>
@@ -204,35 +206,35 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col-md-4 mb-0">
-                                    <label for="account_number" class="form-label">Account Number</label>
+                                    <label for="account_number" class="form-label">Account Number<span style="color: red;">*</span></label>
                                     <input type="text" id="account_number" class="form-control @error('account_number') is-invalid @enderror" placeholder="Enter Account Number" wire:model.defer='payoutFormRequest.account_number' required/>
                                     @error('account_number')
                                         <div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="ifsc-code" class="form-label">Ifsc Code</label>
+                                    <label for="ifsc-code" class="form-label">Ifsc Code<span style="color: red;">*</span></label>
                                     <input type="text" id="ifsc-code" class="form-control @error('payoutFormRequest.ifsc_code') is-invalid @enderror" placeholder="Enter Ifsc code" wire:model.defer='payoutFormRequest.ifsc_code' required/>
                                     @error('payoutFormRequest.ifsc_code')
                                         <div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="account-holder-name" class="form-label">Account Holder Name</label>
+                                    <label for="account-holder-name" class="form-label">Account Holder Name<span style="color: red;">*</span></label>
                                     <input type="text" id="account-holder-name" class="form-control @error('payoutFormRequest.account_holder_name') is-invalid @enderror" placeholder="Enter Account Holder Name" wire:model.defer='payoutFormRequest.account_holder_name' required/>
                                     @error('payoutFormRequest.account_holder_name')
                                         <div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="account-holder-name" class="form-label">Amount</label>
+                                    <label for="account-holder-name" class="form-label">Amount<span style="color: red;">*</span></label>
                                     <input type="text" id="account-holder-name" class="form-control @error('amount') is-invalid @enderror" placeholder="Enter Amount" wire:model.defer='payoutFormRequest.amount' required/>
                                     @error('payoutFormRequest.amount')
                                         <div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="mobile_number" class="form-label">Payment Mode</label>
+                                    <label for="mobile_number" class="form-label">Payment Mode<span style="color: red;">*</span></label>
                                     <select id="paymnet_mode" class="form-control @error('payoutFormRequest.payment_mode') is-invalid @enderror"  wire:model.defer='payoutFormRequest.payment_mode' required>
                                         <option value="">Select Payment Mode</option>
                                         @foreach ($paymentModes as $paymentMode)

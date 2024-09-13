@@ -5,7 +5,9 @@
         <div class="col-md-12">
             <div class="mb-3 d-flex justify-content-end">
                 @can('fund-new-request')
-                    <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-end"  wire:click.prevent='fundNewRequest'><i class="mdi mdi-plus me-2"></i>Add New</a>
+                    <a href="javascript:void(0);" class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                    style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                    wire:click.prevent='fundNewRequest'><i class="mdi mdi-plus"></i></a>
                 @endcan
             </div>
         </div>
@@ -235,7 +237,6 @@
                             @endif
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -253,7 +254,7 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col-md-4 mb-0">
-                                    <label for="name" class="form-label">Deposit Bank</label>
+                                    <label for="name" class="form-label">Deposit Bank<span style="color: red;">*</span></label>
                                     <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='fundNewRequests.bank'>
                                         <option value="">Select Bank</option>
                                         @foreach ($banks as $bank)
@@ -267,7 +268,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="email" class="form-label">Amount</label>
+                                    <label for="email" class="form-label">Amount<span style="color: red;">*</span></label>
                                     <input type="text" id="email" class="form-control @error('amount') is-invalid @enderror" placeholder="Enter Amount" wire:model.defer='fundNewRequests.amount'/>
                                     @error('amount')
                                     <div class="invalid-feedback">
@@ -276,7 +277,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="mobile_number" class="form-label">Payment Mode</label>
+                                    <label for="mobile_number" class="form-label">Payment Mode<span style="color: red;">*</span></label>
                                     <select id="paymnet_mode" class="form-control @error('payment_mode') is-invalid @enderror"  wire:model.defer='fundNewRequests.payment_mode'>
                                         <option value="">Select Payment Mode</option>
                                         @foreach ($paymentModes as $paymentMode)
@@ -290,7 +291,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="pay_date" class="form-label">Pay Date</label>
+                                    <label for="pay_date" class="form-label">Pay Date<span style="color: red;">*</span></label>
                                     <input type="date" id="pay_date" class="form-control @error('pay_date') is-invalid @enderror" placeholder="Enter Address" wire:model.defer='fundNewRequests.pay_date'/>
                                     @error('pay_date')
                                     <div class="invalid-feedback">
@@ -299,7 +300,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="reference_number" class="form-label">Ref No.</label>
+                                    <label for="reference_number" class="form-label">Ref No.<span style="color: red;">*</span></label>
                                     <input type="text" id="reference_number" class="form-control @error('reference_number') is-invalid @enderror" placeholder="Enter Refernce No" wire:model.defer='fundNewRequests.reference_number'/>
                                     @error('reference_number')
                                         <div class="invalid-feedback">
@@ -325,8 +326,7 @@
                 </form>
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-    @else
-        <!--  Large modal example -->
+        @else
         <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-lg">
                 <form wire:submit.prevent="updateFundRequest" autocomplete="off">
@@ -338,7 +338,7 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col-md-12 mb-0">
-                                    <label for="name" class="form-label">Status</label>
+                                    <label for="name" class="form-label">Status<span style="color: red;">*</span></label>
                                     <select  id="bank" class="form-control @error('bank') is-invalid @enderror" wire:model.defer='status'>
                                         <option value="">Select Status</option>
                                         @foreach ($statuses as $status)
@@ -352,7 +352,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 mb-0">
-                                    <label for="remark" class="form-label">Remark</label>
+                                    <label for="remark" class="form-label">Remark<span style="color: red;">*</span></label>
                                     <textarea type="text" id="remark" class="form-control " placeholder="Enter Remark" wire:model.defer='remark'></textarea>
                                 </div>
                             </div>

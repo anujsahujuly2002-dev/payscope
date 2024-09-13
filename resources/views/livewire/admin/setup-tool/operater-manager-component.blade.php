@@ -23,7 +23,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('bank-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);" style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                                            class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                            wire:click.prevent='create'><i class="mdi mdi-plus"></i></a>
                                         @endcan
                                     </div>
                                 </div>
@@ -80,7 +82,7 @@
                                         @canany(['operator-edit'])
                                             <td>
                                                 <ul class="list-inline mb-0">
-                                                    @can('operator-edit') 
+                                                    @can('operator-edit')
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='edit({{$operatorManger}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -124,7 +126,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $operatorManagers->lastPage()) as $i)
-                                            @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage()) 
+                                            @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage())
                                                 <li class="page-item @if($operatorManagers->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -138,7 +140,7 @@
                                         @if($operatorManagers->currentPage() < $operatorManagers->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $operatorManagers->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $operatorManagers->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($operatorManagers->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">

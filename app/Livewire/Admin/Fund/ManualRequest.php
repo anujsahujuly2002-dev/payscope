@@ -25,12 +25,13 @@ class ManualRequest extends Component
     public $fundNewRequests=[];
     public $paySlip;
     public $approvedForm = false;
+    public $updateRequestForm = false;
     public $status;
     public $remark;
     public $fund;
     public $start_date;
     public $end_date;
-    // public $funds;
+    public $selectedTransaction;
     public $value;
     public $agentId;
 
