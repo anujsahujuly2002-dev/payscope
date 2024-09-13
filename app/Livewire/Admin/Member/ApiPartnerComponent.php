@@ -274,7 +274,7 @@ class ApiPartnerComponent extends Component
         $response = $this->signUpEkycInitiateValidate($data);
         if($response['status']):
             
-            User::find()->update([
+            User::find($this->ekyApiPartnerId)->update([
                 'outlet_id'=>$response['data']['outletId'],
             ]);
             $this->reset();
