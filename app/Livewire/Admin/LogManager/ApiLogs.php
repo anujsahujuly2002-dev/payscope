@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\LogManager;
 
+use App\Exports\APILogExport;
 use App\Models\ApiLog;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -50,10 +51,7 @@ class ApiLogs extends Component
             'start_date'=>$this->start_date,
             'end_date'=>$this->end_date,
             'value'=>$this->value,
-            'status'=>$this->status
-
         ];
-        //  dd($data);
-        return Excel::download(new PayoutRequestExport($data), time().'.xlsx');
+        return Excel::download(new APILogExport($data), time().'.xlsx');
     }
 }

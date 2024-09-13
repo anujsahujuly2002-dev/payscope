@@ -35,7 +35,6 @@ class RetailerComponent extends Component
     public $agentId;
 
 
-
     public function render()
     {
         if(!auth()->user()->can('retailer-list'))

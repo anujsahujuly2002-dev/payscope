@@ -47,6 +47,22 @@
             $("#form").modal('hide');
         });
     </script>
+
+
+<script>
+    function downloadPdf() {
+        var element = document.getElementById('transaction-details'); // Select the modal content
+
+        // Configure and download PDF
+        html2pdf().from(element).set({
+            margin: 1,
+            filename: 'transaction-details.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        }).save();
+    }
+</script>
 @livewireScripts
 </body>
 </html>

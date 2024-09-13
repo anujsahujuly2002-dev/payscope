@@ -166,3 +166,26 @@ if(!function_exists('moneyFormatIndia')):
 }
 
 endif;
+
+if (!function_exists('formatAmount')) {
+  function formatAmount($amount) {
+        if ($amount >= 10000000) {
+            return [
+                "unit"=>"Cr",
+                "amount"=>number_format($amount / 10000000, 2),
+            ];
+        } elseif ($amount >= 100000) {
+            return [
+                "unit"=>"L",
+                "amount"=>number_format($amount / 100000, 2),
+            ];
+        } elseif ($amount >= 1000) {
+            return[
+                "unit"=>"K",
+                "amount"=> number_format($amount / 1000, 2),
+            ];
+        } else {
+            return $amount;
+        }
+    }
+}

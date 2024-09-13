@@ -25,12 +25,13 @@ class ManualRequest extends Component
     public $fundNewRequests=[];
     public $paySlip;
     public $approvedForm = false;
+    public $updateRequestForm = false;
     public $status;
     public $remark;
     public $fund;
     public $start_date;
     public $end_date;
-    // public $funds;
+    public $selectedTransaction;
     public $value;
     public $agentId;
 
@@ -159,34 +160,9 @@ class ManualRequest extends Component
             'status'=>$this->status,
             'value'=>$this->value
         ];
-        //  dd($data);
-
         return Excel::download(new ManualRequestExport($data), time().'.xlsx');
     }
-    // public function exportAsExcel() {
-    //     $data = [
-    //         'user_id' => auth()->user()->getRoleNames()->first() == 'super-admin' ? $this->agentId : auth()->user()->id,
-    //         'start_date' => $this->start_date,
-    //         'end_date' => $this->end_date,
-    //         'status' => $this->status,
-    //         'value' => $this->value
-    //     ];
-
-    //     return Excel::download(new ManualRequestExport($data), time() . '.xlsx');
-    // }
-
-    // public function exportAsPdf() {
-    //     $data = [
-    //         'user_id' => auth()->user()->getRoleNames()->first() == 'super-admin' ? $this->agentId : auth()->user()->id,
-    //         'start_date' => $this->start_date,
-    //         'end_date' => $this->end_date,
-    //         'status' => $this->status,
-    //         'value' => $this->value
-    //     ];
-
-    //     $pdf = Pdf::loadView('exports.manual_request', compact('data'));
-    //     return $pdf->download(time() . '.pdf');
-    // }
+  
 }
 
 

@@ -41,11 +41,6 @@ class ApiPartnerExport implements FromCollection,WithHeadings
              ->orWhere('pancard_number','like','%'.$this->data['value'].'%')
              ->orWhere('adhaarcard_number','like','%'.$this->data['value'].'%');
         endif;
-        // if($this->data['status'] !=null):
-        //     $partner = $partner->where('status_id',$this->data['status']);
-        // endif;
-
-
         foreach($partner->get() as $partners):
             $partnerArray[]=[
                 $partners->name,
@@ -59,7 +54,6 @@ class ApiPartnerExport implements FromCollection,WithHeadings
                 Carbon::parse( $partners->apiPartnerHistories?->created_at)->format('dS M Y'),
             ];
         endforeach;
-
         return collect($partnerArray);
     }
 

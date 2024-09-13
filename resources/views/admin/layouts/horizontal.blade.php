@@ -44,11 +44,6 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-search-dropdown">
-<<<<<<< HEAD
-
-=======
-
->>>>>>> edbb7088ad7a904f2f91b646a4572c9f89e9528b
                     <form class="p-3">
                         <div class="m-0">
                             <div class="input-group">

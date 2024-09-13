@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 use App\Exports\ApiPartnerExport;
 use App\Traits\eKYCTrait;
 use Illuminate\Support\Facades\DB;
+use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -165,7 +166,6 @@ class ApiPartnerComponent extends Component
         return redirect()->back()->with('success',$msg);
 
     }
-
 
     public function changeScheme($id) {
         $this->reset();

@@ -24,4 +24,21 @@ class PayoutRequestHistory extends Model
         'product',
         'remarks',
     ];
+
+
+    public function user () {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
+    public function fund()
+    {
+        return $this->belongsTo(Fund::class);
+    }
+    public function funds()
+    {
+        return $this->belongsTo(FundRequest::class, 'fund_request_id');
+    }
 }
