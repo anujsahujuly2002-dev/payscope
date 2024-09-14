@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Models\Retailer;
 use Livewire\WithPagination;
 use App\Exports\RetailerExport;
+use App\Exports\ApiPartnerExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -59,7 +60,7 @@ class RetailerComponent extends Component
         //     $u->where('status_id',$this->status);
         // })
         ->when($this->agentId !=null,function($u){
-            $u->where('user_id',$this->agentId);
+            $u->where('id',$this->agentId);
         })
         ->when($this->value !=null,function($u){
             $u->where('mobile_no',$this->value);
@@ -205,5 +206,15 @@ class RetailerComponent extends Component
             DB::rollback();
             return redirect()->back()->with('error','New Permission not assign Please Try again !');
         endif;
+    }
+
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first()!='api-partner'?$this->agentId:NULL,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'value'=>$this->value
+        ];
+        return Excel::download(new RetailerExport($data), time().'.xlsx');
     }
 }

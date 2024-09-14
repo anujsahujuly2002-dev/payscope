@@ -26,7 +26,7 @@
                                         @can('role-create')
                                             <a href="javascript:void(0);"
                                             class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
-                                            style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;" wire:click.prevent='createRole'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;" wire:click.prevent='createRole'><i class="mdi mdi-plus"></i></a>
                                         @endcan
                                     </div>
                                 </div>

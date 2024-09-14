@@ -180,7 +180,7 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col mb-0">
-                                    <label for="role-name" class="form-label">Permission Group</label>
+                                    <label for="role-name" class="form-label">Permission Group<span style="color: red;">*</span></label>
                                     <input type="text" id="role-name" class="form-control  @error('group') is-invalid @enderror" placeholder="Enter Permission Group" wire:model.defer='state.group'/>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -189,7 +189,7 @@
                                     @enderror
                                 </div>
                                 <div class="col mb-0">
-                                    <label for="role-name" class="form-label">Permission Name</label>
+                                    <label for="role-name" class="form-label">Permission Name<span style="color: red;">*</span></label>
                                     <input type="text" id="role-name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Permission Name" wire:model.defer='state.name'/>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">

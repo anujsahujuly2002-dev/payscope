@@ -41,6 +41,7 @@ class ApiPartnerExport implements FromCollection,WithHeadings
              ->orWhere('pancard_number','like','%'.$this->data['value'].'%')
              ->orWhere('adhaarcard_number','like','%'.$this->data['value'].'%');
         endif;
+
         foreach($partner->get() as $partners):
             $partnerArray[]=[
                 $partners->name,

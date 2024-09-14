@@ -6,34 +6,6 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-inline float-md-end mb-3">
-                                        <div class="search-box ms-2">
-                                            <div class="position-relative">
-                                                <input type="text" class="form-control rounded bg-light border-0"
-                                                    placeholder="Search...">
-                                                <i class="mdi mdi-magnify search-icon"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3 d-flex justify-content-center">
-                                        @can('retailer-create')
-                                            <a href="javascript:void(0);"  class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
-                                            style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
-                                            wire:click.prevent='create'><i class="mdi mdi-plus"></i></a>
-                                        @endcan
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- <div class="row mb-2">
                         <div class="col-md-2">
                             <div class="form-group mb-10">
                                 <input type="text" class="form-control start-date startdate rounded bg-light border-0 start_date" placeholder="Start Date" id="datepicker-basic" wire:model.live='start_date' >
@@ -54,11 +26,11 @@
                         </div>
                         <div class="col-md-2 mb-10">
                             <div class="form-group">
-                                <select class="form-control  rounded bg-light border-0" wire:model.live="status">
-                                    <option value="">Status</option>
-                                    @foreach ($statuses as $status)
-                                        <option value="{{$status->id}}">{!!$status->name!!}</option>
-                                    @endforeach
+                                    <select class="form-control  rounded bg-light border-0" wire:model.live="status">
+                                        <option value="">Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
                                 </select>
                             </div>
                         </div>
@@ -68,15 +40,17 @@
                                     <div class="mb-3 d-flex">
                                         <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
                                     </div>
-                                    <div class="mb-3 ms-3 d-flex justify-content-center">
+                                     <div class="mb-3 ms-3 d-flex justify-content-center">
                                         @can('retailer-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i></a>
+                                            <a href="javascript:void(0);"  class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                            style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                                            wire:click.prevent='create'><i class="mdi mdi-plus"></i></a>
                                         @endcan
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <!-- end row -->
                     <div class="table-responsive mb-4">
                         <table class="table table-centered table-nowrap mb-0">

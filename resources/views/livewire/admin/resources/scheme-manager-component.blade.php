@@ -181,7 +181,7 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col mb-0">
-                                    <label for="scheme-name" class="form-label">Scheme Name</label>
+                                    <label for="scheme-name" class="form-label">Scheme Name<span style="color: red;">*</span></label>
                                     <input type="text" id="scheme-name" class="form-control  @error('schemeName') is-invalid @enderror" placeholder="Enter Scheme Name" wire:model.defer='schemeName'/>
                                     @error('schemeName')
                                         <span class="invalid-feedback" role="alert">

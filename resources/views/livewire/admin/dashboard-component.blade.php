@@ -4,7 +4,7 @@
             <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="growth-chart" data-colors='["--bs-success"]'></div>
+                        {{-- <div id="growth-chart" data-colors='["--bs-success"]'></div> --}}
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
@@ -22,12 +22,14 @@
             <div class="card" style="background-color:#fc0800;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="growth-chart1" data-colors='["--bs-success"]'></div>
+                        {{-- <div id="growth-chart1" data-colors='["--bs-success"]'></div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount'] }}</span></h4>
-                        <p class="text-white mb-0">Total Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
+                                class="counterup">{{ $rejectedPayment['amount'] }}</span></h4>
+                        <p class="text-white mb-0">Total Rejected Payout</p>
                     </div>
+
                     <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
                                 class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
                     </p>
@@ -39,12 +41,11 @@
             <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="growth-chart2" data-colors='["--bs-success"]'> </div>
+                        {{-- <div id="growth-chart2" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $rejectedPayment['amount'] }}</span></h4>
-                        <p class="text-white mb-0">Total Rejected Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount'] }}</span></h4>
+                        <p class="text-white mb-0">Total Payout</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
                                 class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
@@ -57,7 +58,7 @@
             <div class="card" style="background-color:#ff0800">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="growth-chart3" data-colors='["--bs-success"]'> </div>
+                        {{-- <div id="growth-chart3" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white">&#x20B9;<span

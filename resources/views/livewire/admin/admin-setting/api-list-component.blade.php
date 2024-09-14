@@ -166,7 +166,7 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col-md-6 mb-0">
-                                    <label for="api_name" class="form-label">Api Name</label>
+                                    <label for="api_name" class="form-label">Api Name<span style="color: red;">*</span></label>
                                     <input type="text" id="api_name" class="form-control  @error('api_name') is-invalid @enderror" placeholder="Enter  Api Name" wire:model='state.api_name'/>
                                     @error('api_name')
                                         <div class="invalid-feedback">
@@ -175,7 +175,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="api_code" class="form-label">Api Code</label>
+                                    <label for="api_code" class="form-label">Api Code<span style="color: red;">*</span></label>
                                     <input type="text" id="api_code" class="form-control  @error('api_code') is-invalid @enderror" placeholder="Enter Api Code" wire:model='state.api_code'/>
                                     @error('api_code')
                                         <div class="invalid-feedback">
@@ -184,7 +184,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="api_url" class="form-label">Api Url</label>
+                                    <label for="api_url" class="form-label">Api Url<span style="color: red;">*</span></label>
                                     <input type="text" id="api_url" class="form-control  @error('api_url') is-invalid @enderror" placeholder="Enter Api Url" wire:model='state.api_url'/>
                                     @error('api_url')
                                         <div class="invalid-feedback">
@@ -193,7 +193,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="username" class="form-label">User Name</label>
+                                    <label for="username" class="form-label">User Name<span style="color: red;">*</span></label>
                                     <input type="text" id="username" class="form-control  @error('username') is-invalid @enderror" placeholder="Enter Username" wire:model='state.username'/>
                                     @error('username')
                                         <div class="invalid-feedback">
@@ -202,7 +202,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label">Password<span style="color: red;">*</span></label>
                                     <input type="text" id="password" class="form-control  @error('password') is-invalid @enderror" placeholder="Enter Password" wire:model='state.password'/>
                                     @error('password')
                                         <div class="invalid-feedback">
@@ -211,7 +211,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="optional1" class="form-label">Optional1</label>
+                                    <label for="optional1" class="form-label">Optional1<span style="color: red;">*</span></label>
                                     <input type="text" id="optional1" class="form-control  @error('optional1') is-invalid @enderror" placeholder="Enter Optional1" wire:model='state.optional1'/>
                                     @error('optional1')
                                         <div class="invalid-feedback">
@@ -220,7 +220,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="product_type" class="form-label">Product Type</label>
+                                    <label for="product_type" class="form-label">Product Type<span style="color: red;">*</span></label>
                                     <select id="product_type" class="form-control @error('product_type') is-invalid @enderror"  wire:model="state.product_type" >
                                         <option value="">Select Type</option>
                                         <option value="recharge">Recharge</option>
