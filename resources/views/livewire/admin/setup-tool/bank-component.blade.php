@@ -23,13 +23,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('bank-create')
-<<<<<<< HEAD
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='bankCreate'><i class="mdi mdi-plus me-2"></i> Add New</a>
-=======
                                             <a href="javascript:void(0);"  style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
                                             class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
                                             wire:click.prevent='bankCreate'><i class="mdi mdi-plus "></i></a>
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
                                         @endcan
                                     </div>
                                 </div>
@@ -86,7 +82,7 @@
                                             <td>
                                                 <ul class="list-inline mb-0">
 <<<<<<< HEAD
-                                                    @can('bank-edit') 
+                                                    @can('bank-edit')
 =======
                                                     @can('bank-edit')
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
@@ -151,7 +147,7 @@
                                         @endif
                                         @foreach (range(1, $banks->lastPage()) as $i)
 <<<<<<< HEAD
-                                            @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage()) 
+                                            @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage())
 =======
                                             @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage())
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
@@ -169,7 +165,7 @@
                                             <li class="page-item"  wire:click="gotoPage({{ $banks->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $banks->lastPage()}}</a>
 <<<<<<< HEAD
-                                            </li> 
+                                            </li>
 =======
                                             </li>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a

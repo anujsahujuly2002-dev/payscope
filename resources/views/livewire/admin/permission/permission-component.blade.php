@@ -24,7 +24,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('permssion-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='addPermission'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='addPermission'><i class="mdi mdi-plus"></i></a>
                                         @endcan
                                     </div>
                                 </div>

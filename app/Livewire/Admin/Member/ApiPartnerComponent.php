@@ -102,10 +102,15 @@ class ApiPartnerComponent extends Component
             'email'=>'required|email|unique:users,email',
             'mobile_number'=>'required|numeric|digits:10|unique:users,mobile_no',
             'address'=>'required',
+            'company_address'=>'required',
             'state_name'=>'required',
             'city'=>'required|string',
             'pincode'=>'required|numeric|min_digits:6|digits:6',
-            'shop_name'=>'required|string|min:3',
+            'company_name'=>'required|string|min:3',
+            'brand_name'=>'required|string|min:3',
+            'gst'=>'required|string|min:3',
+            'cin_number'=>'required|string|min:3',
+            'company_pan'=>'required|string|min:3',
             'pancard_number'=>'required|string',
             'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
             'scheme'=>'required',
@@ -120,15 +125,20 @@ class ApiPartnerComponent extends Component
         ]);
         if($user):
             $apiPartner =ApiPartner::create([
-                'user_id'=>$user->id,
+               'user_id'=>$user->id,
                 'added_by'=>auth()->user()->id,
                 'mobile_no'=>$validateDate['mobile_number'],
                 'address'=>$validateDate['address'],
                 'state_id'=>$validateDate['state_name'],
                 'city'=>$validateDate['city'],
                 'pincode'=>$validateDate['pincode'],
-                'shop_name'=>$validateDate['shop_name'],
+                'company_name'=>$validateDate['company_name'],
+                'brand_name'=>$validateDate['brand_name'],
                 'pancard_no'=>$validateDate['pancard_number'],
+                'gst'=>$validateDate['gst'],
+                'cin_number'=>$validateDate['cin_number'],
+                'company_pan'=>$validateDate['company_pan'],
+                'company_address'=>$validateDate['company_address'],
                 'addhar_card'=>$validateDate['adhaarcard_number'],
                 'scheme_id'=>$validateDate['scheme'],
                 'website'=>$validateDate['website']??NULL,
@@ -248,7 +258,7 @@ class ApiPartnerComponent extends Component
             'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
             'account_number'=>'required|numeric|min_digits:10',
             'ifsc_code'=>'required',
-           
+
 
         ])->validate();
         $validateData ['agent_id']= $this->ekyApiPartnerId;
@@ -273,7 +283,7 @@ class ApiPartnerComponent extends Component
         ];
         $response = $this->signUpEkycInitiateValidate($data);
         if($response['status']):
-            
+
             User::find($this->ekyApiPartnerId)->update([
                 'outlet_id'=>$response['data']['outletId'],
             ]);

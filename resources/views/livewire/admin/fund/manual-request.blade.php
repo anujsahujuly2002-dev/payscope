@@ -5,7 +5,10 @@
         <div class="col-md-12">
             <div class="mb-3 d-flex justify-content-end">
                 @can('fund-new-request')
-                    <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-end"  wire:click.prevent='fundNewRequest'><i class="mdi mdi-plus me-2"></i>Add New</a>
+                    <a href="javascript:void(0);"
+                    class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                    style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                    wire:click.prevent='fundNewRequest'><i class="mdi mdi-plus me-2"></i>Add New</a>
                 @endcan
             </div>
         </div>

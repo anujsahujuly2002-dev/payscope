@@ -24,7 +24,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('scheme-manager-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);"
+                                            class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                            style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;" wire:click.prevent='create'><i class="mdi mdi-plus"></i></a>
                                         @endcan
                                     </div>
                                 </div>
@@ -132,7 +134,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $schemes->lastPage()) as $i)
-                                            @if ($i >=$schemes->currentPage()-2 && $i <=$schemes->currentPage()) 
+                                            @if ($i >=$schemes->currentPage()-2 && $i <=$schemes->currentPage())
                                                 <li class="page-item @if($schemes->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -146,7 +148,7 @@
                                         @if($schemes->currentPage() < $schemes->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $schemes->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $schemes->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($schemes->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">

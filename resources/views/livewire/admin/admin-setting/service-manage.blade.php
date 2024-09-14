@@ -18,12 +18,8 @@
                                     <div class="form-inline float-md-end mb-3">
                                         <div class="search-box ms-2">
                                             <div class="position-relative">
-<<<<<<< HEAD
-                                                <input type="text" class="form-control rounded bg-light border-0" placeholder="Search...">
-=======
                                                 <input type="text" class="form-control rounded bg-light border-0"
                                                     placeholder="Search...">
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
                                                 <i class="mdi mdi-magnify search-icon"></i>
                                             </div>
                                         </div>
@@ -33,11 +29,6 @@
                                     <div class="mb-3 d-flex justify-content-center">
                                         @if (checkRecordHasPermission(['service-create']))
                                             @can('service-create')
-<<<<<<< HEAD
-                                                <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i> Add New</a>
-                                            @endcan
-                                        @endif
-=======
                                                 @if (checkRecordHasPermission(['service-create']))
                                                     @can('service-create')
                                                         <a href="javascript:void(0);"
@@ -49,7 +40,6 @@
                                                     @endcan
                                                 @endif
                                         </div>
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
                                     </div>
                                 </div>
                             </div>

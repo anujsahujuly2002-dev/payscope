@@ -23,7 +23,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('api-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);"   class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                                style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                                          wire:click.prevent='create'><i class="mdi mdi-plus me-2"></i></a>
                                         @endcan
                                     </div>
                                 </div>
