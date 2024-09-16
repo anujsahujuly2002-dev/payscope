@@ -24,7 +24,9 @@
                                 {{-- <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('bank-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='bankCreate'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);"
+                                              class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                                style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;" wire:click.prevent='bankCreate'><i class="mdi mdi-plus"></i></a>
                                         @endcan
                                     </div>
                                 </div> --}}
@@ -80,7 +82,7 @@
                                         @canany(['bank-edit', 'bank-delete'])
                                             <td>
                                                 <ul class="list-inline mb-0">
-                                                    @can('bank-edit') 
+                                                    @can('bank-edit')
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='edit({{$bank}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -141,7 +143,7 @@
                                             </li>
                                         @endif --}}
                                         {{-- @foreach (range(1, $banks->lastPage()) as $i)
-                                            @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage()) 
+                                            @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage())
                                                 <li class="page-item @if($banks->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -155,7 +157,7 @@
                                         @if($banks->currentPage() < $banks->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $banks->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $banks->lastPage()}}</a>
-                                            </li> 
+                                            </li>
                                         @endif
                                         @if($banks->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
