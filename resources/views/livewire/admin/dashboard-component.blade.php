@@ -8,7 +8,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $paymentIn['amount'] }}</span></h4>
+                                class="counterup">{{ $paymentIn['amount']??0 }}</span></h4>
                         <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
@@ -26,7 +26,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $rejectedPayment['amount'] }}</span></h4>
+                                class="counterup">{{ $rejectedPayment['amount']??0 }}</span></h4>
                         <p class="text-white mb-0">Total Rejected Payout</p>
                     </div>
 
@@ -44,7 +44,7 @@
                         {{-- <div id="growth-chart2" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount'] }}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount']??0 }}</span></h4>
                         <p class="text-white mb-0">Total Payout</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -62,7 +62,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
-                                class="counterup">{{ $commission['amount'] }}</span></h4>
+                                class="counterup">{{ $commission['amount']??0 }}</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -96,7 +96,7 @@
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                <h3 style="color: #0a1d56">&#x20B9;<span class="counterup">{{ $payout ['amount']}}</span><span
+                                <h3 style="color: #0a1d56">&#x20B9;<span class="counterup">{{ $payout ['amount']??0}}</span><span
                                         class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Income</span>
                                 </h3>
                             </li>

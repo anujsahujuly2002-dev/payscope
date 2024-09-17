@@ -151,9 +151,7 @@
                                                     @endif --}}
                                                     <a class="dropdown-item" href="javascript:void(0)"
                                                         wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)"
-                                                        wire:click="generateOutletId({{ $apipartner->id }})">Generate
-                                                        Outlet Id</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="generateOutletId({{ $apipartner->id }})">Generate Outlet Id</a>
                                                 </div>
                                             </li>
                                         </td>

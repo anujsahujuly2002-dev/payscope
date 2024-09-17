@@ -408,6 +408,17 @@
                 </li>
 
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-exchange"></i>
+                        <span style="color: #0a1d56;">DMT</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a style="color: #0a1d56;" href="{{ route('admin.domestic.money.transfer.recipient.list') }}">Recipient List</a></li>
+                        <li><a style="color: #0a1d56;" href="javascript:void()">Money Transfer</a></li>
+                    </ul>
+                </li>
+                
+                <li>
                     <a style="color: #0a1d56;" href="{{ route('admin.logout') }}">
                         <i class="fas fa-sign-out-alt"></i>
                         {{-- <span class="badge rounded-pill bg-primary float-end">01</span> --}}
