@@ -31,7 +31,8 @@ class User extends Authenticatable
         'expire_at',
         'verified_at',
         'virtual_account_number',
-        'services'
+        'services',
+        'outlet_id'
     ];
 
 
