@@ -23,6 +23,7 @@ class PayoutRequestHistory extends Model
         'transtype',
         'product',
         'remarks',
+        'payout_api'
     ];
 
 

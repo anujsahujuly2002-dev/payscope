@@ -29,7 +29,6 @@ if(!function_exists('apiCall')):
             endif;
             return json_decode($res,true);
         } catch (\Exception $e) {
-            dd($e);
             return $e->getMessage();
         }
 
