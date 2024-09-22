@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="col-md-4 mb-0">
                                     <label for="account_name" class="form-label">Account Name<span style="color: red;">*</span></label>
-                                    <input type="text" id="account_name" class="form-control @error('account_name') is-invalid @enderror" placeholder="Enter Amount" wire:model.defer='payoutFormRequest.account_name' required/>
+                                    <input type="text" id="account_name" class="form-control @error('account_name') is-invalid @enderror" placeholder="Enter Account Name" wire:model.defer='payoutFormRequest.account_name' required/>
                                     @error('payoutFormRequest.account_name')
                                         <div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
