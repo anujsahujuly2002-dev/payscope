@@ -23,4 +23,5 @@ Route::controller(FundRequestController::class)->group(function() {
     Route::post('/payout','payout');
     Route::post('/bulk-payout','bulkPayout');
     Route::post("/check-status","checkStatus");
+    Route::post('/webhookpaynpro','webHookPaynPro');
 });
