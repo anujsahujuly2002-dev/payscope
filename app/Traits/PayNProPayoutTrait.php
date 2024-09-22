@@ -107,7 +107,7 @@ trait PayNProPayoutTrait {
             'txn_type'=>'IMPS',
             'recv_bank_ifsc'=>$data['ifsc_code'],
             'recv_name'=>trim($data['account_holder_name']),
-            'recv_bank_name'=>trim($data['account_name']),
+            'recv_bank_name'=>($data['account_name']),
             'purpose'=>"Rembirsment",
             'recv_acc_no'=>$data['account_number'],
             'udf1'=>"",
