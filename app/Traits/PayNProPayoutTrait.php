@@ -96,7 +96,6 @@ trait PayNProPayoutTrait {
             'X-APIKEY'=>'NAAPIB16hn9gFd2nmC8nc',
             'X-APISECRET'=>$secret,
         ];
-        // dd($data);
 
         $requestParameter = [
             'username'=>$checkServiceActive->name,
@@ -164,7 +163,7 @@ trait PayNProPayoutTrait {
         }
     }
 
-    public function getSignature($name,$email,$mobile,$amount)
+    public function getSignature()
     {
         $message = "NAAPIB16hn9gFd2nmC8nc"."mXRhX1lk5jTYxJZD";
 
