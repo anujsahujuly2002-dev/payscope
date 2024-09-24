@@ -47,6 +47,13 @@ class CheckPaymentStatusCommand extends Command
                 ];
                 // dd($requestParameter);
                 $res = apiCall($header,$pyanProUrl,$requestParameter,true,$pendingPaymentRequest->payout_id);
+                Log::info("response:-",$res);
+                $to      = 'anujsahujuly2002@gmail.com';
+                $subject = 'Check Status Api Executed For PaynPro';
+                $message = 'Api Response'.json_encode($res);
+                $headers = 'From:programmeranuj930@gmail.com'. "\r\n" .'X-Mailer: PHP/' . phpversion();
+
+                mail($to, $subject, $message, $headers);
                 if($res['statusCode']==200):
                     if($res['data'][0]['status']=='Failed'):
                         $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
