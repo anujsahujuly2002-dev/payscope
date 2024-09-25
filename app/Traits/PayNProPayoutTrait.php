@@ -117,11 +117,19 @@ trait PayNProPayoutTrait {
         ];
         $requestParameter['signature'] = $this->getSignature($checkServiceActive->name,$checkServiceActive->email,$checkServiceActive->mobile_no,$data['amount']);
         $res = apiCall($headers,$apiUrl,$requestParameter,true,$data['payoutid']);
-        return  [
-            'status'=>'0005',
-            'statusCode'=>"pending",
-            'msg'=>"You're transaction succesfully,Please check status after thirty minute",
-        ];
+        if(!array_key_exists('status',$res)):
+            return  [
+                'status'=>'0005',
+                'statusCode'=>"pending",
+                'msg'=>"You're transaction succesfully,Please check status after thirty minute",
+            ];
+        else:
+            return  [
+                'status'=>'0008',
+                'msg'=>$res['msg'],
+            ];
+        endif;
+        
 
     }
 

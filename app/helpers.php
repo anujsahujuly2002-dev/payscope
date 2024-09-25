@@ -30,6 +30,7 @@ if(!function_exists('apiCall')):
             return json_decode($res,true);
         } catch (\Exception $e) {
             return [
+                'status'=>false,
                 'statusCode'=>$e->getCode(),
                 'msg'=>$e->getMessage(),
             
