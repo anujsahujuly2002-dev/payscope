@@ -119,7 +119,7 @@ trait PayNProPayoutTrait {
         $res = apiCall($headers,$apiUrl,$requestParameter,true,$data['payoutid']);
         return  [
             'status'=>'0005',
-            'msg'=>$res['Data']['description'],
+            'msg'=>"You're transaction succesfully,Please check status after thirty minute",
         ];
 
     }

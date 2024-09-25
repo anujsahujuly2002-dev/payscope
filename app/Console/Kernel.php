@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('app:check-payment-status-command')->everyMinute()->onSuccess(function () {
+        $schedule->command('app:check-payment-status-command')->everyFifteenMinutes()->onSuccess(function () {
             $msg = "Check Payment Status Api Initiate Successfully";
 
             // use wordwrap() if lines are longer than 70 characters
