@@ -15,9 +15,13 @@
 <script src="{{asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
 <script src="{{asset('/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{asset('/assets/js/pages/form-advanced.init.js') }}"></script>
-@yield('script')
+<script src="{{asset('assets/js/pages/form-advanced.init.js')}}""></script>
+<!-- apexcharts -->
+<script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+
+<script src="{{asset('assets/js/pages/dashboard.init.js')}}"></script>
+@yield('script-bottom')
 
 <!-- App js -->
 {{-- <script src="{{asset('/assets/js/app.min.js')}}"></script> --}}
 
-@yield('script-bottom')

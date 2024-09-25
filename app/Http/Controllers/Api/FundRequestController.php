@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Wallet;
 use App\Models\ApiToken;
 use App\Jobs\BulkPayoutJob;
@@ -10,13 +11,15 @@ use App\Traits\PayoutTraits;
 use Illuminate\Http\Request;
 use App\Traits\EkoPayoutTrait;
 use App\Http\Controllers\Controller;
+use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Api\FundRequestRequest;
-use App\Models\User;
+use App\Traits\PayNProPayoutTrait;
+use Illuminate\Support\Facades\Log;
 
 class FundRequestController extends Controller
 {
-    use PayoutTraits,EkoPayoutTrait;
+    use PayoutTraits,EkoPayoutTrait,PayNProPayoutTrait;
     public function payout(FundRequestRequest $request) {
         $checkToken  = ApiToken::where(['ip_address'=>$request->input('ip_address'),'token'=>$request->input('token')])->first();
         if(!$checkToken)
@@ -27,8 +30,9 @@ class FundRequestController extends Controller
        $request['user_id'] = $checkToken->user_id;
        $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
     //    $response = $this->payoutApiRequest($request);
-       $response = $this->ekoPayoutApi($request);;
-       return $response;
+    //    $response = $this->ekoPayoutApi($request);;
+        $response = $this->payNProPayout($request);
+        return $response;
     }
 
 
@@ -125,4 +129,21 @@ class FundRequestController extends Controller
             'data'=>$response
         ],200);
     }
+
+    public function webHookPaynPro(Request $request) {
+        if($request['STATUS']=='Success'):
+            $FundRequest =FundRequest::where("payout_id", $request['PAYOUT_REF'])->first();
+            FundRequest::where('id',$FundRequest->id)->update([
+                'status_id'=>'2',
+                'payout_ref' =>$request['RRN'],
+            ]);
+            PayoutRequestHistory::where('fund_request_id',$FundRequest->id)->update([
+                'status_id'=>'2',
+            ]);
+            Log::info("message:-",$request);
+        else:
+            Log::info("message:-",$request);
+        endif;
+       
+    }   
 }

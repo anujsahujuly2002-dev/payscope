@@ -4,13 +4,15 @@
             <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="customers-chart" data-colors='["--bs-primary"]'> </div>
+                        {{-- <div id="growth-chart" data-colors='["--bs-success"]'></div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($paymentIn)}}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
+                                class="counterup">{{ $paymentIn['amount']??0 }}</span></h4>
                         <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
+                                class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
@@ -20,14 +22,16 @@
             <div class="card" style="background-color:#fc0800;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="growth-chart" data-colors='["--bs-success"]'></div>
+                        {{-- <div id="growth-chart1" data-colors='["--bs-success"]'></div> --}}
                     </div>
                     <div>
-                        {{-- {{dd(Auth::user()->id)}} --}}
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($payout)}}</span></h4>
-                        <p class="text-white mb-0">Total Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
+                                class="counterup">{{ $rejectedPayment['amount']??0 }}</span></h4>
+                        <p class="text-white mb-0">Total Rejected Payout</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
+
+                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
+                                class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
@@ -37,13 +41,14 @@
             <div class="card" style="background-color:#0a1d56;">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="growth-chart" data-colors='["--bs-primary"]'> </div>
+                        {{-- <div id="growth-chart2" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span data-plugin="counterup">{{moneyFormatIndia($rejectedPayment)}}</span></h4>
-                        <p class="text-white mb-0">Total Rejected Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount']??0 }}</span></h4>
+                        <p class="text-white mb-0">Total Payout</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
+                                class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
@@ -53,13 +58,15 @@
             <div class="card" style="background-color:#ff0800">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="orders-chart" data-colors='["--bs-success"]'> </div>
+                        {{-- <div id="growth-chart3" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white">&#x20B9;<span data-plugin="counterup">{{moneyFormatIndia($commission)}}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
+                                class="counterup">{{ $commission['amount']??0 }}</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
+                                class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
                     </p>
                 </div>
             </div>
@@ -72,10 +79,13 @@
                 <div class="card-body">
                     <div class="float-end">
                         <div class="dropdown">
-                            <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold" style="color: #0a1d56">Sort By:</span> <span style="color:#0a1d56">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                            <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fw-semibold" style="color: #0a1d56">Sort By:</span> <span
+                                    style="color:#0a1d56">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5" style="color: #0a1d56">
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5"
+                                style="color: #0a1d56">
                                 <a class="dropdown-item" href="#">Monthly</a>
                                 <a class="dropdown-item" href="#">Yearly</a>
                                 <a class="dropdown-item" href="#">Weekly</a>
@@ -86,18 +96,25 @@
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                <h3 style="color: #0a1d56">&#x20B9;<span data-plugin="counterup">{{moneyFormatIndia($payout)}}</span><span class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Income</span></h3>
+                                <h3 style="color: #0a1d56">&#x20B9;<span class="counterup">{{ $payout ['amount']??0}}</span><span
+                                        class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Income</span>
+                                </h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
-                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span><span class="d-inline-block font-size-15 ms-3" style="color: #0a1d56" >Sales</span></h3>
+                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span><span
+                                        class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Sales</span>
+                                </h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
-                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span>%<span class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Conversation Ratio</span></h3>
+                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span>%<span
+                                        class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Conversation
+                                        Ratio</span></h3>
                             </li>
                         </ul>
                     </div>
                     <div class="mt-3">
-                        <div id="sales-analytics-chart" data-colors='["#0a1d56", "#dfe2e6", "#ff0800"]' class="apex-charts" dir="ltr"></div>
+                        <div id="sales-analytics-chart" data-colors='["#0a1d56", "#dfe2e6", "#ff0800"]'
+                            class="apex-charts" dir="ltr"></div>
                     </div>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
@@ -108,14 +125,17 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-sm-8">
-                            <p class="text-white font-size-18">Enhance your <b>Campaign</b> for better outreach <i class="mdi mdi-arrow-right"></i></p>
+                            <p class="text-white font-size-18">Enhance your <b>Campaign</b> for better outreach <i
+                                    class="mdi mdi-arrow-right"></i></p>
                             <div class="mt-4">
-                                <a href="javascript: void(0);" class="btn btn-success waves-effect waves-light">Upgrade Account!</a>
+                                <a href="javascript: void(0);"
+                                    class="btn btn-success waves-effect waves-light">Upgrade Account!</a>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="mt-4 mt-sm-0">
-                                <img src="{{asset('/assets/images/setup-analytics-amico.svg') }}" class="img-fluid" alt="">
+                                <img src="{{ asset('/assets/images/setup-analytics-amico.svg') }}" class="img-fluid"
+                                    alt="">
                             </div>
                         </div>
                     </div>
@@ -126,10 +146,11 @@
                 <div class="card-body">
                     <div class="float-end">
                         <div class="dropdown">
-                            <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold">Sort By:</span> <span style="color: #0a1d56;">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                            <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fw-semibold">Sort By:</span> <span style="color: #0a1d56;">Yearly<i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <a class="dropdown-item" style="color: #0a1d56" href="#">Monthly</a>
                                 <a class="dropdown-item" style="color: #0a1d56" href="#">Yearly</a>
@@ -141,12 +162,14 @@
                     <h4 class="card-title mb-4">Top Selling Products</h4>
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-primary me-2"></i>Total payout </p>
+                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                                    class="mdi mdi-circle-medium text-primary me-2"></i>Total payout </p>
                         </div>
 
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
-                                <div class="progress-bar progress-bar bg-primary" role="progressbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="52">
+                                <div class="progress-bar progress-bar bg-primary" role="progressbar"
+                                    style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="52">
                                 </div>
                             </div>
                         </div>
@@ -154,11 +177,13 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> iPhones </p>
+                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                                    class="mdi mdi-circle-medium text-info me-2"></i> iPhones </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
-                                <div class="progress-bar progress-bar bg-info" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="45">
+                                <div class="progress-bar progress-bar bg-info" role="progressbar" style="width: 45%"
+                                    aria-valuenow="45" aria-valuemin="0" aria-valuemax="45">
                                 </div>
                             </div>
                         </div>
@@ -166,11 +191,13 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-success me-2"></i> Android </p>
+                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                                    class="mdi mdi-circle-medium text-success me-2"></i> Android </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
-                                <div class="progress-bar progress-bar bg-success" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="48">
+                                <div class="progress-bar progress-bar bg-success" role="progressbar"
+                                    style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="48">
                                 </div>
                             </div>
                         </div>
@@ -178,11 +205,13 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> Tablets </p>
+                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                                    class="mdi mdi-circle-medium text-warning me-2"></i> Tablets </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
-                                <div class="progress-bar progress-bar bg-warning" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="78">
+                                <div class="progress-bar progress-bar bg-warning" role="progressbar"
+                                    style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="78">
                                 </div>
                             </div>
                         </div>
@@ -190,11 +219,13 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p  style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> Cables </p>
+                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                                    class="mdi mdi-circle-medium text-purple me-2"></i> Cables </p>
                         </div>
                         <div class="col-sm-9">
                             <div class="progress mt-1" style="height: 6px;">
-                                <div class="progress-bar progress-bar bg-purple" role="progressbar" style="width: 63%" aria-valuenow="63" aria-valuemin="0" aria-valuemax="63">
+                                <div class="progress-bar progress-bar bg-purple" role="progressbar"
+                                    style="width: 63%" aria-valuenow="63" aria-valuemin="0" aria-valuemax="63">
                                 </div>
                             </div>
                         </div>
@@ -207,93 +238,54 @@
 
     <div class="row">
         <div class="col-xl-4">
-             <div class="card">
+            <div class="card">
                 <div class="card-body">
                     <div class="float-end">
                         <div class="dropdown">
-                            <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span style="color: #0a1d56">All Members<i class="mdi mdi-chevron-down ms-1"></i></span>
+                            <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span style="color: #0a1d56">All Members<i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                                <a class="dropdown-item"  style="color: #0a1d56" href="#">Locations</a>
+                                <a class="dropdown-item" style="color: #0a1d56" href="#">Locations</a>
                                 <a class="dropdown-item" style="color: #0a1d56" href="#">Revenue</a>
-                                <a class="dropdown-item"  style="color: #0a1d56" href="#">Join Date</a>
+                                <a class="dropdown-item" style="color: #0a1d56" href="#">Join Date</a>
                             </div>
                         </div>
                     </div>
-                    <h4 class="card-title mb-4"  style="color: #0a1d56">Top Users</h4>
+                    <h4 class="card-title mb-4" style="color: #0a1d56">Top Users</h4>
 
                     <div data-simplebar style="max-height: 339px;">
                         <div class="table-responsive">
                             <table class="table table-borderless table-centered table-nowrap">
                                 <tbody>
-                                    <tr>
-                                        <td style="width: 20px;"><img src="{{asset('/assets/images/users/avatar-4.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1 fw-normal">Glenn Holden</h6>
-                                            <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Nevada</p>
-                                        </td>
-                                        <td><span class="badge bg-soft-danger font-size-12">Cancel</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;250.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{asset('/assets/images/users/avatar-5.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1 fw-normal">Lolita Hamill</h6>
-                                            <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Texas</p>
-                                        </td>
-                                        <td><span class="badge bg-soft-success font-size-12">Success</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>&#x20B9;110.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{asset('/assets/images/users/avatar-6.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1 fw-normal">Robert Mercer</h6>
-                                            <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> California</p>
-                                        </td>
-                                        <td><span class="badge bg-soft-info font-size-12">Active</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;420.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{asset('/assets/images/users/avatar-7.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1 fw-normal">Marie Kim</h6>
-                                            <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Montana</p>
-                                        </td>
-                                        <td><span class="badge bg-soft-warning font-size-12">Pending</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>&#x20B9;120.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{asset('/assets/images/users/avatar-8.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1 fw-normal">Sonya Henshaw</h6>
-                                            <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Colorado</p>
-                                        </td>
-                                        <td><span class="badge bg-soft-info font-size-12">Active</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;112.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{asset('/assets/images/users/avatar-2.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1 fw-normal">Marie Kim</h6>
-                                            <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Australia</p>
-                                        </td>
-                                        <td><span class="badge bg-soft-success font-size-12">Success</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-danger" data-feather="trending-down"></i>&#x20B9;120.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{asset('/assets/images/users/avatar-1.jpg') }}" class="avatar-xs rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1 fw-normal">Sonya Henshaw</h6>
-                                            <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> India</p>
-                                        </td>
-                                        <td><span class="badge bg-soft-danger font-size-12">Cancel</span></td>
-                                        <td class="text-muted fw-semibold text-end"><i class="icon-xs icon me-2 text-success" data-feather="trending-up"></i>&#x20B9;112.00</td>
-                                    </tr>
+                                    @foreach ($recentTransactions as $transactions)
+                                        <tr>
+                                            <td style="width: 20px;">
+                                                <img src="{{ URL::asset('/assets/images/users/vector-team.png') }}"
+                                                    class="avatar-xs rounded-circle " alt="...">
+                                            </td>
+                                            <td>
+                                                <h6 class="font-size-15 mb-1 fw-normal">
+                                                    {{ $transactions->user->name }}
+                                                </h6>
+                                                <p class="text-muted font-size-13 mb-0"><i
+                                                        class="mdi mdi-map-marker"></i> Location</p>
+                                            </td>
+                                            <td><span
+                                                    class="{{ $transactions->status_class }}">{{ strip_tags($transactions->status->name) }}</span>
+                                            </td>
+                                            <td class="text-muted fw-semibold text-end">
+                                                <i class="icon-xs icon me-2 "></i>
+                                                &#x20B9;{{ moneyFormatIndia($transactions->amount) }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
-                        </div> <!-- enbd table-responsive-->
+                        </div> <!-- end table-responsive-->
                     </div> <!-- data-sidebar-->
                 </div><!-- end card-body-->
             </div> <!-- end card-->
@@ -304,18 +296,19 @@
                 <div class="card-body">
                     <div class="float-end">
                         <div class="dropdown">
-                            <a class="dropdown-toggle" href="#" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span  style="color: #0a1d56" >Recent<i class="mdi mdi-chevron-down ms-1"></i></span>
+                            <a class="dropdown-toggle" href="#" id="dropdownMenuButton3"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span style="color: #0a1d56">Recent<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
-                                <a class="dropdown-item" href="#"  style="color: #0a1d56">Recent</a>
-                                <a class="dropdown-item" href="#"  style="color: #0a1d56">By Users</a>
+                                <a class="dropdown-item" href="#" style="color: #0a1d56">Recent</a>
+                                <a class="dropdown-item" href="#" style="color: #0a1d56">By Users</a>
                             </div>
                         </div>
                     </div>
 
-                    <h4 class="card-title mb-4"  style="color: #0a1d56">Recent Activity</h4>
+                    <h4 class="card-title mb-4" style="color: #0a1d56">Recent Activity</h4>
 
                     <ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 339px;">
                         {{-- <li class="feed-item">
@@ -326,12 +319,13 @@
                                         Rowland</span></p>
                             </div>
                         </li> --}}
-                        @foreach ($loginActivities as $loginActivity )
-                        <li class="feed-item" >
-                            <p class="mb-0"><span class="text-primary">{{$loginActivity->user?->name}}</span></p>
-                            <p class="mb-0">Login Time: {{$loginActivity->login_time}}</p>
-                            <p class="mb-0">Logout time: {{$loginActivity->logout_time}}</p>
-                        </li>
+                        @foreach ($loginActivities as $loginActivity)
+                            <li class="feed-item">
+                                <p class="mb-0"><span class="text-primary">{{ $loginActivity->user?->name }}</span>
+                                </p>
+                                <p class="mb-0">Login Time: {{ $loginActivity->login_time }}</p>
+                                <p class="mb-0">Logout time: {{ $loginActivity->logout_time }}</p>
+                            </li>
                         @endforeach
                     </ol>
                 </div>
@@ -343,7 +337,8 @@
                 <div class="card-body">
                     <div class="float-end">
                         <div class="dropdown">
-                            <a class="dropdown-toggle" href="#" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="dropdown-toggle" href="#" id="dropdownMenuButton4"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span style="color: #0a1d56">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
@@ -364,9 +359,12 @@
                             </span>
                         </div>
                         <p class="font-16 text-muted mb-2"></p>
-                        <h5><a href="#" class="text-dark">Facebook - <span class="font-16" style="color: #0a1d56;">125 sales</span> </a></h5>
-                        <p class="text-muted">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus tincidunt.</p>
-                        <a href="#" class="text-reset font-16">Learn more <i class="mdi mdi-chevron-right"></i></a>
+                        <h5><a href="#" class="text-dark">Facebook - <span class="font-16"
+                                    style="color: #0a1d56;">125 sales</span> </a></h5>
+                        <p class="text-muted">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero
+                            venenatis faucibus tincidunt.</p>
+                        <a href="#" class="text-reset font-16">Learn more <i
+                                class="mdi mdi-chevron-right"></i></a>
                     </div>
                     <div class="row mt-4">
                         <div class="col-4">
@@ -404,7 +402,8 @@
                         </div>
                     </div>
                     <div class="mt-3 text-center">
-                        <a href="#" class="text-primary font-size-14 fw-medium">View All Sources <i class="mdi mdi-chevron-right"></i></a>
+                        <a href="#" class="text-primary font-size-14 fw-medium">View All Sources <i
+                                class="mdi mdi-chevron-right"></i></a>
                     </div>
 
                 </div>
@@ -428,185 +427,47 @@
                                             <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                         </div>
                                     </th>
-                                    <th>Order ID</th>
+                                    <th>Id</th>
                                     <th>Billing Name</th>
                                     <th>Date</th>
                                     <th>Total</th>
                                     <th>Payment Status</th>
-                                    <th>Payment Method</th>
+                                    <th>Payment Type</th>
                                     <th>View Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="form-check font-size-16">
-                                            <input type="checkbox" class="form-check-input" id="customCheck2">
-                                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2540</a> </td>
-                                    <td>Neal Matthews</td>
-                                    <td>
-                                        07 Oct, 2019
-                                    </td>
-                                    <td>
-                                        &#x20B9;400
-                                    </td>
-                                    <td>
-                                        <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                    </td>
-                                    <td>
-                                        <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
+                                @foreach ($recentTransactions as $transactions)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check font-size-16">
+                                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td>{{ $transactions->id }}</td>
+                                        <td>{{ $transactions->user->name }}</td>
+                                        <td>
+                                            {{ $transactions->created_at }}
+                                        </td>
+                                        <td>
+                                            &#x20B9;{{ moneyFormatIndia($transactions->amount) }}
+                                        </td>
+                                        <td>
+                                            <span class="">{{ strip_tags($transactions->status->name) }}</span>
+                                        </td>
+                                        <td>
+                                            <i class="fab fa-cc-mastercard me-1"></i> {{ $transactions->type }}
+                                        </td>
+                                        <td>
+                                            <div class="mb-3 d-flex justify-content-center">
+                                                <a href="javascript:void(0);"
+                                                    class="btn btn-success waves-effect waves-light align-self-end"
+                                                    wire:click.prevent="transaction({{ $transactions->id }})"><i>Slip</a>
 
-                                <tr>
-                                    <td>
-                                        <div class="form-check font-size-16">
-                                            <input type="checkbox" class="form-check-input" id="customCheck3">
-                                            <label class="form-check-label" for="customCheck3">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2541</a> </td>
-                                    <td>Jamal Burnett</td>
-                                    <td>
-                                        07 Oct, 2019
-                                    </td>
-                                    <td>
-                                        &#x20B9;380
-                                    </td>
-                                    <td>
-                                        <span class="badge rounded-pill bg-soft-danger font-size-12">Chargeback</span>
-                                    </td>
-                                    <td>
-                                        <i class="fab fa-cc-visa me-1"></i> Visa
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="form-check font-size-16">
-                                            <input type="checkbox" class="form-check-input" id="customCheck4">
-                                            <label class="form-check-label" for="customCheck4">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2542</a> </td>
-                                    <td>Juan Mitchell</td>
-                                    <td>
-                                        06 Oct, 2019
-                                    </td>
-                                    <td>
-                                        &#x20B9;384
-                                    </td>
-                                    <td>
-                                        <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                    </td>
-                                    <td>
-                                        <i class="fab fa-cc-paypal me-1"></i> Paypal
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check font-size-16">
-                                            <input type="checkbox" class="form-check-input" id="customCheck5">
-                                            <label class="form-check-label" for="customCheck5">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2543</a> </td>
-                                    <td>Barry Dick</td>
-                                    <td>
-                                        05 Oct, 2019
-                                    </td>
-                                    <td>
-                                        &#x20B9;412
-                                    </td>
-                                    <td>
-                                        <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                    </td>
-                                    <td>
-                                        <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check font-size-16">
-                                            <input type="checkbox" class="form-check-input" id="customCheck6">
-                                            <label class="form-check-label" for="customCheck6">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2544</a> </td>
-                                    <td>Ronald Taylor</td>
-                                    <td>
-                                        04 Oct, 2019
-                                    </td>
-                                    <td>
-                                        &#x20B9;404
-                                    </td>
-                                    <td>
-                                        <span class="badge rounded-pill bg-soft-warning font-size-12">Refund</span>
-                                    </td>
-                                    <td>
-                                        <i class="fab fa-cc-visa me-1"></i> Visa
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check font-size-16">
-                                            <input type="checkbox" class="form-check-input" id="customCheck7">
-                                            <label class="form-check-label" for="customCheck7">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2545</a> </td>
-                                    <td>Jacob Hunter</td>
-                                    <td>
-                                        04 Oct, 2019
-                                    </td>
-                                    <td>
-                                        &#x20B9;392
-                                    </td>
-                                    <td>
-                                        <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                    </td>
-                                    <td>
-                                        <i class="fab fa-cc-paypal me-1"></i> Paypal
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                            View Details
-                                        </button>
-                                    </td>
+                                            </div>
+                                        </td>
+                                @endforeach
                                 </tr>
                             </tbody>
                         </table>
@@ -617,4 +478,117 @@
         </div>
     </div>
     <!-- end row -->
-</div>
+    <div>
+        <div wire:ignore.self class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                @if ($selectedTransaction)
+                    <div class="modal-content">
+                        <div id="transaction-details">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <p class="mb-0">Transaction ID:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ $selectedTransaction->fund_request?->payout_ref }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Payment Amount:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ moneyFormatIndia($selectedTransaction->amount) }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Transaction Type:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->type }}</strong></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">UTR:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->utr_number }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Mode:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <p class="mb-0">Status:</p>
+                                            <p class="mb-0">
+                                                <strong>{{ strip_tags($selectedTransaction->status->name) }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Date/Time:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->created_at }}</strong>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Description:</p>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->remarks }}</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myLargeModalLabel">Beneficiary Detail</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <p class="mb-0">Name as per Bank:</p>
+                                                <p class="mb-0"><strong></strong></p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="mb-0">Beneficiary Name:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ $selectedTransaction->user->name }}</strong>
+                                                </p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="mb-0">IFSC:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ strtoupper($selectedTransaction->bank?->ifsc_code) }}</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <p class="mb-0">Account Number:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ $selectedTransaction->user->account_number }}</strong>
+                                                </p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="mb-0">Beneficiary Type:</p>
+                                                <p class="mb-0">
+                                                    <strong>{{ $selectedTransaction->transtype }}</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer p-0 m-0 mt-0">
+                                    <button type="button" class="btn btn-secondary" onclick="downloadPdf()">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <p>No transaction selected.</p>
+                @endif
+            </div>
+        </div>
+    </div>

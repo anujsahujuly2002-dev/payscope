@@ -12,6 +12,10 @@ use App\Models\QRRequest;
 use App\Models\PaymentMode;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use App\Exports\QRRequestExport;
+use App\Exports\ApiPartnerExport;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Razorpay\Api\Errors\SignatureVerificationError;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -21,9 +25,11 @@ class QRRequestComponent extends Component
     use WithFileUploads,WithPagination;
     public $start_date;
     public $end_date;
+    public $agentId;
     public $status;
+    public $statuses = [];
     public $banks;
-    public $orderId;
+    public $value;
     public $paymentModes;
     public $payment =[];
     public $listeners = [
@@ -32,21 +38,30 @@ class QRRequestComponent extends Component
 
     public function render()
     {
-        if(!auth()->user()->can('qr-request-list'))
-        throw UnauthorizedException::forPermissions(['qr-request-list']);
+        if(!Auth::user()->can('qr-request-list')):
+          throw UnauthorizedException::forPermissions(['qr-request-list']);
+        endif;
+        $this->statuses =  Status::get();
         $qr_requests = QRRequest::when(auth()->user()->getRoleNames()->first()=='api-partner',function($query){
             $query->where('user_id',auth()->user()->id);
         })->when(auth()->user()->getRoleNames()->first()=='retailer',function($query){
             $query->where('user_id',auth()->user()->id);
         })
-        ->when($this->start_date !=null && $this->end_date ==null,function($u){
-            $u->whereDate('created_at',$this->start_date);
-        })
-        ->when($this->orderId !=null,function($u){
-            $u->where('user_id',$this->orderId);
-        })
         ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
+        })
+        ->when($this->agentId !=null,function($u){
+            $u->where('id',$this->agentId);
+        })
+        ->when($this->start_date !=null && $this->end_date ==null,function($u){
+            $u->whereDate('created_at','>=',$this->start_date);
+        })
+        ->when($this->value !=null,function($u){
+            $u->where('order_id',$this->value);
+        })
+        ->when($this->status !== null, function ($query){
+            return $query->where('status_id', $this->status);
+
         })->latest()->paginate(10);
         return view('livewire.admin.fund.q-r-request-component',compact('qr_requests'));
     }
@@ -129,6 +144,16 @@ class QRRequestComponent extends Component
             ]);
             session()->flash('error',$error);
         }
-
     }
+
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first() =='super-admin'?$this->agentId:auth()->user()->id,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'value'=>$this->value
+        ];
+        return Excel::download(new QRRequestExport($data), time().'.xlsx');
+    }
+
 }

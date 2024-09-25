@@ -17,7 +17,9 @@ Route::controller(LoginController::class)->group(function() {
 });
 
 
-Route::post('/forgot-password', [ForgetPasswordController::class, 'sendResetLinkEmail']);
+Route::get('/send-verify-mail/{email}', [ForgetPasswordController::class, 'sendVerifyMail']);
+
+Route::post('/forgot-password', [ForgetPasswordController::class, 'forgetPassword']);
 // Route::post('/reset-password', [ForgetPasswordController::class, 'reset'])->name('password.reset');
 
 Route::group(['middleware' => 'auth:api'], function(){

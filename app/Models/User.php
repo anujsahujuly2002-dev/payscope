@@ -31,7 +31,8 @@ class User extends Authenticatable
         'expire_at',
         'verified_at',
         'virtual_account_number',
-        'services'
+        'services',
+        'outlet_id'
     ];
 
 
@@ -58,8 +59,14 @@ class User extends Authenticatable
     public function apiPartner(){
        return $this->hasOne(ApiPartner::class,'user_id','id');
     }
+    public function qrRequest(){
+       return $this->hasOne(QRRequest::class,'user_id','id');
+    }
     public function retailer(){
        return $this->hasOne(Retailer::class,'user_id','id');
+    }
+    public function status(){
+       return $this->hasOne(Status::class,'id');
     }
 
     public function getCreatedAtAttribute($value){
@@ -109,4 +116,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(Fund::class);
     }
+    public function fund()
+    {
+        return $this->hasMany(Fund::class);
+    }
+    public function fundRequest()
+    {
+        return $this->hasMany(FundRequest::class);
+    }
+    public function payoutRequest()
+    {
+        return $this->hasMany(PayoutRequestHistory::class);
+    }
+
 }

@@ -5,8 +5,10 @@ namespace App\Livewire\Admin\ApiSetting;
 use Livewire\Component;
 use App\Models\ApiToken;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
 use Livewire\WithPagination;
+use App\Exports\ApiTokenExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class Setting extends Component
@@ -81,5 +83,15 @@ class Setting extends Component
         $this->dispatch('show-delete-message',[
             'message'=>"Token Delete Successfully !"
         ]);
+    }
+
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first() =='super-admin'?$this->agentId:auth()->user()->id,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'value'=>$this->value
+        ];
+        return Excel::download(new ApiTokenExport($data), time().'.xlsx');
     }
 }

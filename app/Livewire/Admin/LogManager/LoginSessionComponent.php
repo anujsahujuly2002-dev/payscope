@@ -36,4 +36,16 @@ class LoginSessionComponent extends Component
         })->latest()->paginate(10);
         return view('livewire.admin.log-manager.login-session-component',compact('loginSessions'));
     }
+
+
+    public function export() {
+        $data = [
+            'user_id'=>auth()->user()->getRoleNames()->first() =='super-admin'?$this->agentId:auth()->user()->id,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
+            'value'=>$this->value,
+        ];
+        //  dd($data);
+        return Excel::download(new LoginSessionExport($data), time().'.xlsx');
+    }
 }
