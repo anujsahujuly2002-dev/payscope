@@ -82,7 +82,7 @@ class CheckPaymentStatusCommand extends Command
                             'status_id'=>'2',
                         ]);
                     endif;
-                else:
+                elseif($res['statusCode'] !=0):
                     $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
                     $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
                     Fundrequest::where('id',$fundRequest->id)->update([
