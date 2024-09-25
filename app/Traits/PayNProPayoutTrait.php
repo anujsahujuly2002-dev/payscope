@@ -121,6 +121,7 @@ trait PayNProPayoutTrait {
             return  [
                 'status'=>'0005',
                 'statusCode'=>"pending",
+                'txn_id'=>$data['payoutid'],
                 'msg'=>"You're transaction succesfully,Please check status after thirty minute",
             ];
         else:
