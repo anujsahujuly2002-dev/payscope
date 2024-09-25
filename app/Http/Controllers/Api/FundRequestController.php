@@ -14,11 +14,12 @@ use App\Http\Controllers\Controller;
 use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Api\FundRequestRequest;
+use App\Traits\PayNProPayoutTrait;
 use Illuminate\Support\Facades\Log;
 
 class FundRequestController extends Controller
 {
-    use PayoutTraits,EkoPayoutTrait;
+    use PayoutTraits,EkoPayoutTrait,PayNProPayoutTrait;
     public function payout(FundRequestRequest $request) {
         $checkToken  = ApiToken::where(['ip_address'=>$request->input('ip_address'),'token'=>$request->input('token')])->first();
         if(!$checkToken)
@@ -29,8 +30,9 @@ class FundRequestController extends Controller
        $request['user_id'] = $checkToken->user_id;
        $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
     //    $response = $this->payoutApiRequest($request);
-       $response = $this->ekoPayoutApi($request);;
-       return $response;
+    //    $response = $this->ekoPayoutApi($request);;
+        $response = $this->payNProPayout($request);
+        return $response;
     }
 
 
