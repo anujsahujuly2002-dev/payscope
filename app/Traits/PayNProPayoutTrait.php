@@ -126,6 +126,7 @@ trait PayNProPayoutTrait {
         else:
             return  [
                 'status'=>'0008',
+                'txn_id'=>$data['payoutid'],
                 'msg'=>$res['msg'],
             ];
         endif;
