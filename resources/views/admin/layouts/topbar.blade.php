@@ -274,13 +274,12 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
                     {{-- @dd(auth()->user()->getRoleNames()->first()); --}}
-                    @if (auth()->user()->getRoleNames()->first() !=='super-admin')
+                    @if (auth()->user()->getRoleNames()->first() !=='admin')
                         <a class="dropdown-item" href="{{route('admin.api.partner.profile',base64_encode(auth()->user()->id))}}">
                             <i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i>
                             <span class="align-middle">@lang('translation.View_Profile')</span>
                         </a>
                     @endif
-
                     {{-- <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.My_Wallet')</span></a> --}}
                     {{-- <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Settings')</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
                     <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Lock_screen')</span></a> --}}

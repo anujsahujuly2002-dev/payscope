@@ -4,7 +4,7 @@
     --bs-sidebar-menu-item-color: #0a1d56;
     --bs-sidebar-menu-sub-item-color: #0a1d56;
     --bs-sidebar-menu-item-icon-color: #7b8190;
-    --bs-sidebar-menu-item-hover-color: #383c40;
+    --bs-sidebar-menu-item-hover-color: #0a1d56;
     --bs-sidebar-menu-item-active-color: #4e60ba;
     --bs-sidebar-menu-item-active-bg-color: #f3f8fb;
     --bs-sidebar-menu-item-active-bg-color-dark: #293552;
@@ -597,7 +597,7 @@ body[data-layout="horizontal"] .footer {
     font-size: 1.05rem;
     line-height: 1.40625rem;
     vertical-align: middle;
-    color: var(--bs-sidebar-menu-item-icon-color);
+    /* color: var(--bs-sidebar-menu-item-icon-color); */
     transition: all 0.4s;
 }
 #sidebar-menu ul li a:hover,
