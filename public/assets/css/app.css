@@ -1036,13 +1036,13 @@ body[data-sidebar-size="small"] body[data-sidebar-size="sm"] .footer {
     left: 70px;
 }
 body[data-sidebar="colored"] .vertical-menu {
-    background-color: #5b73e8;
+    background-color: #0a1d56;
 }
 body[data-sidebar="colored"] .vertical-menu .vertical-menu-btn {
     color: hsla(0, 0%, 100%, 0.8);
 }
 body[data-sidebar="colored"] .navbar-brand-box {
-    background-color: #5b73e8;
+    background-color: #0a1d56;
 }
 body[data-sidebar="colored"] .navbar-brand-box .logo-dark {
     display: none;
