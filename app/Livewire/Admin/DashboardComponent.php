@@ -61,17 +61,17 @@ class DashboardComponent extends Component
 
 
     public function mount() {
-        $this->recentTransactions = PayoutRequestHistory::with('user', 'status','fund') ->orderBy('created_at', 'desc')->take(10)->get();
+        $this->recentTransactions = PayoutRequestHistory::when(auth()->user()->getRoleNames()->first() != 'super-admin', function ($r) {
+            $r->where('user_id', auth()->user()->id);
+            })->with('user', 'status','fund') ->orderBy('created_at', 'desc')->take(10)->get();
         if ($this->recentTransactions->isEmpty()) {
             $this->recentTransactions = collect();
         }
         $this->calculateAmounts(); 
     }
     public function transaction($transactionId){
-        $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
-        $this->banks = Bank::get();
-        $this->statuses =  Status::get();
-        $this->selectedTransaction = PayoutRequestHistory::with('user', 'status','funds')->findOrFail($transactionId);
+        
+        $this->selectedTransaction = PayoutRequestHistory::find($transactionId);
         $this->dispatch('show-form');
     }
 }

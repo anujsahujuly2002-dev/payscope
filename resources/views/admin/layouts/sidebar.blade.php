@@ -286,8 +286,9 @@
                         'api-edit',
                         'manage-setting',
                         'setting-update',
+                        'callback-token-create','callback-token-delete','login-session',
                     ]))
-                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit'])
+                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'callback-token', 'callback-token-create','callback-token-delete','login-session',])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-cog"></i>
@@ -305,8 +306,8 @@
                                         'callback-token-create',
                                         'callback-token-delete',
                                     ]))
-                                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'login-session',
-                                        'api-logs', 'callback-token', 'callback-token-create', 'callback-token-delete'])
+                                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit',
+                                        'api-logs'])
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.admin-setting.api.list') }}">Api Manager </a></li>
                                     @endcanany
                                 @endif
