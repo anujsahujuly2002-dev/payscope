@@ -22,7 +22,6 @@ class ApiPartner extends Model
         'addhar_card',
         'scheme_id',
         'website',
-        // 'company_name',
         'brand_name',
         'company_state_id',
         'company_city',

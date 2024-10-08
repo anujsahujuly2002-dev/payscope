@@ -8,7 +8,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $paymentIn['amount']??0 }}</span></h4>
+                                class="counterup">{{ $paymentIn['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
@@ -26,7 +26,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $rejectedPayment['amount']??0 }}</span></h4>
+                                class="counterup">{{ $rejectedPayment['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0">Total Rejected Payout</p>
                     </div>
 
@@ -44,7 +44,8 @@
                         {{-- <div id="growth-chart2" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount']??0 }}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
+                                class="counterup">{{ $payout['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0">Total Payout</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -62,7 +63,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
-                                class="counterup">{{ $commission['amount']??0 }}</span></h4>
+                                class="counterup">{{ $commission['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -81,8 +82,8 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold" style="">Sort By:</span> <span
-                                    style="">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span class="fw-semibold" style="">Sort By:</span> <span style="">Yearly<i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5"
                                 style="">
@@ -96,7 +97,8 @@
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                <h3 style="">&#x20B9;<span class="counterup">{{ $payout ['amount']??0}}</span><span
+                                <h3 style="">&#x20B9;<span
+                                        class="counterup">{{ $payout['amount'] ?? 0 }}</span><span
                                         class="d-inline-block font-size-15 ms-3" style="">Income</span>
                                 </h3>
                             </li>
@@ -244,10 +246,8 @@
                         <div class="dropdown">
                             <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span style="">All Members<i
-                                        class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span style="">All Members<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
                                 <a class="dropdown-item" style="" href="#">Locations</a>
                                 <a class="dropdown-item" style="" href="#">Revenue</a>
@@ -351,7 +351,6 @@
                     </div>
 
                     <h4 class="card-title" style="">Social Source</h4>
-
                     <div class="text-center">
                         <div class="avatar-sm mx-auto mb-4">
                             <span class="avatar-title rounded-circle bg-soft-primary font-size-24">
@@ -359,8 +358,8 @@
                             </span>
                         </div>
                         <p class="font-16 text-muted mb-2"></p>
-                        <h5><a href="#" class="text-dark">Facebook - <span class="font-16"
-                                    style=";">125 sales</span> </a></h5>
+                        <h5><a href="#" class="text-dark">Facebook - <span class="font-16" style=";">125
+                                    sales</span> </a></h5>
                         <p class="text-muted">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero
                             venenatis faucibus tincidunt.</p>
                         <a href="#" class="text-reset font-16">Learn more <i
@@ -464,7 +463,6 @@
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-success waves-effect waves-light align-self-end"
                                                     wire:click.prevent="transaction({{ $transactions->id }})"><i>Slip</a>
-
                                             </div>
                                         </td>
                                 @endforeach
@@ -479,43 +477,56 @@
     </div>
     <!-- end row -->
     <div>
-        <div wire:ignore.self class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="form" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-small">
                 @if ($selectedTransaction)
                     <div class="modal-content">
                         <div id="transaction-details" style="padding: 20px;">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <p class="mb-0">Transaction ID: <strong>{{ $selectedTransaction->fund_request?->payout_ref }}</strong></p>
+                                            <p class="mb-0">Transaction ID:
+                                                <strong>{{ $selectedTransaction->fund_request?->payout_ref }}</strong>
+                                            </p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Payment Amount: <strong>{{ moneyFormatIndia($selectedTransaction->amount) }}</strong></p>
+                                            <p class="mb-0">Payment Amount:
+                                                <strong>{{ moneyFormatIndia($selectedTransaction->amount) }}</strong>
+                                            </p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Transaction Type: <strong>{{ $selectedTransaction->type }}</strong></p>
+                                            <p class="mb-0">Transaction Type:
+                                                <strong>{{ $selectedTransaction->type }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">UTR: <strong>{{ $selectedTransaction->utr_number }}</strong></p>
+                                            <p class="mb-0">UTR:
+                                                <strong>{{ $selectedTransaction->utr_number }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Mode: <strong>{{ $selectedTransaction->payment_mode_id }}</strong></p>
+                                            <p class="mb-0">Mode:
+                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong></p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <p class="mb-0">Status: <strong>{{ strip_tags($selectedTransaction->status->name) }}</strong></p>
+                                            <p class="mb-0">Status:
+                                                <strong>{{ strip_tags($selectedTransaction->status->name) }}</strong>
+                                            </p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Date/Time: <strong>{{ $selectedTransaction->created_at }}</strong></p>
+                                            <p class="mb-0">Date/Time:
+                                                <strong>{{ $selectedTransaction->created_at }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Description: <strong>{{ $selectedTransaction->remarks }}</strong></p>
+                                            <p class="mb-0">Description:
+                                                <strong>{{ $selectedTransaction->remarks }}</strong></p>
                                         </div>
                                     </div>
                                 </div>
@@ -527,26 +538,33 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <p class="mb-0">Name as per Bank: <strong>{{ $selectedTransaction->name }}</strong></p>
+                                            <p class="mb-0">Name as per Bank:
+                                                <strong>{{ $selectedTransaction->name }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Beneficiary Name: <strong>{{ $selectedTransaction->user->name }}</strong></p>
+                                            <p class="mb-0">Beneficiary Name:
+                                                <strong>{{ $selectedTransaction->user->name }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">IFSC: <strong>{{ strtoupper($selectedTransaction->bank?->ifsc_code) }}</strong></p>
+                                            <p class="mb-0">IFSC:
+                                                <strong>{{ strtoupper($selectedTransaction->bank?->ifsc_code) }}</strong>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <p class="mb-0">Account Number: <strong>{{ $selectedTransaction->account_number }}</strong></p>
+                                            <p class="mb-0">Account Number:
+                                                <strong>{{ $selectedTransaction->account_number }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Beneficiary Type: <strong>{{ $selectedTransaction->transtype }}</strong></p>
+                                            <p class="mb-0">Beneficiary Type:
+                                                <strong>{{ $selectedTransaction->transtype }}</strong></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer p-0 m-0 mt-0">
-                                    <button type="button" class="btn btn-secondary" onclick="downloadPdf()">Download</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="downloadPdf()">Download</button>
                                 </div>
                             </div>
                         </div>

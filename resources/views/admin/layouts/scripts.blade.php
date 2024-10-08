@@ -33,32 +33,29 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function downloadPdf() {
-            const element = document.getElementById('transaction-details');
+    function downloadPdf() {
+        const element = document.getElementById('transaction-details');
 
-            const options = {
-                margin: 1,
-                filename: 'transaction-details.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 2
-                },
-                jsPDF: {
-                    unit: 'in',
-                    format: 'letter',
-                    orientation: 'portrait'
-                }
-            };
-            if ($('#form').hasClass('show')) {
-                html2pdf().from(element).set(options).save();
-            } else {
-                console.error("Modal is not open");
+        const options = {
+            margin: 1,
+            filename: 'transaction-details.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                scale: 2
+            },
+            jsPDF: {
+                unit: 'in',
+                format: 'letter',
+                orientation: 'portrait'
             }
-            // html2pdf().from(element).set(options).save();
-        }
-    });
+        };
+
+        html2pdf()
+            .from(element)
+            .set(options)
+            .save();
+    }
 </script>
