@@ -496,7 +496,8 @@
                                         <div class="mb-3">
                                             <p class="mb-0">Transaction ID:</p>
                                             <p class="mb-0">
-                                                <strong>{{ $selectedTransaction->fund_request?->payout_ref }}</strong>
+                                            
+                                                <strong>{{ $selectedTransaction->funds?->payout_ref }}</strong>
                                             </p>
                                         </div>
                                         <div class="mb-3">
@@ -511,13 +512,14 @@
                                         </div>
                                         <div class="mb-3">
                                             <p class="mb-0">UTR:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->utr_number }}</strong>
+                                            <p class="mb-0"><strong>{{ $selectedTransaction->fund?->utr_number }}</strong>
                                             </p>
                                         </div>
                                         <div class="mb-3">
                                             <p class="mb-0">Mode:</p>
                                             <p class="mb-0">
-                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong>
+                                        
+                                                <strong>{{ $selectedTransaction->funds->paymentMode->name }}</strong>
                                             </p>
                                         </div>
                                     </div>
@@ -549,18 +551,12 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <p class="mb-0">Name as per Bank:</p>
-                                                <p class="mb-0"><strong></strong></p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <p class="mb-0">Beneficiary Name:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->user->name }}</strong>
-                                                </p>
+                                                <p class="mb-0"><strong>{{ $selectedTransaction->funds->account_holder_name }}</strong></p>
                                             </div>
                                             <div class="mb-3">
                                                 <p class="mb-0">IFSC:</p>
                                                 <p class="mb-0">
-                                                    <strong>{{ strtoupper($selectedTransaction->bank?->ifsc_code) }}</strong>
+                                                    <strong>{{ strtoupper($selectedTransaction->funds?->ifsc_code) }}</strong>
                                                 </p>
                                             </div>
                                         </div>
@@ -568,13 +564,7 @@
                                             <div class="mb-3">
                                                 <p class="mb-0">Account Number:</p>
                                                 <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->user->account_number }}</strong>
-                                                </p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <p class="mb-0">Beneficiary Type:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->transtype }}</strong>
+                                                    <strong>{{ $selectedTransaction->funds->account_number }}</strong>
                                                 </p>
                                             </div>
                                         </div>
