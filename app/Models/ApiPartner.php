@@ -30,6 +30,7 @@ class ApiPartner extends Model
         'company_pan',
         'company_adhaarcard',
         'gst',
+        'company_address',
         'cin_number',
         'email',
     ];
