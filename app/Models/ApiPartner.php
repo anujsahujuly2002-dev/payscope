@@ -28,7 +28,7 @@ class ApiPartner extends Model
         'company_city',
         'company_pincode',
         'company_pan',
-        'company_adhaarcard',
+        // 'company_adhaarcard',
         'gst',
         'company_address',
         'cin_number',

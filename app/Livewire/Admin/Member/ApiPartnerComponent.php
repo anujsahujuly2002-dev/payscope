@@ -116,10 +116,11 @@ class ApiPartnerComponent extends Component
             'cin_number'=>'required|string|min:3',
             'company_pan'=>'required|string|min:3',
             'pancard_number'=>'required|string',
-            'company_adhaarcard'=>'required|numeric|min_digits:12|digits:12',
+            // 'company_adhaarcard'=>'required|numeric|min_digits:12|digits:12',
             'scheme'=>'required',
             'website'=>'required|url:https'
         ])->validate();
+        // dd($validateDate);
         $user = User::create([
             'name'=>$validateDate['name'],
             'email'=>$validateDate['email'],
@@ -144,12 +145,13 @@ class ApiPartnerComponent extends Component
                 'brand_name'=>$validateDate['brand_name'],
                 'pancard_no'=>$validateDate['pancard_number'],
                 'gst'=>$validateDate['gst'],
+                'email'=>$validateDate['email'],
                 'cin_number'=>$validateDate['cin_number'],
                 'company_pan'=>$validateDate['company_pan'],
                 'company_address'=>$validateDate['company_address'],
                 'addhar_card'=>$validateDate['adhaarcard_number'],
                 'scheme_id'=>$validateDate['scheme'],
-                'company_adhaarcard'=>'required|numeric|min_digits:12|digits:12',
+                // 'company_adhaarcard'=>'required|numeric|min_digits:12|digits:12',
                 'website'=>$validateDate['website']??NULL,
             ]);
 
