@@ -22,6 +22,16 @@ class ApiPartner extends Model
         'addhar_card',
         'scheme_id',
         'website',
+        'company_name',
+        'brand_name',
+        'company_state_name',
+        'company_city',
+        'company_pincode',
+        'company_pan',
+        'company_adhaarcard',
+        'gst',
+        'cin_number',
+        'email',
     ];
 
     public function parentDetails() {

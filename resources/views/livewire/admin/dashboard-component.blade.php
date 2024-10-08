@@ -483,7 +483,7 @@
             <div class="modal-dialog modal-small">
                 @if ($selectedTransaction)
                     <div class="modal-content">
-                        <div id="transaction-details" style="padding: 20px; background: white;">
+                        <div id="transaction-details" style="padding: 20px;">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

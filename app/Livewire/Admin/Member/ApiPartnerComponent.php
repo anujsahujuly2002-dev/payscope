@@ -102,9 +102,13 @@ class ApiPartnerComponent extends Component
             'email'=>'required|email|unique:users,email',
             'mobile_number'=>'required|numeric|digits:10|unique:users,mobile_no',
             'address'=>'required',
+            'addhar_card'=>'required',
             'company_address'=>'required',
             'state_name'=>'required',
+            'company_state_name'=>'required',
             'city'=>'required|string',
+            'company_city'=>'required|string',
+            'company_pincode'=>'required|numeric|min_digits:6|digits:6',
             'pincode'=>'required|numeric|min_digits:6|digits:6',
             'company_name'=>'required|string|min:3',
             'brand_name'=>'required|string|min:3',
@@ -112,9 +116,9 @@ class ApiPartnerComponent extends Component
             'cin_number'=>'required|string|min:3',
             'company_pan'=>'required|string|min:3',
             'pancard_number'=>'required|string',
-            'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
+            'company_adhaarcard'=>'required|numeric|min_digits:12|digits:12',
             'scheme'=>'required',
-            // 'website'=>'required|url:https'
+            'website'=>'required|url:https'
         ])->validate();
         $user = User::create([
             'name'=>$validateDate['name'],
@@ -123,6 +127,7 @@ class ApiPartnerComponent extends Component
             'mobile_no'=>$validateDate['mobile_number'],
             'virtual_account_number' =>"ZGROSC".$validateDate['mobile_number'],
         ]);
+
         if($user):
             $apiPartner =ApiPartner::create([
                'user_id'=>$user->id,
@@ -132,6 +137,9 @@ class ApiPartnerComponent extends Component
                 'state_id'=>$validateDate['state_name'],
                 'city'=>$validateDate['city'],
                 'pincode'=>$validateDate['pincode'],
+                'company_state_name'=>$validateDate['company_state_name'],
+                'company_city'=>$validateDate['company_city'],
+                'company_pincode'=>$validateDate['company_pincode'],
                 'company_name'=>$validateDate['company_name'],
                 'brand_name'=>$validateDate['brand_name'],
                 'pancard_no'=>$validateDate['pancard_number'],
@@ -141,8 +149,10 @@ class ApiPartnerComponent extends Component
                 'company_address'=>$validateDate['company_address'],
                 'addhar_card'=>$validateDate['adhaarcard_number'],
                 'scheme_id'=>$validateDate['scheme'],
+                'company_adhaarcard'=>'required|numeric|min_digits:12|digits:12',
                 'website'=>$validateDate['website']??NULL,
             ]);
+
             $user->assignRole(['api-partner']);
             Wallet::create([
                 'user_id'=>$user->id,
@@ -296,6 +306,4 @@ class ApiPartnerComponent extends Component
         endif;
 
     }
-
-
 }

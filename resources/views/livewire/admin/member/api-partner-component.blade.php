@@ -440,11 +440,11 @@
                                         <div class="col-md-4 mb-0">
                                             <label for="company_pan" class="form-label">Company PAN<span
                                                     style="color: red;">*</span></label>
-                                            <input type="text" id="pancard_number"
-                                                class="form-control @error('pancard_number') is-invalid @enderror"
+                                            <input type="text" id="company_pan"
+                                                class="form-control @error('company_pan') is-invalid @enderror"
                                                 placeholder="Enter Company PAN"
-                                                wire:model.defer='state.pancard_number' />
-                                            @error('pancard_number')
+                                                wire:model.defer='state.company_pan' />
+                                            @error('company_pan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -494,40 +494,40 @@
                                         <div class="col-md-4 mb-0">
                                             <label for="state" class="form-label">State<span
                                                     style="color: red;">*</span></label>
-                                            <select id="state_name"
-                                                class="form-control @error('state_name') is-invalid @enderror"
-                                                placeholder="Enter State" wire:model.lazy='state.state_name'>
+                                            <select id="company_state_name"
+                                                class="form-control @error('company_state_name') is-invalid @enderror"
+                                                placeholder="Enter State" wire:model.lazy='state.company_state_name'>
                                                 <option value="">Select State</option>
                                                 @foreach ($states as $state)
                                                     <option value="{{ $state->id }}">{{ ucfirst($state->name) }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            @error('state_name')
+                                            @error('company_state_name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="city" class="form-label">City<span
+                                            <label for="company_city" class="form-label">City<span
                                                     style="color: red;">*</span></label>
-                                            <input type="text" id="city"
-                                                class="form-control @error('city') is-invalid @enderror"
-                                                placeholder="Enter City" wire:model.defer='state.city' />
-                                            @error('city')
+                                            <input type="text" id="company_city"
+                                                class="form-control @error('company_city') is-invalid @enderror"
+                                                placeholder="Enter City" wire:model.defer='state.company_city' />
+                                            @error('company_city')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="pincode" class="form-label">Pincode<span
+                                            <label for="company_pincode" class="form-label">Pincode<span
                                                     style="color: red;">*</span></label>
-                                            <input type="text" id="pincode"
-                                                class="form-control @error('pincode') is-invalid @enderror"
-                                                placeholder="Enter Pincode" wire:model.defer='state.pincode' />
-                                            @error('pincode')
+                                            <input type="text" id="company_pincode"
+                                                class="form-control @error('company_pincode') is-invalid @enderror"
+                                                placeholder="Enter Pincode" wire:model.defer='state.company_pincode' />
+                                            @error('company_pincode')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
