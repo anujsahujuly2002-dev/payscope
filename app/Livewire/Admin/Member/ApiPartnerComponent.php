@@ -97,29 +97,23 @@ class ApiPartnerComponent extends Component
 
     // This Method Api Partner Store
     public function StoreApiPartner() {
-<<<<<<< HEAD
         $validateDate = Validator::make($this->state,[
-=======
-        // dd($this->state);
-        $validateData = Validator::make($this->state,[
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
             'name'=>'required|string|min:3',
-            'email'=>'required|email|unique:users,email',
             'mobile_number'=>'required|numeric|digits:10|unique:users,mobile_no',
+            'email'=>'required|email|unique:users,email',
             'address'=>'required',
-<<<<<<< HEAD
-            'company_address'=>'required',
             'state_name'=>'required',
             'city'=>'required|string',
             'pincode'=>'required|numeric|min_digits:6|digits:6',
+            'scheme'=>'required',
+            'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
             'company_name'=>'required|string|min:3',
-            'brand_name'=>'required|string|min:3',
             'gst'=>'required|string|min:3',
             'cin_number'=>'required|string|min:3',
             'company_pan'=>'required|string|min:3',
             'pancard_number'=>'required|string',
-            'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
-            'scheme'=>'required',
+          
+            
             // 'website'=>'required|url:https'
         ])->validate();
         $user = User::create([
@@ -129,78 +123,24 @@ class ApiPartnerComponent extends Component
             'mobile_no'=>$validateDate['mobile_number'],
             'virtual_account_number' =>"ZGROSC".$validateDate['mobile_number'],
         ]);
-=======
-            'adhaarcard_number'=>'required',
-            'company_address'=>'required',
-            'state_name'=>'required',
-            'company_state_name'=>'required',
-            'city'=>'required|string',
-            'company_city'=>'required|string',
-            'company_pincode'=>'required|numeric|min_digits:6|digits:6',
-            'pincode'=>'required|numeric|min_digits:6|digits:6',
-            'shop_name'=>'required|string|min:3',
-            'brand_name'=>'required|string|min:3',
-            'gst'=>'required|string|min:3',
-            'cin_number'=>'required|string|min:3',
-            'company_pan'=>'required|string',
-            'pancard_number'=>'required|string',
-            'scheme'=>'required',
-            'website'=>'required|url:https'
-        ])->validate();
-        // dd($validateData);
-        $user = User::create([
-            'name'=>$validateData['name'],
-            'email'=>$validateData['email'],
-            'password'=>Hash::make($validateData['mobile_number']),
-            'mobile_no'=>$validateData['mobile_number'],
-            'virtual_account_number' =>"ZGROSC".$validateData['mobile_number'],
-        ]);
-
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
         if($user):
             $apiPartner =ApiPartner::create([
                'user_id'=>$user->id,
                 'added_by'=>auth()->user()->id,
-<<<<<<< HEAD
                 'mobile_no'=>$validateDate['mobile_number'],
                 'address'=>$validateDate['address'],
                 'state_id'=>$validateDate['state_name'],
                 'city'=>$validateDate['city'],
                 'pincode'=>$validateDate['pincode'],
                 'company_name'=>$validateDate['company_name'],
-                'brand_name'=>$validateDate['brand_name'],
                 'pancard_no'=>$validateDate['pancard_number'],
-                'gst'=>$validateDate['gst'],
-                'cin_number'=>$validateDate['cin_number'],
+                'company_gst_number'=>$validateDate['gst'],
+                'company_cin_number'=>$validateDate['cin_number'],
                 'company_pan'=>$validateDate['company_pan'],
-                'company_address'=>$validateDate['company_address'],
                 'addhar_card'=>$validateDate['adhaarcard_number'],
                 'scheme_id'=>$validateDate['scheme'],
                 'website'=>$validateDate['website']??NULL,
             ]);
-=======
-                'mobile_no'=>$validateData['mobile_number'],
-                'address'=>$validateData['address'],
-                'state_id'=>$validateData['state_name'],
-                'city'=>$validateData['city'],
-                'pincode'=>$validateData['pincode'],
-                'company_state_id'=>$validateData['company_state_name'],
-                'company_city'=>$validateData['company_city'],
-                'company_pincode'=>$validateData['company_pincode'],
-                'shop_name'=>$validateData['shop_name'],
-                'brand_name'=>$validateData['brand_name'],
-                'pancard_no'=>$validateData['pancard_number'],
-                'gst'=>$validateData['gst'],
-                'email'=>$validateData['email'],
-                'cin_number'=>$validateData['cin_number'],
-                'company_pan'=>$validateData['company_pan'],
-                'company_address'=>$validateData['company_address'],
-                'addhar_card' => $validateData['adhaarcard_number'] ?? null,
-                'scheme_id'=>$validateData['scheme'],
-                'website'=>$validateData['website']??NULL,
-            ]);
-
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
             $user->assignRole(['api-partner']);
             Wallet::create([
                 'user_id'=>$user->id,
@@ -354,9 +294,6 @@ class ApiPartnerComponent extends Component
         endif;
 
     }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
 }

@@ -12,19 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('api_partners', function (Blueprint $table) {
-            $table->string('email')->nullable()->unique()->after('mobile_no');
-            $table->string('company_address')->after('address');
-            $table->string('brand_name');
-            $table->string('gst')->after('brand_name');
-            $table->string('cin_number')->after('gst');
-            $table->string('company_pan')->after('cin_number');
-            $table->bigInteger('company_adhaarcard')->after('addhar_card');
-
-            $table->unsignedBigInteger('company_state_id');
-            $table->foreign('company_state_id')->references('id')->on('states')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->string('company_city')->after('company_state_id');
-            $table->bigInteger('company_pincode')->after('company_city');
+            $table->string('company_name')->after('website')->nullable();
+            $table->string('company_gst_number')->after('company_name')->nullable();
+            $table->string('company_cin_number')->after('company_gst_number')->nullable();
+            $table->string('company_pan')->after('company_cin_number')->nullable();
         });
     }
 

@@ -400,183 +400,41 @@
                                 <div class="card-body">
                                     <div class="row g-2">
                                         <div class="col-md-4 mb-0">
-<<<<<<< HEAD
-                                            <label for="company_name" class="form-label"> Company Name<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="company_name"
-                                                class="form-control @error('company_name') is-invalid @enderror"
-                                                placeholder="Enter Company Name"
-                                                wire:model.defer='state.company_name' />
+                                            <label for="company_name" class="form-label"> Company Name<span style="color: red;">*</span></label>
+                                            <input type="text" id="company_name" class="form-control @error('company_name') is-invalid @enderror" placeholder="Enter Company Name" wire:model.defer='state.company_name' />
                                             @error('company_name')
-=======
-                                            <label for="shop_name" class="form-label"> Company Name<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="shop_name"
-                                                class="form-control @error('shop_name') is-invalid @enderror"
-                                                placeholder="Enter Company Name"
-                                                wire:model.defer='state.shop_name' />
-                                            @error('shop_name')
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-4 mb-0">
-                                            <label for="brand_name" class="form-label">Brand Name<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="brand_name"
-                                                class="form-control @error('brand_name') is-invalid @enderror"
-                                                placeholder="Enter Brand Name" wire:model.defer='state.brand_name' />
-                                            @error('brand_name')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                <div class="invalid-feedback">  {{ $message }}</div>
                                             @enderror
                                         </div>
 
                                         <div class="col-md-4 mb-0">
-                                            <label for="website" class="form-label">Website<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="website"
-                                                class="form-control @error('website') is-invalid @enderror"
-                                                placeholder="Enter Website" wire:model.defer='state.website' />
+                                            <label for="website" class="form-label">Website<span style="color: red;">*</span></label>
+                                            <input type="text" id="website" class="form-control @error('website') is-invalid @enderror"  placeholder="Enter Website" wire:model.defer='state.website' />
                                             @error('website')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                <div class="invalid-feedback"> {{ $message }} </div>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="company_pan" class="form-label">Company PAN<span
-                                                    style="color: red;">*</span></label>
-<<<<<<< HEAD
-                                            <input type="text" id="pancard_number"
-                                                class="form-control @error('pancard_number') is-invalid @enderror"
-                                                placeholder="Enter Company PAN"
-                                                wire:model.defer='state.pancard_number' />
-                                            @error('pancard_number')
-=======
-                                            <input type="text" id="company_pan"
-                                                class="form-control @error('company_pan') is-invalid @enderror"
-                                                placeholder="Enter Company PAN"
-                                                wire:model.defer='state.company_pan' />
+                                            <label for="company_pan" class="form-label">Company PAN<span style="color: red;">*</span></label>
+                                            <input type="text" id="company_pan" class="form-control @error('company_pan') is-invalid @enderror" placeholder="Enter Company PAN"  wire:model.defer='state.company_pan' />
                                             @error('company_pan')
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                <div class="invalid-feedback">  {{ $message }}</div>
                                             @enderror
                                         </div>
 
                                         <div class="col-md-4 mb-0 ">
-                                            <label for="cin_number" class="form-label">CIN Number<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="cin_number"
-                                                class="form-control @error('cin_number') is-invalid @enderror"
-                                                placeholder="Enter CIN Number  "
-                                                wire:model.defer='state.cin_number' />
+                                            <label for="cin_number" class="form-label">CIN Number<span style="color: red;">*</span></label>
+                                            <input type="text" id="cin_number" class="form-control @error('cin_number') is-invalid @enderror" placeholder="Enter CIN Number  " wire:model.defer='state.cin_number' />
                                             @error('cin_number')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                <div class="invalid-feedback">  {{ $message }}  </div>
                                             @enderror
                                         </div>
 
                                         <div class="col-md-4 mb-0">
-                                            <label for="gst" class="form-label">GSTIN<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="gst"
-                                                class="form-control @error('gst') is-invalid @enderror"
-                                                placeholder="Enter GST Number" wire:model.defer='state.gst' />
+                                            <label for="gst" class="form-label">GSTIN<span  style="color: red;">*</span></label>
+                                            <input type="text" id="gst" class="form-control @error('gst') is-invalid @enderror" placeholder="Enter GST Number" wire:model.defer='state.gst' />
                                             @error('gst')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-md-12 mb-0">
-                                            <label for="company_address" class="form-label">Company Address<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="company_address"
-                                                class="form-control @error('company_address') is-invalid @enderror"
-                                                placeholder="Enter Company Address"
-                                                wire:model.defer='state.company_address' />
-                                            @error('company_address')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-4 mb-0">
-                                            <label for="state" class="form-label">State<span
-                                                    style="color: red;">*</span></label>
-<<<<<<< HEAD
-                                            <select id="state_name"
-                                                class="form-control @error('state_name') is-invalid @enderror"
-                                                placeholder="Enter State" wire:model.lazy='state.state_name'>
-=======
-                                            <select id="company_state_name"
-                                                class="form-control @error('company_state_name') is-invalid @enderror"
-                                                placeholder="Enter State" wire:model.lazy='state.company_state_name'>
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
-                                                <option value="">Select State</option>
-                                                @foreach ($states as $state)
-                                                    <option value="{{ $state->id }}">{{ ucfirst($state->name) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-<<<<<<< HEAD
-                                            @error('state_name')
-=======
-                                            @error('company_state_name')
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-4 mb-0">
-<<<<<<< HEAD
-                                            <label for="city" class="form-label">City<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="city"
-                                                class="form-control @error('city') is-invalid @enderror"
-                                                placeholder="Enter City" wire:model.defer='state.city' />
-                                            @error('city')
-=======
-                                            <label for="company_city" class="form-label">City<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="company_city"
-                                                class="form-control @error('company_city') is-invalid @enderror"
-                                                placeholder="Enter City" wire:model.defer='state.company_city' />
-                                            @error('company_city')
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-4 mb-0">
-<<<<<<< HEAD
-                                            <label for="pincode" class="form-label">Pincode<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="pincode"
-                                                class="form-control @error('pincode') is-invalid @enderror"
-                                                placeholder="Enter Pincode" wire:model.defer='state.pincode' />
-                                            @error('pincode')
-=======
-                                            <label for="company_pincode" class="form-label">Pincode<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="company_pincode"
-                                                class="form-control @error('company_pincode') is-invalid @enderror"
-                                                placeholder="Enter Pincode" wire:model.defer='state.company_pincode' />
-                                            @error('company_pincode')
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                <div class="invalid-feedback"> {{ $message }} </div>
                                             @enderror
                                         </div>
                                     </div>
