@@ -8,7 +8,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $paymentIn['amount']??0 }}</span></h4>
+                                class="counterup">{{ $paymentIn['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
@@ -26,7 +26,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $rejectedPayment['amount']??0 }}</span></h4>
+                                class="counterup">{{ $rejectedPayment['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0">Total Rejected Payout</p>
                     </div>
 
@@ -44,7 +44,8 @@
                         {{-- <div id="growth-chart2" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ $payout['amount']??0 }}</span></h4>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
+                                class="counterup">{{ $payout['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0">Total Payout</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -62,7 +63,7 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
-                                class="counterup">{{ $commission['amount']??0 }}</span></h4>
+                                class="counterup">{{ $commission['amount'] ?? 0 }}</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
                     <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
@@ -81,33 +82,34 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold" style="color: #0a1d56">Sort By:</span> <span
-                                    style="color:#0a1d56">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span class="fw-semibold" style="">Sort By:</span> <span style="">Yearly<i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5"
-                                style="color: #0a1d56">
+                                style="">
                                 <a class="dropdown-item" href="#">Monthly</a>
                                 <a class="dropdown-item" href="#">Yearly</a>
                                 <a class="dropdown-item" href="#">Weekly</a>
                             </div>
                         </div>
                     </div>
-                    <h4 class="card-title mb-4" style="color: #0a1d56">Sales Analytics</h4>
+                    <h4 class="card-title mb-4" style="">Sales Analytics</h4>
                     <div class="mt-1">
                         <ul class="list-inline main-chart mb-0">
                             <li class="list-inline-item chart-border-left me-0 border-0">
-                                <h3 style="color: #0a1d56">&#x20B9;<span class="counterup">{{ $payout ['amount']??0}}</span><span
-                                        class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Income</span>
+                                <h3 style="">&#x20B9;<span
+                                        class="counterup">{{ $payout['amount'] ?? 0 }}</span><span
+                                        class="d-inline-block font-size-15 ms-3" style="">Income</span>
                                 </h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
-                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span><span
-                                        class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Sales</span>
+                                <h3><span data-plugin="counterup" style="">0</span><span
+                                        class="d-inline-block font-size-15 ms-3" style="">Sales</span>
                                 </h3>
                             </li>
                             <li class="list-inline-item chart-border-left me-0">
-                                <h3><span data-plugin="counterup" style="color: #0a1d56">0</span>%<span
-                                        class="d-inline-block font-size-15 ms-3" style="color: #0a1d56">Conversation
+                                <h3><span data-plugin="counterup" style="">0</span>%<span
+                                        class="d-inline-block font-size-15 ms-3" style="">Conversation
                                         Ratio</span></h3>
                             </li>
                         </ul>
@@ -148,13 +150,13 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold">Sort By:</span> <span style="color: #0a1d56;">Yearly<i
+                                <span class="fw-semibold">Sort By:</span> <span style=";">Yearly<i
                                         class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                <a class="dropdown-item" style="color: #0a1d56" href="#">Monthly</a>
-                                <a class="dropdown-item" style="color: #0a1d56" href="#">Yearly</a>
-                                <a class="dropdown-item" style="color: #0a1d56" href="#">Weekly</a>
+                                <a class="dropdown-item" style="" href="#">Monthly</a>
+                                <a class="dropdown-item" style="" href="#">Yearly</a>
+                                <a class="dropdown-item" style="" href="#">Weekly</a>
                             </div>
                         </div>
                     </div>
@@ -162,7 +164,7 @@
                     <h4 class="card-title mb-4">Top Selling Products</h4>
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                            <p style="" class="text-truncate mt-1 mb-0"><i
                                     class="mdi mdi-circle-medium text-primary me-2"></i>Total payout </p>
                         </div>
 
@@ -177,7 +179,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                            <p style="" class="text-truncate mt-1 mb-0"><i
                                     class="mdi mdi-circle-medium text-info me-2"></i> iPhones </p>
                         </div>
                         <div class="col-sm-9">
@@ -191,7 +193,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                            <p style="" class="text-truncate mt-1 mb-0"><i
                                     class="mdi mdi-circle-medium text-success me-2"></i> Android </p>
                         </div>
                         <div class="col-sm-9">
@@ -205,7 +207,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                            <p style="" class="text-truncate mt-1 mb-0"><i
                                     class="mdi mdi-circle-medium text-warning me-2"></i> Tablets </p>
                         </div>
                         <div class="col-sm-9">
@@ -219,7 +221,7 @@
 
                     <div class="row align-items-center g-0 mt-3">
                         <div class="col-sm-3">
-                            <p style="color: #0a1d56" class="text-truncate mt-1 mb-0"><i
+                            <p style="" class="text-truncate mt-1 mb-0"><i
                                     class="mdi mdi-circle-medium text-purple me-2"></i> Cables </p>
                         </div>
                         <div class="col-sm-9">
@@ -244,18 +246,16 @@
                         <div class="dropdown">
                             <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span style="color: #0a1d56">All Members<i
-                                        class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span style="">All Members<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                                <a class="dropdown-item" style="color: #0a1d56" href="#">Locations</a>
-                                <a class="dropdown-item" style="color: #0a1d56" href="#">Revenue</a>
-                                <a class="dropdown-item" style="color: #0a1d56" href="#">Join Date</a>
+                                <a class="dropdown-item" style="" href="#">Locations</a>
+                                <a class="dropdown-item" style="" href="#">Revenue</a>
+                                <a class="dropdown-item" style="" href="#">Join Date</a>
                             </div>
                         </div>
                     </div>
-                    <h4 class="card-title mb-4" style="color: #0a1d56">Top Users</h4>
+                    <h4 class="card-title mb-4" style="">Top Users</h4>
 
                     <div data-simplebar style="max-height: 339px;">
                         <div class="table-responsive">
@@ -298,17 +298,17 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" id="dropdownMenuButton3"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span style="color: #0a1d56">Recent<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span style="">Recent<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
-                                <a class="dropdown-item" href="#" style="color: #0a1d56">Recent</a>
-                                <a class="dropdown-item" href="#" style="color: #0a1d56">By Users</a>
+                                <a class="dropdown-item" href="#" style="">Recent</a>
+                                <a class="dropdown-item" href="#" style="">By Users</a>
                             </div>
                         </div>
                     </div>
 
-                    <h4 class="card-title mb-4" style="color: #0a1d56">Recent Activity</h4>
+                    <h4 class="card-title mb-4" style="">Recent Activity</h4>
 
                     <ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 339px;">
                         {{-- <li class="feed-item">
@@ -339,19 +339,18 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" id="dropdownMenuButton4"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span style="color: #0a1d56">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                <span style="">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton4">
-                                <a class="dropdown-item" href="#" style="color: #0a1d56">Yearly</a>
-                                <a class="dropdown-item" href="#" style="color: #0a1d56">Monthly</a>
-                                <a class="dropdown-item" href="#" style="color: #0a1d56">Weekly</a>
+                                <a class="dropdown-item" href="#" style="">Yearly</a>
+                                <a class="dropdown-item" href="#" style="">Monthly</a>
+                                <a class="dropdown-item" href="#" style="">Weekly</a>
                             </div>
                         </div>
                     </div>
 
-                    <h4 class="card-title" style="color: #0a1d56">Social Source</h4>
-
+                    <h4 class="card-title" style="">Social Source</h4>
                     <div class="text-center">
                         <div class="avatar-sm mx-auto mb-4">
                             <span class="avatar-title rounded-circle bg-soft-primary font-size-24">
@@ -359,8 +358,8 @@
                             </span>
                         </div>
                         <p class="font-16 text-muted mb-2"></p>
-                        <h5><a href="#" class="text-dark">Facebook - <span class="font-16"
-                                    style="color: #0a1d56;">125 sales</span> </a></h5>
+                        <h5><a href="#" class="text-dark">Facebook - <span class="font-16" style=";">125
+                                    sales</span> </a></h5>
                         <p class="text-muted">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero
                             venenatis faucibus tincidunt.</p>
                         <a href="#" class="text-reset font-16">Learn more <i
@@ -402,7 +401,7 @@
                         </div>
                     </div>
                     <div class="mt-3 text-center">
-                        <a href="#" class="text-primary font-size-14 fw-medium">View All Sources <i
+                        <a href="#" class="font-size-14 fw-medium">View All Sources <i
                                 class="mdi mdi-chevron-right"></i></a>
                     </div>
 
@@ -416,11 +415,11 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4" style="color: #0a1d56">Latest Transaction</h4>
+                    <h4 class="card-title mb-4" style="">Latest Transaction</h4>
                     <div class="table-responsive">
                         <table class="table table-centered table-nowrap mb-0">
                             <thead class="table-light">
-                                <tr style="color: #0a1d56">
+                                <tr style="">
                                     <th style="width: 20px;">
                                         <div class="form-check font-size-16">
                                             <input type="checkbox" class="form-check-input" id="customCheck1">
@@ -464,7 +463,6 @@
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-success waves-effect waves-light align-self-end"
                                                     wire:click.prevent="transaction({{ $transactions->id }})"><i>Slip</a>
-
                                             </div>
                                         </td>
                                 @endforeach
@@ -479,12 +477,12 @@
     </div>
     <!-- end row -->
     <div>
-        <div wire:ignore.self class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
+        <div wire:ignore.self class="modal fade" id="form" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-small">
                 @if ($selectedTransaction)
                     <div class="modal-content">
-                        <div id="transaction-details">
+                        <div id="transaction-details" style="padding: 20px;">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -494,84 +492,79 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <p class="mb-0">Transaction ID:</p>
-                                            <p class="mb-0">
-                                            
-                                                <strong>{{ $selectedTransaction->funds?->payout_ref }}</strong>
+                                            <p class="mb-0">Transaction ID:
+                                                <strong>{{ $selectedTransaction->fund_request?->payout_ref }}</strong>
                                             </p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Payment Amount:</p>
-                                            <p class="mb-0">
+                                            <p class="mb-0">Payment Amount:
                                                 <strong>{{ moneyFormatIndia($selectedTransaction->amount) }}</strong>
                                             </p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Transaction Type:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->type }}</strong></p>
+                                            <p class="mb-0">Transaction Type:
+                                                <strong>{{ $selectedTransaction->type }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">UTR:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->fund?->utr_number }}</strong>
+                                            <p class="mb-0">UTR:
+                                                <strong>{{ $selectedTransaction->utr_number }}</strong></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Mode:
+                                                <strong>{{ $selectedTransaction->payment_mode_id }}</strong></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <p class="mb-0">Status:
+                                                <strong>{{ strip_tags($selectedTransaction->status->name) }}</strong>
                                             </p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Mode:</p>
-                                            <p class="mb-0">
-                                        
-                                                <strong>{{ $selectedTransaction->funds->paymentMode->name }}</strong>
+                                            <p class="mb-0">Date/Time:
+                                                <strong>{{ $selectedTransaction->created_at }}</strong></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Description:
+                                                <strong>{{ $selectedTransaction->remarks }}</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myLargeModalLabel">Beneficiary Detail</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <p class="mb-0">Name as per Bank:
+                                                <strong>{{ $selectedTransaction->name }}</strong></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">Beneficiary Name:
+                                                <strong>{{ $selectedTransaction->user->name }}</strong></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-0">IFSC:
+                                                <strong>{{ strtoupper($selectedTransaction->bank?->ifsc_code) }}</strong>
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <p class="mb-0">Status:</p>
-                                            <p class="mb-0">
-                                                <strong>{{ strip_tags($selectedTransaction->status->name) }}</strong>
-                                            </p>
+                                            <p class="mb-0">Account Number:
+                                                <strong>{{ $selectedTransaction->account_number }}</strong></p>
                                         </div>
                                         <div class="mb-3">
-                                            <p class="mb-0">Date/Time:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->created_at }}</strong>
-                                            </p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="mb-0">Description:</p>
-                                            <p class="mb-0"><strong>{{ $selectedTransaction->remarks }}</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="myLargeModalLabel">Beneficiary Detail</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <p class="mb-0">Name as per Bank:</p>
-                                                <p class="mb-0"><strong>{{ $selectedTransaction->funds->account_holder_name }}</strong></p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <p class="mb-0">IFSC:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ strtoupper($selectedTransaction->funds?->ifsc_code) }}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <p class="mb-0">Account Number:</p>
-                                                <p class="mb-0">
-                                                    <strong>{{ $selectedTransaction->funds->account_number }}</strong>
-                                                </p>
-                                            </div>
+                                            <p class="mb-0">Beneficiary Type:
+                                                <strong>{{ $selectedTransaction->transtype }}</strong></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer p-0 m-0 mt-0">
-                                    <button type="button" class="btn btn-secondary" onclick="downloadPdf()">Download</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="downloadPdf()">Download</button>
                                 </div>
                             </div>
                         </div>

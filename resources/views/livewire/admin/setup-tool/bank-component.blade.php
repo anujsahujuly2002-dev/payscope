@@ -82,10 +82,14 @@
                                             <td>
                                                 <ul class="list-inline mb-0">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     @can('bank-edit')
 =======
                                                     @can('bank-edit')
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                                    @can('bank-edit')
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='edit({{$bank}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -147,10 +151,14 @@
                                         @endif
                                         @foreach (range(1, $banks->lastPage()) as $i)
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage())
 =======
                                             @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage())
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                            @if ($i >=$banks->currentPage()-2 && $i <=$banks->currentPage())
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                                 <li class="page-item @if($banks->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -165,10 +173,14 @@
                                             <li class="page-item"  wire:click="gotoPage({{ $banks->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $banks->lastPage()}}</a>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             </li>
 =======
                                             </li>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                            </li>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                         @endif
                                         @if($banks->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
@@ -202,10 +214,14 @@
                             <div class="row g-2">
                                 <div class="col-md-6 mb-0">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <label for="name" class="form-label"> Name</label>
 =======
                                     <label for="name" class="form-label"> Name<span style="color: red;">*</span></label>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                    <label for="name" class="form-label"> Name</label>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                     <input type="text" id="name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Bank Name" wire:model.lazy='state.name'/>
                                     @error('name')
                                         <div class="invalid-feedback">
@@ -215,10 +231,14 @@
                                 </div>
                                 <div class="col-md-6 mb-0">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <label for="account_number" class="form-label"> Account Number</label>
 =======
                                     <label for="account_number" class="form-label"> Account Number<span style="color: red;">*</span></label>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                    <label for="account_number" class="form-label"> Account Number</label>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                     <input type="text" id="account_number" class="form-control  @error('account_number') is-invalid @enderror" placeholder="Enter Account Number" wire:model.lazy='state.account_number'/>
                                     @error('account_number')
                                         <div class="invalid-feedback">
@@ -228,10 +248,14 @@
                                 </div>
                                 <div class="col-md-6 mb-0">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <label for="ifsc" class="form-label">Ifsc</label>
 =======
                                     <label for="ifsc" class="form-label">Ifsc<span style="color: red;">*</span></label>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                    <label for="ifsc" class="form-label">Ifsc</label>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                     <input type="text" id="ifsc" class="form-control  @error('ifsc_code') is-invalid @enderror" placeholder="Enter Ifsc Code" wire:model.lazy='state.ifsc_code'/>
                                     @error('ifsc_code')
                                         <div class="invalid-feedback">
@@ -241,10 +265,14 @@
                                 </div>
                                 <div class="col-md-6 mb-0">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <label for="branch_name" class="form-label">Branch</label>
 =======
                                     <label for="branch_name" class="form-label">Branch<span style="color: red;">*</span></label>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                    <label for="branch_name" class="form-label">Branch</label>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                     <input type="text" id="branch_name" class="form-control  @error('branch_name') is-invalid @enderror" placeholder="Enter Branch" wire:model.lazy='state.branch_name'/>
                                     @error('branch_name')
                                         <div class="invalid-feedback">
@@ -265,7 +293,11 @@
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 <<<<<<< HEAD
+<<<<<<< HEAD
 </div>
 =======
 </div>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+</div>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8

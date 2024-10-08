@@ -61,9 +61,7 @@ class DashboardComponent extends Component
 
 
     public function mount() {
-        $this->recentTransactions = PayoutRequestHistory::when(auth()->user()->getRoleNames()->first() != 'super-admin', function ($r) {
-            $r->where('user_id', auth()->user()->id);
-            })->with('user', 'status','fund') ->orderBy('created_at', 'desc')->take(10)->get();
+        $this->recentTransactions = PayoutRequestHistory::with('user', 'status','fund') ->orderBy('created_at', 'desc')->take(10)->get();
         if ($this->recentTransactions->isEmpty()) {
             $this->recentTransactions = collect();
         }

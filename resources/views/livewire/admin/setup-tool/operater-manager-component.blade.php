@@ -83,10 +83,14 @@
                                             <td>
                                                 <ul class="list-inline mb-0">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     @can('operator-edit')
 =======
                                                     @can('operator-edit')
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                                    @can('operator-edit')
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='edit({{$operatorManger}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -131,10 +135,14 @@
                                         @endif
                                         @foreach (range(1, $operatorManagers->lastPage()) as $i)
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage())
 =======
                                             @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage())
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                            @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage())
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                                 <li class="page-item @if($operatorManagers->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -149,10 +157,14 @@
                                             <li class="page-item"  wire:click="gotoPage({{ $operatorManagers->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $operatorManagers->lastPage()}}</a>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             </li>
 =======
                                             </li>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+                                            </li>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                         @endif
                                         @if($operatorManagers->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
@@ -247,7 +259,11 @@
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
 <<<<<<< HEAD
+<<<<<<< HEAD
 </div>
 =======
 </div>
 >>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
+=======
+</div>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8

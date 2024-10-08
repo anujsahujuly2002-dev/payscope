@@ -40,7 +40,11 @@ class ApiLogs extends Component
 
         })->when($this->value !=null,function($u){
             $u->where('payout_ref', 'like', '%'.$this->value.'%')->orWhere('payout_id','like','%'.$this->value.'%');
+<<<<<<< HEAD
         })->latest()->paginate(10);
+=======
+        })->latest()->paginate(1000);
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
         return view('livewire.admin.log-manager.api-logs',compact('apiLogs'));
     }
 

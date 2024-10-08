@@ -101,6 +101,46 @@ View Profile
                                 {{-- </div> --}}
                             </div>
                         </div>
+<<<<<<< HEAD
+=======
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    Bank Details
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                {{-- <div class="table-responsive mt-4"> --}}
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div>
+                                                <p class="mb-1">Bank Name :</p>
+                                                {{-- <h5 class="font-size-16">{{$user->getRoleNames()->first()=='api-partner'?ucwords($user?->apiPartner->bank_name):ucwords($user?->retailer?->bank_name)}}</h5> --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                <p class="mb-1">Account Number :</p>
+                                                {{-- <h5 class="font-size-16">{{$user->getRoleNames()->first()=='api-partner'?strtoupper($user?->apiPartner->account_number):strtoupper($user?->retailer?->account_number)}}</h5> --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                <p class="mb-1">Ifsc :</p>
+                                                {{-- <h5 class="font-size-16">{{$user->getRoleNames()->first()=='api-partner'?strtoupper($user?->apiPartner->ifsc_code):strtoupper($user?->retailer?->ifsc_code)}}</h5> --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div>
+                                                <p class="mb-1">Branch :</p>
+                                                {{-- <h5 class="font-size-16">{{$user->getRoleNames()->first()=='api-partner'?strtoupper($user?->apiPartner->branch_name):strtoupper($user?->retailer?->branch_name)}}</h5> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{-- </div> --}}
+                            </div>
+                        </div>
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                     </div>
                 </div>
             </div>

@@ -30,78 +30,10 @@ class PayoutRequestController extends Controller
                 ];
              }
         endif;
-             return response()->json([
+        return response()->json([
             'status' => true,
             'message' => 'Payout Request have been successfully.',
             'data' => $result,
-             ], 200);
-    }
-
-<<<<<<< HEAD
-    // public function createPayoutNewRequest(PayoutRequest $request)
-    //  {
-
-    //     $validator = Validator::make($request->all(),[
-    //         'account_number'=>'required',
-    //         'ifsc_code' =>'required',
-    //         'account_holder_name'=>'required',
-    //         'amount'=>'required',
-    //         'payment_mode'=>'required',
-    //     ]);
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'errors' => $validator->errors(),
-    //         ], 401);
-    //     }else{
-    //         return response()->json([
-    //        'status' => true,
-    //        'message' => 'Payout created successfully.',
-    //      ], 200);
-    //    }
-    //  }
-
-    public function createPayoutNewRequest(PayoutRequest $request) {
-=======
-    public function createPayoutNewRequest(PayoutRequest $request) {
-        $validator = Validator::make($request->all(), [
-            'account_number' => 'required',
-            'ifsc_code' => 'required',
-            'account_holder_name' => 'required',
-            'amount' => 'required',
-            'payment_mode' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors(),
-            ], 401);
-        }
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
-        $userDetails = [
-            'account_number'=> $request->account_number,
-            'ifsc_code'=>$request->ifsc_code,
-            'account_holder_name'=>$request->account_holder_name,
-            'amount'=>$request->amount,
-            'payment_mode'=>$request->payment_mode,
-            'type'=>"mobile_api",
-        ];
-<<<<<<< HEAD
-        $user = $this->$userDetails;
-        return response()->json($user);
-=======
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-            ], 401);
-        }
-        else{
-             return response()->json([
-            'status' => true,
-            'message' => 'Payout request created successfully.',
         ], 200);
-        }
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
     }
 }
