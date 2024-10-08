@@ -253,11 +253,9 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-0">
-                                <label for="account_number" class="form-label">Domain</label>
-                                <input type="text" id="domain"
-                                    class="form-control  @error('domain') is-invalid @enderror"
-                                    placeholder="Enter Domain" wire:model='state.domain' />
-                                @error('domain')
+                                <label for="account_number" class="form-label">Webhook Url</label>
+                                <input type="text" id="domain"  class="form-control  @error('webhook_url') is-invalid @enderror" placeholder="Enter Webhook Url" wire:model='state.webhook_url' />
+                                @error('webhook_url')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

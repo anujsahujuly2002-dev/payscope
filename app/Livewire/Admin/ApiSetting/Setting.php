@@ -53,12 +53,12 @@ class Setting extends Component
     public function store() {
         $validateData = Validator::make($this->state,[
             'ip_address'=>'required|ip|ipv4',
-            'domain'=>'required|url'
+            'webhook_url'=>'required|url'
         ])->validate();
         $apiTokens = ApiToken::create([
             'user_id'=>auth()->user()->id,
             'ip_address'=>$validateData['ip_address'],
-            'domain'=>$validateData['domain'],
+            'domain'=>$validateData['webhook_url'],
             'token'=>Str::random(50),
         ]);
 
