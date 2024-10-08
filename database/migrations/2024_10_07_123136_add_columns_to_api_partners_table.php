@@ -14,14 +14,13 @@ return new class extends Migration
         Schema::table('api_partners', function (Blueprint $table) {
             $table->string('email')->nullable()->unique()->after('mobile_no');
             $table->string('company_address')->after('address');
-            $table->string('company_name')->after('shop_name');
-            $table->string('brand_name')->after('company_name');
+            $table->string('brand_name');
             $table->string('gst')->after('brand_name');
             $table->string('cin_number')->after('gst');
             $table->string('company_pan')->after('cin_number');
             $table->bigInteger('company_adhaarcard')->after('addhar_card');
 
-            $table->unsignedBigInteger('company_state_id')->after('company_adhaarcard');
+            $table->unsignedBigInteger('company_state_id');
             $table->foreign('company_state_id')->references('id')->on('states')->onUpdate('cascade')->onDelete('cascade');
 
             $table->string('company_city')->after('company_state_id');

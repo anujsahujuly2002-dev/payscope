@@ -79,7 +79,7 @@ class RetailerComponent extends Component
     }
 
     public function store() {
-        $validateDate = Validator::make($this->state,[
+        $validateData = Validator::make($this->state,[
             'name'=>'required|string|min:3',
             'email'=>'required|email|unique:users,email',
             'mobile_number'=>'required|numeric|digits:10|unique:users,mobile_no',
@@ -94,26 +94,26 @@ class RetailerComponent extends Component
             // 'website'=>'required|url:https'
         ])->validate();
         $user = User::create([
-            'name'=>$validateDate['name'],
-            'email'=>$validateDate['email'],
-            'password'=>Hash::make($validateDate['mobile_number']),
-            'mobile_no'=>$validateDate['mobile_number'],
-            'virtual_account_number' =>"ZGROSC".$validateDate['mobile_number'],
+            'name'=>$validateData['name'],
+            'email'=>$validateData['email'],
+            'password'=>Hash::make($validateData['mobile_number']),
+            'mobile_no'=>$validateData['mobile_number'],
+            'virtual_account_number' =>"ZGROSC".$validateData['mobile_number'],
         ]);
         if($user):
             $retailer =Retailer::create([
                 'user_id'=>$user->id,
                 'added_by'=>auth()->user()->id,
-                'mobile_no'=>$validateDate['mobile_number'],
-                'address'=>$validateDate['address'],
-                'state_id'=>$validateDate['state_name'],
-                'city'=>$validateDate['city'],
-                'pincode'=>$validateDate['pincode'],
-                'shop_name'=>$validateDate['shop_name'],
-                'pancard_no'=>$validateDate['pancard_number'],
-                'addhar_card'=>$validateDate['adhaarcard_number'],
-                'scheme_id'=>$validateDate['scheme'],
-                'website'=>$validateDate['website']??NULL,
+                'mobile_no'=>$validateData['mobile_number'],
+                'address'=>$validateData['address'],
+                'state_id'=>$validateData['state_name'],
+                'city'=>$validateData['city'],
+                'pincode'=>$validateData['pincode'],
+                'shop_name'=>$validateData['shop_name'],
+                'pancard_no'=>$validateData['pancard_number'],
+                'addhar_card'=>$validateData['adhaarcard_number'],
+                'scheme_id'=>$validateData['scheme'],
+                'website'=>$validateData['website']??NULL,
             ]);
             $user->assignRole(['retailer']);
             Wallet::create([

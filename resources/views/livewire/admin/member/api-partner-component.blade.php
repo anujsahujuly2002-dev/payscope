@@ -400,13 +400,13 @@
                                 <div class="card-body">
                                     <div class="row g-2">
                                         <div class="col-md-4 mb-0">
-                                            <label for="company_name" class="form-label"> Company Name<span
+                                            <label for="shop_name" class="form-label"> Company Name<span
                                                     style="color: red;">*</span></label>
-                                            <input type="text" id="company_name"
-                                                class="form-control @error('company_name') is-invalid @enderror"
+                                            <input type="text" id="shop_name"
+                                                class="form-control @error('shop_name') is-invalid @enderror"
                                                 placeholder="Enter Company Name"
-                                                wire:model.defer='state.company_name' />
-                                            @error('company_name')
+                                                wire:model.defer='state.shop_name' />
+                                            @error('shop_name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
