@@ -71,10 +71,10 @@
                                     <th scope="col">User Details</th>
                                     <th scope="col">Bank Details</th>
                                     <th scope="col">Reference Details</th>
-                                    <th scope="col">Opening balance</th>
+                                    {{-- <th scope="col">Opening balance</th> --}}
                                     <th scope="col">Order amount</th>
                                     <th scope="col">Debit charges</th>
-                                    <th scope="col">Closing balance</th>
+                                    {{-- <th scope="col">Closing balance</th> --}}
                                     <th scope="col">Remark</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
@@ -107,15 +107,15 @@
                                             Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}} <br>
                                             UTR Number :-{{$payoutReq->utr_number}}
                                         </td>
-                                        <td class="fw-bolder">
-                                            &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->balance)}}</td>
+                                        {{-- <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->balance)}}</td> --}}
                                         <td class="fw-bolder">
                                             <span class="text-danger fw-bolder">&#8722;</span> &#x20B9;{{moneyFormatIndia($payoutReq->amount)}}
                                         </td>
                                         <td class="fw-bolder">
                                             <span class="text-danger fw-bolder">&#8722;</span>&#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->charge)}}
                                         </td>
-                                        <td class="fw-bolder"> &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->closing_balnce)}}
+                                        {{-- <td class="fw-bolder"> &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->closing_balnce)}} --}}
                                         </td>
                                         <td>
                                             {{$payoutReq?->payoutTransactionHistories?->remarks}}
