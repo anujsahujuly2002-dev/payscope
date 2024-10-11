@@ -122,7 +122,7 @@ trait PayNProPayoutTrait {
                 'status'=>'0005',
                 'statusCode'=>"pending",
                 'txn_id'=>$data['payoutid'],
-                'msg'=>"You're transaction succesfully,Please check status after thirty minute",
+                'msg'=>"Your transaction was successful! We’re now updating your records through our webhook system. Please wait a few moments, and your transaction status will be updated automatically.",
             ];
         else:
             return  [

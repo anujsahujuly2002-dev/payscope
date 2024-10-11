@@ -2,10 +2,11 @@
 
 namespace App\Console;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\VirtualRequestApi;
+use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\CheckPaymentStatusCommand;
+use App\Console\Commands\AutoTransactionUpdateWebhook;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected $commands =[
         VirtualRequestApi::class,
         CheckPaymentStatusCommand::class,
+        AutoTransactionUpdateWebhook::class,
     ];
 
     protected function schedule(Schedule $schedule): void
@@ -25,10 +27,13 @@ class Kernel extends ConsoleKernel
 
             // use wordwrap() if lines are longer than 70 characters
             $msg = wordwrap($msg,70);
-    
             // send email
             mail("programmeranuj930@gmail.com","Check Payment Status",$msg);
         });
+
+        $schedule->command('app:auto-transaction-update-webhook')->everyMinute();
+
+
     }
 
     /**
