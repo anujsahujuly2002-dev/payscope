@@ -19,7 +19,7 @@ Route::get('cache-clear',function(){
     sendOtp("9305238392",'3421');
     echo "Cache Cleared !";
 });
-
+Route::get('/genrate-qr-code', [App\Http\Controllers\Admin\PaymentController::class, 'index']);
 Route::get('migrate',function(){
     Artisan::call('migrate');
     echo "Migration successfully!";
