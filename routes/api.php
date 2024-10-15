@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\FundRequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +23,9 @@ Route::controller(FundRequestController::class)->group(function() {
     Route::post('/bulk-payout','bulkPayout');
     Route::post("/check-status","checkStatus");
     Route::post('/webhookpaynpro','webHookPaynPro');
+});
+
+Route::controller(QRPaymentCollectionController::class)->group(function(){
+    Route::post('create-qr-code','createQrCode');
+    Route::post('fetch-qr-status','fetchQrStatus');
 });

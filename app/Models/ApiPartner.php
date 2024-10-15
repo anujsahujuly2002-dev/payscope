@@ -26,6 +26,7 @@ class ApiPartner extends Model
         'company_gst_number',
         'company_cin_number',
         'company_pan',
+        'razorpay_customer_id'
     ];
 
     public function parentDetails() {
