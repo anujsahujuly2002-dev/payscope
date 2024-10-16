@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class RazorapEventHistory extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'event',
+        'response',
+    ];
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Razorpay\Api\Errors\BadRequestError;
 use App\Http\Requests\Api\FetchQrStatusRequest;
 use App\Http\Requests\Api\QRPaymentCollectionRequest;
+use App\Models\RazorapEventHistory;
 use Exception;
 
 class QRPaymentCollectionController extends Controller
@@ -199,6 +200,10 @@ class QRPaymentCollectionController extends Controller
     public function webhookRecivedPaymentInRazorapy(Request $request){
         try{    
             $paymentResponse = $request->all();
+            RazorapEventHistory::create([
+                'event'=>$paymentResponse['event'],
+                'response'=>json_encode($request->all()),
+            ]); 
             if($paymentResponse['event']==='qr_code.credited'):
                 QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['qr_code']['id'])->update([
                     'qr_status'=>$paymentResponse['payload']['qr_code']['entity']['status'],
