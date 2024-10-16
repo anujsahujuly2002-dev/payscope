@@ -13,7 +13,8 @@ class ApiToken extends Model
         'user_id',
         'ip_address',
         'domain',
-        'token'
+        'token',
+        'payin_webhook_url'
     ];
 
     public function user() {

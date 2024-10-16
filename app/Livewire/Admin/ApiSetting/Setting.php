@@ -20,6 +20,8 @@ class Setting extends Component
     public $value;
     public $end_date;
     public $agentId;
+    public $editForm;
+    public $id;
     // public $agentName;
     public $start_date;
     public function render()
@@ -53,12 +55,14 @@ class Setting extends Component
     public function store() {
         $validateData = Validator::make($this->state,[
             'ip_address'=>'required|ip|ipv4',
-            'webhook_url'=>'required|url'
+            'webhook_url'=>'required|url',
+            'payin_webhook_url'=>'required|url'
         ])->validate();
         $apiTokens = ApiToken::create([
             'user_id'=>auth()->user()->id,
             'ip_address'=>$validateData['ip_address'],
             'domain'=>$validateData['webhook_url'],
+            'payin_webhook_url'=>$validateData['payin_webhook_url'],
             'token'=>Str::random(50),
         ]);
 
@@ -93,5 +97,35 @@ class Setting extends Component
             'value'=>$this->value
         ];
         return Excel::download(new ApiTokenExport($data), time().'.xlsx');
+    }
+
+    public function edit($apiTokens) {
+        $this->state = $apiTokens;
+        $this->id = $apiTokens['id'];
+        $this->state['ip_address'] = $apiTokens['ip_address'];
+        $this->state['webhook_url'] = $apiTokens['domain'];
+        $this->state['payin_webhook_url'] = $apiTokens['payin_webhook_url'];
+        $this->editForm = true;
+        $this->dispatch('show-form');
+    }
+
+    public function update() {
+        $validateData = Validator::make($this->state,[
+            'ip_address'=>'required|ip|ipv4',
+            'webhook_url'=>'required|url',
+            'payin_webhook_url'=>'required|url'
+        ])->validate();
+        $apiTokens = ApiToken::find($this->id)->update([
+            'user_id'=>auth()->user()->id,
+            'ip_address'=>$validateData['ip_address'],
+            'domain'=>$validateData['webhook_url'],
+            'payin_webhook_url'=>$validateData['payin_webhook_url'],
+        ]);
+        $this->dispatch('hide-form');
+        if($apiTokens):
+            return redirect()->back()->with('success','Token  has been update successfully !');
+        else:
+            return redirect()->back()->with('error','Token not generated Please Try again !');
+        endif;
     }
 }

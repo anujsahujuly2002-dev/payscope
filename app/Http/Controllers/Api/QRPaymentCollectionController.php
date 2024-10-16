@@ -176,7 +176,7 @@ class QRPaymentCollectionController extends Controller
             'usage'=>$qRPaymentCollection['usage'],
             'type'=>$qRPaymentCollection['type'],
             'image_url'=>$qRPaymentCollection['image_url'],
-            'payment_amount'=>$qRPaymentCollection['payment_amount']/100,
+            'payment_amount'=>$qRPaymentCollection['payment_amount'],
             'qr_status'=>$qRPaymentCollection['qr_status'],
             'description'=>$qRPaymentCollection['description'],
             'fixed_amount'=>$qRPaymentCollection['fixed_amount']?'1':'0',

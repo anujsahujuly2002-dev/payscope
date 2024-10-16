@@ -106,7 +106,8 @@
                                     @endrole
                                     <th scope="col">Ip</th>
                                     <th scope="col">Token</th>
-                                    <th scope="col">Domain</th>
+                                    <th scope="col">Payout Webhook Url</th>
+                                    <th scope="col">Payin Webhook Url</th>
                                     @canany(['callback-token-delete'])
                                         <th scope="col" style="width: 200px;">Action</th>
                                     @endcanany
@@ -138,14 +139,14 @@
                                         </td> --}}
                                         <td>{{ $apiToken->token }}</td>
                                         <td>{{ $apiToken->domain }}</td>
+                                        <td>{{ $apiToken->payin_webhook_url }}</td>
                                         @canany(['callback-token-delete'])
                                             <td>
                                                 <ul class="list-inline mb-0">
                                                     @can('callback-token-delete')
                                                         <li class="list-inline-item">
-                                                            <a href="javascript:void(0);" class="px-2 text-danger"
-                                                                wire:click.prevent='deleteConfirmation({{ $apiToken->id }})'><i
-                                                                    class="uil uil-trash-alt font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="px-2 text-danger" wire:click.prevent='deleteConfirmation({{ $apiToken->id }})'><i class="uil uil-trash-alt font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="px-2 text-danger" wire:click.prevent='edit({{ $apiToken}})'><i class="uil uil-edit-alt font-size-18" ></i></a>                                                          
                                                         </li>
                                                     @endcan
                                                 </ul>
@@ -214,8 +215,7 @@
                                             </li>
                                         @else
                                             <li class="page-item disabled">
-                                                <a href="javascript:void(0)" class="page-link"><i
-                                                        class="mdi mdi-chevron-right"></i></a>
+                                                <a href="javascript:void(0)" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
                                             </li>
                                         @endif
                                     </ul>
@@ -232,10 +232,10 @@
     <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
         aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-lg">
-            <form wire:submit.prevent="store" autocomplete="off">
+            <form wire:submit.prevent="{{$editForm?"update":"store"}}" autocomplete="off">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myLargeModalLabel">Create Callback & Token</h5>
+                        <h5 class="modal-title" id="myLargeModalLabel">{{$editForm?"Edit":"Create"}} Callback & Token</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -253,9 +253,18 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-0">
-                                <label for="account_number" class="form-label">Webhook Url</label>
-                                <input type="text" id="domain"  class="form-control  @error('webhook_url') is-invalid @enderror" placeholder="Enter Webhook Url" wire:model='state.webhook_url' />
+                                <label for="domain" class="form-label">Payout Webhook Url</label>
+                                <input type="text" id="domain"  class="form-control  @error('webhook_url') is-invalid @enderror" placeholder="Enter Payout Webhook Url" wire:model='state.webhook_url' />
                                 @error('webhook_url')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-0">
+                                <label for="payin_webhook_url" class="form-label">Payin Webhook Url</label>
+                                <input type="text" id="payin_webhook_url"  class="form-control  @error('payin_webhook_url') is-invalid @enderror" placeholder="Enter Payin Webhook Url" wire:model='state.payin_webhook_url' />
+                                @error('payin_webhook_url')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
