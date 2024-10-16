@@ -32,8 +32,22 @@ class QRPaymentCollectionController extends Controller
         // dd($qrResponse);
         $qrImage=$qrResponse['image_url'];
         $imageData = base64_encode(file_get_contents($qrImage));
-        $src = 'data: ;base64,' . $imageData;
-        $qrResponse['qr_image_url'] =$src;
+        $imageDirectory = storage_path('app/public/qr_images');
+        // Check if the directory exists, if not, create it
+        if (!is_dir($imageDirectory)) {
+            mkdir($imageDirectory, 0755, true); // 0755 is the permission, true enables recursive creation
+        }
+        
+        // Now set the image path
+        $imagePath = $imageDirectory;
+        $imageName = 'qr_image_'.time().'.png';
+        // Store the image on the server
+        file_put_contents($imagePath.'/'.$imageName, file_get_contents($qrImage));
+
+        // Instead of encoding the image, store the URL or path
+        $imageUrl = url('public/storage/qr_images/').'/'.$imageName;
+
+        $qrResponse['qr_image_url'] =$imageUrl;
         $qrResponse['payment_amount'] =$qrResponse['payment_amount']/100;
         return response()->json([
             'status'=>true,
@@ -75,7 +89,6 @@ class QRPaymentCollectionController extends Controller
     private function generateQrCode($name,$amount,$customerId,$userId) {
         try {
             // Create QR code using Razorpay API
-            $time = Carbon::now('Asia/Kolkata')->addMinutes(4)->format('Y-m-d h:i:s');
             // Set the current time in the 'Asia/Kolkata' timezone
             $currentTime = Carbon::now('Asia/Kolkata');
 
