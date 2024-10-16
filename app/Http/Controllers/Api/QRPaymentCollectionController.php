@@ -26,7 +26,7 @@ class QRPaymentCollectionController extends Controller
         if($checkRazorPayCustomerId->razorpay_customer_id !=NULL):
             $customerId = $checkRazorPayCustomerId->razorpay_customer_id;
         else:
-            $customerId  = $this->createCustomerId($checkRazorPayCustomerId->parentDetails->name,$checkRazorPayCustomerId->parentDetails->email,$checkRazorPayCustomerId->parentDetails->mobile_no,$checkRazorPayCustomerId->id);
+            $customerId  = $this->createCustomerId($checkRazorPayCustomerId->user->name,$checkRazorPayCustomerId->user->email,$checkRazorPayCustomerId->user->mobile_no,$checkRazorPayCustomerId->user_id);
         endif;
         $qrResponse = $this->generateQrCode($request->input('name'),$request->input('payment_amount'),$customerId,$checkRazorPayCustomerId->user_id);
         $qrImage=$qrResponse['image_url'];
