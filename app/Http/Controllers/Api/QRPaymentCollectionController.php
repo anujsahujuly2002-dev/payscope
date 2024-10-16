@@ -7,11 +7,12 @@ use Razorpay\Api\Api;
 use App\Models\ApiPartner;
 use App\Models\RazorPayLog;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\FetchQrStatusRequest;
-use Razorpay\Api\Errors\BadRequestError;
-use App\Http\Requests\Api\QRPaymentCollectionRequest;
 use App\Models\QRPaymentCollection;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Razorpay\Api\Errors\BadRequestError;
+use App\Http\Requests\Api\FetchQrStatusRequest;
+use App\Http\Requests\Api\QRPaymentCollectionRequest;
 
 class QRPaymentCollectionController extends Controller
 {
@@ -192,6 +193,10 @@ class QRPaymentCollectionController extends Controller
             'date'=>$data
         ]);
 
+    }
+
+    public function webhookRecivedPaymentInRazorapy(Request $request){
+        Log::info($request->all());
     }
 
 

@@ -28,4 +28,5 @@ Route::controller(FundRequestController::class)->group(function() {
 Route::controller(QRPaymentCollectionController::class)->group(function(){
     Route::post('create-qr-code','createQrCode');
     Route::post('fetch-qr-status','fetchQrStatus');
+    Route::match(['get', 'post'], 'web-hook-recived-payment-in-razorapy', 'webhookRecivedPaymentInRazorapy');
 });
