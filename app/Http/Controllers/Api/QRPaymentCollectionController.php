@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Razorpay\Api\Errors\BadRequestError;
 use App\Http\Requests\Api\FetchQrStatusRequest;
 use App\Http\Requests\Api\QRPaymentCollectionRequest;
+use Exception;
 
 class QRPaymentCollectionController extends Controller
 {
@@ -196,7 +197,24 @@ class QRPaymentCollectionController extends Controller
     }
 
     public function webhookRecivedPaymentInRazorapy(Request $request){
-        Log::info($request->all());
+        try{    
+            $paymentResponse = $request->all();
+            if($paymentResponse['event']==='qr_code.credited'):
+                QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['qr_code']['id'])->update([
+                    'qr_status'=>$paymentResponse['payload']['qr_code']['entity']['status'],
+                    'payments_amount_received'=>$paymentResponse['payload']['qr_code']['entity']['payments_amount_received']/100,
+                    'payments_count_received'=>$paymentResponse['payload']['qr_code']['entity']['payments_count_received'],
+                    'status_id'=>$paymentResponse['payload']['qr_code']['entity']['payments_amount_received'] !=0?'2':"3",
+                    'close_by'=>Carbon::parse($paymentResponse['payload']['qr_code']['entity']['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                    'close_reason'=>$paymentResponse['payload']['qr_code']['entity']['close_reason'],
+                ]);
+            endif;
+        }catch (Exception $e){
+            Log::info($request->all(),$e);
+        }
+        
+       
+       
     }
 
 
