@@ -15,10 +15,8 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Route::get('cache-clear',function(){
-    sendOtp("9305238392",'3421');
-    echo "Cache Cleared !";
-});
+
+
 Route::get('/genrate-qr-code', [App\Http\Controllers\Admin\PaymentController::class, 'index']);
 Route::get('migrate',function(){
     Artisan::call('migrate');
@@ -30,6 +28,7 @@ Route::get('/',function (){
 });
 
 Route::prefix('admin')->name('admin.')->group(function(){
+    Route::match(['get', 'post'], 'web-hook-recived-payment-in-razorapy', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webhookRecivedPaymentInRazorapy']);
     Route::namespace('Auth')->middleware(['guest'])->controller(AuthController::class)->group(function() {
         Route::get('/','login')->name('login');
         Route::get('/otp-verification',function() {
