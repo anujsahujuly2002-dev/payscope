@@ -29,6 +29,7 @@ class QRPaymentCollectionController extends Controller
             $customerId  = $this->createCustomerId($checkRazorPayCustomerId->user->name,$checkRazorPayCustomerId->user->email,$checkRazorPayCustomerId->user->mobile_no,$checkRazorPayCustomerId->user_id);
         endif;
         $qrResponse = $this->generateQrCode($request->input('name'),$request->input('payment_amount'),$customerId,$checkRazorPayCustomerId->user_id);
+        // dd($qrResponse);
         $qrImage=$qrResponse['image_url'];
         $imageData = base64_encode(file_get_contents($qrImage));
         $src = 'data: ;base64,' . $imageData;
@@ -46,6 +47,15 @@ class QRPaymentCollectionController extends Controller
             'email'=>$email,
             'contact'=>$mobile_no,
         ]);
+        $data=[
+            'id'=>$response['id'],
+            'entity'=>$response['entity'],
+            'name'=>$response['name'],
+            'email'=>$response['email'],
+            'contact'=>$response['contact'],
+            'gstin'=>$response['gstin'],
+            'created_at'=>$response['created_at'],
+        ];
         RazorPayLog::create([
             'user_id'=>$userId,
             'type'=>"customer_create",
@@ -66,6 +76,18 @@ class QRPaymentCollectionController extends Controller
         try {
             // Create QR code using Razorpay API
             $time = Carbon::now('Asia/Kolkata')->addMinutes(4)->format('Y-m-d h:i:s');
+            // Set the current time in the 'Asia/Kolkata' timezone
+            $currentTime = Carbon::now('Asia/Kolkata');
+
+            // Set 'close_by' time to be 4 minutes after the current time
+            $closeByTime = $currentTime->copy()->addMinutes(4);
+
+            // Check if 'close_by' is at least 2 minutes after the current time
+            if ($closeByTime->greaterThan($currentTime->addMinutes(2))) {
+                // echo "close_by is at least 2 minutes after the current time.";
+            } else {
+                // echo "close_by is less than 2 minutes after the current time.";
+            }
             $request =  [
                 'type' => 'upi_qr',
                 'name' => $name,
@@ -73,9 +95,10 @@ class QRPaymentCollectionController extends Controller
                 'payment_amount' => $amount*100,
                 "usage"=> "single_use",
                 "customer_id"=>$customerId,
-                "close_by"=> strtotime($time),
+                "close_by"=> strtotime($currentTime->addMinutes(6)),
                 'description' => 'QR code for payment'
             ];
+            // dd(date('Y-m-d h:i:s',strtotime($time)),$request);
             $response = $this->api->qrCode->create($request);
             // dd($response);
             $data =[
@@ -120,6 +143,7 @@ class QRPaymentCollectionController extends Controller
             ]);
             return $data;
         } catch (BadRequestError $e) {
+            dd($e);
             // Handle Bad Request error (most common for missing/invalid parameters)
             echo "BadRequestError: " . $e->getMessage();
         } catch (\Exception $e) {
