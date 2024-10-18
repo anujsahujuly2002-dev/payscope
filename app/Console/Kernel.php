@@ -8,6 +8,7 @@ use App\Console\Commands\CheckPaymentStatusCommand;
 use App\Console\Commands\AutoTransactionUpdateWebhook;
 use App\Console\Commands\FetchRazorpayQrStatusCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\AutoPayinTransactionUpdateWebhook;
 
 class Kernel extends ConsoleKernel
 {
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         CheckPaymentStatusCommand::class,
         AutoTransactionUpdateWebhook::class,
         FetchRazorpayQrStatusCommand::class,
+        AutoPayinTransactionUpdateWebhook::class
     ];
 
     protected function schedule(Schedule $schedule): void
@@ -35,6 +37,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('app:auto-transaction-update-webhook')->everyMinute();
         $schedule->command('app:fetch-razorpay-qr-status-command')->everyMinute();
+        $schedule->command('app:auto-payin-transaction-update-webhook')->everyMinute();
 
 
     }
