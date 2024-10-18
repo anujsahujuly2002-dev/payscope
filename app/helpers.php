@@ -29,8 +29,12 @@ if(!function_exists('apiCall')):
             endif;
             return json_decode($res,true);
         } catch (\Exception $e) {
-            dd($e);
-            return $e->getMessage();
+            return [
+                'status'=>false,
+                'statusCode'=>$e->getCode(),
+                'msg'=>$e->getMessage(),
+            
+            ];
         }
 
     }

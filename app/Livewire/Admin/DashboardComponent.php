@@ -68,10 +68,8 @@ class DashboardComponent extends Component
         $this->calculateAmounts(); 
     }
     public function transaction($transactionId){
-        $this->paymentModes = PaymentMode::whereIn('id',['1','2'])->get();
-        $this->banks = Bank::get();
-        $this->statuses =  Status::get();
-        $this->selectedTransaction = PayoutRequestHistory::with('user', 'status','funds')->findOrFail($transactionId);
+        
+        $this->selectedTransaction = PayoutRequestHistory::find($transactionId);
         $this->dispatch('show-form');
     }
 }

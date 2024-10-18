@@ -15,11 +15,9 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Route::get('cache-clear',function(){
-    sendOtp("9305238392",'3421');
-    echo "Cache Cleared !";
-});
 
+
+Route::get('/genrate-qr-code', [App\Http\Controllers\Admin\PaymentController::class, 'index']);
 Route::get('migrate',function(){
     Artisan::call('migrate');
     echo "Migration successfully!";
@@ -30,6 +28,7 @@ Route::get('/',function (){
 });
 
 Route::prefix('admin')->name('admin.')->group(function(){
+    Route::match(['get', 'post'], 'web-hook-recived-payment-in-razorapy', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webhookRecivedPaymentInRazorapy'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::namespace('Auth')->middleware(['guest'])->controller(AuthController::class)->group(function() {
         Route::get('/','login')->name('login');
         Route::get('/otp-verification',function() {
@@ -63,6 +62,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::prefix('retailer')->name('retailer.')->group(function() {
                 Route::get('/','retailer')->name('list');
             });
+            
             Route::get('view-profile/{id}','viewProfile')->name('view.profile');
         });
 
@@ -78,6 +78,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/manual-request','manualRequest')->name('manual.request');
             Route::get('/virtul-request','virtualRequest')->name('virtual.request');
             Route::get('/qr-request','qrRequest')->name('qr.request');
+            Route::get('/qr-collection','qrCollection')->name('qr.collection');
         });
 
         // Payout Manager Route
@@ -115,5 +116,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(RechargeAndBillPaymentsController::class)->prefix('recharge-and-bill-payments')->name('recharge.and.bill.payments')->group(function(){
             Route::get('/mobile-recharge','mobileRecharge')->name('mobile.recharge');
         });
+
+        // Domestic Money Transfer Routes
+        Route::controller(DomesticMoneyTransferController::class)->prefix('domestic-money-transfer')->name('domestic.money.transfer.')->group(function(){
+            Route::get('/recipient-list','index')->name('recipient.list');
+        });
+
+
     });
 });

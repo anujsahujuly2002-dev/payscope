@@ -23,7 +23,6 @@ return new class extends Migration
             $table->foreign('state_id')->references('id')->on('states')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('city');
             $table->bigInteger('pincode');
-            $table->string('shop_name');
             $table->string('pancard_no');
             $table->bigInteger('addhar_card');
             $table->unsignedBigInteger('scheme_id');

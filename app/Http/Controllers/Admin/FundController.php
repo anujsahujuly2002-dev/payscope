@@ -19,6 +19,11 @@ class FundController extends Controller
         return view('admin.fund-manager.qr-request');
     }
 
+    public function qrCollection() {
+        return view('admin.fund-manager.qr-collection');
+    }
+
+
 
     
 

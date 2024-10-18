@@ -60,10 +60,17 @@
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
     --bs-body-color: #495057;
+<<<<<<< HEAD
     --bs-body-bg: #f5f6f8;
     --bs-border-width: 1px;
     --bs-border-style: solid;
     --bs-border-color: #f6f6f6;
+=======
+    --bs-body-bg: #ffffff;
+    --bs-border-width: 1px;
+    --bs-border-style: solid;
+    --bs-border-color: #ffffff;
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
     --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
     --bs-border-radius: 0.25rem;
     --bs-border-radius-sm: 0.2rem;
@@ -8070,7 +8077,11 @@ fieldset:disabled .btn {
 .text-truncate {
     overflow: hidden;
     text-overflow: ellipsis;
+<<<<<<< HEAD
     white-space: nowrap
+=======
+    white-space: nowrap;
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
 }
 
 .vr {
@@ -9435,10 +9446,17 @@ fieldset:disabled .btn {
     color: hsla(0, 0%, 100%, .5) !important
 }
 
+<<<<<<< HEAD
 .text-reset {
     --bs-text-opacity: 1;
     color: inherit !important
 }
+=======
+/* .text-reset {
+    --bs-text-opacity: 1;
+    color: inherit !important
+} */
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
 
 .text-opacity-25 {
     --bs-text-opacity: 0.25
@@ -14595,4 +14613,8 @@ button {
     right: 2px;
     top: 50%;
     transform: translateY(-50%)
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8

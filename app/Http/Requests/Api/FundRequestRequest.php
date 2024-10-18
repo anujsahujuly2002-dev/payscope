@@ -28,6 +28,7 @@ class FundRequestRequest extends FormRequest
         return [
             'token'=>'required',
             'account_number'=>'required|numeric',
+            'account_name'=>'required',
             'account_holder_name'=>'required|string|min:3',
             'ifsc_code'=>'required',
             'amount'=>'required|min:10|numeric',

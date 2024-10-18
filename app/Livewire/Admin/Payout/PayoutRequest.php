@@ -15,6 +15,7 @@ use Livewire\WithPagination;
 use App\Traits\EkoPayoutTrait;
 use App\Exports\PayoutRequestExport;
 use App\Models\PayoutRequestHistory;
+use App\Traits\PayNProPayoutTrait;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +24,7 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class PayoutRequest extends Component
 {
-    use WithPagination,PayoutTraits,EkoPayoutTrait;
+    use WithPagination,PayoutTraits,EkoPayoutTrait,PayNProPayoutTrait;
     public $paymentModes;
     public $payoutFormRequest = [];
     public $statuses = [];
@@ -84,12 +85,14 @@ class PayoutRequest extends Component
             'ifsc_code' =>'required',
             'account_holder_name'=>'required|string|min:3',
             'amount'=>'required|numeric|min:10',
-            'payment_mode'=>'required'
+            'payment_mode'=>'required',
+            'account_name'=>'required'
         ])->validate();
 
         $validateData['user_id']= auth()->user()->id;
         // $response = $this->payoutApiRequest($validateData);
-        $response = $this->ekoPayoutApi($validateData);;
+        // $response = $this->ekoPayoutApi($validateData);
+        $response = $this->payNProPayout($validateData);
         $this->dispatch('hide-form');
         if($response['status']=='0005'):
             return redirect()->back()->with('success',$response['msg']);
