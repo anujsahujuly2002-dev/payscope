@@ -43,7 +43,7 @@ class AutoPayinTransactionUpdateWebhook extends Command
                         "status" => true,
                         "msg" => "You're request has been complete",
                         "data" => [
-                           'qr_code_id'=>$transaction['id'],
+                           'qr_code_id'=>$transaction['qr_code_id'],
                             'entity'=>$transaction['entity'],
                             'name'=>$transaction['name'],
                             'usage'=>$transaction['usage'],
