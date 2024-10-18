@@ -221,6 +221,8 @@
                                 @endcanany
                             @endif
 
+                            <li><a href="{{ route('admin.fund.qr.collection') }}" style="color: #0A1D56;">QR Collection </a></li>
+
                             <li><a href="javascript:void()" style="color: #0a1d56;">Transfer Return</a></li>
                             {{-- @if (['payout-request', 'payout-new-request'])
                                 @canany(['payout-request', 'payout-new-request'])

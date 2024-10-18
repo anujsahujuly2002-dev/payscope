@@ -78,6 +78,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/manual-request','manualRequest')->name('manual.request');
             Route::get('/virtul-request','virtualRequest')->name('virtual.request');
             Route::get('/qr-request','qrRequest')->name('qr.request');
+            Route::get('/qr-collection','qrCollection')->name('qr.collection');
         });
 
         // Payout Manager Route
