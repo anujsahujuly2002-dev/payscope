@@ -80,7 +80,9 @@
                                             <label class="form-check-label" for="contacusercheck">Sr No.</label>
                                         </div>
                                     </th>
-                                    <th scope="col">Id</th>
+                                    @if (!auth()->user()->getRoleNames()->first() == 'super-admin')
+                                        <th scope="col">User Name</th>
+                                    @endif
                                     <th scope="col">QR Id</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Received Amount</th>
@@ -102,9 +104,12 @@
                                                     for="contacusercheck1">{{ $loop->iteration }}</label>
                                             </div>
                                         </th>
-                                        <td>
-                                            <a href="javascript:void(0)" class="text-body">{{ $item->user_id }}</a>
-                                        </td>
+                                        @if (!auth()->user()->getRoleNames()->first() == 'super-admin')
+                                            <td>
+                                                <a href="javascript:void(0)" class="text-body">{{ $item->user->name }}</a>
+                                            </td>
+                                        @endif
+                                        
                                         <td>
                                             {{ ($item->qr_code_id) }}
                                         </td>

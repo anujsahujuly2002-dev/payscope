@@ -45,7 +45,7 @@ class QRCollectionComponent extends Component
                       ->whereDate('created_at', '<=', $this->end_date);
             })
             ->when($this->agentId, function($query) {
-                $query->where('id', $this->agentId);
+                $query->where('user_id', $this->agentId);
             })
             ->when($this->start_date && !$this->end_date, function($query) {
                 $query->whereDate('created_at', '>=', $this->start_date);
