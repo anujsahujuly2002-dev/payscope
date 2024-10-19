@@ -59,17 +59,19 @@ class FundRequestController extends Controller
 
     public function webHookPaynPro(Request $request) {
         if($request['STATUS']=='Success'):
+            Log::info('Request data:', $request->all());
             $FundRequest =FundRequest::where("payout_id", $request['PAYOUT_REF'])->first();
             FundRequest::where('id',$FundRequest->id)->update([
                 'status_id'=>'2',
-                'payout_ref' =>$request['RRN'],
+                'payout_ref' =>$request['TXN_ID'],
+                'utr_number'=>$request['RRN']
             ]);
             PayoutRequestHistory::where('fund_request_id',$FundRequest->id)->update([
                 'status_id'=>'2',
             ]);
-            Log::info("message:-",$request);
+            // Log::info("message:-".$request);
         else:
-            Log::info("message:-",$request);
+           Log::info('Request data:', $request->all());
         endif;
        
     }   

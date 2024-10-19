@@ -28,12 +28,15 @@ class PaymentSettlementCommand extends Command
      */
     public function handle()
     {
-        $getPaymentInSattelmnets = QRPaymentCollection::whereDate('created_at','=',Carbon::now()->subDays(1)->format('Y-m-d'))->where('status_id','2')->get();
+        $getPaymentInSattelmnets = QRPaymentCollection::whereDate('created_at','<=',Carbon::now()->subDays(1)->format('Y-m-d'))->where(['status_id'=>'2','is_payment_settel'=>'0'])->get();
         foreach($getPaymentInSattelmnets as $getPaymentInSattelmnet):
             addTransactionHistory($getPaymentInSattelmnet->qr_code_id,$getPaymentInSattelmnet->user_id,$getPaymentInSattelmnet->payment_amount,'credit');
             $getCurrentWalletAmount =  Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->first()->amount;
             Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->update([
                 'amount'=>$getPaymentInSattelmnet->payment_amount+$getCurrentWalletAmount
+            ]);
+            $getPaymentInSattelmnet->update([
+                'is_payment_settel'=>'1'
             ]);
         endforeach;
     }

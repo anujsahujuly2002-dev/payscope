@@ -26,6 +26,7 @@ class QRPaymentCollection extends Model
         'qr_created_at',
         'status_id',
         'close_by',
+        'is_payment_settel',
         'close_reason'
     ];
 
