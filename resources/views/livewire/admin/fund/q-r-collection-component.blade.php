@@ -80,14 +80,14 @@
                                             <label class="form-check-label" for="contacusercheck">Sr No.</label>
                                         </div>
                                     </th>
-                                    @if (!auth()->user()->getRoleNames()->first() == 'super-admin')
+                                    @if (auth()->user()->getRoleNames()->first() == 'super-admin')
                                         <th scope="col">User Name</th>
                                     @endif
                                     <th scope="col">QR Id</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Received Amount</th>
-                                    <th scope="col">Current Status</th>
-                                    <th scope="col">QR Status</th>
+                                    <th scope="col">Entity Status</th>
+                                    <th scope="col">QR Current Status</th>
                                     <th scope="col">QR Close Reason</th>
                                     <th scope="col">Status</th>
                                     @canany(['approved-qr_request-request'])
@@ -104,7 +104,7 @@
                                                     for="contacusercheck1">{{ $loop->iteration }}</label>
                                             </div>
                                         </th>
-                                        @if (!auth()->user()->getRoleNames()->first() == 'super-admin')
+                                        @if (auth()->user()->getRoleNames()->first() == 'super-admin')
                                             <td>
                                                 <a href="javascript:void(0)" class="text-body">{{ $item->user->name }}</a>
                                             </td>
@@ -120,7 +120,7 @@
                                             {{ moneyFormatIndia($item->payments_amount_received) }}
                                         </td>
                                         <td>
-                                            {{ ucfirst($item->entity) }}
+                                            {{ ucword(str_replace('_',' ',$item->entity)) }}
                                         </td>
                                         <td>
                                             {{ ucfirst($item->qr_status) }}
