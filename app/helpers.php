@@ -198,12 +198,13 @@ if (!function_exists('formatAmount')) {
 
 if(!function_exists('addTransactionHistory')):
     function  addTransactionHistory($transaction_id,$user_id,$amount,$transction_type) {
+        $closingAmount = $transction_type =='credit'?getBalance($user_id) + $amount:getBalance($user_id) + $amount;
         TransactionHistory::create([
             'user_id'=>$user_id,
             'transaction_id'=>$transaction_id,
             'opening_balance'=>getBalance($user_id),
             'amount'=>$amount,
-            'closing_balnce'=>getBalance($user_id) - $amount,
+            'closing_balnce'=>$closingAmount,
             'transaction_type'=>$transction_type
         ]);
     }

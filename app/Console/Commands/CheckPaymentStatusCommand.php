@@ -52,7 +52,6 @@ class CheckPaymentStatusCommand extends Command
                 $subject = 'Check Status Api Executed For PaynPro';
                 $message = 'Api Response'.json_encode($res);
                 $headers = 'From:programmeranuj930@gmail.com'. "\r\n" .'X-Mailer: PHP/' . phpversion();
-
                 mail($to, $subject, $message, $headers);
                 if($res['statusCode']==200):
                     if($res['data'][0]['status']=='Failed'):
@@ -66,6 +65,7 @@ class CheckPaymentStatusCommand extends Command
                             'status_id'=>'3',
                             'closing_balnce'=>$fundRequestHistory->balance
                         ]);
+                        addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge),'credit');
                         // $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
                         $getCurrentWalletAmount =  Wallet::where('user_id',$fundRequest->user_id)->first()->amount;
                         Wallet::where('user_id',$fundRequest->user_id)->update([
@@ -93,12 +93,12 @@ class CheckPaymentStatusCommand extends Command
                         'status_id'=>'3',
                         'closing_balnce'=>$fundRequestHistory->balance
                     ]);
+                    addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge),'credit');
                     // $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
                     $getCurrentWalletAmount =  Wallet::where('user_id',$fundRequest->user_id)->first()->amount;
                     Wallet::where('user_id',$fundRequest->user_id)->update([
                         'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount
                     ]);
-
                 endif;
             endif;
         endforeach;
