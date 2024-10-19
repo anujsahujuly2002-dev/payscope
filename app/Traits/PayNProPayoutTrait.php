@@ -57,10 +57,11 @@ trait PayNProPayoutTrait {
                 'msg'=>$e->getMessage(),
             ];
         }
-
+        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),'debit');
         Wallet::where('user_id',$data['user_id'])->update([
             'amount'=>$walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
         ]);
+        
         $adminId = User::whereHas('roles',function($q){
             $q->where('name','super-admin');
         })->first();

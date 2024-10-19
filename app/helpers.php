@@ -10,6 +10,7 @@ use App\Models\ApiPartner;
 use App\Models\Commission;
 use App\Models\PaymentMode;
 use App\Models\OperatorManager;
+use App\Models\TransactionHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -193,3 +194,26 @@ if (!function_exists('formatAmount')) {
         }
     }
 }
+
+
+if(!function_exists('addTransactionHistory')):
+    function  addTransactionHistory($transaction_id,$user_id,$amount,$transction_type) {
+        TransactionHistory::create([
+            'user_id'=>$user_id,
+            'transaction_id'=>$transaction_id,
+            'opening_balance'=>getBalance($user_id),
+            'amount'=>$amount,
+            'closing_balnce'=>getBalance($user_id) - $amount,
+            'transaction_type'=>$transction_type
+        ]);
+    }
+endif;
+
+if(!function_exists('getBalance')):
+    function getBalance($user_id) {
+        return Wallet::where('user_id',$user_id)->first()->amount;
+    }
+endif;
+
+
+
