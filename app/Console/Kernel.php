@@ -28,7 +28,6 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:check-payment-status-command')->everyFifteenMinutes()->onSuccess(function () {
             $msg = "Check Payment Status Api Initiate Successfully";
-
             // use wordwrap() if lines are longer than 70 characters
             $msg = wordwrap($msg,70);
             // send email
@@ -38,7 +37,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:auto-transaction-update-webhook')->everyMinute();
         $schedule->command('app:fetch-razorpay-qr-status-command')->everyMinute();
         $schedule->command('app:auto-payin-transaction-update-webhook')->everyMinute();
-
+        $schedule->command('app:payment-settlement-command')->daily()->at('18:00');
 
     }
 
