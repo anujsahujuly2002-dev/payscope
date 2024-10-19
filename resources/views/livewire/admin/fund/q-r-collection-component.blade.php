@@ -120,7 +120,7 @@
                                             {{ moneyFormatIndia($item->payments_amount_received) }}
                                         </td>
                                         <td>
-                                            {{ ucword(str_replace('_',' ',$item->entity)) }}
+                                            {{ ucwords(str_replace('_',' ',$item->entity)) }}
                                         </td>
                                         <td>
                                             {{ ucfirst($item->qr_status) }}
