@@ -86,7 +86,7 @@ class PayoutRequest extends Component
             'account_holder_name'=>'required|string|min:3',
             'amount'=>'required|numeric|min:10',
             'payment_mode'=>'required',
-            'account_name'=>'required'
+            'bank_name'=>'required'
         ])->validate();
 
         $validateData['user_id']= auth()->user()->id;

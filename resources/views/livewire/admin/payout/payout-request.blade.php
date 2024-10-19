@@ -249,9 +249,9 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-0">
-                                    <label for="account_name" class="form-label">Account Name<span style="color: red;">*</span></label>
-                                    <input type="text" id="account_name" class="form-control @error('account_name') is-invalid @enderror" placeholder="Enter Account Name" wire:model.defer='payoutFormRequest.account_name' required/>
-                                    @error('payoutFormRequest.account_name')
+                                    <label for="bank_name" class="form-label">Bank <Noscript></Noscript>ame<span style="color: red;">*</span></label>
+                                    <input type="text" id="bank_name" class="form-control @error('account_name') is-invalid @enderror" placeholder="Enter Bank Name" wire:model.defer='payoutFormRequest.bank_name' required/>
+                                    @error('payoutFormRequest.bank_name')
                                         <div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
