@@ -19,25 +19,29 @@ class PaymentController extends Controller
     }
 
     public function index(){
+        // dd($_SERVER);
+        // dd($this->api->payment->fetchPaymentMethods());
         $order = $this->createOrder(10);
+        // dd($order);
         try{
-            $intent =$this->api->payment->createUpi(
-                array(
-                    "amount" => $order['amount']/100,
+            $request = [
+                "amount" => $order['amount']/100,
                     "currency" => "INR",
                     "order_id" => $order['id'],
-                    "email" => "nicknikhilyadavnick@gmail.com",
-                    "contact" => "6386565744",
-                    // "method" => "upi",
+                    "email" => "nicknikhilyadavnieck@gmail.com",
+                    "contact" => "6386565743",
+                    "method" => "upi",
                     "customer_id" => "cust_P9lEOdEtSHA1FT",
-                    "ip" => "192.168.0.103",
-                    "referer" => "https://login.groscope.com",
-                    "user_agent" => "Mozilla/5.0",
-                    "description" => "Test flow",
-                    "notes" => array("note_key" => "value1"),
+                    // "ip" => "106.219.152.38",
+                    // "referer" => "https://login.groscope.com",
+                    // "user_agent" => $_SERVER['HTTP_USER_AGENT'],
+                    "description" => "Payment For Groscery",
+                    // "notes" => array("note_key" => "value1"),
                     "upi" => array("flow" => "intent")
-                )
-            );
+            ];
+            // dd($request);
+            $intent =$this->api->payment->createUpi($request);
+            dd($intent);
         }catch(Exception $e) {
             dd($e);
         }
@@ -46,13 +50,15 @@ class PaymentController extends Controller
 
     public function createOrder($amount, $currency = 'INR')
     {
-        $order = $this->api->order->create([
+        /* $order = $this->api->order->create([
             'amount' => $amount * 100,  // Amount in paise (₹100 = 10000 paise)
             'currency' => 'INR',
             'payment_capture' => 1,
             'method' => 'upi'
-        ]);
-        return $order;
+        ]); */
+        return $this->api->order->create(array('amount' => 1000,'currency' => 'INR','receipt' => 'rcptid_11','payment' => array('capture' => 'automatic','capture_options' => array('automatic_expiry_period' => 12,'manual_expiry_period' => 7200,'refund_speed' => 'optimum'))));
+
+        
     }
 
     public function generateQrCode($orderId)
