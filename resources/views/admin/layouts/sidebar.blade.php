@@ -253,7 +253,7 @@
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.payout.payout.request') }}">Payout Request </a></li>
                                     @endcanany
                                 @endif
-                                
+                                <li><a href="{{ route('admin.fund.transaction.history') }}" style="color: #0A1D56;">Transaction History </a></li>
                                 <li><a href="javascript:void()" style="color: #0a1d56;">Bulk Payout</a></li>
                                 <li><a href="javascript:void()" style="color: #0a1d56;">Schedule Payout</a></li>
                                 <li><a href="javascript:void()" style="color: #0a1d56;">Payout Links</a></li>
@@ -271,6 +271,7 @@
                         <li><a href="javascript:void()" style="color: #0a1d56;">Api Wallet</a></li>
                     </ul>
                 </li>
+                
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="far fa-clock"></i>
