@@ -88,24 +88,20 @@
                                         <td>
                                             {{ $item->transaction_id }}
                                         </td>
-                                        <td>
-                                            {{ moneyFormatIndia($item->opening_balance) }}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->opening_amount)}}
                                         </td>
-                                        <td>
-                                            {{ moneyFormatIndia($item->amount) }}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->amount)}}
                                         </td>
-                                        <td>
-                                            {{ moneyFormatIndia($item->closing_balance) }}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
                                         </td>
-                                        <td>
-                                            @if ($item->transaction_type === 'debit')
-                                                {{ ucfirst($item->transaction_type) }}  ↑
-                                            @elseif ($item->transaction_type === 'credit')
-                                                {{ ucfirst($item->transaction_type) }}  ↓
-                                            @else
-                                                {{ ucfirst($item->transaction_type) }}
-                                            @endif
+                                        <td class="fw-bolder">
+                                            <span class="@if($item->transaction_type =='credit') text-success @else text-danger @endif; fw-bolder">  <i class="uil-arrow-down"></i> &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}</span>
+                                          
                                         </td>
+                                       
                                     </tr>
                                 @endforeach
                             </tbody>
