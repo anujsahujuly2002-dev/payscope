@@ -89,7 +89,7 @@
                                             {{ $item->transaction_id }}
                                         </td>
                                         <td class="fw-bolder">
-                                            &#x20B9;{{moneyFormatIndia($item->opening_amount)}}
+                                            &#x20B9;{{moneyFormatIndia($item->opening_balance)}}
                                         </td>
                                         <td class="fw-bolder">
                                             &#x20B9;{{moneyFormatIndia($item->amount)}}
@@ -98,7 +98,7 @@
                                             &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
                                         </td>
                                         <td class="fw-bolder">
-                                            <span class="@if($item->transaction_type =='credit') text-success @else text-danger @endif fw-bolder">  <i class="@if($item->transaction_type =='credit') fuil-arrow-down @else fuil-arrow-up @endif"></i></span> &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
+                                            <span class="@if($item->transaction_type =='credit') text-success @else text-danger @endif fw-bolder"> <i class="@if($item->transaction_type =='credit') uil-arrow-up @else uil-arrow-down @endif"></i></span> &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
                                           
                                         </td>
                                        
