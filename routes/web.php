@@ -80,6 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/virtul-request','virtualRequest')->name('virtual.request');
             Route::get('/qr-request','qrRequest')->name('qr.request');
             Route::get('/qr-collection','qrCollection')->name('qr.collection');
+            Route::get('/transaction-history','transactionHistory')->name('transaction.history');
         });
 
         // Payout Manager Route
