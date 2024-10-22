@@ -16,4 +16,8 @@ class TransactionHistory extends Model
         'closing_balnce',
         'transaction_type',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }
