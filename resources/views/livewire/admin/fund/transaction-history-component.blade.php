@@ -69,8 +69,6 @@
                                     <th scope="col">Opening Balance</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Closing Balance</th>
-                                    <th scope="col">Transaction Type</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,15 +90,12 @@
                                             &#x20B9;{{moneyFormatIndia($item->opening_balance)}}
                                         </td>
                                         <td class="fw-bolder">
-                                            &#x20B9;{{moneyFormatIndia($item->amount)}}
+                                            <span class="@if($item->transaction_type =='credit') text-success @else text-danger @endif fw-bolder"> <i class="@if($item->transaction_type =='credit') uil-arrow-up @else uil-arrow-down @endif"></i></span>&#x20B9;{{moneyFormatIndia($item->amount)}}
                                         </td>
                                         <td class="fw-bolder">
                                             &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
                                         </td>
-                                        <td class="fw-bolder">
-                                            <span class="@if($item->transaction_type =='credit') text-success @else text-danger @endif fw-bolder"> <i class="@if($item->transaction_type =='credit') uil-arrow-up @else uil-arrow-down @endif"></i></span> &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
-                                          
-                                        </td>
+                                        
                                        
                                     </tr>
                                 @endforeach
