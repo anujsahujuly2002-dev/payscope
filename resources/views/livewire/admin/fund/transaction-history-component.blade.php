@@ -98,7 +98,7 @@
                                             &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
                                         </td>
                                         <td class="fw-bolder">
-                                            <span class="@if($item->transaction_type =='credit') text-success @else text-danger @endif; fw-bolder">  <i class="uil-arrow-down"></i> &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}</span>
+                                            <span class="@if($item->transaction_type =='credit') text-success @else text-danger @endif fw-bolder">  <i class="@if($item->transaction_type =='credit') fuil-arrow-down @else fuil-arrow-up @endi"></i></span> &#x20B9;{{moneyFormatIndia($item->closing_balnce)}}
                                           
                                         </td>
                                        
