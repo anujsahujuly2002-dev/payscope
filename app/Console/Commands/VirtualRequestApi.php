@@ -312,16 +312,31 @@ class VirtualRequestApi extends Command
        endforeach;
 
        Log::info(["pending payout"=>implode(',',$pendingFundRequest)]); */
-       
-        $razorpayEventHistories = QRPaymentCollection::get();
+        $razorpayEventHistories = QRPaymentCollection::orderBy('id','DESC')->get();
         foreach($razorpayEventHistories as $razorpayEventHistories):
-            $payments = DB::table('razorap_event_histories')
-            ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(response, '$.qr_code.entity.id')) = ?", [$razorpayEventHistories->qr_code_id])
-            ->first();
-            
+          // Perform the query using the Laravel Query Builder
+            $payments = DB::table('razorap_event_histories')->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(response, '$.payload.qr_code.entity.id')) = ?", [$razorpayEventHistories->qr_code_id]) ->get(); // Use ->first() if you expect only one record\
     
-            
-            dd($payments);
+            foreach ($payments as $key => $value) {
+                // dd($value->event);
+                if($value->event==='qr_code.credited'):
+                    // dd();
+                    $data = json_decode($value->response);
+                    // dd($data->payload->qr_code->entity->payments_amount_received);
+                    QRPaymentCollection::where('qr_code_id',$data->payload->qr_code->entity->id)->update([
+                        'qr_status'=>$data->payload->qr_code->entity->status,
+                        'payments_amount_received'=>$data->payload->qr_code->entity->payments_amount_received/100,
+                        'payments_count_received'=>$data->payload->qr_code->entity->payments_count_received,
+                        'status_id'=>$data->payload->qr_code->entity->payments_amount_received !=0?'2':"3",
+                        'close_by'=>Carbon::parse($data->payload->qr_code->entity->close_by)->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                        'close_reason'=>$data->payload->qr_code->entity->close_reason,
+                        'utr_number'=>$data->payload->payment->entity->acquirer_data->rrn,
+                        'payment_id'=>$data->payload->payment->entity->id,
+                        'payer_name'=>$data->payload->payment->entity->vpa,
+                    ]);
+                endif;
+            }
+          
         endforeach;
     }
 }
