@@ -2,17 +2,20 @@
 
 namespace App\Console\Commands;
 
-use App\Livewire\Admin\Payout\PayoutRequest;
-use App\Models\ApiLog;
-use App\Models\FundRequest;
-use App\Models\PayoutRequestHistory;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\ApiLog;
 use App\Models\Wallet;
+use App\Models\FundRequest;
 use App\Models\VirtualRequest;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use App\Models\QRPaymentCollection;
+use App\Models\RazorapEventHistory;
 use Illuminate\Support\Facades\Log;
+use App\Models\PayoutRequestHistory;
+use Illuminate\Support\Facades\Http;
+use App\Livewire\Admin\Payout\PayoutRequest;
 
 class VirtualRequestApi extends Command
 {
@@ -111,23 +114,23 @@ class VirtualRequestApi extends Command
         endforeach;
         echo implode(',',$poutuid); */
 
-        $f_pointer=fopen("/var/www/html/RevisedPayment.csv",'r');
-        $i =0;
-        while(! feof($f_pointer)){
-            $arr=fgetcsv($f_pointer);
-            // print_r($arr);
-            if($i !=0):
-                $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
-                // dd($fundRequests);
-                // dd($fundRequests);
-                $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
-                    'closing_balnce'=>$arr['6'],
-                    'balance'=>$arr['3'],
-                ]);
-            endif;
-            $i++;
-        }
-        $pendingRequests = FundRequest::where('status_id','3')->whereIn('user_id',["9"])->orderBy('id','ASC')->get();
+        // $f_pointer=fopen("/var/www/html/RevisedPayment.csv",'r');
+        // $i =0;
+        // while(! feof($f_pointer)){
+        //     $arr=fgetcsv($f_pointer);
+        //     // print_r($arr);
+        //     if($i !=0):
+        //         $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
+        //         // dd($fundRequests);
+        //         // dd($fundRequests);
+        //         $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
+        //             'closing_balnce'=>$arr['6'],
+        //             'balance'=>$arr['3'],
+        //         ]);
+        //     endif;
+        //     $i++;
+        // }
+        // $pendingRequests = FundRequest::where('status_id','3')->whereIn('user_id',["9"])->orderBy('id','ASC')->get();
         // dd($pendingRequests->count());
        /*  $rejectedes =[
             'GROSC600358748588',
@@ -310,6 +313,15 @@ class VirtualRequestApi extends Command
 
        Log::info(["pending payout"=>implode(',',$pendingFundRequest)]); */
        
-
+        $razorpayEventHistories = QRPaymentCollection::get();
+        foreach($razorpayEventHistories as $razorpayEventHistories):
+            $payments = DB::table('razorap_event_histories')
+            ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(response, '$.qr_code.entity.id')) = ?", [$razorpayEventHistories->qr_code_id])
+            ->first();
+            
+    
+            
+            dd($payments);
+        endforeach;
     }
 }
