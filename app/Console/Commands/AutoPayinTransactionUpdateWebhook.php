@@ -57,7 +57,9 @@ class AutoPayinTransactionUpdateWebhook extends Command
                             'payments_count_received'=>$transaction['payments_count_received'],
                             'qr_close_at'=>Carbon::parse($transaction['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                             'qr_created_at'=>Carbon::parse($transaction['created_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-                            "status" => ucfirst(strip_tags($transaction->status->name)),
+                            "rrn_no" => ucfirst(strip_tags($transaction->utr_number)),
+                            "payer_upi_id" => ucfirst(strip_tags($transaction->payer_name)),
+                            "payment_id" => ucfirst(strip_tags($transaction->payment_id)),
                         ],
                     ];
                     try{

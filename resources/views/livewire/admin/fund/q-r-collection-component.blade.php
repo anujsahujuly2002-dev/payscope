@@ -86,13 +86,12 @@
                                     <th scope="col">QR Id</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Received Amount</th>
-                                    <th scope="col">Entity Status</th>
+                                    <th scope="col">Payment Details</th>
                                     <th scope="col">QR Current Status</th>
                                     <th scope="col">QR Close Reason</th>
+                                    <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
-                                    @canany(['approved-qr_request-request'])
-                                        <th scope="col" style="width: 200px;">Action</th>
-                                    @endcanany
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,20 +112,25 @@
                                         <td>
                                             {{ ($item->qr_code_id) }}
                                         </td>
-                                        <td >
-                                        {{ moneyFormatIndia($item->payment_amount) }}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->payment_amount)}}
                                         </td>
-                                        <td>
-                                            {{ moneyFormatIndia($item->payments_amount_received) }}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->payments_amount_received)}}
                                         </td>
+                                        
                                         <td>
-                                            {{ ucwords(str_replace('_',' ',$item->entity)) }}
+                                            Payment Id:-{{$item->payment_id}} <br> UPI Id:-{{$item->payer_name}} <br>
+                                            UTR Number :-{{$item->utr_number}}
                                         </td>
                                         <td>
                                             {{ ucfirst($item->qr_status) }}
                                         </td>
                                         <td>
                                             {{ ucfirst($item->close_reason )}}
+                                        </td>
+                                        <td>
+                                            {{$item->created_at}}
                                         </td>
                                         <td>
                                             {!! $item->status->name !!}
