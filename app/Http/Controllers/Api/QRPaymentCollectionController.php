@@ -205,7 +205,7 @@ class QRPaymentCollectionController extends Controller
                 'response'=>json_encode($request->all()),
             ]); 
             if($paymentResponse['event']==='qr_code.credited'):
-                QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['qr_code']['id'])->update([
+                QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['qr_code']['entity']['id'])->update([
                     'qr_status'=>$paymentResponse['payload']['qr_code']['entity']['status'],
                     'payments_amount_received'=>$paymentResponse['payload']['qr_code']['entity']['payments_amount_received']/100,
                     'payments_count_received'=>$paymentResponse['payload']['qr_code']['entity']['payments_count_received'],
