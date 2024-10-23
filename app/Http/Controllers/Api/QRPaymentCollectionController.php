@@ -170,25 +170,30 @@ class QRPaymentCollectionController extends Controller
 
     public function fetchQrStatus(FetchQrStatusRequest $request) {
         $userId = $request->attributes->get('user_id');
+        $data = [];
         $qRPaymentCollection = QRPaymentCollection::where(['user_id'=>$userId,'qr_code_id'=>$request->input('qr_code_id')])->first();
-        // dd($qRPaymentCollection->status->name);
-        $data =[
-            'qr_code_id'=>$qRPaymentCollection['id'],
-            'entity'=>$qRPaymentCollection['entity'],
-            'name'=>$qRPaymentCollection['name'],
-            'usage'=>$qRPaymentCollection['usage'],
-            'type'=>$qRPaymentCollection['type'],
-            'image_url'=>$qRPaymentCollection['image_url'],
-            'payment_amount'=>$qRPaymentCollection['payment_amount'],
-            'qr_status'=>$qRPaymentCollection['qr_status'],
-            'description'=>$qRPaymentCollection['description'],
-            'fixed_amount'=>$qRPaymentCollection['fixed_amount']?'1':'0',
-            'payments_amount_received'=>$qRPaymentCollection['payments_amount_received'],
-            'payments_count_received'=>$qRPaymentCollection['payments_count_received'],
-            'qr_close_at'=>Carbon::parse($qRPaymentCollection['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-            'qr_created_at'=>Carbon::parse($qRPaymentCollection['created_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-            "status" => ucfirst(strip_tags($qRPaymentCollection->status->name)),
-        ];
+        if(!is_null($qRPaymentCollection)):
+            $data =[
+                'qr_code_id'=>$qRPaymentCollection['qr_code_id'],
+                'entity'=>$qRPaymentCollection['entity'],
+                'name'=>$qRPaymentCollection['name'],
+                'usage'=>$qRPaymentCollection['usage'],
+                'type'=>$qRPaymentCollection['type'],
+                'image_url'=>$qRPaymentCollection['image_url'],
+                'payment_amount'=>$qRPaymentCollection['payment_amount'],
+                'qr_status'=>$qRPaymentCollection['qr_status'],
+                'description'=>$qRPaymentCollection['description'],
+                'fixed_amount'=>$qRPaymentCollection['fixed_amount']?'1':'0',
+                'payments_amount_received'=>$qRPaymentCollection['payments_amount_received'],
+                'payments_count_received'=>$qRPaymentCollection['payments_count_received'],
+                'qr_close_at'=>Carbon::parse($qRPaymentCollection['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                'qr_created_at'=>Carbon::parse($qRPaymentCollection['created_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                "status" => ucfirst(strip_tags($qRPaymentCollection->status->name)),
+                "rrn_no" => ucfirst(strip_tags($qRPaymentCollection->utr_number)),
+                "payer_upi_id" => ucfirst(strip_tags($qRPaymentCollection->payer_name)),
+                "payment_id" => ucfirst(strip_tags($qRPaymentCollection->payment_id)),
+            ];
+        endif;
 
         return response()->json([
             'status'=>true,
