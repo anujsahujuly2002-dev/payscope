@@ -8,11 +8,10 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $paymentIn['amount'] ?? 0 }}</span></h4>
+                                class="counterup">{{ formatAmount($totalAmountPayIn) }} Lakh.</span></h4>
                         <p class="text-white mb-0 ">Total Payment In</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
-                                class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since till now
                     </p>
                 </div>
             </div>
@@ -25,14 +24,10 @@
                         {{-- <div id="growth-chart1" data-colors='["--bs-success"]'></div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $rejectedPayment['amount'] ?? 0 }}</span></h4>
-                        <p class="text-white mb-0">Total Rejected Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ formatAmount($totalPayOut) }} Lakh.</span></h4>
+                        <p class="text-white mb-0">Total  Payout</p>
                     </div>
-
-                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i
-                                class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since last week
-                    </p>
+                    <p class="text-white mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>0%</span> since till now</p>
                 </div>
             </div>
         </div> <!-- end col-->
@@ -44,12 +39,10 @@
                         {{-- <div id="growth-chart2" data-colors='["--bs-success"]'> </div> --}}
                     </div>
                     <div>
-                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span
-                                class="counterup">{{ $payout['amount'] ?? 0 }}</span></h4>
-                        <p class="text-white mb-0">Total Payout</p>
+                        <h4 class="mb-1 mt-1 text-white"> &#x20B9; <span class="counterup">{{ formatAmount($totalPayOutToday) }}  Lakh.</span></h4>
+                        <p class="text-white mb-0">Total Today Payout</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
-                                class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since today
                     </p>
                 </div>
             </div>
@@ -63,11 +56,10 @@
                     </div>
                     <div>
                         <h4 class="mb-1 mt-1 text-white">&#x20B9;<span
-                                class="counterup">{{ $commission['amount'] ?? 0 }}</span></h4>
+                                class="counterup">{{ formatAmount($totalCommission) }}  Lakh.</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i
-                                class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since last week
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since 
                     </p>
                 </div>
             </div>
@@ -261,7 +253,7 @@
                         <div class="table-responsive">
                             <table class="table table-borderless table-centered table-nowrap">
                                 <tbody>
-                                    @foreach ($recentTransactions as $transactions)
+                                    {{-- @foreach ($recentTransactions as $transactions)
                                         <tr>
                                             <td style="width: 20px;">
                                                 <img src="{{ URL::asset('/assets/images/users/vector-team.png') }}"
@@ -282,7 +274,7 @@
                                                 &#x20B9;{{ moneyFormatIndia($transactions->amount) }}
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div> <!-- end table-responsive-->
@@ -436,7 +428,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($recentTransactions as $transactions)
+                                {{-- @foreach ($recentTransactions as $transactions)
                                     <tr>
                                         <td>
                                             <div class="form-check font-size-16">
@@ -465,7 +457,7 @@
                                                     wire:click.prevent="transaction({{ $transactions->id }})"><i>Slip</a>
                                             </div>
                                         </td>
-                                @endforeach
+                                @endforeach --}}
                                 </tr>
                             </tbody>
                         </table>
