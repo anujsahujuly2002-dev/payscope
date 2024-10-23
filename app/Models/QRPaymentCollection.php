@@ -27,7 +27,10 @@ class QRPaymentCollection extends Model
         'status_id',
         'close_by',
         'is_payment_settel',
-        'close_reason'
+        'close_reason',
+        'payer_name',
+        'utr_number',
+        'payment_id',
     ];
 
     public function status() {

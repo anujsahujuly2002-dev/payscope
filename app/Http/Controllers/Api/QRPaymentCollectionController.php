@@ -212,6 +212,9 @@ class QRPaymentCollectionController extends Controller
                     'status_id'=>$paymentResponse['payload']['qr_code']['entity']['payments_amount_received'] !=0?'2':"3",
                     'close_by'=>Carbon::parse($paymentResponse['payload']['qr_code']['entity']['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                     'close_reason'=>$paymentResponse['payload']['qr_code']['entity']['close_reason'],
+                    'utr_number'=>$paymentResponse['payload']['payment']['entity']['acquirer_data']['rrn'],
+                    'payment_id'=>$paymentResponse['payload']['payment']['entity']['id'],
+                    'payer_name'=>$paymentResponse['payload']['payment']['entity']['vpa'],
                 ]);
             endif;
         }catch (Exception $e){
