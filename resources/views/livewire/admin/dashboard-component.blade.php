@@ -231,13 +231,12 @@
     </div> <!-- end row-->
 
     <div class="row">
-        <div class="col-xl-4">
+        <div class="col-xl-8">
             <div class="card">
                 <div class="card-body">
-                    <div class="float-end">
+                   {{--  <div class="float-end">
                         <div class="dropdown">
-                            <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span style="">All Members<i class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
@@ -246,38 +245,56 @@
                                 <a class="dropdown-item" style="" href="#">Join Date</a>
                             </div>
                         </div>
-                    </div>
-                    <h4 class="card-title mb-4" style="">Top Users</h4>
-
+                    </div> --}}
+                    <h4 class="card-title mb-4" style="">Recent Payment Recived</h4>
                     <div data-simplebar style="max-height: 339px;">
                         <div class="table-responsive">
-                            <table class="table table-borderless table-centered table-nowrap">
+                            <table class="table table-centered table-nowrap mb-0">
+                                <thead class="table-light">
+                                    <tr style="">
+                                        <th>Sr Name</th>
+                                        <th>User Name</th>
+                                        <th>Payer Name</th>
+                                        <th>Amount</th>
+                                        <th>Created At</th>
+                                        <th>Payment Status</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     {{-- @foreach ($recentTransactions as $transactions)
                                         <tr>
-                                            <td style="width: 20px;">
-                                                <img src="{{ URL::asset('/assets/images/users/vector-team.png') }}"
-                                                    class="avatar-xs rounded-circle " alt="...">
+                                            <td>
+                                                <div class="form-check font-size-16">
+                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>{{ $transactions->id }}</td>
+                                            <td>{{ $transactions->user->name }}</td>
+                                            <td>
+                                                {{ $transactions->created_at }}
                                             </td>
                                             <td>
-                                                <h6 class="font-size-15 mb-1 fw-normal">
-                                                    {{ $transactions->user->name }}
-                                                </h6>
-                                                <p class="text-muted font-size-13 mb-0"><i
-                                                        class="mdi mdi-map-marker"></i> Location</p>
-                                            </td>
-                                            <td><span
-                                                    class="{{ $transactions->status_class }}">{{ strip_tags($transactions->status->name) }}</span>
-                                            </td>
-                                            <td class="text-muted fw-semibold text-end">
-                                                <i class="icon-xs icon me-2 "></i>
                                                 &#x20B9;{{ moneyFormatIndia($transactions->amount) }}
                                             </td>
-                                        </tr>
+                                            <td>
+                                                <span class="">{{ strip_tags($transactions->status->name) }}</span>
+                                            </td>
+                                            <td>
+                                                <i class="fab fa-cc-mastercard me-1"></i> {{ $transactions->type }}
+                                            </td>
+                                            <td>
+                                                <div class="mb-3 d-flex justify-content-center">
+                                                    <a href="javascript:void(0);"
+                                                        class="btn btn-success waves-effect waves-light align-self-end"
+                                                        wire:click.prevent="transaction({{ $transactions->id }})"><i>Slip</a>
+                                                </div>
+                                            </td>
                                     @endforeach --}}
+                                    </tr>
                                 </tbody>
                             </table>
-                        </div> <!-- end table-responsive-->
+                        </div>
                     </div> <!-- data-sidebar-->
                 </div><!-- end card-body-->
             </div> <!-- end card-->
@@ -324,7 +341,7 @@
             </div>
         </div>
 
-        <div class="col-xl-4">
+        {{-- <div class="col-xl-4">
             <div class="card">
                 <div class="card-body">
                     <div class="float-end">
@@ -399,7 +416,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <!-- end row -->
 
