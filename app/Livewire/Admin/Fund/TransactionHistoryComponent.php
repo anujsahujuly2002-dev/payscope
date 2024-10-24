@@ -42,7 +42,7 @@ class TransactionHistoryComponent extends Component
             ->when($this->value, function($query) {
                 $query->where('transaction_id', $this->value);
             })
-            ->latest()->paginate(100);
+            ->orderBy('id','desc')->paginate(100);
         return view('livewire.admin.fund.transaction-history-component',[
           'transaction_history'=> $transaction_history
         ]);
