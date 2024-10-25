@@ -102,6 +102,7 @@ trait EkoPayoutTrait {
             'payout_api'=>"eko",
             'gst'=>calculateGst($data['amount'])
         ]);
+        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+calculateGst($data['amount']),'debit');
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = 'initiator_id=9519035604&amount='.$data['amount'].'&payment_mode='.$ekoPaymentMode[$this->getPaymentModesName($data['payment_mode'])].'&client_ref_id='.$data['payoutid'].'&recipient_name='.$data['account_holder_name'].'&ifsc='.$data['ifsc_code'].'&account='.$data['account_number'].'&service_code=45&sender_name=test&source=NEWCONNECT&tag=Logistic&beneficiary_account_type=1';
         $res = apiCallWitBody($header,$apiUrl,$requestParameter,true,$data['payoutid']);
