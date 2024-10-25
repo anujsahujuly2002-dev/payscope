@@ -202,5 +202,11 @@ if(!function_exists('getBalance')):
     }
 endif;
 
+if(!function_exists('calculateGst')):
+    function calculateGst($amount) {
+        return   $amount*18/100;
+    }
+endif;
+
 
 

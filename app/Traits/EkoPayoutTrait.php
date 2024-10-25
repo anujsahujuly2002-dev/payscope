@@ -76,7 +76,7 @@ trait EkoPayoutTrait {
             ];
         }
         $main_amount = $walletAmount->amount;
-        $closing_balance = $walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']));
+        $closing_balance = $walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+calculateGst($data['amount']);
         Wallet::where('user_id',$data['user_id'])->update([
             // 'amount'=>$walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
             'amount'=>$closing_balance ,
@@ -93,36 +93,53 @@ trait EkoPayoutTrait {
             'charge'=>getCommission("dmt",$data['amount'],$data['user_id']),
             'status_id'=>'1',
             'credited_by'=>$adminId->id,
-            // 'balance'=>$walletAmount->amount,
             'balance'=>$main_amount,
-            // 'closing_balnce'=>$walletAmount->amount - ($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
             'closing_balnce'=>$closing_balance ,
             'type'=>"debit",
             'transtype'=>"fund",
             'product'=>'payout',
-            'remarks'=>'Bank Settlement'
+            'remarks'=>'Bank Settlement',
+            'payout_api'=>"eko",
+            'gst'=>calculateGst($data['amount'])
         ]);
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = 'initiator_id=9519035604&amount='.$data['amount'].'&payment_mode='.$ekoPaymentMode[$this->getPaymentModesName($data['payment_mode'])].'&client_ref_id='.$data['payoutid'].'&recipient_name='.$data['account_holder_name'].'&ifsc='.$data['ifsc_code'].'&account='.$data['account_number'].'&service_code=45&sender_name=test&source=NEWCONNECT&tag=Logistic&beneficiary_account_type=1';
         $res = apiCallWitBody($header,$apiUrl,$requestParameter,true,$data['payoutid']);
-        dd( $res );
         if($res['data'] != ""){
             if(isset($res['status']) && $res['status']=='0' && $res['response_status_id']=='0'):
                 if($res['data']['tx_status']=='0'):
-                    FundRequest::where('id',$fundRequest->id)->update([
-                        'status_id'=>'2',
-                        'payout_ref' =>$res['data']['tid'],
-                        'utr_number' =>$res['data']['bank_ref_num'],
-                    ]);
-                    PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
-                        'status_id'=>'2',
-                    ]);
-                    return [
-                        'status'=>'0005',
-                        'msg'=>'Your'.$res['message'],
-                        'txn_id'=>$data['payoutid'],
-                        'rrn_no'=>$res['data']['bank_ref_num']
-                    ];
+                    if($res['data']['bank_ref_num'] !=''):
+                        FundRequest::where('id',$fundRequest->id)->update([
+                            'status_id'=>'2',
+                            'payout_ref' =>$res['data']['tid'],
+                            'utr_number' =>$res['data']['bank_ref_num'],
+                        ]);
+                        PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                            'status_id'=>'2',
+                        ]);
+                        return  [
+                            'status'=>'0005',
+                            'statusCode'=>"pending",
+                            'txn_id'=>$data['payoutid'],
+                            'msg'=>"Your transaction was successful! We’re now updating your records through our webhook system. Please wait a few moments, and your transaction status will be updated automatically.",
+                        ];
+                    else:
+                        FundRequest::where('id',$fundRequest->id)->update([
+                            'status_id'=>'1',
+                            'payout_ref' =>$res['data']['tid'],
+                            'utr_number' =>$res['data']['bank_ref_num'],
+                        ]);
+                        PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                            'status_id'=>'1',
+                        ]);
+                        return  [
+                            'status'=>'0005',
+                            'statusCode'=>"pending",
+                            'txn_id'=>$data['payoutid'],
+                            'msg'=>"Your transaction was successful! We’re now updating your records through our webhook system. Please wait a few moments, and your transaction status will be updated automatically.",
+                        ];
+                    endif;
+                   
                 else:
                     FundRequest::where('id',$fundRequest->id)->update([
                         'status_id'=>'1',
@@ -132,11 +149,11 @@ trait EkoPayoutTrait {
                     PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                         'status_id'=>'1',
                     ]);
-                    return [
-                        'status'=>'0009',
-                        'msg'=>'Your'.$res['message'],
+                    return  [
+                        'status'=>'0005',
+                        'statusCode'=>"pending",
                         'txn_id'=>$data['payoutid'],
-                        'rrn_no'=>$res['data']['bank_ref_num']
+                        'msg'=>"Your transaction was successful! We’re now updating your records through our webhook system. Please wait a few moments, and your transaction status will be updated automatically.",
                     ];
                 endif;                
             else:
