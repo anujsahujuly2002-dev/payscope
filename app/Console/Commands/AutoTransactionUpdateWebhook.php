@@ -37,7 +37,7 @@ class AutoTransactionUpdateWebhook extends Command
         foreach ($getTransactions as $transaction):
             if(in_array($transaction->status_id,[2,3,4])):
                 $webhookUrl = ApiToken::where('user_id', $transaction->user_id)->latest()->first();
-                if (!is_nulll($webhookUrl) && $webhookUrl->domain !== NULL) {
+                if (!is_null($webhookUrl) && $webhookUrl->domain !== NULL) {
                     $parameters = [
                         "status" => true,
                         "msg" => "You're request has been complete",
