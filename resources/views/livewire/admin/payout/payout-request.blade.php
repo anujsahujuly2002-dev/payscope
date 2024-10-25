@@ -5,7 +5,10 @@
         <div class="col-md-12">
             <div class="mb-3 d-flex justify-content-end">
                 @can('payout-new-request')
-                    <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-end" wire:click.prevent='payoutRequest'><i class="mdi mdi-plus me-2"></i>Add New</a>
+                    <a href="javascript:void(0);"
+                    class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                    style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                     wire:click.prevent='payoutRequest'><i class="mdi mdi-plus"></i></a>
                 @endcan
             </div>
         </div>
@@ -68,10 +71,10 @@
                                     <th scope="col">User Details</th>
                                     <th scope="col">Bank Details</th>
                                     <th scope="col">Reference Details</th>
-                                    <th scope="col">Opening balance</th>
+                                    {{-- <th scope="col">Opening balance</th> --}}
                                     <th scope="col">Order amount</th>
                                     <th scope="col">Debit charges</th>
-                                    <th scope="col">Closing balance</th>
+                                    {{-- <th scope="col">Closing balance</th> --}}
                                     <th scope="col">Remark</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
@@ -104,15 +107,15 @@
                                             Transaction Id:-{{$payoutReq->payout_ref}} <br> Payout Id:-{{$payoutReq->payout_id}} <br>
                                             UTR Number :-{{$payoutReq->utr_number}}
                                         </td>
-                                        <td class="fw-bolder">
-                                            &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->balance)}}</td>
+                                        {{-- <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->balance)}}</td> --}}
                                         <td class="fw-bolder">
                                             <span class="text-danger fw-bolder">&#8722;</span> &#x20B9;{{moneyFormatIndia($payoutReq->amount)}}
                                         </td>
                                         <td class="fw-bolder">
                                             <span class="text-danger fw-bolder">&#8722;</span>&#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->charge)}}
                                         </td>
-                                        <td class="fw-bolder"> &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->closing_balnce)}}
+                                        {{-- <td class="fw-bolder"> &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->closing_balnce)}} --}}
                                         </td>
                                         <td>
                                             {{$payoutReq?->payoutTransactionHistories?->remarks}}
@@ -243,6 +246,13 @@
                                     <div class="invalid-feedback">
                                         {{$message}}
                                         </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4 mb-0">
+                                    <label for="bank_name" class="form-label">Bank <Noscript></Noscript>ame<span style="color: red;">*</span></label>
+                                    <input type="text" id="bank_name" class="form-control @error('account_name') is-invalid @enderror" placeholder="Enter Bank Name" wire:model.defer='payoutFormRequest.bank_name' required/>
+                                    @error('payoutFormRequest.bank_name')
+                                        <div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                             </div>

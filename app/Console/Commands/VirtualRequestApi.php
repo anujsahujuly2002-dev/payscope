@@ -2,17 +2,20 @@
 
 namespace App\Console\Commands;
 
-use App\Livewire\Admin\Payout\PayoutRequest;
-use App\Models\ApiLog;
-use App\Models\FundRequest;
-use App\Models\PayoutRequestHistory;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\ApiLog;
 use App\Models\Wallet;
+use App\Models\FundRequest;
 use App\Models\VirtualRequest;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use App\Models\QRPaymentCollection;
+use App\Models\RazorapEventHistory;
 use Illuminate\Support\Facades\Log;
+use App\Models\PayoutRequestHistory;
+use Illuminate\Support\Facades\Http;
+use App\Livewire\Admin\Payout\PayoutRequest;
 
 class VirtualRequestApi extends Command
 {
@@ -111,23 +114,23 @@ class VirtualRequestApi extends Command
         endforeach;
         echo implode(',',$poutuid); */
 
-        $f_pointer=fopen("/var/www/html/RevisedPayment.csv",'r');
-        $i =0;
-        while(! feof($f_pointer)){
-            $arr=fgetcsv($f_pointer);
-            // print_r($arr);
-            if($i !=0):
-                $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
-                // dd($fundRequests);
-                // dd($fundRequests);
-                $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
-                    'closing_balnce'=>$arr['6'],
-                    'balance'=>$arr['3'],
-                ]);
-            endif;
-            $i++;
-        }
-        $pendingRequests = FundRequest::where('status_id','3')->whereIn('user_id',["9"])->orderBy('id','ASC')->get();
+        // $f_pointer=fopen("/var/www/html/RevisedPayment.csv",'r');
+        // $i =0;
+        // while(! feof($f_pointer)){
+        //     $arr=fgetcsv($f_pointer);
+        //     // print_r($arr);
+        //     if($i !=0):
+        //         $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
+        //         // dd($fundRequests);
+        //         // dd($fundRequests);
+        //         $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
+        //             'closing_balnce'=>$arr['6'],
+        //             'balance'=>$arr['3'],
+        //         ]);
+        //     endif;
+        //     $i++;
+        // }
+        // $pendingRequests = FundRequest::where('status_id','3')->whereIn('user_id',["9"])->orderBy('id','ASC')->get();
         // dd($pendingRequests->count());
        /*  $rejectedes =[
             'GROSC600358748588',
@@ -309,7 +312,31 @@ class VirtualRequestApi extends Command
        endforeach;
 
        Log::info(["pending payout"=>implode(',',$pendingFundRequest)]); */
-       
-
+        $razorpayEventHistories = QRPaymentCollection::orderBy('id','DESC')->get();
+        foreach($razorpayEventHistories as $razorpayEventHistories):
+          // Perform the query using the Laravel Query Builder
+            $payments = DB::table('razorap_event_histories')->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(response, '$.payload.qr_code.entity.id')) = ?", [$razorpayEventHistories->qr_code_id]) ->get(); // Use ->first() if you expect only one record\
+    
+            foreach ($payments as $key => $value) {
+                // dd($value->event);
+                if($value->event==='qr_code.credited'):
+                    // dd();
+                    $data = json_decode($value->response);
+                    // dd($data->payload->qr_code->entity->payments_amount_received);
+                    QRPaymentCollection::where('qr_code_id',$data->payload->qr_code->entity->id)->update([
+                        'qr_status'=>$data->payload->qr_code->entity->status,
+                        'payments_amount_received'=>$data->payload->qr_code->entity->payments_amount_received/100,
+                        'payments_count_received'=>$data->payload->qr_code->entity->payments_count_received,
+                        'status_id'=>$data->payload->qr_code->entity->payments_amount_received !=0?'2':"3",
+                        'close_by'=>Carbon::parse($data->payload->qr_code->entity->close_by)->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                        'close_reason'=>$data->payload->qr_code->entity->close_reason,
+                        'utr_number'=>$data->payload->payment->entity->acquirer_data->rrn,
+                        'payment_id'=>$data->payload->payment->entity->id,
+                        'payer_name'=>$data->payload->payment->entity->vpa,
+                    ]);
+                endif;
+            }
+          
+        endforeach;
     }
 }

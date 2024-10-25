@@ -19,6 +19,27 @@ class FundController extends Controller
         return view('admin.fund-manager.qr-request');
     }
 
+    public function transactionHistory() {
+        return view('admin.fund-manager.transaction-history');
+    }
+
+    public function qrCollection() {
+        return view('admin.fund-manager.qr-collection');
+    }
+
+
+    public function autoPayInTransaction() {
+        return view('admin.fund-manager.auto_payin_transaction_updates');
+    }
+
+    public function autoTransactionUpdate() {
+        return view('admin.fund-manager.auto-transaction-update-webhook');
+    }
+
+    
+
+
+
 
     
 

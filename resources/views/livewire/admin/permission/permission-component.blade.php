@@ -24,7 +24,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 d-flex justify-content-center">
                                         @can('permssion-create')
-                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='addPermission'><i class="mdi mdi-plus me-2"></i> Add New</a>
+                                            <a href="javascript:void(0);" class="btn btn-success waves-effect waves-light align-self-center" wire:click.prevent='addPermission'><i class="mdi mdi-plus"></i></a>
                                         @endcan
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col mb-0">
-                                    <label for="role-name" class="form-label">Permission Group</label>
+                                    <label for="role-name" class="form-label">Permission Group<span style="color: red;">*</span></label>
                                     <input type="text" id="role-name" class="form-control  @error('group') is-invalid @enderror" placeholder="Enter Permission Group" wire:model.defer='state.group'/>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -189,7 +189,7 @@
                                     @enderror
                                 </div>
                                 <div class="col mb-0">
-                                    <label for="role-name" class="form-label">Permission Name</label>
+                                    <label for="role-name" class="form-label">Permission Name<span style="color: red;">*</span></label>
                                     <input type="text" id="role-name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Permission Name" wire:model.defer='state.name'/>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">

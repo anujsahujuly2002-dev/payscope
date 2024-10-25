@@ -215,6 +215,14 @@
                                     <li><a style="color: #0a1d56;" href="{{ route('admin.fund.virtual.request') }}">Virtual Request</a></li>
                                 @endcanany
                             @endif
+                            @if (['qr-request-add-fund', 'qr-request-add-list'])
+                                @canany(['qr-request-add-fund', 'qr-request-list'])
+                                    <li><a style="color: #0a1d56;" href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
+                                @endcanany
+                            @endif
+
+                            <li><a href="{{ route('admin.fund.qr.collection') }}" style="color: #0A1D56;">QR Collection </a></li>
+
                             <li><a href="javascript:void()" style="color: #0a1d56;">Transfer Return</a></li>
                             {{-- @if (['payout-request', 'payout-new-request'])
                                 @canany(['payout-request', 'payout-new-request'])
@@ -245,12 +253,7 @@
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.payout.payout.request') }}">Payout Request </a></li>
                                     @endcanany
                                 @endif
-                                @if (['qr-request-add-fund', 'qr-request-add-list'])
-                                    @canany(['qr-request-add-fund', 'qr-request-list'])
-                                        <li><a style="color: #0a1d56;" href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
-                                    @endcanany
-                                @endif
-
+                                <li><a href="{{ route('admin.fund.transaction.history') }}" style="color: #0A1D56;">Transaction History </a></li>
                                 <li><a href="javascript:void()" style="color: #0a1d56;">Bulk Payout</a></li>
                                 <li><a href="javascript:void()" style="color: #0a1d56;">Schedule Payout</a></li>
                                 <li><a href="javascript:void()" style="color: #0a1d56;">Payout Links</a></li>
@@ -268,6 +271,7 @@
                         <li><a href="javascript:void()" style="color: #0a1d56;">Api Wallet</a></li>
                     </ul>
                 </li>
+                
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="far fa-clock"></i>
@@ -285,8 +289,9 @@
                         'api-edit',
                         'manage-setting',
                         'setting-update',
+                        'callback-token-create','callback-token-delete','login-session',
                     ]))
-                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit'])
+                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'callback-token', 'callback-token-create','callback-token-delete','login-session',])
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uil-cog"></i>
@@ -304,8 +309,8 @@
                                         'callback-token-create',
                                         'callback-token-delete',
                                     ]))
-                                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'login-session',
-                                        'api-logs', 'callback-token', 'callback-token-create', 'callback-token-delete'])
+                                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit',
+                                        'api-logs'])
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.admin-setting.api.list') }}">Api Manager </a></li>
                                     @endcanany
                                 @endif
@@ -407,6 +412,17 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-exchange"></i>
+                        <span style="color: #0a1d56;">DMT</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a style="color: #0a1d56;" href="{{ route('admin.domestic.money.transfer.recipient.list') }}">Recipient List</a></li>
+                        <li><a style="color: #0a1d56;" href="javascript:void()">Money Transfer</a></li>
+                    </ul>
+                </li>
+                
                 <li>
                     <a style="color: #0a1d56;" href="{{ route('admin.logout') }}">
                         <i class="fas fa-sign-out-alt"></i>

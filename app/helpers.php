@@ -10,6 +10,7 @@ use App\Models\ApiPartner;
 use App\Models\Commission;
 use App\Models\PaymentMode;
 use App\Models\OperatorManager;
+use App\Models\TransactionHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -29,8 +30,12 @@ if(!function_exists('apiCall')):
             endif;
             return json_decode($res,true);
         } catch (\Exception $e) {
-            dd($e);
-            return $e->getMessage();
+            return [
+                'status'=>false,
+                'statusCode'=>$e->getCode(),
+                'msg'=>$e->getMessage(),
+            
+            ];
         }
 
     }
@@ -169,23 +174,33 @@ endif;
 
 if (!function_exists('formatAmount')) {
   function formatAmount($amount) {
-        if ($amount >= 10000000) {
-            return [
-                "unit"=>"Cr",
-                "amount"=>number_format($amount / 10000000, 2),
-            ];
-        } elseif ($amount >= 100000) {
-            return [
-                "unit"=>"L",
-                "amount"=>number_format($amount / 100000, 2),
-            ];
-        } elseif ($amount >= 1000) {
-            return[
-                "unit"=>"K",
-                "amount"=> number_format($amount / 1000, 2),
-            ];
-        } else {
-            return $amount;
-        }
+    $amountInCrores = $amount / 100000;
+    // Optional: Format the result to two decimal places
+    return number_format($amountInCrores,2);
+    
     }
 }
+
+
+if(!function_exists('addTransactionHistory')):
+    function  addTransactionHistory($transaction_id,$user_id,$amount,$transction_type) {
+        $closingAmount = $transction_type =='credit'?getBalance($user_id) + $amount:getBalance($user_id) - $amount;
+        TransactionHistory::create([
+            'user_id'=>$user_id,
+            'transaction_id'=>$transaction_id,
+            'opening_balance'=>getBalance($user_id),
+            'amount'=>$amount,
+            'closing_balnce'=>$closingAmount,
+            'transaction_type'=>$transction_type
+        ]);
+    }
+endif;
+
+if(!function_exists('getBalance')):
+    function getBalance($user_id) {
+        return Wallet::where('user_id',$user_id)->first()->amount;
+    }
+endif;
+
+
+

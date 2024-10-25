@@ -22,6 +22,11 @@ class ApiPartner extends Model
         'addhar_card',
         'scheme_id',
         'website',
+        'company_name',
+        'company_gst_number',
+        'company_cin_number',
+        'company_pan',
+        'razorpay_customer_id'
     ];
 
     public function parentDetails() {
@@ -34,5 +39,9 @@ class ApiPartner extends Model
 
     public function scheme() {
         return $this->belongsTo(Scheme::class,'scheme_id','id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class,'user_id','id');
     }
 }
