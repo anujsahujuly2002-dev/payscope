@@ -24,8 +24,8 @@ class FundRequestController extends Controller
        $request['user_id'] =  $request->attributes->get('user_id');
        $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
     //    $response = $this->payoutApiRequest($request);
-    //    $response = $this->ekoPayoutApi($request);;
-        $response = $this->payNProPayout($request);
+       $response = $this->ekoPayoutApi($request);;
+        // $response = $this->payNProPayout($request);
         return $response;
     }
 
