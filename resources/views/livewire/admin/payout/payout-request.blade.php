@@ -74,7 +74,7 @@
                                     {{-- <th scope="col">Opening balance</th> --}}
                                     <th scope="col">Order amount</th>
                                     <th scope="col">Debit charges</th>
-                                    {{-- <th scope="col">Closing balance</th> --}}
+                                    <th scope="col">GST Amount</th>
                                     <th scope="col">Remark</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
@@ -115,7 +115,7 @@
                                         <td class="fw-bolder">
                                             <span class="text-danger fw-bolder">&#8722;</span>&#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->charge)}}
                                         </td>
-                                        {{-- <td class="fw-bolder"> &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->closing_balnce)}} --}}
+                                        <td class="fw-bolder"> &#x20B9;{{moneyFormatIndia($payoutReq?->payoutTransactionHistories?->gst)}}
                                         </td>
                                         <td>
                                             {{$payoutReq?->payoutTransactionHistories?->remarks}}
