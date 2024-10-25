@@ -33,7 +33,7 @@ class AutoPayinTransactionUpdateWebhook extends Command
     public function handle()
     {
         try{
-            $getPayInTransactions = QRPaymentCollection::where('id', '>=', function ($query) {
+            $getPayInTransactions = QRPaymentCollection::where('id', '>', function ($query) {
                 $query->from('auto_payin_transaction_updates')->selectRaw('COALESCE(MAX(qr_collection_id))');
             })->get();
             if($getPayInTransactions->count() >0):
