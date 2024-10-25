@@ -48,7 +48,7 @@ class QRPaymentCollectionController extends Controller
         file_put_contents($imagePath.'/'.$imageName, file_get_contents($qrImage));
 
         // Instead of encoding the image, store the URL or path
-        $imageUrl = url('public/storage/qr_images/').'/'.$imageName;
+        $imageUrl = url('storage/qr_images/').'/'.$imageName;
 
         $qrResponse['qr_image_url'] =$imageUrl;
         $qrResponse['payment_amount'] =$qrResponse['payment_amount']/100;
