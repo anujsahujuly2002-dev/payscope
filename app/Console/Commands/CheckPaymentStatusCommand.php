@@ -140,7 +140,7 @@ class CheckPaymentStatusCommand extends Command
                         'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount+$fundRequestHistory->gst
                     ]);
                 elseif($res['data']['tx_status']=='1'):
-                    $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id,'account_number'=>$res['data']['account'] ])->first();
+                    $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
                     $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
                     Fundrequest::where('id',$fundRequest->id)->update([
                         'status_id'=>'3',
@@ -153,7 +153,7 @@ class CheckPaymentStatusCommand extends Command
                     // $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
                     $getCurrentWalletAmount =  Wallet::where('user_id',$fundRequest->user_id)->first()->amount;
                     Wallet::where('user_id',$fundRequest->user_id)->update([
-                        'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount
+                        'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount+$fundRequestHistory->gst
                     ]);
                     addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
                 elseif($res['data']['tx_status']=='0'):
