@@ -11,6 +11,7 @@ class QRPaymentCollection extends Model
     protected $fillable = [
         'user_id',
         'qr_code_id',
+        'order_id',
         'entity',
         'name',
         'usage',

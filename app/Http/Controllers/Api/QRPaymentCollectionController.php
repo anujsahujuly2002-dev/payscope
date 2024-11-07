@@ -31,7 +31,7 @@ class QRPaymentCollectionController extends Controller
         else:
             $customerId  = $this->createCustomerId($checkRazorPayCustomerId->user->name,$checkRazorPayCustomerId->user->email,$checkRazorPayCustomerId->user->mobile_no,$checkRazorPayCustomerId->user_id);
         endif;
-        $qrResponse = $this->generateQrCode($request->input('name'),$request->input('payment_amount'),$customerId,$checkRazorPayCustomerId->user_id);
+        $qrResponse = $this->generateQrCode($request->input('name'),$request->input('payment_amount'),$customerId,$checkRazorPayCustomerId->user_id,$request->input('order_id'));
         // dd($qrResponse);
         $qrImage=$qrResponse['image_url'];
         $imageData = base64_encode(file_get_contents($qrImage));
@@ -89,7 +89,7 @@ class QRPaymentCollectionController extends Controller
         return $response['id'];
     }
 
-    private function generateQrCode($name,$amount,$customerId,$userId) {
+    private function generateQrCode($name,$amount,$customerId,$userId,$orderId=NULL) {
         try {
             // Create QR code using Razorpay API
             // Set the current time in the 'Asia/Kolkata' timezone
@@ -142,6 +142,7 @@ class QRPaymentCollectionController extends Controller
             QRPaymentCollection::create([
                 'user_id'=>$userId,
                 'qr_code_id'=>$data['id'],
+                'order_id'=>$orderId,
                 'entity'=>$data['entity'],
                 'name'=>$data['name'],
                 'usage'=>$data['usage'],
@@ -157,6 +158,7 @@ class QRPaymentCollectionController extends Controller
                 'qr_created_at'=>Carbon::parse($data['created_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                 'status_id'=>"1",
             ]);
+            $data['order_id'] = $orderId;
             return $data;
         } catch (BadRequestError $e) {
             dd($e);
@@ -175,6 +177,7 @@ class QRPaymentCollectionController extends Controller
         if(!is_null($qRPaymentCollection)):
             $data =[
                 'qr_code_id'=>$qRPaymentCollection['qr_code_id'],
+                'order_id'=>$qRPaymentCollection['order_id'],
                 'entity'=>$qRPaymentCollection['entity'],
                 'name'=>$qRPaymentCollection['name'],
                 'usage'=>$qRPaymentCollection['usage'],

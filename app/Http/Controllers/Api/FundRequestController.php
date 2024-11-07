@@ -38,6 +38,7 @@ class FundRequestController extends Controller
             foreach($payoutsTransactions as $payoutTransaction):
                 $response []=[
                     "payout_ref"=>$payoutTransaction->payout_ref,
+                    'order_id'=>$payoutTransaction->order_id,
                     "utr_number"=>trim($payoutTransaction->utr_number),
                     "transaction_id"=>$payoutTransaction->payout_id,
                     'status'=>strip_tags($payoutTransaction->status->name),
