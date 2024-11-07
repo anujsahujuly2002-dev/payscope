@@ -91,8 +91,8 @@ class PayoutRequest extends Component
 
         $validateData['user_id']= auth()->user()->id;
         // $response = $this->payoutApiRequest($validateData);
-        // $response = $this->ekoPayoutApi($validateData);
-        $response = $this->payNProPayout($validateData);
+        $response = $this->ekoPayoutApi($validateData);
+        // $response = $this->payNProPayout($validateData);
         $this->dispatch('hide-form');
         if($response['status']=='0005'):
             return redirect()->back()->with('success',$response['msg']);

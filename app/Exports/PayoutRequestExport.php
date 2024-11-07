@@ -44,6 +44,7 @@ class PayoutRequestExport implements FromCollection,WithHeadings
                 $fundRequest->payoutTransactionHistories?->balance??"0",
                 $fundRequest->payoutTransactionHistories?->amount??"0",
                 $fundRequest->payoutTransactionHistories?->charge??"0",
+                $fundRequest->payoutTransactionHistories?->gst??"0",
                 $fundRequest->payoutTransactionHistories?->closing_balnce??"0",
                strip_tags($fundRequest->status?->name),
                 Carbon::parse( $fundRequest->payoutTransactionHistories?->created_at)->format('dS M Y'),
@@ -60,6 +61,6 @@ class PayoutRequestExport implements FromCollection,WithHeadings
      */
     public function headings(): array
     {
-        return ["Name", "Payout Id", "Payment Reference Number",'Opening Amount','Order Amount','Charges','Closing Balance','Status','Date'];
+        return ["Name", "Payout Id", "Payment Reference Number",'Opening Amount','Order Amount','Charges','GST','Closing Balance','Status','Date'];
     }
 }

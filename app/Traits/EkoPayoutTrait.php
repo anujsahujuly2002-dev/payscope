@@ -38,7 +38,7 @@ trait EkoPayoutTrait {
             ];
         endif;
         $walletAmount = Wallet::where('user_id',$data['user_id'])->first();
-        if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']) > ($walletAmount->amount-$walletAmount->locked_amuont)):
+        if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])+calculateGst(getCommission("dmt",$data['amount'],$data['user_id'])) > ($walletAmount->amount-$walletAmount->locked_amuont)):
             return [
                 'status'=>'0002',
                 'msg'=>'Low balance to make this request.'
@@ -76,15 +76,12 @@ trait EkoPayoutTrait {
             ];
         }
         $main_amount = $walletAmount->amount;
-        $closing_balance = $walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+calculateGst($data['amount']);
-        Wallet::where('user_id',$data['user_id'])->update([
-            // 'amount'=>$walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
-            'amount'=>$closing_balance ,
-        ]);
-
         $adminId = User::whereHas('roles',function($q){
             $q->where('name','super-admin');
         })->first();
+
+        $gstAmount = calculateGst(getCommission("dmt",$data['amount'],$data['user_id']));
+        $closing_balance = $walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))-$gstAmount ;
         $payoutRequestHistories = PayoutRequestHistory::create([
             'user_id'=>$data['user_id'],
             'fund_request_id'=>$fundRequest->id,
@@ -100,9 +97,14 @@ trait EkoPayoutTrait {
             'product'=>'payout',
             'remarks'=>'Bank Settlement',
             'payout_api'=>"eko",
-            'gst'=>calculateGst($data['amount'])
+            'gst'=>$gstAmount
         ]);
-        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+calculateGst($data['amount']),'debit');
+        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+$gstAmount,'debit');
+       
+        Wallet::where('user_id',$data['user_id'])->update([
+            // 'amount'=>$walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
+            'amount'=>$closing_balance ,
+        ]);
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = 'initiator_id=9519035604&amount='.$data['amount'].'&payment_mode='.$ekoPaymentMode[$this->getPaymentModesName($data['payment_mode'])].'&client_ref_id='.$data['payoutid'].'&recipient_name='.$data['account_holder_name'].'&ifsc='.$data['ifsc_code'].'&account='.$data['account_number'].'&service_code=45&sender_name=test&source=NEWCONNECT&tag=Logistic&beneficiary_account_type=1';
         $res = apiCallWitBody($header,$apiUrl,$requestParameter,true,$data['payoutid']);
@@ -158,13 +160,15 @@ trait EkoPayoutTrait {
                     ];
                 endif;                
             else:
+
+                addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+$gstAmount,'credit');
                 FundRequest::where('id',$fundRequest->id)->update([
                     'status_id'=>'3',
                 ]);
                 PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                     'status_id'=>'3',
                     // 'closing_balnce'=>$walletAmount->amount
-                    'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id']),
+                    'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])+$gstAmount,
                 ]);
                 Wallet::where('user_id',$data['user_id'])->update([
                     // 'amount'=>$walletAmount->amount,
@@ -177,13 +181,14 @@ trait EkoPayoutTrait {
                 ];
             endif;
         }else{
+            addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+$gstAmount,'credit');
             FundRequest::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
             ]);
             PayoutRequestHistory::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
                 // 'closing_balnce'=>$walletAmount->amount
-                'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])
+                'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])+$gstAmount
             ]);
             Wallet::where('user_id',$data['user_id'])->update([
                 // 'amount'=>$walletAmount->amount,
