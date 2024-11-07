@@ -82,7 +82,6 @@ class AutoPayinTransactionUpdateWebhook extends Command
                     endif;
                 endforeach;
             endif;
-           
         }catch(Exception $e) {
             Log::error([$e->getMessage()]);
         }
