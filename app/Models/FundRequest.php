@@ -10,6 +10,7 @@ class FundRequest extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'order_id',
         'account_number',
         'account_holder_name',
         'ifsc_code',

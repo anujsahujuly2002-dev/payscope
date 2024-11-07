@@ -43,6 +43,7 @@ class AutoTransactionUpdateWebhook extends Command
                         "msg" => "You're request has been complete",
                         "data" => [
                             "payout_ref" => $transaction->payout_ref,
+                            "order_id" => $transaction->order_id,
                             "utr_number" => $transaction->utr_number,
                             "transaction_id" => $transaction->payout_id,
                             "status" => ucfirst(strip_tags($transaction->status->name)),

@@ -58,6 +58,7 @@ trait EkoPayoutTrait {
         try{
             $fundRequest=FundRequest::create([
                 'user_id'=>$data['user_id'],
+                'order_id'=>$data['order_id'],
                 'account_number'=>$data['account_number'],
                 'account_holder_name'=>$data['account_holder_name'],
                 'ifsc_code'=>$data['ifsc_code'],
