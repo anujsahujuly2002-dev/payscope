@@ -30,14 +30,14 @@ class PaymentSettlementCommand extends Command
     {
         $getPaymentInSattelmnets = QRPaymentCollection::whereDate('created_at','<=',Carbon::now()->subDays(1)->format('Y-m-d'))->where(['status_id'=>'2','is_payment_settel'=>'0'])->get();
         foreach($getPaymentInSattelmnets as $getPaymentInSattelmnet):
-            $collectionCharges = calculateCollectionCharges($getPaymentInSattelmnet->payment_amount);
+            $collectionCharges = calculateCollectionCharges($getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id);
             $collectionChargesGST = calculateGst( $collectionCharges);
             $chargesAndGstAmount =  $collectionCharges+  $collectionChargesGST;
             $amount = $getPaymentInSattelmnet->payment_amount-  $chargesAndGstAmount;
             addTransactionHistory($getPaymentInSattelmnet->qr_code_id,$getPaymentInSattelmnet->user_id,$amount,'credit');
             $getCurrentWalletAmount =  Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->first()->amount;
             Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->update([
-                'amount'=>$getPaymentInSattelmnet->payment_amount+$amount
+                'amount'=>$getCurrentWalletAmount+$amount
             ]);
             $getPaymentInSattelmnet->update([
                 'is_payment_settel'=>'1',
