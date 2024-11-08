@@ -209,8 +209,12 @@ if(!function_exists('calculateGst')):
 endif;
 
 if(!function_exists('calculateCollectionCharges')):
-    function calculateCollectionCharges($amount) {
-        return $amount*2/100;
+    function calculateCollectionCharges($amount,$userId) {
+        $chargesAmount = 0;
+        if(in_array($userId,['2','10'])){
+            $chargesAmount += $amount*2/100;
+        }
+        return $chargesAmount;
     }
 endif;
 
