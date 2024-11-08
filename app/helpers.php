@@ -208,5 +208,11 @@ if(!function_exists('calculateGst')):
     }
 endif;
 
+if(!function_exists('calculateCollectionCharges')):
+    function calculateCollectionCharges($amount) {
+        return $amount*2/100;
+    }
+endif;
+
 
 
