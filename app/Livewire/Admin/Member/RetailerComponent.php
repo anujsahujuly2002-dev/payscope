@@ -56,9 +56,7 @@ class RetailerComponent extends Component
         ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
         })
-        // ->when($this->status !=null,function($u){
-        //     $u->where('status_id',$this->status);
-        // })
+
         ->when($this->agentId !=null,function($u){
             $u->where('id',$this->agentId);
         })
@@ -210,7 +208,7 @@ class RetailerComponent extends Component
 
     public function export() {
         $data = [
-            'user_id'=>auth()->user()->getRoleNames()->first()!='api-partner'?$this->agentId:NULL,
+            'user_id'=>auth()->user()->getRoleNames()->first()!='retailer'?$this->agentId:NULL,
             'start_date'=>$this->start_date,
             'end_date'=>$this->end_date,
             'value'=>$this->value

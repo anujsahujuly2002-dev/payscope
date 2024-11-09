@@ -21,29 +21,39 @@ class ManualRequestExport implements FromCollection,WithHeadings
     {
         $fundsArray = [];
         $funds = new Fund;
-        if($this->data['user_id'] !=null):
-            $funds = $funds->where('user_id',$this->data['user_id']);
-        endif;
-        if($this->data['start_date'] !=null && $this->data['end_date'] ==null):
-            $funds = $funds->whereDate('created_at',$this->data['start_date']);
-        endif;
-        if($this->data['start_date'] !=null && $this->data['end_date'] !=null):
-            $funds = $funds->whereDate('created_at','>=',$this->data['start_date'])->whereDate("created_at","<=",$this->data['end_date']);
-        endif;
-        if($this->data['value'] !=null):
-            $funds = $funds->where('references_no','like','%'.$this->data['value'].'%')
-            ->orWhere('pay_date','like','%'.$this->data['value'].'%')
-            ->orWhere('paymentMode->name','like','%'.$this->data['value'].'%')
-            ->orWhere('opening_amount','like','%'.$this->data['value'].'%')
-            ->orWhere('amount','like','%'.$this->data['value'].'%')
-            ->orWhere('closing_amount','like','%'.$this->data['value'].'%')
-            ->orWhere('remark','like','%'.$this->data['value'].'%');
-        endif;
-        if($this->data['status'] !=null):
-            $funds = $funds->where('status_id',$this->data['status']);
-        endif;
-        foreach($funds->get() as $fund):
-            $fundsArray[]=[
+        if ($this->data['user_id'] != null) {
+            $funds = $funds->where('user_id', $this->data['user_id']);
+        }
+        if ($this->data['start_date'] != null && $this->data['end_date'] == null) {
+            $funds = $funds->whereDate('created_at', $this->data['start_date']);
+        }
+
+        if ($this->data['start_date'] != null && $this->data['end_date'] != null) {
+            $funds = $funds->whereDate('created_at', '>=', $this->data['start_date'])
+                ->whereDate('created_at', '<=', $this->data['end_date']);
+        }
+        if ($this->data['value'] != null) {
+            $funds = $funds->where('references_no', 'like', '%' . $this->data['value'] . '%')
+                ->orWhere('pay_date', 'like', '%' . $this->data['value'] . '%')
+                ->orWhere('opening_amount', 'like', '%' . $this->data['value'] . '%')
+                ->orWhere('amount', 'like', '%' . $this->data['value'] . '%')
+                ->orWhere('closing_amount', 'like', '%' . $this->data['value'] . '%')
+                ->orWhere('remark', 'like', '%' . $this->data['value'] . '%');
+
+            //Filter related 'paymentMode->name'
+            if (isset($this->data['value'])) {
+                $funds = $funds->whereHas('paymentMode', function ($query) {
+                    $query->where('name', 'like', '%' . $this->data['value'] . '%');
+                });
+            }
+        }
+
+        if ($this->data['status'] != null) {
+            $funds = $funds->where('status_id', $this->data['status']);
+        }
+
+        foreach ($funds->get() as $fund) {
+            $fundsArray[] = [
                 $fund->user->name,
                 $fund->bank->name,
                 $fund->bank->account_number,
@@ -54,11 +64,11 @@ class ManualRequestExport implements FromCollection,WithHeadings
                 $fund->opening_amount,
                 $fund->amount,
                 $fund->closing_amount,
-                // $fund->remark,
-               strip_tags($fund->status?->name),
-                Carbon::parse( $fund->manualTransactionHistories?->created_at)->format('dS M Y'),
+                strip_tags($fund->status?->name),
+                Carbon::parse($fund->manualTransactionHistories?->created_at)->format('dS M Y'),
             ];
-        endforeach;
+        }
+
         return collect($fundsArray);
     }
 

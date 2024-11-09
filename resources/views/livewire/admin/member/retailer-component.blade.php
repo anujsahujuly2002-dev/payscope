@@ -100,8 +100,8 @@
                                         <td>
                                             {{ucfirst($retailer->retailer->shop_name)}}<br>{{$retailer->retailer->website}}
                                         </td>
-                                        <td>
-                                            {{$retailer->walletAmount->amount}}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{$retailer->walletAmount->amount}}
                                         </td>
                                         <td>
                                             {{$retailer->created_at}}

@@ -162,7 +162,7 @@ class ManualRequest extends Component
         ];
         return Excel::download(new ManualRequestExport($data), time().'.xlsx');
     }
-  
+
 }
 
 

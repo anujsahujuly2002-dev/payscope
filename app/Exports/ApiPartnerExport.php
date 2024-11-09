@@ -20,7 +20,7 @@ class ApiPartnerExport implements FromCollection,WithHeadings
     */
     public function collection()
     {
-        $apiPartnerArray = [];
+        $partnerArray = [];
         $partner = new User;
         if($this->data['user_id'] !=null):
             $partner = $partner->where('user_id',$this->data['user_id']);

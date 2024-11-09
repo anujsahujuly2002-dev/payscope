@@ -36,7 +36,7 @@
                                 </div>
                                 <hr>
                                 <div class="ms-5">
-                                    <a wire:click="" wire:loading.attr="disabled"
+                                    <a href="https://groscope.com/" wire:loading.attr="disabled"
                                         class=" cursor-pointer border-0 flex items-center space-x-2 transition duration-200">
                                         <span class="ms-2" style="color: blue">Documentation</span>
                                         <i class="fas fa-book ms-2" style="color: blue"></i>

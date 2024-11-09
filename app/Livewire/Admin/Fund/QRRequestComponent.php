@@ -51,7 +51,7 @@ class QRRequestComponent extends Component
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
         })
         ->when($this->agentId !=null,function($u){
-            $u->where('id',$this->agentId);
+            $u->where('user_id',$this->agentId);
         })
         ->when($this->start_date !=null && $this->end_date ==null,function($u){
             $u->whereDate('created_at','>=',$this->start_date);
@@ -151,6 +151,7 @@ class QRRequestComponent extends Component
             'user_id'=>auth()->user()->getRoleNames()->first() =='super-admin'?$this->agentId:auth()->user()->id,
             'start_date'=>$this->start_date,
             'end_date'=>$this->end_date,
+            'status'=>$this->status,
             'value'=>$this->value
         ];
         return Excel::download(new QRRequestExport($data), time().'.xlsx');

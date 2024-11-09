@@ -5,11 +5,12 @@
         <div class="col-md-12">
             <div class="mb-3 d-flex justify-content-end">
                 @can('qr-request-add-fund')
-                    <a href="javascript:void(0);"
-                      class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
-                    style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
-                    wire:click.prevent='walletLoad'><i class="mdi mdi-plus me-2"></i>Wallet Load</a>
+                <a href="javascript:void(0);"
+                class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
+                    wire:click.prevent='walletLoad'><i class="mdi mdi-plus"></i></a>
                 @endcan
+
             </div>
         </div>
         <div class="col-lg-12">

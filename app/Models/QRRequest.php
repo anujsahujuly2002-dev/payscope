@@ -26,4 +26,5 @@ class QRRequest extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
 }

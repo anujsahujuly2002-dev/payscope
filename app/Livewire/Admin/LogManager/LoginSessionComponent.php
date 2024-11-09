@@ -5,6 +5,8 @@ namespace App\Livewire\Admin\LogManager;
 use Livewire\Component;
 use App\Models\LoginSession;
 use Livewire\WithPagination;
+use App\Exports\LoginSessionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LoginSessionComponent extends Component
 {
