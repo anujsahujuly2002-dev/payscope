@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-md-2 mb-10">
                             <div class="form-group">
-                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="References No" wire:model.live="value">
+                                <input type="text" class="form-control  rounded bg-light border-0" placeholder="Payout Id" wire:model.live="value">
                             </div>
                         </div>
                         <div class="col-md-2 mb-10">

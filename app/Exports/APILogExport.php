@@ -22,18 +22,16 @@ class APILogExport implements FromCollection, WithHeadings
     {
         $LoginSessionArray = [];
         $loginSession = new ApiLog;
-        if($this->data['user_id'] !=null):
-            $loginSession = $loginSession->where('user_id',$this->data['user_id']);
-        endif;
-        if($this->data['start_date'] !=null && $this->data['end_date'] ==null):
+
+         if($this->data['start_date'] !=null && $this->data['end_date'] ==null){
             $loginSession = $loginSession->whereDate('created_at',$this->data['start_date']);
-        endif;
-        if($this->data['start_date'] !=null && $this->data['end_date'] !=null):
+         }
+        if($this->data['start_date'] !=null && $this->data['end_date'] !=null){
             $loginSession = $loginSession->whereDate('created_at','>=',$this->data['start_date'])->whereDate("created_at","<=",$this->data['end_date']);
-        endif;
-        if($this->data['value'] !=null):
-            $loginSession = $loginSession->where('order_id','like','%'.$this->data['value'].'%');
-        endif;
+        }
+        if($this->data['transaction_id'] !=null){
+            $loginSession = $loginSession->where('txn_id','like','%'.$this->data['transaction_id'].'%');
+        }
 
 
         foreach($loginSession->get() as $requests):
@@ -52,6 +50,6 @@ class APILogExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['Url','transaction Id','Header','Request'];
+        return ['Url','Transaction Id','Header','Request','Date'];
     }
 }

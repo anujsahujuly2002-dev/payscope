@@ -54,7 +54,6 @@ class QRRequestExport implements FromCollection,WithHeadings
                 strip_tags($requests->status?->name),
                 $requests->created_at,
                 Carbon::parse( $requests->qrRequestHistories?->created_at)->format('dS M Y'),
-
             ];
         }
 

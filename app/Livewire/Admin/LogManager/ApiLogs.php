@@ -6,9 +6,7 @@ use App\Exports\APILogExport;
 use App\Models\ApiLog;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Exports\PayoutRequestExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Spatie\Permission\Exceptions\UnauthorizedException;
 
 
 class ApiLogs extends Component
@@ -36,11 +34,8 @@ class ApiLogs extends Component
 
         }) ->when($this->transaction_id !=null,function($u){
             $u->where('txn_id', 'like', '%'.$this->transaction_id.'%');
-            // $u->where('txn_id',$this->transaction_id);
-
-        })->when($this->value !=null,function($u){
-            $u->where('payout_ref', 'like', '%'.$this->value.'%')->orWhere('payout_id','like','%'.$this->value.'%');
         })->latest()->paginate(100);
+
         return view('livewire.admin.log-manager.api-logs',compact('apiLogs'));
     }
 
@@ -50,7 +45,7 @@ class ApiLogs extends Component
             'user_id'=>auth()->user()->getRoleNames()->first()!='api-logs'?$this->transaction_id:NULL,
             'start_date'=>$this->start_date,
             'end_date'=>$this->end_date,
-            'value'=>$this->value,
+            'transaction_id'=>$this->transaction_id,
         ];
         return Excel::download(new APILogExport($data), time().'.xlsx');
     }

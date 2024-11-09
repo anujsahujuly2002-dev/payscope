@@ -15,4 +15,9 @@ class ApiLog extends Model
         'request',
         'response',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
