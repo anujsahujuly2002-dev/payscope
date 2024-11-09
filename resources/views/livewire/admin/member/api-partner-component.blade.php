@@ -105,7 +105,7 @@
                                             {{ ucfirst($apipartner->name) }}<br>{{ $apipartner->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner->getRoleNames()->first()) }}
                                         </td>
                                         <td>
-                                            {{ ucfirst($apipartner?->apiPartner?->parentDetails?->name) }}<br>{{ $apipartner?->apiPartner?->parentDetails?->getRoleNames()->first() == 'super admin' ? '9519035604' : $apipartner?->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner?->apiPartner?->parentDetails?->getRoleNames()->first()) }}
+                                            {{ ucfirst($apipartner?->apiPartner?->parentDetails?->name) }}<br>{{ $apipartner?->apiPartner?->parentDetails?->getRoleNames()->first() == 'super-admin' ? '9519035604' : $apipartner?->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner?->apiPartner?->parentDetails?->getRoleNames()->first()) }}
                                         </td>
                                         <td>
                                             {{ ucfirst($apipartner?->apiPartner?->shop_name) }}<br>{{ $apipartner?->apiPartner?->website }}
