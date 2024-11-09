@@ -37,7 +37,7 @@ class Setting extends Component
         })->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
         })->when($this->agentId !=null,function($u){
-            $u->where('id',$this->agentId);
+            $u->where('user_id',$this->agentId);
         })->when($this->value !=null,function($u){
             $u->where('ip_address',$this->value);
         // })->when($this->value !=null,function($u){

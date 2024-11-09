@@ -33,8 +33,6 @@ class LoginSessionComponent extends Component
             $u->where('user_id',$this->agentId);
         })->when($this->value !=null,function($u){
             $u->where('ip_address',$this->value);
-        // })->when($this->value !=null,function($u){
-        //     $u->where('name',$this->userName);
         })->latest()->paginate(10);
         return view('livewire.admin.log-manager.login-session-component',compact('loginSessions'));
     }

@@ -31,7 +31,7 @@ class LoginSessionExport implements FromCollection, WithHeadings
             $loginSession = $loginSession->whereDate('created_at','>=',$this->data['start_date'])->whereDate("created_at","<=",$this->data['end_date']);
         endif;
         if($this->data['value'] !=null):
-            $loginSession = $loginSession->where('order_id','like','%'.$this->data['value'].'%');
+            $loginSession = $loginSession->where('ip_address','like','%'.$this->data['value'].'%');
         endif;
 
         foreach($loginSession->get() as $requests):
@@ -43,6 +43,8 @@ class LoginSessionExport implements FromCollection, WithHeadings
                 $requests->login_time,
                 $requests->is_logged_in ==0?"Login":"Logout",
                 $requests->logout_time,
+                Carbon::parse( $requests->qrCollectionHistories?->created_at)->format('dS M Y'),
+
             ];
         endforeach;
 
@@ -51,6 +53,6 @@ class LoginSessionExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["Name", "Latitude", "Logitude",'IP Address ','Login Time','Is Logged In ','Logout Time'];
+        return ["Name", "Latitude", "Logitude",'IP Address ','Login Time','Is Logged In ','Logout Time','ExportDate'];
     }
 }
