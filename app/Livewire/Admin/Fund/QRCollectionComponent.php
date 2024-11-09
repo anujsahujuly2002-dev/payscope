@@ -72,4 +72,15 @@ class QRCollectionComponent extends Component
         return Excel::download(new QRCollectionExport($data), time() . '.xlsx');
     }
 
+    public function settlement() {
+        $this->reset();
+        $this->dispatch('show-form');
+    }
+
+    public $isCollapsed = false;
+
+    public function toggle()
+    {
+        $this->isCollapsed = !$this->isCollapsed;
+    }
 }

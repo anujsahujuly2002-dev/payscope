@@ -1,6 +1,110 @@
 <div>
     <div wire:loading class="loading"></div>
     @include('admin.flash-message.flash-message')
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-contenet-between">
+                        <div class="d-flex justify-contenet-between">
+                            <div class="d-flex justify-contenet-between">
+                                <div>
+                                    <h4 class=" " style="font-weight: bold">Overview</h4>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 mt-1 ms-4 text-muted"><i class="fa fa-clock me-2"></i>8 min Ago</h6>
+                                </div>
+                                <div class="ms-4">
+                                    <a wire:click="refreshPage" wire:loading.attr="disabled"
+                                        class=" cursor-pointer border-0 flex items-center space-x-2 transition duration-200">
+                                        <i class="fas fa-sync-alt" style="color: blue"></i>
+                                        <span class="ms-2" style="color: blue">Refresh</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-contenet-between" style="margin-left: 500px">
+                            <div class="d-flex justify-contenet-between">
+                                <div>
+                                    <a wire:click="settlement" wire:loading.attr="disabled" type="a"
+                                        class=" cursor-pointer border-0 flex items-center space-x-2 transition duration-200"
+                                        data-bs-toggle="modal" data-bs-target="#settlementModal">
+                                        <i class="fa fa-info-circle" style="color: blue"></i><span class="ms-2"
+                                            style="color: blue">My Settlement Cycle</span>
+                                    </a>
+                                </div>
+                                <hr>
+                                <div class="ms-5">
+                                    <a wire:click="" wire:loading.attr="disabled"
+                                        class=" cursor-pointer border-0 flex items-center space-x-2 transition duration-200">
+                                        <span class="ms-2" style="color: blue">Documentation</span>
+                                        <i class="fas fa-book ms-2" style="color: blue"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body d-flex">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <p class="mb-0 ">Current Balance <i class="fa fa-info-circle ms-3"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="This is the total amount that is due to be deposited in your bank account after deduction of taxes, platform fees, any other applicable charges, and adjustment of refunds and credits."></i>
+                                    </p>
+                                    <h3 class="mb-1 mt-1 "> &#x20B9; <span class="counterup">1234</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col-->
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <p class=" mb-0 ">Settelement due today <i class="fa fa-info-circle ms-3"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="This is the amount initiated for deposit into your bank account and is in processing."></i>
+                                    </p>
+                                    <h3 class="mb-1 mt-1 "> &#x20B9; <span class="counterup">1234</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col-->
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <p class=" mb-0 ">Previous Settelement <i class="fa fa-info-circle ms-3"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="This is the last amount initiated for deposit into your bank account (the settlement may have either processed or failed)."></i>
+                                    </p>
+                                    <h3 class="mb-1 mt-1 "> &#x20B9; <span class="counterup">1234</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col-->
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <p class="mb-0 ">Upcoming Settelement <i class="fa fa-info-circle ms-3"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="This is the amount that’ll be deposited into your bank account next as per your settlement cycle."></i>
+                                    </p>
+                                    <h3 class="mb-1 mt-1 "> &#x20B9; <span class="counterup">1234</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col-->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -91,7 +195,7 @@
                                     <th scope="col">QR Close Reason</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,7 +212,7 @@
                                                 <a href="javascript:void(0)" class="text-body">{{ $item->user->name }}</a>
                                             </td>
                                         @endif
-                                        
+
                                         <td>
                                             {{ ($item->qr_code_id) }}
                                         </td>
@@ -118,7 +222,7 @@
                                         <td class="fw-bolder">
                                             &#x20B9;{{moneyFormatIndia($item->payments_amount_received)}}
                                         </td>
-                                        
+
                                         <td>
                                             Payment Id:-{{$item->payment_id}} <br> UPI Id:-{{$item->payer_name}} <br>
                                             UTR Number :-{{$item->utr_number}}
@@ -209,6 +313,99 @@
 
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="form" tabindex="-1" aria-labelledby="settlementModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settlementModalLabel">Settlement Cycle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Card with overflow effect -->
+                    <div class="card card-overflow">
+                        <div class="card-body">
+                            <h6> <span style="font-size: 24px;" class="me-2">&#8226;</span> Payments default
+                                settlement cycle</h6>
+                            <div class="mb-3">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: left; padding-left: 10px; padding-top: 2px; padding-bottom: 2px;">Domestic Payments</td>
+                                            <th style="text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;">T+1 10AM</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-left: 10px; padding-top: 2px; padding-bottom: 2px;">Internationl Payments</td>
+                                            <th style="text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;">T+7 11AM</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div>
+                                                    <p class="m-0 p-0">
+                                                        <strong>Note: </strong> Some international payment methods have
+                                                        a different schedule.
+                                                        <a data-bs-toggle="collapse" href="#collapseExample"
+                                                            role="button" aria-expanded="false"
+                                                            aria-controls="collapseExample"> View schedules
+                                                        </a>
+                                                    <div class="collapse" id="collapseExample">
+                                                        <table class="table border"
+                                                            style="width: 100%; border-collapse: collapse;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="text-align: left; padding-left: 10px; padding-top: 2px; padding-bottom: 2px;">Payment Method</td>
+                                                                    <td style="text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;">Settlement schedule</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="color: rgb(11, 11, 11); text-align: left; padding-left: 10px; padding-top: 2px; padding-bottom: 2px;">Card</td>
+                                                                    <td style="color: rgb(11, 11, 11); text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;">T+1 4AM</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                        </table>
+                                                    </div>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="margin-top: -43px;">
+                                    <p class="ms-4 text-muted  m-0 p-0"><span style="font-size: 24px; color:red"
+                                            class="me-2">&#8226;</span>T is the date
+                                        of payment capture</p>
+                                </div>
+                                <h6 class="mt-1"><span style="font-size: 24px;" class="me-2">&#8226;</span>Other
+                                    Settlement cycle</h6>
+                                <table class="table m-0 p-0 ms-3">
+                                    <tbody class="m-0" style="">
+                                        <tr class="text-center">
+                                            <td style="color:rgb(11, 11, 11); text-align:left;">Refunds</td>
+                                            <th scope="col">Instant</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div style="background-color: rgb(255, 242, 186); margin-top:-35px">
+                            <p class="ms-4 mt-2">
+                                <strong>Note:</strong> <span style="color: rgb(255, 196, 0)">Bank holidays</span>
+                                aren’t counted as working days.
+                                <a href="#">View Example</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Button Group -->
+                <div class="button-group mb-2">
+                    <button class="btn1" style="">List of Bank Holidays</button>
+                    <button class="btn">Settlement Guide</button>
                 </div>
             </div>
         </div>

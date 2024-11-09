@@ -1,0 +1,79 @@
+.modal-header {
+    border-bottom: none;
+}
+
+.card-overflow {
+    position: relative;
+    max-height: 500px;
+    overflow-y: auto;
+    width: 455px;
+    right: 45px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.settlement-note {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 1rem;
+    background-color: bisque;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -20px;
+    padding: 10px;
+}
+
+.button-group .btn {
+    width: 48%;
+    background-color: #e6070f;
+    color: white;
+}
+
+.button-group .btn:hover {
+    background-color: #e6070f;
+    color: white;
+}
+
+.button-group .btn1 {
+    width: 48%;
+    color: #e6070f;
+    border: 2px solid #e6070f;
+}
+
+.text-muted a,
+.settlement-note a {
+    color: #e6070f;
+    text-decoration: none;
+}
+
+.modal-dialog {
+    max-width: 400px;
+}
+
+/* .td1 {
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.td2 {
+    color: rgb(11, 11, 11);
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.td3{
+    text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;
+}
+
+.td4{
+    color: rgb(11, 11, 11); text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;
+} */
