@@ -63,7 +63,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::prefix('retailer')->name('retailer.')->group(function() {
                 Route::get('/','retailer')->name('list');
             });
-            
+
             Route::get('view-profile/{id}','viewProfile')->name('view.profile');
         });
 

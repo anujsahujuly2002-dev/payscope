@@ -23,6 +23,8 @@ class QRCollectionComponent extends Component
     public $value;
     public $paymentModes;
     public $payment =[];
+    public $settlementForm = false;
+    public $holidayForm = false;
 
 
     public function render()
@@ -75,6 +77,15 @@ class QRCollectionComponent extends Component
 
     public function settlement() {
         $this->reset();
+        $this->settlementForm= true;
+        $this->holidayForm= false;
+        $this->dispatch('show-form');
+    }
+
+    public function holiday() {
+        $this->reset();
+        $this->settlementForm= false;
+         $this->holidayForm= true;
         $this->dispatch('show-form');
     }
 
@@ -85,9 +96,4 @@ class QRCollectionComponent extends Component
         $this->isCollapsed = !$this->isCollapsed;
     }
 
-    public function refreshPage()
-    {
-        session()->flash('message', 'Page refreshed!');
-        return redirect();
-    }
 }

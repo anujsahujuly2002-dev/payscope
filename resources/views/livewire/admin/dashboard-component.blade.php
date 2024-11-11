@@ -59,7 +59,7 @@
                                 class="counterup">{{ formatAmount($totalCommission) }}  Lakh.</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since 
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since
                     </p>
                 </div>
             </div>
@@ -261,7 +261,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($recentTransactions as $transactions)
+                                    {{-- @foreach ($recentPayoutHistory as $transactions)
                                         <tr>
                                             <td>
                                                 <div class="form-check font-size-16">
@@ -290,8 +290,9 @@
                                                         wire:click.prevent="transaction({{ $transactions->id }})"><i>Slip</a>
                                                 </div>
                                             </td>
-                                    @endforeach --}}
-                                    </tr>
+
+                                        </tr>
+                                     @endforeach --}}
                                 </tbody>
                             </table>
                         </div>
@@ -445,7 +446,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($recentTransactions as $transactions)
+                                @foreach ($recentPayoutHistory as $transactions)
                                     <tr>
                                         <td>
                                             <div class="form-check font-size-16">
@@ -474,8 +475,8 @@
                                                     wire:click.prevent="transaction({{ $transactions->id }})"><i>Slip</a>
                                             </div>
                                         </td>
-                                @endforeach --}}
-                                </tr>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -486,16 +487,22 @@
     </div>
     <!-- end row -->
     <div>
-        <div wire:ignore.self class="modal fade" id="form" tabindex="-1" role="dialog"
+        {{-- <div wire:ignore.self class="modal fade" id="form" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-small">
+            <div class="modal-dialog modal-lg">
                 @if ($selectedTransaction)
                     <div class="modal-content">
                         <div id="transaction-details" style="padding: 20px;">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="myLargeModalLabel">Personal Information</h5>
+                                <div class="align-items-left">
+                                   <h5 class="modal-title" id="myLargeModalLabel">Transaction Detail</h5>
+                                </div>
+                                <div class="align-items-left">
+                                    <button type="button" class="btn" data-bs-dismiss="modal"
+                                    ><i class="bi bi-download"></i></button>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
+                                </div>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -576,11 +583,14 @@
                                         onclick="downloadPdf()">Download</button>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 @else
                     <p>No transaction selected.</p>
                 @endif
             </div>
-        </div>
+        </div> --}}
     </div>

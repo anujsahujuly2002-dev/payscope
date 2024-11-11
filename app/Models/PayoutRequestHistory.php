@@ -35,9 +35,19 @@ class PayoutRequestHistory extends Model
     {
         return $this->belongsTo(Status::class, 'status_id');
     }
-   
+
     public function fund()
     {
         return $this->belongsTo(Fund::class, 'fund_request_id','id');
+    }
+
+    public function banks()
+    {
+        return $this->belongsTo(Bank::class, 'id');
+    }
+
+    public function paymentModes()
+    {
+        return $this->belongsTo(PaymentMode::class);
     }
 }

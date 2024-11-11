@@ -9,6 +9,13 @@
     width: 455px;
     right: 45px;
 }
+.card-overflows {
+    position: relative;
+    max-height: 450px;
+    overflow-y: auto;
+    width: 400px;
+    right: 15px;
+}
 
 .card-body {
     padding: 1.5rem;
@@ -55,25 +62,33 @@
     max-width: 400px;
 }
 
-/* .td1 {
+.table-heading{
+background-color:  #f1f1f1;
+}
+
+.my-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.my-table th, .my-table td {
+    padding: 12px 15px;
     text-align: left;
-    padding-left: 10px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    border: 1px solid #ddd;
 }
 
-.td2 {
-    color: rgb(11, 11, 11);
-    text-align: left;
-    padding-left: 10px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+.my-table th {
+    font-weight: bold;
 }
 
-.td3{
-    text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;
+.my-table-heading{
+    background-color:  #f1f1f1;
+    }
+
+.my-table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
-.td4{
-    color: rgb(11, 11, 11); text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;
-} */
+.my-table tbody tr:hover {
+    background-color: #f1f1f1;
+}

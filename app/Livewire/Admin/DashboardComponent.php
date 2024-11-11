@@ -16,46 +16,65 @@ use App\Models\PayoutRequestHistory;
 
 class DashboardComponent extends Component
 {
-    public $recentTransactions =null;
+    // public $recentTransactions ;
     public $selectedTransaction;
     public $statuses;
     public $banks;
     public $paymentModes;
-    
 
+            public function render()
+            {
+                // Fetch other necessary data
+                $loginActivities = LoginSession::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->with('user')->orderBy('created_at', 'desc')->take(10)->get();
 
-    public function render(){
+                $totalPaymenUsingQrReqesttIn = QRRequest::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->where('status_id', '2')->sum('order_amount');
 
-        $loginActivities =  LoginSession::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->with('user')->orderBy('created_at', 'desc')->take(10) ->get();
-        $totalPaymenUsingQrReqesttIn = QRRequest::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->where('status_id','2')->sum('order_amount');
-        $totalPaymenUsingQrCodetIn = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->where('status_id','2')->sum('payment_amount');
-        $totalPaymenInManual = Fund::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->where('status_id','2')->sum('amount');
-        $totalAmountPayIn =  $totalPaymenUsingQrReqesttIn+  $totalPaymenInManual+ $totalPaymenUsingQrCodetIn;
-        $totalPayOut = FundRequest::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->where('status_id','2')->sum('amount');
-        // dd($totalPayOut);
+                $totalPaymenUsingQrCodetIn = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->where('status_id', '2')->sum('payment_amount');
 
-        $totalCommission =  PayoutRequestHistory::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->where('status_id','2')->sum('charge');
-        $totalPayOutToday = FundRequest::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){
-            $query->where('user_id',auth()->user()->id);
-        })->whereDate('created_at',Carbon::parse(now())->format('Y-m-d'))->where('status_id','2')->sum('amount');
-        return view('livewire.admin.dashboard-component',compact('loginActivities','totalAmountPayIn','totalPayOut','totalCommission','totalPayOutToday'));
-    }
+                $totalPaymenInManual = Fund::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->where('status_id', '2')->sum('amount');
+
+                $totalAmountPayIn = $totalPaymenUsingQrReqesttIn + $totalPaymenInManual + $totalPaymenUsingQrCodetIn;
+
+                $totalPayOut = FundRequest::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->where('status_id', '2')->sum('amount');
+
+                $totalCommission = PayoutRequestHistory::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->where('status_id', '2')->sum('charge');
+
+                $totalPayOutToday = FundRequest::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->whereDate('created_at', Carbon::parse(now())->format('Y-m-d'))->where('status_id', '2')->sum('amount');
+
+                $recentPayoutHistory = PayoutRequestHistory::when(auth()->user()->getRoleNames()->first() != 'super-admin', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->orderBy('created_at', 'desc')->take(10)->get();
+
+                // Pass the class property $recentTransactions directly to the view
+                return view('livewire.admin.dashboard-component', compact(
+                    'loginActivities',
+                    'totalAmountPayIn',
+                    'totalPayOut',
+                    'totalCommission',
+                    'totalPayOutToday',
+                    'recentPayoutHistory'
+                ));
+            }
+
 
     public function transaction($transactionId){
-        
+
         $this->selectedTransaction = PayoutRequestHistory::find($transactionId);
         $this->dispatch('show-form');
     }
+
 }
