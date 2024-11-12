@@ -23,8 +23,6 @@ class QRCollectionComponent extends Component
     public $value;
     public $paymentModes;
     public $payment =[];
-    public $settlementForm = false;
-    public $holidayForm = false;
 
 
     public function render()
@@ -73,20 +71,6 @@ class QRCollectionComponent extends Component
             'status' => $this->status
         ];
         return Excel::download(new QRCollectionExport($data), time() . '.xlsx');
-    }
-
-    public function settlement() {
-        $this->reset();
-        $this->settlementForm= true;
-        $this->holidayForm= false;
-        $this->dispatch('show-form');
-    }
-
-    public function holiday() {
-        $this->reset();
-        $this->settlementForm= false;
-         $this->holidayForm= true;
-        $this->dispatch('show-form');
     }
 
     public $isCollapsed = false;

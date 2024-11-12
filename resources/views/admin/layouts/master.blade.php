@@ -48,21 +48,35 @@
         });
     </script>
 
-
 <script>
-    function downloadPdf() {
-        var element = document.getElementById('transaction-details'); // Select the modal content
+    // Event listener for the download PDF button
+    document.getElementById('downloadPdfBtn').addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
 
-        // Configure and download PDF
-        html2pdf().from(element).set({
-            margin: 1,
-            filename: 'transaction-details.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        }).save();
-    }
+        // Create a new jsPDF instance
+        const doc = new jsPDF();
+
+        // Get the content of the modal (or any div you want to convert to PDF)
+        const transactionDetails = document.getElementById('transactionSlip').innerHTML;
+
+        // Ensure that content is available
+        if (transactionDetails) {
+            // Add the content to the PDF
+            doc.html(transactionDetails, {
+                callback: function (doc) {
+                    // Save the generated PDF with the desired file name
+                    doc.save('transaction-slip.pdf');
+                },
+                margin: [10, 10, 10, 10], // Adjust margins if necessary
+                x: 10,
+                y: 10
+            });
+        } else {
+            alert("Content not available for PDF generation.");
+        }
+    });
 </script>
+
 @livewireScripts
 </body>
 </html>

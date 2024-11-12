@@ -59,7 +59,6 @@ class DashboardComponent extends Component
                     $query->where('user_id', auth()->user()->id);
                 })->orderBy('created_at', 'desc')->take(10)->get();
 
-                // Pass the class property $recentTransactions directly to the view
                 return view('livewire.admin.dashboard-component', compact(
                     'loginActivities',
                     'totalAmountPayIn',
@@ -71,10 +70,13 @@ class DashboardComponent extends Component
             }
 
 
-    public function transaction($transactionId){
-
-        $this->selectedTransaction = PayoutRequestHistory::find($transactionId);
-        $this->dispatch('show-form');
-    }
+        public function transaction($transactionId){
+            $this->paymentModes = PaymentMode::get();
+            $this->banks = Bank::get();
+            $this->statuses =  Status::get();
+            $this->selectedTransaction = PayoutRequestHistory::with('user', 'banks','status','fund_request', 'paymentModes')->findOrFail($transactionId);
+            // dd($this->selectedTransaction);
+            $this->dispatch('show-form');
+        }
 
 }

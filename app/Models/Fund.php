@@ -40,13 +40,10 @@ class Fund extends Model
         return $this->belongsTo(Bank::class,'bank_id','id');
     }
 
-    // public function paymentMode(){
-    //     return $this->belongsTo(PaymentMode::class,'payment_mode_id','id');
-    // }
-    public function paymentMode()
-    {
-        return $this->belongsTo(PaymentMode::class);
+    public function paymentMode(){
+        return $this->belongsTo(PaymentMode::class,'payment_mode_id','id');
     }
+
 
     public function status() {
         return $this->belongsTo(Status::class,'status_id','id');

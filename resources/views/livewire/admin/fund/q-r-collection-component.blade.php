@@ -27,10 +27,11 @@
                         <div class="d-flex justify-contenet-between" style="margin-left: 500px">
                             <div class="d-flex justify-contenet-between">
                                 <div>
-                                    <a wire:click="settlement" wire:loading.attr="disabled" class="cursor-pointer border-0 flex items-center space-x-2 transition duration-200">
-                                        <i class="fa fa-info-circle" style="color: blue"></i>
-                                        <span class="ms-2" style="color: blue">My Settlement Cycle</span>
-                                    </a>
+                                    <a class="cursor-pointer border-0 flex items-center space-x-2 transition duration-200"
+                                    data-bs-toggle="modal" data-bs-target="#settlement">
+                                    <i class="fa fa-info-circle" style="color: blue"></i>
+                                    <span class="ms-2" style="color: blue">My Settlement Cycle</span>
+                                </a>
                                 </div>
                                 <hr>
                                 <div class="ms-5">
@@ -326,12 +327,16 @@
         </div>
     </div>
 
-    @if ($settlementForm)
-    <div class="modal fade" id="form" tabindex="-1" aria-labelledby="settlementModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <div>
+        <!-- Modal Settlement  -->
+        <div class="modal fade" id="settlement" data-bs-backdrop="static"
+            data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="settlementLabel" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="settlementModalLabel">Settlement Cycle</h5>
+                        <h5 class="modal-title" id="settlementModalLabel">Settlement
+                            Cycle</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -339,7 +344,8 @@
                         <!-- Card with overflow effect -->
                         <div class="card card-overflow">
                             <div class="card-body">
-                                <h6> <span style="font-size: 24px;" class="me-2">&#8226;</span> Payments default
+                                <h6> <span style="font-size: 24px;"
+                                        class="me-2">&#8226;</span> Payments default
                                     settlement cycle</h6>
                                 <div class="mb-3">
                                     <table class="table">
@@ -364,24 +370,33 @@
                                                 <td colspan="2">
                                                     <div>
                                                         <p class="m-0 p-0">
-                                                            <strong>Note: </strong> Some international payment methods
+                                                            <strong>Note: </strong> Some
+                                                            international payment
+                                                            methods
                                                             have
                                                             a different schedule.
-                                                            <a data-bs-toggle="collapse" href="#collapseExample"
-                                                                role="button" aria-expanded="false"
-                                                                aria-controls="collapseExample"> View schedules
+                                                            <a data-bs-toggle="collapse"
+                                                                href="#collapseExample"
+                                                                role="button"
+                                                                aria-expanded="false"
+                                                                aria-controls="collapseExample">
+                                                                View schedules
                                                             </a>
-                                                        <div class="collapse" id="collapseExample">
+                                                        <div class="collapse"
+                                                            id="collapseExample">
                                                             <table class="table border"
                                                                 style="width: 100%; border-collapse: collapse;">
                                                                 <tbody>
                                                                     <tr>
                                                                         <td
                                                                             style="text-align: left; padding-left: 10px; padding-top: 2px; padding-bottom: 2px;">
-                                                                            Payment Method</td>
+                                                                            Payment
+                                                                            Method</td>
                                                                         <td
                                                                             style="text-align: right; padding-right: 10px; padding-top: 2px; padding-bottom: 2px;">
-                                                                            Settlement schedule</td>
+                                                                            Settlement
+                                                                            schedule
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td
@@ -401,8 +416,10 @@
                                         </tbody>
                                     </table>
                                     <div style="margin-top: -43px;">
-                                        <p class="ms-4 text-muted  m-0 p-0"><span style="font-size: 24px; color:red"
-                                                class="me-2">&#8226;</span>T is the date
+                                        <p class="ms-4 text-muted  m-0 p-0"><span
+                                                style="font-size: 24px; color:red"
+                                                class="me-2">&#8226;</span>T is the
+                                            date
                                             of payment capture</p>
                                     </div>
                                     <h6 class="mt-1"><span style="font-size: 24px;"
@@ -411,16 +428,21 @@
                                     <table class="table m-0 p-0 ms-3">
                                         <tbody class="m-0" style="">
                                             <tr class="text-center">
-                                                <td style="color:rgb(11, 11, 11); text-align:left;">Refunds</td>
+                                                <td
+                                                    style="color:rgb(11, 11, 11); text-align:left;">
+                                                    Refunds</td>
                                                 <th scope="col">Instant</th>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div style="background-color: rgb(255, 242, 186); margin-top:-35px">
+                            <div
+                                style="background-color: rgb(255, 242, 186); margin-top:-35px">
                                 <p class="ms-4 mt-2">
-                                    <strong>Note:</strong> <span style="color: rgb(255, 196, 0)">Bank holidays</span>
+                                    <strong>Note:</strong> <span
+                                        style="color: rgb(255, 196, 0)">Bank
+                                        holidays</span>
                                     aren’t counted as working days.
                                     <a href="#">View Example</a>
                                 </p>
@@ -429,22 +451,22 @@
                     </div>
                     <!-- Button Group -->
                     <div class="button-group mb-2">
-                        <button class="btn1" wire:click="holiday" data-bs-toggle="modal" wire:loading.attr="disabled"
-                            data-bs-target="#holidayModal">List of Bank Holidays</button>
+                        <button class="btn1"  data-bs-toggle="modal" data-bs-target="#holidayList">List of Bank
+                            Holidays</button>
                         <button class="btn">Settlement Guide</button>
                     </div>
                 </div>
             </div>
         </div>
-    @elseif($holidayForm)
-        <div class="modal fade" id="holidayModal" tabindex="-1" aria-labelledby="holidayModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal Holiday  -->
+        <div class="modal fade" id="holidayList" data-bs-backdrop="static"
+            data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="holidayListLabel" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="settlementModalLabel">Holiday List</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="card card-overflows">
@@ -516,11 +538,13 @@
                                             </tr>
                                             <tr>
                                                 <td>07/09/2024</td>
-                                                <td>Ganesh Chaturthi/samvatsari(Chaturthi Paksha)/varasiddhi Vinayaka Vrata/Vinayakar Chaturthi</td>
+                                                <td>Ganesh Chaturthi/samvatsari(Chaturthi Paksha)/varasiddhi Vinayaka
+                                                    Vrata/Vinayakar Chaturthi</td>
                                             </tr>
                                             <tr>
                                                 <td>16/09/2024</td>
-                                                <td>Milad-un-nabi Or Id-e-milad(birthday of Profet Mohammad)(Bara Vafat)</td>
+                                                <td>Milad-un-nabi Or Id-e-milad(birthday of Profet Mohammad)(Bara Vafat)
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>02/10/2024</td>
@@ -536,7 +560,8 @@
                                             </tr>
                                             <tr>
                                                 <td>01/11/2024</td>
-                                                <td>Diwali(Bali Pratipada)/balipadyami/laxmi(Deepawali)/Govardhan Pooja/Vikram Samvant New Year Day</td>
+                                                <td>Diwali(Bali Pratipada)/balipadyami/laxmi(Deepawali)/Govardhan
+                                                    Pooja/Vikram Samvant New Year Day</td>
                                             </tr>
                                             <tr>
                                                 <td>15/11/2024</td>
@@ -556,7 +581,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    </div>
 
     @include('admin.razorpay.razorpay')
 </div>

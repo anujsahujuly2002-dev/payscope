@@ -28,7 +28,8 @@ class PayoutRequestHistory extends Model
     ];
 
 
-    public function user () {
+    public function user ()
+    {
         return $this->belongsTo(User::class,'user_id','id');
     }
     public function status()
@@ -36,18 +37,18 @@ class PayoutRequestHistory extends Model
         return $this->belongsTo(Status::class, 'status_id');
     }
 
-    public function fund()
+    public function fund_request()
     {
-        return $this->belongsTo(Fund::class, 'fund_request_id','id');
+        return $this->belongsTo(FundRequest::class, 'fund_request_id','id');
     }
 
     public function banks()
     {
-        return $this->belongsTo(Bank::class, 'id');
+        return $this->belongsTo(Bank::class);
     }
 
     public function paymentModes()
     {
-        return $this->belongsTo(PaymentMode::class);
+        return $this->belongsTo(PaymentMode::class, 'name');
     }
 }
