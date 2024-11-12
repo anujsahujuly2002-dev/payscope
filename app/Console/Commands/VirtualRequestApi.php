@@ -62,25 +62,26 @@ class VirtualRequestApi extends Command
             ]); */
         // endforeach;
 
-        // $f_pointer=fopen("/var/www/groscope/statuses.csv",'r');
+        // $f_pointer=fopen("/var/www/groscope/correction.csv",'r');
         // $i =0;
         // while(! feof($f_pointer)){
         //     $arr=fgetcsv($f_pointer);
         //     print_r($arr);
             
         //     if($i !=0):
-        //         $fundRequests = FundRequest::where('id',$arr['1'])->first();
+        // //     TransactionHistory::where('transaction_id',$payoutRequest->payout_id)->update([
+        //         $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
         //         // dd($fundRequests);
         //         echo "Sr No.:-".($i+1).PHP_EOL;
         //         echo "Fund Request Id:-".$fundRequests->id.PHP_EOL.
         //         $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
-        //             'closing_balnce'=>$arr['6'],
-        //             'balance'=>$arr['2'],
+        //             'closing_balnce'=>$arr['7'],
+        //             'balance'=>$arr['3'],
         //         ]);
         //     endif;
         //     $i++;
         // }
-        $payoutRequests = FundRequest::where(['user_id'=>'10'])->where('id','>=','4356')->get();
+        $payoutRequests = FundRequest::where(['user_id'=>'10'])->where('id','>=','4919')->get();
         foreach($payoutRequests as $payoutRequest):
             $fundRequestHistories = PayoutRequestHistory::where('fund_request_id',$payoutRequest->id)->first();
             TransactionHistory::where('transaction_id',$payoutRequest->payout_id)->update([
