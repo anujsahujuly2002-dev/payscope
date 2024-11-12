@@ -97,7 +97,7 @@ class CheckPaymentStatusCommand extends Command
                     ]);
                 endif;
             elseif($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='eko'):
-                $apiUrl  = 'https://api.eko.in:25002/ekoicici/v1/transactions/client_ref_id:'.$pendingPaymentRequest->payout_id.'?initiator_id=9519035604';
+                $apiUrl  = 'https://api.eko.in:25002/ekoicici/v1/transactions/'.$pendingPaymentRequest->payout_ref.'?initiator_id=9519035604';
                 $key = "7865654c-2149-40d3-a184-aff404864a68";
                 $encodedKey = base64_encode($key);
                 $secret_key_timestamp =round(microtime(true) * 1000);
