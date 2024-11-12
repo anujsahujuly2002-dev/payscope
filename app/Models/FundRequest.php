@@ -46,5 +46,10 @@ class FundRequest extends Model
         return $this->belongsTo(Bank::class,'bank_id','id');
     }
 
+    public function paymentMode()
+{
+    return $this->belongsTo(PaymentMode::class, 'payment_mode_id');
+}
+
 
 }

@@ -472,7 +472,21 @@
                                             <span class="">{{ strip_tags($transactions->status->name) }}</span>
                                         </td>
                                         <td>
-                                            <i class="fab fa-cc-mastercard me-1"></i> {{ $transactions->type }}
+                                            <span>
+                                                @if (strtolower($transactions->type) == 'credit')
+                                                    <span style="color: green;">
+                                                        {{ ucfirst($transactions->type) }}
+                                                        <i class="uil uil-arrow-up"></i>
+                                                    </span>
+                                                @elseif(strtolower($transactions->type) == 'debit')
+                                                    <span style="color: red;">
+                                                        {{ ucfirst($transactions->type) }}
+                                                        <i class="uil uil-arrow-down"></i>
+                                                    </span>
+                                                @else
+                                                    {{ ucfirst($transactions->type) }}
+                                                @endif
+                                            </span>
                                         </td>
                                         <td>
                                             <div class="mb-3 d-flex justify-content-center">
@@ -508,7 +522,7 @@
                                 <button id="downloadPdf" type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body m-0">
                                 <div id="transactionSlip" class="transaction-slip">
                                     <div class="details">
                                         <p>Transaction ID:
@@ -536,11 +550,11 @@
                                         </p>
 
                                         <p>UTR: <span>{{ $selectedTransaction->fund_request->utr_number }} </span></p>
-                                        <p>Mode: <span>{{ $selectedTransaction->fund_request->payment_mode_id }}
+                                        <p>Mode: <span>{{ ucfirst($selectedTransaction->fund_request->paymentMode->name) }}
                                             </span>
                                         </p>
                                         <p>Status:
-                                            {{-- <span
+                                            <span
                                                 class="badge
                                                 {{ $selectedTransaction->status && strtolower($selectedTransaction->status->name) == 'pending'
                                                     ? 'text-bg-warning'
@@ -550,32 +564,7 @@
                                                             ? 'text-bg-primary'
                                                             : 'text-bg-success')) }}">
                                                 {{ $selectedTransaction->status ? strip_tags($selectedTransaction->status->name) : 'N/A' }}
-                                            </span> --}}
-
-                                            <span>
-                                                @if ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'success')
-                                                    <span style="color: green;">
-                                                        {{ ucfirst($selectedTransaction->status->name) }}
-                                                    </span>
-                                                @elseif ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'rejected')
-                                                    <span style="color: red;">
-                                                        {{ ucfirst($selectedTransaction->status->name) }}
-                                                    </span>
-                                                @elseif ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'pending')
-                                                    <span style="color: rgba(249, 108, 7, 0.853);">
-                                                        {{ ucfirst($selectedTransaction->status->name) }}
-                                                    </span>
-                                                @elseif ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'refunded')
-                                                    <span style="color: rgba(20, 9, 122, 0.853);">
-                                                        {{ ucfirst($selectedTransaction->status->name) }}
-                                                    </span>
-                                                @else
-                                                    <span>Status not available</span>
-                                                @endif
                                             </span>
-
-
-
                                         </p>
 
                                         <p>Date/Time: <span>{{ $selectedTransaction->created_at }} </span></p>
