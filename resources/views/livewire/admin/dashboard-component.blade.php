@@ -540,7 +540,7 @@
                                             </span>
                                         </p>
                                         <p>Status:
-                                            <span
+                                            {{-- <span
                                                 class="badge
                                                 {{ $selectedTransaction->status && strtolower($selectedTransaction->status->name) == 'pending'
                                                     ? 'text-bg-warning'
@@ -550,7 +550,32 @@
                                                             ? 'text-bg-primary'
                                                             : 'text-bg-success')) }}">
                                                 {{ $selectedTransaction->status ? strip_tags($selectedTransaction->status->name) : 'N/A' }}
+                                            </span> --}}
+
+                                            <span>
+                                                @if ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'success')
+                                                    <span style="color: green;">
+                                                        {{ ucfirst($selectedTransaction->status->name) }}
+                                                    </span>
+                                                @elseif ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'rejected')
+                                                    <span style="color: red;">
+                                                        {{ ucfirst($selectedTransaction->status->name) }}
+                                                    </span>
+                                                @elseif ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'pending')
+                                                    <span style="color: rgba(249, 108, 7, 0.853);">
+                                                        {{ ucfirst($selectedTransaction->status->name) }}
+                                                    </span>
+                                                @elseif ($selectedTransaction->status && strtolower(trim($selectedTransaction->status->name)) == 'refunded')
+                                                    <span style="color: rgba(20, 9, 122, 0.853);">
+                                                        {{ ucfirst($selectedTransaction->status->name) }}
+                                                    </span>
+                                                @else
+                                                    <span>Status not available</span>
+                                                @endif
                                             </span>
+
+
+
                                         </p>
 
                                         <p>Date/Time: <span>{{ $selectedTransaction->created_at }} </span></p>

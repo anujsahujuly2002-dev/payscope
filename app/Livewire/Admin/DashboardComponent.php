@@ -70,11 +70,11 @@ class DashboardComponent extends Component
             }
 
 
-        public function transaction($transactionId){
+        public function transaction($id){
             $this->paymentModes = PaymentMode::get();
             $this->banks = Bank::get();
             $this->statuses =  Status::get();
-            $this->selectedTransaction = PayoutRequestHistory::with('user', 'banks','status','fund_request', 'paymentModes')->findOrFail($transactionId);
+            $this->selectedTransaction = PayoutRequestHistory::with('user', 'banks','status','fund_request', 'paymentModes')->findOrFail($id);
             // dd($this->selectedTransaction);
             $this->dispatch('show-form');
         }
