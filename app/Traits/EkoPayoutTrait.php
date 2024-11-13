@@ -68,7 +68,7 @@ trait EkoPayoutTrait {
                 'type'=>'Bank',
                 'pay_type'=>'payout',
                 'payout_id'=>$data['payoutid'],
-                'payout_ref'=>$data['payoutid']
+                // 'payout_ref'=>$data['payoutid']
             ]);
         }catch (Exception $e){
             return [
