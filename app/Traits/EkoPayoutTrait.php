@@ -38,18 +38,19 @@ trait EkoPayoutTrait {
             ];
         endif;
         $walletAmount = Wallet::where('user_id',$data['user_id'])->first();
-        if($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])+calculateGst(getCommission("dmt",$data['amount'],$data['user_id'])) > ($walletAmount->amount-$walletAmount->locked_amuont)):
+        $commissionAndGst = getCommission("payout",$data['amount'],$data['user_id'])['payout_charges']+ getCommission("payout",$data['amount'],$data['user_id'])['gst_charge'];
+        if($data['amount']+$commissionAndGst > ($walletAmount->amount-$walletAmount->locked_amuont)):
             return [
                 'status'=>'0002',
                 'msg'=>'Low balance to make this request.'
             ];
         endif;
         // Check previous transaction time
-        $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id']])->whereBetween('created_at',[Carbon::now()->subSeconds(10)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(10)->format('Y-m-d H:i:s')])->count();
+        $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id']])->whereBetween('created_at',[Carbon::now()->subSeconds(1)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(1)->format('Y-m-d H:i:s')])->count();
         if($previousTransactionTimeCheck > 0):
             return [
                 'status'=>'0003',
-                'msg'=>'Next transaction allowed after 4 sec.'
+                'msg'=>'Next transaction allowed after 2 sec.'
             ];
         endif;
         do {
@@ -68,7 +69,6 @@ trait EkoPayoutTrait {
                 'type'=>'Bank',
                 'pay_type'=>'payout',
                 'payout_id'=>$data['payoutid'],
-                // 'payout_ref'=>$data['payoutid']
             ]);
         }catch (Exception $e){
             return [
@@ -81,14 +81,14 @@ trait EkoPayoutTrait {
             $q->where('name','super-admin');
         })->first();
 
-        $gstAmount = calculateGst(getCommission("dmt",$data['amount'],$data['user_id']));
-        $closing_balance = $walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))-$gstAmount ;
+
+        $closing_balance = $walletAmount->amount-($data['amount']+$commissionAndGst) ;
         $payoutRequestHistories = PayoutRequestHistory::create([
             'user_id'=>$data['user_id'],
             'fund_request_id'=>$fundRequest->id,
             'api_id'=>'1',
             'amount'=>$data['amount'],
-            'charge'=>getCommission("dmt",$data['amount'],$data['user_id']),
+            'charge'=>getCommission("payout",$data['amount'],$data['user_id'])['payout_charges'],
             'status_id'=>'1',
             'credited_by'=>$adminId->id,
             'balance'=>$main_amount,
@@ -98,12 +98,11 @@ trait EkoPayoutTrait {
             'product'=>'payout',
             'remarks'=>'Bank Settlement',
             'payout_api'=>"eko",
-            'gst'=>$gstAmount
+            'gst'=>getCommission("payout",$data['amount'],$data['user_id'])['gst_charge']
         ]);
-        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+$gstAmount,'debit');
+        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+$commissionAndGst),'debit');
        
         Wallet::where('user_id',$data['user_id'])->update([
-            // 'amount'=>$walletAmount->amount-($data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])),
             'amount'=>$closing_balance ,
         ]);
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
@@ -144,7 +143,6 @@ trait EkoPayoutTrait {
                             'msg'=>"Your transaction was successful! We’re now updating your records through our webhook system. Please wait a few moments, and your transaction status will be updated automatically.",
                         ];
                     endif;
-                   
                 else:
                     FundRequest::where('id',$fundRequest->id)->update([
                         'status_id'=>'1',
@@ -163,18 +161,15 @@ trait EkoPayoutTrait {
                     ];
                 endif;                
             else:
-
-                addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+$gstAmount,'credit');
+                addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+$commissionAndGst),'credit');
                 FundRequest::where('id',$fundRequest->id)->update([
                     'status_id'=>'3',
                 ]);
                 PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                     'status_id'=>'3',
-                    // 'closing_balnce'=>$walletAmount->amount
-                    'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])+$gstAmount,
+                    'closing_balnce'=>$closing_balance+$data['amount']+$commissionAndGst,
                 ]);
                 Wallet::where('user_id',$data['user_id'])->update([
-                    // 'amount'=>$walletAmount->amount,
                     'amount'=>$main_amount,
                 ]);
                 return [
@@ -184,17 +179,15 @@ trait EkoPayoutTrait {
                 ];
             endif;
         }else{
-            addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+getCommission("dmt",$data['amount'],$data['user_id']))+$gstAmount,'credit');
+            addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+$commissionAndGst),'credit');
             FundRequest::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
             ]);
             PayoutRequestHistory::where('id',$fundRequest->id)->update([
                 'status_id'=>'3',
-                // 'closing_balnce'=>$walletAmount->amount
-                'closing_balnce'=>$closing_balance+$data['amount']+getCommission("dmt",$data['amount'],$data['user_id'])+$gstAmount
+                'closing_balnce'=>$closing_balance+$data['amount']+$commissionAndGst
             ]);
             Wallet::where('user_id',$data['user_id'])->update([
-                // 'amount'=>$walletAmount->amount,
                 'amount'=>$main_amount,
             ]);
             return [

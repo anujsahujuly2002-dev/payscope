@@ -11,6 +11,7 @@ use App\Models\Commission;
 use App\Models\PaymentMode;
 use App\Models\OperatorManager;
 use App\Models\TransactionHistory;
+use App\Models\UserActivityLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -68,6 +69,7 @@ if(!function_exists('getCommission')):
     function getCommission ($operaterType,$amount,$user_id) {
         $charges = 0.00;
         $commission = null;
+        $gstCharges = 0.00;
         $schemeId = ApiPartner::where('user_id',$user_id)->first()->scheme_id??Retailer::where('user_id',$user_id)->first()->scheme_id;
         $scheme = OperatorManager::where('operator_type',$operaterType)->where('charge_range_start','<=',$amount)->where('charge_range_end','>=',$amount)->where('status','1')->first();
         if(!is_null($scheme) && !is_null($schemeId)):
@@ -79,8 +81,14 @@ if(!function_exists('getCommission')):
             else:
                 $charges = $commission->value;
             endif;
+            if($commission->gst ==='1'):
+                $gstCharges = $charges*18/100;
+            endif;
         endif;
-        return $charges;
+        return [
+            'payout_charges' =>$charges,
+            'gst_charge'=>$gstCharges,
+        ];
     }
 endif;
 
@@ -211,6 +219,17 @@ endif;
 if(!function_exists('calculateCollectionCharges')):
     function calculateCollectionCharges($amount,$userId) {
         return  $amount*2/100;
+    }
+endif;
+
+if(!function_exists('storeUserActivityLog')):
+    function storeUserActivityLog($data =[]){
+        UserActivityLog::create([
+            'activity'=>$data['activity'],
+            'ip_address'=>$data['ip_address'],
+            'last_modify_id'=>$data['last_modify_id'],
+            'changes'=>$data['changes'],
+        ]);
     }
 endif;
 

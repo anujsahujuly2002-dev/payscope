@@ -30,13 +30,8 @@ class PaymentSettlementCommand extends Command
     {
         $getPaymentInSattelmnets = QRPaymentCollection::whereDate('created_at','<=',Carbon::now()->subDays(1)->format('Y-m-d'))->where(['status_id'=>'2','is_payment_settel'=>'0'])->get();
         foreach($getPaymentInSattelmnets as $getPaymentInSattelmnet):
-            $collectionCharges = calculateCollectionCharges($getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id);
-            $collectionChargesGST = 0;
-            if(in_array($getPaymentInSattelmnet->user_id,['10'])):
-                $collectionChargesGST += calculateGst( $collectionCharges);
-            endif;
-            $chargesAndGstAmount =  $collectionCharges+  $collectionChargesGST;
-            $amount = $getPaymentInSattelmnet->payment_amount-  $chargesAndGstAmount;
+            $collectionCharges = getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['payout_charges']+getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['gst_charge'];
+            $amount = $getPaymentInSattelmnet->payment_amount-  $collectionCharges;
             addTransactionHistory($getPaymentInSattelmnet->qr_code_id,$getPaymentInSattelmnet->user_id,$amount,'credit');
             $getCurrentWalletAmount =  Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->first()->amount;
             Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->update([
@@ -44,8 +39,8 @@ class PaymentSettlementCommand extends Command
             ]);
             $getPaymentInSattelmnet->update([
                 'is_payment_settel'=>'1',
-                'charge'=>$collectionCharges,
-                'gst'=>$collectionChargesGST,
+                'charge'=>getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['payout_charges'],
+                'gst'=>getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['gst_charge'],
             ]);
         endforeach;
     }

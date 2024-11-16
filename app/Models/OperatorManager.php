@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OperatorManager extends Model
 {
     use HasFactory;
-    public $appends = ['charge_range'];
+    public $appends = ['charge_range','service_type'];
     protected $fillable = [
         'name',
         'operator_type',
@@ -25,5 +25,9 @@ class OperatorManager extends Model
     public function getChargeRangeAttribute() {
         return $this->charge_range_start."-".$this->charge_range_end;
 
+    }
+
+    public function getServiceTypeAttribute() {
+        return $this->operator_type;
     }
 }

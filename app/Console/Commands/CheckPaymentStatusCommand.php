@@ -31,7 +31,6 @@ class CheckPaymentStatusCommand extends Command
      */
     public function handle()
     {
-        Log::info("Check Payment Status Api Execute");
         $pendingRequests = FundRequest::where('status_id','1')->with(['payoutTransactionHistories'])->orderBy('id','ASC')->get();
         foreach($pendingRequests as $pendingPaymentRequest):
             if($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='paynpro'):

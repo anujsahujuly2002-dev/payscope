@@ -22,11 +22,15 @@ class SchemeManagerComponent extends Component
     public $operaterType;
     public $slab = [];
     public $items = [];
+
     protected $rules = [
         'schemeName' => 'required|string:min:3',
     ];
+
     public function render()
     {
+        if(!auth()->user()->can('scheme-manager-list')) 
+        throw UnauthorizedException::forPermissions(['scheme-manager-list']);
         $schemes = Scheme::latest()->paginate(10);
         return view('livewire.admin.resources.scheme-manager-component',compact('schemes'));
     }
@@ -47,6 +51,14 @@ class SchemeManagerComponent extends Component
             'name'=>$this->schemeName,
             'status'=>'1',
         ]);
+        $value['name']=$this->schemeName;
+        $data =[
+            'activity'=>'Scheme Create',
+            'ip_address'=>request()->ip(),
+            'last_modify_id'=>auth()->user()->id,
+            'changes'=>json_encode($value)
+        ];
+        storeUserActivityLog($data);
         if($scheme):
             $this->dispatch('hide-form');
             return redirect()->back()->with('success','Scheme Added Successfully');
@@ -62,6 +74,15 @@ class SchemeManagerComponent extends Component
         $scheme = Scheme::where('id',$id)->update([
             'status'=>$status =="1"?"0":"1",
         ]);
+        $value['scheme_id']=$id;
+        $value['status']=$status =="1"?"0":"1";
+        $data =[
+            'activity'=>'Scheme status changes',
+            'ip_address'=>request()->ip(),
+            'last_modify_id'=>auth()->user()->id,
+            'changes'=>json_encode($value)
+        ];
+        storeUserActivityLog($data);
         if($status=='0'):
             $msg = "Scheme Active Successfully";
         else:
@@ -77,8 +98,7 @@ class SchemeManagerComponent extends Component
         endif;
     }
 
-    public function edit($scheme){
-        // dd($scheme);
+    public function edit($scheme){        
         $this->editSchemeForm=True;
         $this->schemeId = $scheme['id'];
         $this->schemeName = $scheme['name'];
@@ -92,6 +112,14 @@ class SchemeManagerComponent extends Component
             'name'=>$this->schemeName,
             'status'=>'1',
         ]);
+        $value['name']=$this->schemeName;
+        $data =[
+            'activity'=>'Scheme Update',
+            'ip_address'=>request()->ip(),
+            'last_modify_id'=>auth()->user()->id,
+            'changes'=>json_encode($value)
+        ];
+        storeUserActivityLog($data);
         if($scheme):
             $this->dispatch('hide-form');
 
@@ -106,7 +134,7 @@ class SchemeManagerComponent extends Component
     public function getCommission($scheme,$operaterName){
         $this->reset();
         $this->setCommissionForm = TRUE;
-        if($operaterName =='dmt'):
+        if($operaterName =='payout'):
             $this->operaterName = $operaterName;
             $this->commissionTypeTitle = 'Money Transfer';
         endif;
@@ -119,9 +147,9 @@ class SchemeManagerComponent extends Component
             $this->slab[] = [
                 'type'=>$commision->type,
                 'value'=>$commision->value,
+                'gst'=>$commision->gst
             ];
         endforeach;
-        // dd($this->slab);
         $this->dispatch('show-form');
     }
 
@@ -133,15 +161,37 @@ class SchemeManagerComponent extends Component
                     'operator'=> $this->operaterType,
                     'type'=>$value['type'],
                     'value'=>$value['value'],
+                    'gst'=>$value['gst']?"1":"0"
                 ]);
+                $value['scheme_id'] = $this->schemeId;
+                $value['slab_id'] = $commission->id;
+                $value['charge_type'] = $this->operaterType;
+                $data =[
+                    'activity'=>'Commision Update',
+                    'ip_address'=>request()->ip(),
+                    'last_modify_id'=>auth()->user()->id,
+                    'changes'=>json_encode($value)
+                ];
+                storeUserActivityLog($data);
             else:
                 Commission::create([
                     'scheme_id'=>$this->schemeId,
                     'slab_id'=>$this->items[$key],
                     'operator'=> $this->operaterType,
                     'type'=>$value['type'],
+                    'gst'=>array_key_exists('gst',$value)?($value['gst']?"1":"0"):"0",
                     'value'=>$value['value'],
                 ]);
+                $value['scheme_id'] = $this->schemeId;
+                $value['slab_id'] = $this->items[$key];
+                $value['charge_type'] = $this->operaterType;
+                $data =[
+                    'activity'=>'New Commision Create',
+                    'ip_address'=>request()->ip(),
+                    'last_modify_id'=>auth()->user()->id,
+                    'changes'=>json_encode($value)
+                ];
+                storeUserActivityLog($data);
             endif;
         endforeach;
         $this->dispatch('hide-form');

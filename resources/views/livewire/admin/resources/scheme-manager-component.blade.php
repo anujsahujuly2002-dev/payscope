@@ -89,10 +89,9 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <div class="menu-header">Commission</div>
-                                                        <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'mobile')">Mobile Recharge</a>
-                                                        <a class="dropdown-item" href="javascript:void()">Virtual Account</a>
-                                                        <div class="menu-header">Charge</div>
-                                                        <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'dmt')">Money Transfer</a>
+                                                        <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'payin')">Payin</a>
+                    
+                                                        <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'payout')">Payout</a>
                                                         <a class="dropdown-item" href="javascript:void()">Virtual Account</a>
                                                     </div>
                                                 </li>
@@ -218,13 +217,15 @@
                                             <th style="width: 40%;">Operator</th>
                                             <th style="width: 30%;">Commission Type</th>
                                             <th>Commission Value</th>
+                                            <th>GST</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {{-- @dd($slab) --}}
                                         @foreach ($operaterList as $key => $item)
                                         <tr>
-                                            <td>{{ucfirst(Str_replace('-',' to ',$item->name))}}</td>
-                                            <input type="hidden" type="hidden" wire:model="items" value="{{ $item->id }}">
+                                            <td>{{ ucfirst(Str_replace('-', ' to ', $item->name)) }}</td>
+                                            <input type="hidden" wire:model="items" value="{{ $item->id }}">
                                             <td>
                                                 <select wire:model.defer="slab.{{$key}}.type" class="form-control">
                                                     <option value="">Select type</option>
@@ -233,7 +234,13 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" id="scheme-name" class="form-control  @error('schemeName') is-invalid @enderror" placeholder="Enter Value" wire:model='slab.{{$key}}.value'>
+                                                <input type="text" id="scheme-name" class="form-control @error('schemeName') is-invalid @enderror" placeholder="Enter Value" wire:model='slab.{{$key}}.value'>
+                                            </td>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input type="checkbox" id="gst-{{$key}}" class="form-check-input large-checkbox" wire:model='slab.{{$key}}.gst' @if(array_key_exists($key,$slab)&&$slab[$key]['gst']=='1') checked @endif>
+                                                    <label class="form-check-label" for="gst-{{$key}}"></label>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -245,8 +252,8 @@
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
-                    </div><!-- /.modal-content -->
-                </form>
+                    </div>
+                </form>                
             </div><!-- /.modal-dialog -->
         </div>
     @endif

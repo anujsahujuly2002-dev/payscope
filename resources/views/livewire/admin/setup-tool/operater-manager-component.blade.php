@@ -45,9 +45,8 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Type</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Operator Api</th>
                                     <th scope="col">Charge Range</th>
-                                    @canany(['operator-edit'])
+                                    @canany(['charges-slab-edit'])
                                         <th scope="col" style="width: 200px;">Action</th>
                                     @endcanany
                                 </tr>
@@ -70,27 +69,17 @@
                                         </td>
                                         <td>{{ucfirst(Str_replace('-',' ',$operatorManger->operator_type))}}</td>
                                         <td>
+                                            {{Str_replace('-',' to ',$operatorManger->charge_range)}}
+                                         </td>
+                                        <td>
                                             <input type="checkbox" id="switch{{$operatorManger->id}}" switch="bool"  @if($operatorManger->status==1) checked @endif wire:change='statusUpdate({{$operatorManger->id}},{{$operatorManger->status}})' />
                                             <label for="switch{{$operatorManger->id}}" data-on-label="Active" data-off-label="Inactive"></label>
                                         </td>
-                                        <td>
-                                            {{ucfirst(Str_replace('-',' ',$operatorManger->api->name))}}
-                                        </td>
-                                        <td>
-                                           {{$operatorManger->charge_range}}
-                                        </td>
-                                        @canany(['operator-edit'])
+                                       
+                                        @canany(['charges-slab-edit'])
                                             <td>
                                                 <ul class="list-inline mb-0">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                    @can('operator-edit')
-=======
-                                                    @can('operator-edit')
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
-=======
-                                                    @can('operator-edit')
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
+                                                    @can('charges-slab-edit')
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-primary" wire:click.prevent='edit({{$operatorManger}})'><i class="uil uil-pen font-size-18"></i></a>
                                                         </li>
@@ -134,15 +123,7 @@
                                             </li>
                                         @endif
                                         @foreach (range(1, $operatorManagers->lastPage()) as $i)
-<<<<<<< HEAD
-<<<<<<< HEAD
                                             @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage())
-=======
-                                            @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage())
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
-=======
-                                            @if ($i >=$operatorManagers->currentPage()-2 && $i <=$operatorManagers->currentPage())
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                                 <li class="page-item @if($operatorManagers->currentPage() ==$i) active @endif"  wire:click="gotoPage({{ $i }})">
                                                     <a href="javascript:void(0)" class="page-link">{{$i}}</a>
                                                 </li>
@@ -156,15 +137,7 @@
                                         @if($operatorManagers->currentPage() < $operatorManagers->lastPage() - 2)
                                             <li class="page-item"  wire:click="gotoPage({{ $operatorManagers->lastPage()}})">
                                                 <a href="javascript:void(0)" class="page-link">{{ $operatorManagers->lastPage()}}</a>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                             </li>
-=======
-                                            </li>
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
-=======
-                                            </li>
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
                                         @endif
                                         @if($operatorManagers->hasMorePages())
                                             <li class="page-item" wire:click="nextPage">
@@ -191,14 +164,14 @@
                 <form wire:submit.prevent="{{$editFormOperaterManger?"update":"store"}}" autocomplete="off">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="myLargeModalLabel">{{$editFormOperaterManger?"Edit":"Create"}} Operator</h5>
+                            <h5 class="modal-title" id="myLargeModalLabel">{{$editFormOperaterManger?"Edit":"Create"}} Slabs</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row g-2">
                                 <div class="col-md-6 mb-0">
                                     <label for="name" class="form-label"> Name</label>
-                                    <input type="text" id="name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Operator Name" wire:model.lazy='operatorLists.name'/>
+                                    <input type="text" id="name" class="form-control  @error('name') is-invalid @enderror" placeholder="Enter Slab Name" wire:model.lazy='operatorLists.name'/>
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -206,32 +179,18 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-0">
-                                    <label for="operator_type" class="form-label">Operator Type</label>
-                                    <select id="operator_type" class="form-control @error('operator_type') is-invalid @enderror" wire:model.defer='operatorLists.operator_type'>
-                                        <option value="">Select Operator Type</option>
-                                        <option value="mobile">Mobile</option>
+                                    <label for="service_type" class="form-label">Service Type</label>
+                                    <select id="service_type" class="form-control @error('service_type') is-invalid @enderror" wire:model.defer='operatorLists.service_type'>
+                                        <option value="">Select Service Type</option>
+                                        {{-- <option value="mobile">Mobile</option>
                                         <option value="dth">DTH</option>
                                         <option value="electricity">Electricity Bill</option>
-                                        <option value="pancard">Pancard</option>
-                                        <option value="dmt">Dmt</option>
-                                        <option value="aeps">Aeps</option>
-                                        <option value="fund">Fund</option>
+                                        <option value="pancard">Pancard</option> --}}
+                                        <option value="payout">Payout</option>
+                                        <option value="payin">Payin</option>
+                                        {{-- <option value="fund">Fund</option> --}}
                                     </select>
-                                    @error('operator_type')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6 mb-0">
-                                    <label for="api" class="form-label">Api</label>
-                                    <select id="api" class="form-control @error('api_id') is-invalid @enderror" wire:model.defer="operatorLists.api_id">
-                                        <option value="">Select Api</option>
-                                        @foreach ($apis as $api)
-                                            <option value="{{$api->id}}">{{$api->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('api_id')
+                                    @error('service_type')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>
@@ -258,12 +217,6 @@
         </div><!-- /.modal -->
     <!-- end row -->
     @include('admin.delete-confirmation.delete-confirmation')
-<<<<<<< HEAD
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> dca90cd8db11dc302b67d1f9c0cac6cc2981b29a
-=======
-</div>
->>>>>>> 69ebcad2dd6a5673882d22a9e1718bf962eda9c8
+
+
