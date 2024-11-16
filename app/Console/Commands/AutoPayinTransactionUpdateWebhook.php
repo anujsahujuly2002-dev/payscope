@@ -38,7 +38,6 @@ class AutoPayinTransactionUpdateWebhook extends Command
             })->get();
             if($getPayInTransactions->count() >0):
                 foreach ($getPayInTransactions as $transaction):
-                    Log::error(json_encode($transaction));
                     if(in_array($transaction->status_id,[2,3,4])):
                         $webhookUrl = ApiToken::where('user_id', $transaction->user_id)->latest()->first();
                         if (!is_null($webhookUrl) && $webhookUrl->payin_webhook_url !== NULL) {
