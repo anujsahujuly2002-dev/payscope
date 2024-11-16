@@ -165,7 +165,6 @@ class CheckPaymentStatusCommand extends Command
                             'status_id'=>'2',
                         ]);
                     endif;
-                   
                 endif;
             endif;
         endforeach;
