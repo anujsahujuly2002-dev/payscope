@@ -18,17 +18,15 @@ class OperaterManagerComponent extends Component
     public $api;
     public function render()
     {
-        if(!auth()->user()->can('operator-list')) 
-        throw UnauthorizedException::forPermissions(['operator-list']);
-        $apis = Api::where('status','1')->get(['id','name']);
+        if(!auth()->user()->can('charge-slab-list')) 
+        throw UnauthorizedException::forPermissions(['charge-slab-list']);
         $operatorManagers = OperatorManager::latest()->paginate(10);
-        return view('livewire.admin.setup-tool.operater-manager-component',compact('apis','operatorManagers'));
+        return view('livewire.admin.setup-tool.operater-manager-component',compact('operatorManagers'));
     }
 
     public function create() {
-       
-        if(!auth()->user()->can('operator-create')) 
-            throw UnauthorizedException::forPermissions(['operator-create']);
+        if(!auth()->user()->can('charge-slab-create')) 
+        throw UnauthorizedException::forPermissions(['operator-create']);
         $this->editFormOperaterManger = false;
         $this->reset();
         $this->dispatch('show-form');
@@ -37,15 +35,13 @@ class OperaterManagerComponent extends Component
     public function store() {
         $validateData = Validator::make($this->operatorLists,[
             'name'=>'required|string|min:3',
-            'operator_type'=>'required',
-            'api_id'=>'required',
-            'charge_range'=>'required_if:operator_type,dmt|regex:/^\d+-\d+$/'
+            'service_type'=>'required',
+            'charge_range'=>'required|regex:/^\d+-\d+$/'
         ])->validate();
         $chargeRange = explode('-',$validateData['charge_range']??0);
         $operatorManager = OperatorManager::create([
             'name'=>$validateData['name'],
-            'operator_type'=>$validateData['operator_type'],
-            'api_id'=>$validateData['api_id'],
+            'operator_type'=>$validateData['service_type'],
             'charge_range_start' =>$chargeRange[0]??0, 
             'charge_range_end' =>$chargeRange[1]??0, 
             'status'=>'1',
@@ -53,23 +49,23 @@ class OperaterManagerComponent extends Component
         
         $this->dispatch('hide-form');
         if($operatorManager):
-            return redirect()->back()->with('success','Operator Added Successfully !');
+            return redirect()->back()->with('success','Slabs Added Successfully !');
         else:
-            return redirect()->back()->with('error','Operator not added,Please try again !');
+            return redirect()->back()->with('error','Slabs not added,Please try again !');
         endif;
     }
 
     public function statusUpdate($id,$status) {
-        if(!auth()->user()->can('operator-manager-status-change')) 
+        if(!auth()->user()->can('charge-slabs-status-change')) 
             throw UnauthorizedException::forPermissions(['operator-manager-status-change']);
         $statusUpdate = OperatorManager::findOrFail($id)->update([
             'status'=>$status==0?"1":"0",
         ]);
         
         if($status=='0'):
-            $msg = "Operator Manager Active Successfully";
+            $msg = "Slab Active Successfully";
         else:
-            $msg = "Operator Manager Inactive Successfully";
+            $msg = "Slab Inactive Successfully";
         endif;
         if($statusUpdate):
             $this->dispatch('hide-form');   
@@ -81,7 +77,7 @@ class OperaterManagerComponent extends Component
     }
 
     public function edit(OperatorManager $operatorManager){
-        if(!auth()->user()->can('operator-edit')) 
+        if(!auth()->user()->can('charges-slab-edit')) 
         throw UnauthorizedException::forPermissions(['operator-edit']);
         $this->editFormOperaterManger = true;
         $this->operatorManagerId = $operatorManager->id;
@@ -92,18 +88,15 @@ class OperaterManagerComponent extends Component
     public function  update() {
         $validateData = Validator::make($this->operatorLists,[
             'name'=>'required|string|min:3',
-            'operator_type'=>'required',
-            'api_id'=>'required',
+            'service_type'=>'required',
             'charge_range'=>'required|regex:/^\d+-\d+$/'
         ])->validate();
         $chargeRange = explode('-',$validateData['charge_range']);
         $operatorManager = OperatorManager::where('id',$this->operatorManagerId)->update([
             'name'=>$validateData['name'],
-            'operator_type'=>$validateData['operator_type'],
-            'api_id'=>$validateData['api_id'],
+            'operator_type'=>$validateData['service_type'],
             'charge_range_start' =>$chargeRange[0], 
             'charge_range_end' =>$chargeRange[1], 
-            'status'=>'1',
         ]);
         
         $this->dispatch('hide-form');

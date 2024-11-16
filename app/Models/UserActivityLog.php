@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Commission extends Model
+class UserActivityLog extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'scheme_id',
-        'slab_id',
-        'operator',
-        'type',
-        'gst',
-        'value',
+        'activity',
+        'ip_address',
+        'last_modify_id',
+        'changes',
     ];
 }

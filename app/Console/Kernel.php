@@ -30,13 +30,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('app:check-payment-status-command')->everyTwoMinutes()->onSuccess(function () {
-            $msg = "Check Payment Status Api Initiate Successfully";
-            // use wordwrap() if lines are longer than 70 characters
-            $msg = wordwrap($msg,70);
-            // send email
-            mail("programmeranuj930@gmail.com","Check Payment Status",$msg);
-        });
+        $schedule->command('app:check-payment-status-command')->everyTwoMinutes();
         $getStaturday = $this->getSaturdaysOfCurrentMonth();
         // Search for the key of a specific date
         $days = [1,2,3,4,5];

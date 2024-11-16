@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('fund_requests', function (Blueprint $table) {
-            $table->string('order_id')->nullable()->after('payout_id');
+        Schema::table('commissions', function (Blueprint $table) {
+            $table->enum('gst',['0','1'])->default('0')->comment('0=No,1=Yes')->after('value');
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('fund_requests', function (Blueprint $table) {
+        Schema::table('commissions', function (Blueprint $table) {
             //
         });
     }
