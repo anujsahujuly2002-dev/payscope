@@ -17,10 +17,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Exceptions\UnauthorizedException;
+use App\Traits\eKYCTrait;
 
 class RetailerComponent extends Component
 {
-    use WithPagination;
+    use WithPagination,eKYCTrait;
     public $state=[];
     public $start_date;
     public $value;
@@ -34,6 +35,16 @@ class RetailerComponent extends Component
     public $permissionsId=[];
     public $user;
     public $agentId;
+    public $ekyApiPartnerId;
+    public $otpReferenceID;
+    public $hash;
+    public $ekycForm = false;
+    public $otp= false;
+    public $ekycFormData=[];
+    public $otp_code;
+    protected $rules = [
+        'otp_code' => 'required|integer',
+    ];
 
 
     public function render()
@@ -56,9 +67,6 @@ class RetailerComponent extends Component
         ->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
         })
-        // ->when($this->status !=null,function($u){
-        //     $u->where('status_id',$this->status);
-        // })
         ->when($this->agentId !=null,function($u){
             $u->where('id',$this->agentId);
         })
@@ -87,11 +95,10 @@ class RetailerComponent extends Component
             'state_name'=>'required',
             'city'=>'required|string',
             'pincode'=>'required|numeric|min_digits:6|digits:6',
-            'shop_name'=>'required|string|min:3',
+            // 'shop_name'=>'required|string|min:3',
             'pancard_number'=>'required|string',
             'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
             'scheme'=>'required',
-            // 'website'=>'required|url:https'
         ])->validate();
         $user = User::create([
             'name'=>$validateData['name'],
@@ -109,7 +116,7 @@ class RetailerComponent extends Component
                 'state_id'=>$validateData['state_name'],
                 'city'=>$validateData['city'],
                 'pincode'=>$validateData['pincode'],
-                'shop_name'=>$validateData['shop_name'],
+                // 'shop_name'=>$validateData['shop_name'],
                 'pancard_no'=>$validateData['pancard_number'],
                 'addhar_card'=>$validateData['adhaarcard_number'],
                 'scheme_id'=>$validateData['scheme'],
@@ -141,11 +148,9 @@ class RetailerComponent extends Component
     }
 
     public function serviceUpdate($userId,$status){
-        // dd($userId,$status);
         $serviceUpdate = User::findOrFail($userId)->update([
             'services'=>$status==0?"1":"0",
         ]);
-        // dd($serviceUpdate);
         $msg = $status==0?"Service has been acctivated":"Service has been deactivated";
         return redirect()->back()->with('success',$msg);
 
@@ -153,7 +158,7 @@ class RetailerComponent extends Component
 
     public function changeScheme($id) {
         $this->reset();
-        $this->createRetailerForm = true;
+        $this->createRetailerForm = false;
         $this->assignPermissionUserBasedForm = false;
         $this->schemeForm=true;
         $retailer = Retailer::where('user_id',$id)->first();
@@ -216,5 +221,57 @@ class RetailerComponent extends Component
             'value'=>$this->value
         ];
         return Excel::download(new RetailerExport($data), time().'.xlsx');
+    }
+
+    public function generateOutletId($id) {
+        $this->reset();
+        $this->ekyApiPartnerId = $id;
+        $this->ekycForm =true;
+        $this->dispatch('show-form');
+    }
+
+    public function eKycFormData() {
+        $validateData = Validator::make($this->ekycFormData,[
+            'pancard_number'=>'required|string|regex:/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/',
+            'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
+            'account_number'=>'required|numeric|min_digits:10',
+            'ifsc_code'=>'required',
+
+
+        ])->validate();
+        $validateData ['agent_id']= $this->ekyApiPartnerId;
+        $response = $this->signUpEkycInitiate($validateData);
+        if($response['status']):
+            $this->otp =true;
+            $this->otpReferenceID = $response['data']['otpReferenceID'];
+            $this->hash = $response['data']['hash'];
+        else:
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('error',$response['msg']);
+        endif;
+    }
+
+
+    public function eKycValidate() {
+        $this->validate();
+        $data = [
+            'otpReferenceID'=>$this->otpReferenceID,
+            'hash'=>$this->hash,
+            'otp'=>$this->otp_code,
+        ];
+        $response = $this->signUpEkycInitiateValidate($data);
+        if($response['status']):
+
+            User::find($this->ekyApiPartnerId)->update([
+                'outlet_id'=>$response['data']['outletId'],
+            ]);
+            $this->reset();
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('success',$response['msg']);
+        else:
+            $this->dispatch('hide-form');
+            return redirect()->back()->with('error',$response['msg']);
+        endif;
+
     }
 }

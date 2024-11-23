@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use App\Models\PayoutRequestHistory;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class CheckPaymentStatusCommand extends Command
 {
@@ -31,8 +32,8 @@ class CheckPaymentStatusCommand extends Command
      */
     public function handle()
     {
-        $pendingRequests = FundRequest::where('status_id','1')->with(['payoutTransactionHistories'])->orderBy('id','ASC')->get();
-        foreach($pendingRequests as $pendingPaymentRequest):
+        $pendingRequests = FundRequest::where('status_id','1')->where('created_at', '<', Carbon::now()->subMinute())->with(['payoutTransactionHistories'])->orderBy('id','ASC')->get();
+	foreach($pendingRequests as $pendingPaymentRequest):
             if($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='paynpro'):
                 $pyanProUrl = "https://pout.paynpro.com/payout/v1/getStatus";
                 $header= [

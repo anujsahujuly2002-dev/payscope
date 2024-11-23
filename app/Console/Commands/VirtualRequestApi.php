@@ -62,34 +62,43 @@ class VirtualRequestApi extends Command
             ]); */
         // endforeach;
 
-        // $f_pointer=fopen("/var/www/groscope/correction.csv",'r');
-        // $i =0;
-        // while(! feof($f_pointer)){
-        //     $arr=fgetcsv($f_pointer);
-        //     print_r($arr);
-            
-        //     if($i !=0):
-        // //     TransactionHistory::where('transaction_id',$payoutRequest->payout_id)->update([
-        //         $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
-        //         // dd($fundRequests);
-        //         echo "Sr No.:-".($i+1).PHP_EOL;
-        //         echo "Fund Request Id:-".$fundRequests->id.PHP_EOL.
-        //         $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
-        //             'closing_balnce'=>$arr['7'],
-        //             'balance'=>$arr['3'],
-        //         ]);
-        //     endif;
-        //     $i++;
-        // }
-        $payoutRequests = FundRequest::where(['user_id'=>'10'])->where('id','>=','4919')->get();
-        foreach($payoutRequests as $payoutRequest):
-            $fundRequestHistories = PayoutRequestHistory::where('fund_request_id',$payoutRequest->id)->first();
-            TransactionHistory::where('transaction_id',$payoutRequest->payout_id)->update([
+        $f_pointer=fopen("/var/www/groscope/correction.csv",'r');
+        $i =0;
+        while(! feof($f_pointer)){
+            $arr=fgetcsv($f_pointer);
+            print_r($arr);
+            if($i !=0):
+        //     TransactionHistory::where('transaction_id',$payoutRequest->payout_id)->update([
+                // $fundRequests = FundRequest::where('payout_id',$arr['1'])->first();
+                // // dd($fundRequests);
+                // echo "Sr No.:-".($i+1).PHP_EOL;
+                // echo "Fund Request Id:-".$fundRequests->id.PHP_EOL.
+                // $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
+                   
+                //     'balance'=>$arr['3'],
+                //     'amount'=>$arr['4'],
+                //     'charge'=>$arr['5'],
+                //     'gst'=>$arr['6'],
+                //     'closing_balnce'=>$arr['7'],
+                // ]);
+                TransactionHistory::where('transaction_id',$arr['1'])->update([
+                    'opening_balance'=>$arr['2'],
+                    'amount'=>$arr['3'],
+                    'closing_balnce'=>$arr['4']
+                ]);
+            endif;
+            $i++;
+        }
+        // $payoutRequests = FundRequest::where(['user_id'=>'10'])->where('id','>=','5321')->get();
+        // foreach($payoutRequests as $payoutRequest):
+        //     $fundRequestHistories = PayoutRequestHistory::where('fund_request_id',$payoutRequest->id)->first();
+        //     // dd($fundRequestHistories);
+            /* TransactionHistory::where('transaction_id',$payoutRequest->payout_id)->update([
                 'opening_balance'=>$fundRequestHistories->balance,
-                // 'amount'=>$totalPayout,
+                'amount'=>$fundRequestHistories->amount+$fundRequestHistories->charge+$fundRequestHistories->gst,
                 'closing_balnce'=>$fundRequestHistories->closing_balnce
-            ]);
-        endforeach;
+            ]); */
+        // endforeach;
         /* $fundRequestHistories = PayoutRequestHistory::where('fund_request_id','>=','4322')->where('status_id','3')->get();
         foreach($fundRequestHistories as $fundRequestsHistory):
             $fundRequests =FundRequest::where('id',$fundRequestsHistory->fund_request_id)->first();

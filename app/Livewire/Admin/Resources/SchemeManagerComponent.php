@@ -142,7 +142,7 @@ class SchemeManagerComponent extends Component
         $this->operaterList = OperatorManager::where('operator_type',$operaterName)->get();
         $this->items = array_map(fn($operaterList)=>$operaterList->id,iterator_to_array($this->operaterList)); 
         $this->schemeId = $scheme;
-        $commisions = Commission::where(['operator'=>$operaterName,'scheme_id'=>$this->schemeId])->get();
+        $commisions = Commission::where(['operator'=>$operaterName,'scheme_id'=>$this->schemeId])->orderBy('slab_id','ASC')->get();
         foreach($commisions as $commision):
             $this->slab[] = [
                 'type'=>$commision->type,

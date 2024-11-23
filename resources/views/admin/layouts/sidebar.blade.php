@@ -190,8 +190,7 @@
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 @if (checkRecordHasPermission(['api-create','api-list','api-change-status','api-edit','login-session','api-logs','callback-token','callback-token-create','callback-token-delete',]))
-                                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit',
-                                        'api-logs'])
+                                    @canany(['api-create', 'api-list', 'api-change-status', 'api-edit','api-logs'])
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.admin-setting.api.list') }}">Api Manager </a></li>
                                     @endcanany
                                 @endif
@@ -245,17 +244,24 @@
                         <li><a style="color: #0a1d56;" href="javascript:void()">Wallect Lock</a></li>
                     </ul>
                 </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-exchange"></i>
-                        <span style="color: #0a1d56;">DMT</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a style="color: #0a1d56;" href="{{ route('admin.domestic.money.transfer.recipient.list') }}">Recipient List</a></li>
-                        <li><a style="color: #0a1d56;" href="javascript:void()">Money Transfer</a></li>
-                    </ul>
-                </li>
+                @if (checkRecordHasPermission(['remitter-registration','beneficiary-registration','beneficiary-list']))
+                    @canany(['remitter-registration','beneficiary-registration','beneficiary-list'])
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="uil-exchange"></i>
+                                <span style="color: #0a1d56;">DMT</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                @if (checkRecordHasPermission(['remitter-registration','beneficiary-registration','beneficiary-list']))
+                                    @canany(['remitter-registration','beneficiary-registration','beneficiary-list'])
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.domestic.money.transfer.recipient.list') }}">Beneficiary List</a></li>
+                                    @endcanany
+                                @endif
+                                    {{-- <li><a style="color: #0a1d56;" href="javascript:void()">Money Transfer</a></li> --}}
+                            </ul>
+                        </li>
+                    @endcanany
+                @endif
                 
                 <li>
                     <a style="color: #0a1d56;" href="{{ route('admin.logout') }}">
