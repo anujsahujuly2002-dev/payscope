@@ -67,7 +67,8 @@ class QRCollectionComponent extends Component
             'user_id' => auth()->user()->getRoleNames()->first() == 'super-admin' ? $this->agentId : auth()->user()->id,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'value' => $this->value
+            'value' => $this->value,
+            'status'=> $this->status
         ];
         return Excel::download(new QRCollectionExport($data), time() . '.xlsx');
     }

@@ -9,8 +9,10 @@ use Livewire\Component;
 class RecipientComponent extends Component
 {
     public $otpVerificationForm =true;
-    public $otpReference;
+    public $otpReferenceID;
+    public $otp_code;
     use DomesticMoneyTransferTrait;
+
     protected $rules = [
         'otp_code' => 'required|integer',
     ];
@@ -20,40 +22,18 @@ class RecipientComponent extends Component
     }
 
     public function payerRegistration() {
-       /*  if(!auth()->user()->can('fund-new-request'))
-        throw UnauthorizedException::forPermissions(['fund-new-request']); */
+        if(!auth()->user()->can('remitter-registration') && checkRecordHasPermission(['remitter-registration']))
+        throw UnauthorizedException::forPermissions(['remitter-registration']);
         $data['role'] = auth()->user()->getRoleNames()->first();
         $response  = $this->payerRegistrations($data);
         if(isset($response['statuscode']) && $response['statuscode'] =='OTP'){
-            $this->otpReference = $response['data']['otpReference'];
+            $this->otpReferenceID = $response['data']['referenceKey'];
             $this->otpVerificationForm = true;
             $this->dispatch('show-form');
         }else{
-            // dd();
-            if(isset($response['statuscode']) &&$response['statuscode'] !='OTP' && $response['status'] ):
-                Payer::create([
-                    'user_id'=>auth()->user()->id,
-                    'limit_per_transaction'=>$response['data']['limitPerTransaction'],
-                    'limit_total'=>$response['data']['limitTotal'],
-                    'limit_consumed'=>$response['data']['limitConsumed'],
-                    'limit_available'=>$response['data']['limitAvailable'],
-                    'limit_increase_offer'=>$response['data']['limitIncreaseOffer']?1:0,
-                    'allow_profile_update'=>$response['data']['allowProfileUpdate']?1:0,
-                    'maximum_daily_limit'=>$response['data']['limitDetails']['maximumDailyLimit'],
-                    'consumed_daily_limit'=>$response['data']['limitDetails']['consumedDailyLimit'],
-                    'available_daily_limit'=>$response['data']['limitDetails']['availableDailyLimit'],
-                    'maximum_monthly_limit'=>$response['data']['limitDetails']['maximumMonthlyLimit'],
-                    'consumed_monthly_limit'=>$response['data']['limitDetails']['consumedMonthlyLimit'],
-                    'available_monthly_limit'=>$response['data']['limitDetails']['availableMonthlyLimit'],
-                ]);
-                sleep(1);
-                session()->flash('success',$response['msg']);
-                return back();
-            else:
-                sleep(1);
-                session()->flash('error',$response['msg']);
-                return back();
-            endif;
+            sleep(1);
+            session()->flash('error',$response['message']);
+            return back();
            
         }
         
@@ -62,12 +42,13 @@ class RecipientComponent extends Component
     public function otpValidate() {
         $this->validate();
         $data = [
+            'mobileNumber'=>auth()->user()->mobile_no,
             'otpReference'=>$this->otpReferenceID,
             'otp'=>$this->otp_code,
         ];
         $response = $this->otpVerification($data);
+        dd($response);
         if($response['status']):
-
             User::find($this->ekyApiPartnerId)->update([
                 'outlet_id'=>$response['data']['outletId'],
             ]);

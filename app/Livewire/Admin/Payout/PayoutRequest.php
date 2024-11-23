@@ -90,6 +90,7 @@ class PayoutRequest extends Component
         ])->validate();
 
         $validateData['user_id']= auth()->user()->id;
+	$validateData['order_id']="";
         // $response = $this->payoutApiRequest($validateData);
         $response = $this->ekoPayoutApi($validateData);
         // $response = $this->payNProPayout($validateData);

@@ -1,4 +1,3 @@
-
     <div>
         <div wire:loading class="loading"></div>
         @include('admin.flash-message.flash-message')
@@ -11,31 +10,22 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                   {{--  <div class="col-md-6">
-                                        <div class="form-inline float-md-end mb-3">
-                                            <div class="search-box ms-2">
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control rounded bg-light border-0"
-                                                        placeholder="Search...">
-                                                    <i class="mdi mdi-magnify search-icon"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                     <div class="col-md-6">
                                         <div class="mb-3 d-flex justify-content-center">
-                                            {{-- @can('') --}}
+                                        @if (checkRecordHasPermission(['remitter-registration']))
+                                            @canany(['remitter-registration'])
                                                 <a href="javascript:void(0);" class="btn btn-success d-flex" wire:click.prevent='payerRegistration'><i class="mdi mdi-plus"></i>Payer Registration</a>
-            
-                                            {{-- @endcan --}}
+                                            @endcanany
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 d-flex justify-content-center">
-                                            {{-- @can('') --}}
-                                                <a href="javascript:void(0);" class="btn btn-success d-flex" wire:click.prevent='create'><i class="mdi mdi-plus"></i>Recipient Registration</a>
-                                               
-                                            {{-- @endcan --}}
+                                        @if (checkRecordHasPermission(['beneficiary-registration']))
+                                            @can('beneficiary-registration')
+                                                <a href="javascript:void(0);" class="btn btn-success d-flex" wire:click.prevent='create'><i class="mdi mdi-plus"></i>Beneficiary Registration</a>
+                                            @endcan 
+                                        @endif
                                         </div>
                                     </div>
                                 </div>
