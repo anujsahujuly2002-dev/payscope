@@ -31,6 +31,7 @@ Route::get('/',function (){
 
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::match(['get', 'post'], 'web-hook-recived-payment-in-razorapy', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webhookRecivedPaymentInRazorapy'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    Route::match(['get', 'post'], 'web-hook-order-paid-razorpay', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webHookOrderPaidCallBack'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::match(['get', 'post'],'webhookpaynpro',[App\Http\Controllers\Api\FundRequestController::class,'webHookPaynPro'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::namespace('Auth')->middleware(['guest'])->controller(AuthController::class)->group(function() {
         Route::get('/','login')->name('login');

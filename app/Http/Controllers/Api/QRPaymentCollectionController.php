@@ -307,4 +307,9 @@ class QRPaymentCollectionController extends Controller
         
     }
 
+
+    public function webHookOrderPaidCallBack(Request $request){
+        Log::info($request->all());
+    }
+
 }
