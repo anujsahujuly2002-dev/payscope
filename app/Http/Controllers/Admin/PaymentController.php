@@ -19,7 +19,24 @@ class PaymentController extends Controller
     }
 
     public function index(){
-        $order = $this->createOrder(10);
+        $order = $this->createOrder(10);    
+        dd(json_encode(array(
+            "amount" => $order['amount'],
+            "currency" => "INR",
+            "order_id" => $order['id'],
+            "email" =>  "nicknikhilyadavnieck@gmail.com",
+            "contact" => "6386565743",
+            "method" => "upi",
+            "customer_id" => "cust_P9lEOdEtSHA1FT",
+            "ip" => "106.219.152.38",
+            "referer" => "http",
+            "user_agent" => "Mozilla/5.0",
+            "description" => "Test flow",
+            "notes" => array("note_key" => "value1"),
+            "upi" => array(
+                "flow" => "intent"
+            )
+            )));
         dd($order);
         try{
 
@@ -53,11 +70,11 @@ class PaymentController extends Controller
             'amount' => 100, 
             'method' => 'upi',
             'currency' => 'INR',
-            'bank_account'=> array(
-                'account_number'=> '3336359309',
-                'name'=> 'NIKHIL KUMAR',
-                'ifsc'=>'CBIN0284533'
-            )
+            // 'bank_account'=> array(
+            //     'account_number'=> '3336359309',
+            //     'name'=> 'NIKHIL KUMAR',
+            //     'ifsc'=>'CBIN0284533'
+            // )
         ));
         
     }

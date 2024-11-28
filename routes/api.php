@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::controller(FundRequestController::class)->group(function() {
     Route::post('/payout','payout');
@@ -28,5 +25,6 @@ Route::controller(FundRequestController::class)->group(function() {
 Route::controller(QRPaymentCollectionController::class)->group(function(){
     Route::post('create-qr-code','createQrCode');
     Route::post('fetch-qr-status','fetchQrStatus');
+    Route::post('upi-intent','upiIntent');
     
 });
