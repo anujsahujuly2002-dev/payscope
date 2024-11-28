@@ -121,7 +121,7 @@
                         </li>
                     @endcanany
                 @endif
-                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request','virtual-list','payout-request','payout-new-request',]))
+                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request','virtual-list','payout-request','payout-new-request','qr-collection-add-payment','qr-collection-list']))
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="uil-history"></i>
@@ -143,8 +143,12 @@
                                     <li><a style="color: #0a1d56;" href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
                                 @endcanany
                             @endif
+                            @if (checkRecordHasPermission(['qr-collection-add-payment', 'qr-request-add-list']))
+                                @canany(['qr-collection-add-payment', 'qr-request-list'])
+                                    <li><a href="{{ route('admin.fund.qr.collection') }}" style="color: #0A1D56;">QR Collection </a></li>
+                                @endcanany
+                            @endif
 
-                            <li><a href="{{ route('admin.fund.qr.collection') }}" style="color: #0A1D56;">QR Collection </a></li>
                         </ul>
                     </li>
                 @endif

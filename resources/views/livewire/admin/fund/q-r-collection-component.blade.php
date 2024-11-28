@@ -57,11 +57,13 @@
                                                         class="fas fa-file-excel me-2"></i>Export</a>
                                             </div>
                                             <div class="mb-3 ms-3 d-flex">
-                                                @can('qr-request-add-fund')
-                                                <a href="javascript:void(0);"
-                                                class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
-                                                style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;" wire:click.prevent='walletLoad'><i class="mdi mdi-plus"></i></a>
-                                                @endcan
+                                                @if(checkRecordHasPermission(['qr-collection-add-payment']))
+                                                    @can('qr-collection-add-payment')
+                                                        <a href="javascript:void(0);"
+                                                        class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                                        style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;" wire:click.prevent='walletLoad'><i class="mdi mdi-plus"></i></a>
+                                                    @endcan
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

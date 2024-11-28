@@ -2,16 +2,6 @@
     <div wire:loading class="loading"></div>
     @include('admin.flash-message.flash-message')
     <div class="row">
-        <div class="col-md-12">
-            <div class="mb-3 d-flex justify-content-end">
-                @can('qr-request-add-fund')
-                    <a href="javascript:void(0);"
-                      class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
-                    style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;"
-                    wire:click.prevent='walletLoad'><i class="mdi mdi-plus me-2"></i>Wallet Load</a>
-                @endcan
-            </div>
-        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -49,11 +39,24 @@
                                         </select>
                                      </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 mb-10">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12  d-flex justify-content-center">
                                             <div class="mb-3 d-flex">
-                                                <a href="javascript:void(0);" class="btn  waves-effect waves-light align-self-center" style="background-color:#FE7A36;font-color:white" wire:click.prevent='export'><i class="fas fa-file-excel me-2"></i>Export</a>
+                                                <a href="javascript:void(0);"
+                                                    class="btn  waves-effect waves-light align-self-center"
+                                                    style="background-color:#FE7A36;font-color:white"
+                                                    wire:click.prevent='export'><i
+                                                        class="fas fa-file-excel me-2"></i>Export</a>
+                                            </div>
+                                            <div class="mb-3 ms-3 d-flex">
+                                                @if(checkRecordHasPermission(['qr-request-add-fund']))
+                                                    @can('qr-request-add-fund')
+                                                        <a href="javascript:void(0);"
+                                                        class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
+                                                        style="width: 40px; height: 40px; padding: 0; font-size: 20px; line-height: 1;" wire:click.prevent='walletLoad'><i class="mdi mdi-plus"></i></a>
+                                                    @endcan
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
