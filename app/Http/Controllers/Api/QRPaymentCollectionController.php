@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
+use Exception;
 use Carbon\Carbon;
 use Razorpay\Api\Api;
 use App\Models\ApiPartner;
 use App\Models\RazorPayLog;
 use Illuminate\Http\Request;
 use App\Models\QRPaymentCollection;
+use App\Models\RazorapEventHistory;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use Razorpay\Api\Errors\BadRequestError;
 use App\Http\Requests\Api\FetchQrStatusRequest;
 use App\Http\Requests\Api\QRPaymentCollectionRequest;
-use App\Models\RazorapEventHistory;
-use Exception;
 
 class QRPaymentCollectionController extends Controller
 {
@@ -228,10 +229,82 @@ class QRPaymentCollectionController extends Controller
         }catch (Exception $e){
             Log::info($request->all(),$e);
         }
-        
-       
-       
     }
 
+    public function upiIntent(Request $request) {
+        $userId = $request->attributes->get('user_id');
+        $checkRazorPayCustomerId = ApiPartner::where('user_id',$userId)->first();
+        if($checkRazorPayCustomerId->razorpay_customer_id !=NULL):
+            $customerId = $checkRazorPayCustomerId->razorpay_customer_id;
+        else:
+            $customerId  = $this->createCustomerId($checkRazorPayCustomerId->user->name,$checkRazorPayCustomerId->user->email,$checkRazorPayCustomerId->user->mobile_no,$checkRazorPayCustomerId->user_id);
+        endif;
+        $order = $this->createOrder($request->input('payment_amount'));
+        $requestParameter = [
+            "amount" => $order['amount'],
+            "currency" => "INR",
+            "order_id" => $order['id'],
+            "email" => $checkRazorPayCustomerId->user->email,
+            "contact" => $checkRazorPayCustomerId->user->mobile_no,
+            "method" => "upi",
+            "customer_id" => "cust_P9lEOdEtSHA1FT",
+            "ip" => "106.219.152.38",
+            "referer" => "http",
+            "user_agent" => "Mozilla/5.0",
+            "description" => "Test flow",
+            "notes" => array("note_key" => "value1"),
+            "upi" => array(
+                "flow" => "intent"
+            )
+        ];
+        $response = Http::withBasicAuth(env('RAZORPAY_KEY'),env('RAZORPAY_SECRET'))->post('https://api.razorpay.com/v1/payments/create/upi',$requestParameter);
+        // dd($response->json());
+        RazorPayLog::create([
+            'user_id'=>$userId,
+            'type'=>"upi_intent",
+            'request'=>json_encode($requestParameter),
+            'response'=>json_encode($response->json()),
+        ]);
+        QRPaymentCollection::create([
+            'user_id'=>$userId,
+            'qr_code_id'=>$order['id'],
+            'order_id'=>$request->input('order_id'),
+            'entity'=>'Intent',
+            'name'=>$request->input('name'),
+            'usage'=>"Single Use",
+            'type'=>"UPI Intent",
+            'image_url'=>$response->json()['link'],
+            'payment_amount'=> $order['amount']/100,
+            'qr_status'=>'Open',
+            'description'=>"intent code for payment",
+            'fixed_amount'=>'0',
+            'payment_id'=>$response->json()['razorpay_payment_id'],
+            'payments_amount_received'=>0,
+            'payments_count_received'=>0,
+            'qr_close_at'=>Carbon::parse(now())->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+            'qr_created_at'=>Carbon::parse(now())->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+            'status_id'=>"1",
+            'payment_type'=>'intent',
+        ]);
+        $data['order_id'] = $request->input('order_id');
+        if ($response->successful()) {
+            return $response->json(); // or dd($response->json());
+        } else {
+            return response()->json([
+                'error' => $response->status(),
+                'message' => $response->body(),
+            ]);
+        }
+    }
+
+    private function createOrder($amount)
+    {
+        return $this->api->order->create(array(
+            'amount' => $amount*100, 
+            'method' => 'upi',
+            'currency' => 'INR',
+        ));
+        
+    }
 
 }

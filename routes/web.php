@@ -1,7 +1,9 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Admin\PaymentController;
 
 
 /*
@@ -17,9 +19,7 @@ use Illuminate\Support\Facades\Artisan;
 
 
 
-Route::get('/genrate-qr-code',function(){
-    return view('welcome');
-});
+Route::get('/genrate-qr-code',[PaymentController::class,'index']);
 Route::get('migrate',function(){
     Artisan::call('migrate');
     echo "Migration successfully!";
