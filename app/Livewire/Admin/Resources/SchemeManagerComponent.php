@@ -31,7 +31,9 @@ class SchemeManagerComponent extends Component
     {
         if(!auth()->user()->can('scheme-manager-list')) 
         throw UnauthorizedException::forPermissions(['scheme-manager-list']);
-        $schemes = Scheme::latest()->paginate(10);
+        $schemes = Scheme::when(auth()->user()->getRoleNames()->first()=='api-partner',function($q){
+            $q->where('user_id',auth()->user()->id);
+        })->latest()->paginate(10);
         return view('livewire.admin.resources.scheme-manager-component',compact('schemes'));
     }
 
