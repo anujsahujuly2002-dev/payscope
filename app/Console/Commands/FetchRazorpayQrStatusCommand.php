@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Razorpay\Api\Api;
 use Illuminate\Console\Command;
 use App\Models\QRPaymentCollection;
+use Exception;
 
 class FetchRazorpayQrStatusCommand extends Command
 {
@@ -30,24 +31,54 @@ class FetchRazorpayQrStatusCommand extends Command
     public function handle()
     {
         $this->api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-        $getAllActiveQrs = QRPaymentCollection::where('qr_status','active')->get();
-        foreach($getAllActiveQrs as $getAllActiveQr):
-            if($this->fetchQrStatus($getAllActiveQr->qr_code_id)['status'] =='closed'):
-                $getAllActiveQr->update([
-                    'qr_status'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['status'],
-                    'payments_amount_received'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['payments_amount_received']/100,
-                    'payments_count_received'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['payments_count_received'],
-                    'status_id'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['payments_amount_received'] !=0?'2':"3",
-                    'close_by'=>Carbon::parse($this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-                    'close_reason'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_reason'],
-                ]);
+        $getActivePayments = QRPaymentCollection::where('status_id','1')->get();
+        foreach ($getActivePayments as $key => $getActivePayment) {
+            if($getActivePayment->payment_type=='intent'):
+                $response = $this->fetchPaymentStatus($getActivePayment->payment_id);
+                if($response['status'] =='captured'):
+                    $getActivePayment->update([
+                        'qr_status'=> $response ['status'],
+                        'payments_amount_received'=> $response ['amount']/100,
+                        'status_id'=> $response ['status'] =='captured'?'2':"3",
+                        'close_by'=>Carbon::parse( $response ['captured_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                        'close_reason'=> $response ['status']=='captured'?"Paid":"Expired",
+                        'utr_number'=>$response['acquirer_data']['rrn'],
+                        'payer_name'=>$response['upi']['vpa'],
+                    ]);
+                endif;
+            else:
+               
+                $getAllActiveQrs = QRPaymentCollection::where('qr_status','active')->get();
+                foreach($getAllActiveQrs as $getAllActiveQr):
+                    if($this->fetchQrStatus($getAllActiveQr->qr_code_id)['status'] =='closed'):
+                        $getAllActiveQr->update([
+                            'qr_status'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['status'],
+                            'payments_amount_received'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['payments_amount_received']/100,
+                            'payments_count_received'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['payments_count_received'],
+                            'status_id'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['payments_amount_received'] !=0?'2':"3",
+                            'close_by'=>Carbon::parse($this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                            'close_reason'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_reason'],
+                        ]);
+                    endif;
+                endforeach;
             endif;
-        endforeach;
+        }
+        
+        
         
     }
 
     private function fetchQrStatus($qrCodeId) {
         return $this->api->qrCode->fetch($qrCodeId);
+    }
+
+    private function fetchPaymentStatus($paymentId) {
+       try {
+            return $this->api->payment->fetch($paymentId);
+       } catch (Exception $th) {
+            dd($th);
+       }
+     
     }
 
 
