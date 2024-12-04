@@ -81,6 +81,7 @@ class VirtualRequestApi extends Command
                 //     'gst'=>$arr['6'],
                 //     'closing_balnce'=>$arr['7'],
                 // ]);
+
                 TransactionHistory::where('transaction_id',$arr['1'])->update([
                     'opening_balance'=>$arr['2'],
                     'amount'=>$arr['3'],

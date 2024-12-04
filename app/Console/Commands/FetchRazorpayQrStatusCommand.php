@@ -45,9 +45,15 @@ class FetchRazorpayQrStatusCommand extends Command
                         'utr_number'=>$response['acquirer_data']['rrn'],
                         'payer_name'=>$response['upi']['vpa'],
                     ]);
+                elseif($response['status'] =='failed'):
+                    $getActivePayment->update([
+                        'qr_status'=> $response ['status'],
+                        'status_id'=>"3",
+                        // 'close_by'=>Carbon::parse( $response ['captured_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                        'close_reason'=> ucwords(str_replace('_', ' ', $response['error_reason'])),
+                    ]);
                 endif;
             else:
-               
                 $getAllActiveQrs = QRPaymentCollection::where('qr_status','active')->get();
                 foreach($getAllActiveQrs as $getAllActiveQr):
                     if($this->fetchQrStatus($getAllActiveQr->qr_code_id)['status'] =='closed'):

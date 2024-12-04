@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Http;
 use Razorpay\Api\Errors\BadRequestError;
 use App\Http\Requests\Api\FetchQrStatusRequest;
 use App\Http\Requests\Api\QRPaymentCollectionRequest;
+use App\Models\User;
 
 class QRPaymentCollectionController extends Controller
 {
@@ -26,6 +27,13 @@ class QRPaymentCollectionController extends Controller
     }
     public function createQrCode(QRPaymentCollectionRequest $request) {
         $userId = $request->attributes->get('user_id');
+        $checkServiceActive = User::findOrFail($userId)->services;
+        if($checkServiceActive =='0'):
+            return [
+                'status'=>'0008',
+                'msg'=>"This service has been down, Please try again after sometimes",
+            ];
+        endif;
         $checkRazorPayCustomerId = ApiPartner::where('user_id',$userId)->first();
         if($checkRazorPayCustomerId->razorpay_customer_id !=NULL):
             $customerId = $checkRazorPayCustomerId->razorpay_customer_id;
@@ -233,6 +241,13 @@ class QRPaymentCollectionController extends Controller
 
     public function upiIntent(Request $request) {
         $userId = $request->attributes->get('user_id');
+        $checkServiceActive = User::findOrFail($userId)->services;
+        if($checkServiceActive =='0'):
+            return [
+                'status'=>'0008',
+                'msg'=>"This service has been down, Please try again after sometimes",
+            ];
+        endif;
         $checkRazorPayCustomerId = ApiPartner::where('user_id',$userId)->first();
         if($checkRazorPayCustomerId->razorpay_customer_id !=NULL):
             $customerId = $checkRazorPayCustomerId->razorpay_customer_id;
@@ -288,7 +303,10 @@ class QRPaymentCollectionController extends Controller
         ]);
         $data['order_id'] = $request->input('order_id');
         if ($response->successful()) {
-            return $response->json(); // or dd($response->json());
+            $response = $response->json();
+            $response['order_id'] =$request->input('order_id');
+            $response['status'] = "Processd";
+            return $response; // or dd($response->json());
         } else {
             return response()->json([
                 'error' => $response->status(),
