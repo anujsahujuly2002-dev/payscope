@@ -233,5 +233,18 @@ if(!function_exists('storeUserActivityLog')):
     }
 endif;
 
+if(!function_exists('generateUniqueId')):
+    function generateUniqueId($prefix = 'setl_') {
+        $uuid = sprintf(
+            '%04x%04x%04x%04x%04x%04x%04x%04x',
+            random_int(0, 0xffff), random_int(0, 0xffff),
+            random_int(0, 0xffff), random_int(0, 0x0fff) | 0x4000,
+            random_int(0, 0x3fff) | 0x8000, random_int(0, 0xffff),
+            random_int(0, 0xffff), random_int(0, 0xffff)
+        );
+        return $prefix . $uuid;
+    }
+endif;
+
 
 

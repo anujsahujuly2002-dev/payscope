@@ -5,7 +5,10 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\Wallet;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use App\Models\QRPaymentCollection;
+use App\Models\Settelment;
+use App\Models\SuccessfulPaymentCollection;
 
 class PaymentSettlementCommand extends Command
 {
@@ -28,20 +31,27 @@ class PaymentSettlementCommand extends Command
      */
     public function handle()
     {
-        $getPaymentInSattelmnets = QRPaymentCollection::whereDate('created_at','<=',Carbon::now()->subDays(1)->format('Y-m-d'))->where(['status_id'=>'2','is_payment_settel'=>'0'])->get();
-        foreach($getPaymentInSattelmnets as $getPaymentInSattelmnet):
-            $collectionCharges = getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['payout_charges']+getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['gst_charge'];
-            $amount = $getPaymentInSattelmnet->payment_amount-  $collectionCharges;
-            addTransactionHistory($getPaymentInSattelmnet->qr_code_id,$getPaymentInSattelmnet->user_id,$amount,'credit');
-            $getCurrentWalletAmount =  Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->first()->amount;
-            Wallet::where('user_id',$getPaymentInSattelmnet->user_id)->update([
-                'amount'=>$getCurrentWalletAmount+$amount
+        $getCollections  = SuccessfulPaymentCollection::select('user_id', DB::raw('SUM(amount) as total_amount'),DB::raw('SUM(order_amount) as order_amount'),DB::raw('SUM(charges) as charges'),DB::raw('SUM(gst) as fees'))->whereDate('created_at',now()->format('Y-m-d'))->whereNull('settelment_id')->groupBy('user_id')->get();
+        foreach($getCollections as $collection):
+            $settelment=Settelment::create([
+                'user_id'=>$collection->user_id,
+                'settelment_id'=>generateUniqueId(),
+                'amount'=>$collection->total_amount,
+                'charges'=>$collection->charges,
+                'gst'=>$collection->fees
             ]);
-            $getPaymentInSattelmnet->update([
-                'is_payment_settel'=>'1',
-                'charge'=>getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['payout_charges'],
-                'gst'=>getCommission("payin",$getPaymentInSattelmnet->payment_amount,$getPaymentInSattelmnet->user_id)['gst_charge'],
+            // dd($settelment);
+            SuccessfulPaymentCollection::whereDate('created_at',now()->format('Y-m-d'))->whereNull('settelment_id')->where('user_id',$collection->user_id)->update([
+                'settelment_id'=>$settelment->settelment_id,
             ]);
+            $getCurrentWalletAmount =  Wallet::where('user_id',$collection->user_id)->first()->amount;
+            Wallet::where('user_id',$collection->user_id)->update([
+                'amount'=>$collection->total_amount+$getCurrentWalletAmount
+            ]);
+            addTransactionHistory($settelment->settelment_id,$collection->user_id,$settelment->amount,'credit');
+                       
+
         endforeach;
     }
+
 }

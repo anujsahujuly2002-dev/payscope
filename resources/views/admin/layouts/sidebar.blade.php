@@ -176,14 +176,11 @@
                     @endcanany
                 @endif
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <a href="{{route('admin.settelment')}}">
                         <i class="uil-book-open"></i>
-                        <span style="color: #0a1d56;">Wallet Statement</span>
+                        <span style="color: #0a1d56;">Settelment</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="javascript:void()" style="color: #0a1d56;">Main Wallet</a></li>
-                        <li><a href="javascript:void()" style="color: #0a1d56;">Api Wallet</a></li>
-                    </ul>
+                    
                 </li>
                 @if (checkRecordHasPermission(['api-create','api-list','api-change-status','api-edit','manage-setting','setting-update','callback-token-create','callback-token-delete','login-session','charge-slab-list', 'charge-slab-create', 'charges-slab-edit','charge-slabs-status-change', 'operator-delete']))
                     @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'callback-token', 'callback-token-create','callback-token-delete','login-session','charge-slab-list', 'charge-slab-create', 'charges-slab-edit','charge-slabs-status-change', 'operator-delete', ])
