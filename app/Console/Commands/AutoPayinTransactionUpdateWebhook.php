@@ -63,7 +63,7 @@ class AutoPayinTransactionUpdateWebhook extends Command
                                     "rrn_no" => ucfirst(strip_tags($transaction->utr_number)),
                                     "payer_upi_id" => ucfirst(strip_tags($transaction->payer_name)),
                                     "payment_id" => ucfirst(strip_tags($transaction->payment_id)),
-				 "status" => ucfirst(strip_tags($transaction->status->name)),
+				                    "status" => ucfirst(strip_tags($transaction->status->name)),
                                 ],
                             ];
                             try{
