@@ -58,4 +58,5 @@ class DashboardComponent extends Component
         $this->selectedTransaction = PayoutRequestHistory::find($transactionId);
         $this->dispatch('show-form');
     }
+
 }

@@ -23,17 +23,12 @@ class ApiLogs extends Component
     public function render()
     {
 
-        $apiLogs = ApiLog::when(auth()->user()->getRoleNames()->first()=='api-logs',function($query){
+        $apiLogs = ApiLog::when(auth()->user()->getRoleNames()->first()!='super-admin',function($query){
             $query->where('user_id',auth()->user()->id);
-        })->when(auth()->user()->getRoleNames()->first()=='login-session',function($query){
-            $query->where('user_id',auth()->user()->id);
-
         })->when($this->start_date !=null && $this->end_date ==null,function($u){
             $u->whereDate('created_at',$this->start_date);
-
         })->when($this->start_date !=null && $this->end_date !=null,function($twoBetweenDates){
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
-
         }) ->when($this->transaction_id !=null,function($u){
             $u->where('txn_id', 'like', '%'.$this->transaction_id.'%');
             // $u->where('txn_id',$this->transaction_id);

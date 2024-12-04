@@ -56,7 +56,7 @@ class QRCollectionComponent extends Component
             ->when($this->status !== null, function($query) {
                 $query->where('status_id', $this->status);
             })
-            ->latest()->paginate(500);
+            ->latest()->paginate(10);
             return view('livewire.admin.fund.q-r-collection-component', [
             'qr_collection' => $qr_collection
         ]);

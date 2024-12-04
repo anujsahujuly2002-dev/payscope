@@ -25,4 +25,8 @@ class DashBoardController extends Controller
         $request->session()->regenerateToken();
         return to_route('admin.login')->with('success','Your account has been logout');
     }
+
+    public function settelment() {
+        return view('admin.settelment');
+    }
 }

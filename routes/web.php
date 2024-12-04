@@ -44,6 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // DashBoard Route
         Route::controller(DashBoardController::class)->group(function() {
             Route::get('/dashboard','dashboard')->name('dashboard');
+            Route::get('/settelment','settelment')->name('settelment');
             Route::get('/logout','logout')->name('logout');
         });
 
