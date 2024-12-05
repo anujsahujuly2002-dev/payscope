@@ -12,14 +12,6 @@ trait PayoutTraits {
 
     protected function payoutApiRequest($data =array()) {
         //check pending fund request
-       /*  $checkPendingRequest  = FundRequest::where(['user_id'=>$data['user_id'],'status_id'=>'1'])->count();
-        if($checkPendingRequest >0):
-            return [
-                'status'=>'0001',
-                'msg'=>'One request is already submitted'
-            ];
-        endif; */
-
         $checkServiceActive = User::findOrFail($data['user_id'])->services;
         if($checkServiceActive =='0'):
             return [
