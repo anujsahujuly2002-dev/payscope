@@ -56,6 +56,11 @@ trait EkoPayoutTrait {
         do {
             $data['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
         } while (FundRequest::where("payout_id", $data['payoutid'])->first() instanceof FundRequest);
+        $closing_balance = $walletAmount->amount-($data['amount']+$commissionAndGst) ;
+        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+$commissionAndGst),'debit');
+        Wallet::where('user_id',$data['user_id'])->update([
+            'amount'=>$closing_balance ,
+        ]);
         try{
             $fundRequest=FundRequest::create([
                 'user_id'=>$data['user_id'],
@@ -80,9 +85,6 @@ trait EkoPayoutTrait {
         $adminId = User::whereHas('roles',function($q){
             $q->where('name','super-admin');
         })->first();
-
-
-        $closing_balance = $walletAmount->amount-($data['amount']+$commissionAndGst) ;
         $payoutRequestHistories = PayoutRequestHistory::create([
             'user_id'=>$data['user_id'],
             'fund_request_id'=>$fundRequest->id,
@@ -100,11 +102,7 @@ trait EkoPayoutTrait {
             'payout_api'=>"eko",
             'gst'=>getCommission("payout",$data['amount'],$data['user_id'])['gst_charge']
         ]);
-        addTransactionHistory($data['payoutid'] ,$data['user_id'],($data['amount']+$commissionAndGst),'debit');
-       
-        Wallet::where('user_id',$data['user_id'])->update([
-            'amount'=>$closing_balance ,
-        ]);
+        
         $new_arr[]= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.request()->ip()));
         $requestParameter = 'initiator_id=9519035604&amount='.$data['amount'].'&payment_mode='.$ekoPaymentMode[$this->getPaymentModesName($data['payment_mode'])].'&client_ref_id='.$data['payoutid'].'&recipient_name='.$data['account_holder_name'].'&ifsc='.$data['ifsc_code'].'&account='.$data['account_number'].'&service_code=45&sender_name=test&source=NEWCONNECT&tag=Logistic&beneficiary_account_type=1';
         $res = apiCallWitBody($header,$apiUrl,$requestParameter,true,$data['payoutid']);
