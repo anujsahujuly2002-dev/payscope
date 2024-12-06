@@ -53,17 +53,17 @@ class PaymentCollectionCallbackJob implements ShouldQueue
                     'payments_count_received'=>$this->transaction['payments_count_received'],
                     'qr_close_at'=>Carbon::parse($this->transaction['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                     'qr_created_at'=>Carbon::parse($this->transaction['created_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-                    "rrn_no" => ucfirst(strip_tags($this->transaction->utr_number)),
-                    "payer_upi_id" => ucfirst(strip_tags($this->transaction->payer_name)),
-                    "payment_id" => ucfirst(strip_tags($this->transaction->payment_id)),
-                    "status" => ucfirst(strip_tags($this->transaction->status->name)),
+                    "rrn_no" => ucfirst(strip_tags($this->transaction['utr_number'])),
+                    "payer_upi_id" => ucfirst(strip_tags($this->transaction['payer_name'])),
+                    "payment_id" => ucfirst(strip_tags($this->transaction['payment_id'])),
+                    "status" => ucfirst(strip_tags($this->transaction['status']['name'])),
                 ],
             ];
             try{
                 Http::retry(3, 100)->post($webhookUrl->payin_webhook_url ,$parameters);
                 AutoPayinTransactionUpdate::create([
-                    'user_id'=> $this->transaction->user_id,
-                    'qr_collection_id'=> $this->transaction->id,
+                    'user_id'=> $this->transaction['user_id'],
+                    'qr_collection_id'=> $this->transaction['id'],
                     'webhook_url'=>$webhookUrl->domain 
                 ]);
             }catch(Exception $e) {
