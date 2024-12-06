@@ -178,10 +178,7 @@ class CheckPaymentStatusCommand extends Command
                         FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                     endif;
                 endif;
-                
-            endif;
-
-           
+            endif;           
         endforeach;
     }
 

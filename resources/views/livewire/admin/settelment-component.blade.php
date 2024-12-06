@@ -74,14 +74,14 @@
                                         <td>
                                             {{($settelment->settelment_id)}}
                                         </td>
-                                        <td>
-                                            {{($settelment->amount)}}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->amount)}}
                                         </td>
-                                        <td>
-                                            {{$settelment->charges}}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->charges)}}
                                         </td>
-                                        <td>
-                                            {{$settelment->gst}}
+                                        <td class="fw-bolder">
+                                            &#x20B9;{{moneyFormatIndia($item->gst)}}
                                         </td>
                                         <td>
                                             {{$settelment->created_at}}
