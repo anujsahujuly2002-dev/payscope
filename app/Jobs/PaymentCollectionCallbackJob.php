@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\Status;
 use App\Models\ApiToken;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -56,7 +57,7 @@ class PaymentCollectionCallbackJob implements ShouldQueue
                     "rrn_no" => ucfirst(strip_tags($this->transaction['utr_number'])),
                     "payer_upi_id" => ucfirst(strip_tags($this->transaction['payer_name'])),
                     "payment_id" => ucfirst(strip_tags($this->transaction['payment_id'])),
-                    "status" => ucfirst(strip_tags($this->transaction['status']['name'])),
+                    "status" => ucfirst(strip_tags($this->getStatus($this->transaction['status_id']))),
                 ],
             ];
             try{
@@ -74,5 +75,9 @@ class PaymentCollectionCallbackJob implements ShouldQueue
         } else {
             Log::info("Webhook Url Not a registerd");
         }
+    }
+
+    private function getStatus($id) {
+        return Status::find($id)->name;
     }
 }
