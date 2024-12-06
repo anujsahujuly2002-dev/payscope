@@ -41,7 +41,7 @@ trait EkoPayoutTrait {
             'payment_mode' => $data['payment_mode'],
         ];
 
-        FundsTransferRequestJob::dispatch($serializableData)->onQueue('funds-transfers');;
+        FundsTransferRequestJob::dispatch($serializableData)->onQueue('funds-transfers');
         return  [
             'status'=>'0005',
             'statusCode'=>"pending",

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Http;
 use Razorpay\Api\Errors\BadRequestError;
 use App\Http\Requests\Api\FetchQrStatusRequest;
 use App\Http\Requests\Api\QRPaymentCollectionRequest;
+use App\Jobs\PaymentCollectionCallbackJob;
 use App\Models\User;
 
 class QRPaymentCollectionController extends Controller
@@ -344,6 +345,8 @@ class QRPaymentCollectionController extends Controller
                     'payment_id'=>$paymentResponse['payload']['payment']['entity']['id'],
                     'payer_name'=>$paymentResponse['payload']['payment']['entity']['upi']['vpa'],
                 ]);
+                $paymentCollection=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->first()->toArray();
+                PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
             endif;
         }catch (Exception $e){
             Log::info(json_encode($request->all()),$e);
