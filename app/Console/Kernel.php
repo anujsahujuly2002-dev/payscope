@@ -42,9 +42,9 @@ class Kernel extends ConsoleKernel
                 $days[] = 6;
             endif;
         }  
-        $schedule->command('app:auto-transaction-update-webhook')->everySecond();
+        // $schedule->command('app:auto-transaction-update-webhook')->everySecond();
         $schedule->command('app:fetch-razorpay-qr-status-command')->everyMinute();
-        $schedule->command('app:auto-payin-transaction-update-webhook')->everySecond();
+        // $schedule->command('app:auto-payin-transaction-update-webhook')->everySecond();
         $schedule->command('app:get-successfully-payment-collection-command')->daily()->at('05:00');
         $schedule->command('app:payment-settlement-command')->daily()->at('09:00')->when(function () use($days){
             $today = Carbon::today();

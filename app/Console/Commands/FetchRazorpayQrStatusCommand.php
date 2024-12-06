@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use Carbon\Carbon;
 use Razorpay\Api\Api;
 use Illuminate\Console\Command;
 use App\Models\QRPaymentCollection;
-use Exception;
+use App\Jobs\PaymentCollectionCallbackJob;
 
 class FetchRazorpayQrStatusCommand extends Command
 {
@@ -45,13 +46,16 @@ class FetchRazorpayQrStatusCommand extends Command
                         'utr_number'=>$response['acquirer_data']['rrn'],
                         'payer_name'=>$response['upi']['vpa'],
                     ]);
+                    $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->toArray();
+                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
                 elseif($response['status'] =='failed'):
                     $getActivePayment->update([
                         'qr_status'=> $response ['status'],
                         'status_id'=>"3",
-                        // 'close_by'=>Carbon::parse( $response ['captured_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                         'close_reason'=> ucwords(str_replace('_', ' ', $response['error_reason'])),
                     ]);
+                    $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->toArray();
+                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-failed');
                 endif;
             else:
                 $getAllActiveQrs = QRPaymentCollection::where('qr_status','active')->get();
@@ -65,6 +69,8 @@ class FetchRazorpayQrStatusCommand extends Command
                             'close_by'=>Carbon::parse($this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                             'close_reason'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_reason'],
                         ]);
+                        $paymentCollection = QRPaymentCollection::where('id',$getAllActiveQr->id)->toArray();
+                        PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-using-qr');
                     endif;
                 endforeach;
             endif;

@@ -27,10 +27,10 @@ class FundRequestRequest extends FormRequest
     {
         return [
             
-            'account_number'=>'required|numeric',
+            'account_number'=>'required|numeric|min:10',
             'bank_name'=>'required',
             'account_holder_name'=>'required|string|min:3',
-            'ifsc_code'=>'required',
+            'ifsc_code'=>'required|ifsc',
             'amount'=>'required|min:10|numeric',
             'payment_mode'=>'required',
         ];
