@@ -40,17 +40,14 @@ class PaymentSettlementCommand extends Command
                 'charges'=>$collection->charges,
                 'gst'=>$collection->fees
             ]);
-            // dd($settelment);
             SuccessfulPaymentCollection::whereDate('created_at',now()->format('Y-m-d'))->whereNull('settelment_id')->where('user_id',$collection->user_id)->update([
                 'settelment_id'=>$settelment->settelment_id,
             ]);
+            addTransactionHistory($settelment->settelment_id,$collection->user_id,$settelment->amount,'credit');
             $getCurrentWalletAmount =  Wallet::where('user_id',$collection->user_id)->first()->amount;
             Wallet::where('user_id',$collection->user_id)->update([
                 'amount'=>$collection->total_amount+$getCurrentWalletAmount
             ]);
-            addTransactionHistory($settelment->settelment_id,$collection->user_id,$settelment->amount,'credit');
-                       
-
         endforeach;
     }
 
