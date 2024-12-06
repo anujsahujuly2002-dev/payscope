@@ -345,7 +345,7 @@ class QRPaymentCollectionController extends Controller
                     'payment_id'=>$paymentResponse['payload']['payment']['entity']['id'],
                     'payer_name'=>$paymentResponse['payload']['payment']['entity']['upi']['vpa'],
                 ]);
-                $paymentCollection=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->first()->toArray();
+                $paymentCollection=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->with('status')->first()->toArray();
                 PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
             endif;
         }catch (Exception $e){
