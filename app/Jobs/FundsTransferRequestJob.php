@@ -2,14 +2,15 @@
 
 namespace App\Jobs;
 
+use Exception;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Models\FundRequest;
 use App\Models\PaymentMode;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
+use App\Jobs\FundRequestCallbackJob;
 use App\Models\PayoutRequestHistory;
-use Exception;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -149,6 +150,8 @@ class FundsTransferRequestJob implements ShouldQueue
                         Wallet::where('user_id',$this->requestParamater['user_id'])->update([
                             'amount'=>$main_amount,
                         ]);
+                        $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                        FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                     endif;
                 }else{
                     addTransactionHistory($this->requestParamater['payoutid'] ,$this->requestParamater['user_id'],($this->requestParamater['amount']+$commissionAndGst),'credit');
@@ -162,6 +165,8 @@ class FundsTransferRequestJob implements ShouldQueue
                     Wallet::where('user_id',$this->requestParamater['user_id'])->update([
                         'amount'=>$main_amount,
                     ]);
+                    $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                    FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                 }
             else:
                 addTransactionHistory($this->requestParamater['payoutid'] ,$this->requestParamater['user_id'],($this->requestParamater['amount']+$commissionAndGst),'credit');
@@ -175,6 +180,8 @@ class FundsTransferRequestJob implements ShouldQueue
                 Wallet::where('user_id',$this->requestParamater['user_id'])->update([
                     'amount'=>$main_amount,
                 ]);
+                $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
             endif;
         }catch (Exception $e) {
             Log::info(['message'=>$e->getMessage(),'transaction_id'=>$this->requestParamater['payoutid']]);

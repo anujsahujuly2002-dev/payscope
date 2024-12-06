@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\FundRequestCallbackJob;
 use App\Models\ApiLog;
 use App\Models\Wallet;
 use App\Models\FundRequest;
@@ -33,7 +34,7 @@ class CheckPaymentStatusCommand extends Command
     public function handle()
     {
         $pendingRequests = FundRequest::where('status_id','1')->where('created_at', '<', Carbon::now()->subMinute())->with(['payoutTransactionHistories'])->orderBy('id','ASC')->get();
-	foreach($pendingRequests as $pendingPaymentRequest):
+	    foreach($pendingRequests as $pendingPaymentRequest):
             if($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='paynpro'):
                 $pyanProUrl = "https://pout.paynpro.com/payout/v1/getStatus";
                 $header= [
@@ -141,6 +142,8 @@ class CheckPaymentStatusCommand extends Command
                     Wallet::where('user_id',$fundRequest->user_id)->update([
                         'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount+$fundRequestHistory->gst
                     ]);
+                    $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                    FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                 elseif($res['data']['tx_status']=='1'):
                     $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
                     $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
@@ -158,6 +161,8 @@ class CheckPaymentStatusCommand extends Command
                     Wallet::where('user_id',$fundRequest->user_id)->update([
                         'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount+$fundRequestHistory->gst
                     ]);
+                    $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                    FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                 elseif($res['data']['tx_status']=='0'):
                     if($res['data']['bank_ref_num'] !=''):
                         $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id,'account_number'=>$res['data']['account'] ])->first();
@@ -169,9 +174,14 @@ class CheckPaymentStatusCommand extends Command
                         PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                             'status_id'=>'2',
                         ]);
+                        $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                        FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                     endif;
                 endif;
+                
             endif;
+
+           
         endforeach;
     }
 
