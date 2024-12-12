@@ -57,8 +57,9 @@ class QRRequestComponent extends Component
             $u->whereDate('created_at','>=',$this->start_date);
         })
         ->when($this->value !=null,function($u){
-            $u->where('order_id',$this->value);
+            $u->where('order_id','like','%'.$this->value.'%');
         })
+       
         ->when($this->status !== null, function ($query){
             return $query->where('status_id', $this->status);
 
