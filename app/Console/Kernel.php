@@ -9,10 +9,10 @@ use Carbon\Carbon;
 use App\Console\Commands\VirtualRequestApi;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\CheckPaymentStatusCommand;
-use App\Console\Commands\AutoTransactionUpdateWebhook;
 use App\Console\Commands\FetchRazorpayQrStatusCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\AutoPayinTransactionUpdateWebhook;
+use App\Console\Commands\GetDisputePaymentInRazorPayCommand;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -22,14 +22,13 @@ class Kernel extends ConsoleKernel
     protected $commands =[
         VirtualRequestApi::class,
         CheckPaymentStatusCommand::class,
-        AutoTransactionUpdateWebhook::class,
         FetchRazorpayQrStatusCommand::class,
-        AutoPayinTransactionUpdateWebhook::class
+        GetDisputePaymentInRazorPayCommand::class
     ];
 
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('app:get-dispute-payment-in-razor-pay-command')->everyThirtyMinutes();
         $schedule->command('app:check-payment-status-command')->everyTwoMinutes();
         $getStaturday = $this->getSaturdaysOfCurrentMonth();
         // Search for the key of a specific date
@@ -42,9 +41,7 @@ class Kernel extends ConsoleKernel
                 $days[] = 6;
             endif;
         }  
-        // $schedule->command('app:auto-transaction-update-webhook')->everySecond();
         $schedule->command('app:fetch-razorpay-qr-status-command')->everyMinute();
-        // $schedule->command('app:auto-payin-transaction-update-webhook')->everySecond();
         $schedule->command('app:get-successfully-payment-collection-command')->daily()->at('05:00');
         $schedule->command('app:payment-settlement-command')->daily()->at('09:00')->when(function () use($days){
             $today = Carbon::today();
