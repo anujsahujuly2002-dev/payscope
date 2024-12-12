@@ -148,6 +148,11 @@
                                     <li><a href="{{ route('admin.fund.qr.collection') }}" style="color: #0A1D56;">QR Collection </a></li>
                                 @endcanany
                             @endif
+                            @if (checkRecordHasPermission(['disputes-list']))
+                            @canany(['disputes-list'])
+                                <li><a href="{{ route('admin.payout.disputes') }}" style="color: #0A1D56;">Disputes </a></li>
+                            @endcanany
+                        @endif
 
                         </ul>
                     </li>

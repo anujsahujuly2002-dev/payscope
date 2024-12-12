@@ -98,11 +98,13 @@
                             </thead>
                             <tbody>
                                 @foreach ($qr_collection as $key => $item)
+                                    @php
+                                         $currentPage = $qr_collection->currentPage() !=1?$qr_collection->perPage():1;
+                                         $srNo  =($qr_collection->currentPage()-1)*$currentPage;
+                                    @endphp
                                     <tr>
                                         <th scope="row">
-                                            <div class="form-check font-size-16">
-                                                <label class="form-check-label"
-                                                    for="contacusercheck1">{{ $loop->iteration }}</label>
+                                            <div class="form-check font-size-16"> <label class="form-check-label" for="contacusercheck1">{{ $srNo+$loop->iteration }}</label>
                                             </div>
                                         </th>
                                         @if (auth()->user()->getRoleNames()->first() == 'super-admin')
