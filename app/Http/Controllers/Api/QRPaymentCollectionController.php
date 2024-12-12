@@ -183,7 +183,7 @@ class QRPaymentCollectionController extends Controller
     public function fetchQrStatus(FetchQrStatusRequest $request) {
         $userId = $request->attributes->get('user_id');
         $data = [];
-        $qRPaymentCollection = QRPaymentCollection::where(['user_id'=>$userId,'qr_code_id'=>$request->input('qr_code_id')])->first();
+        $qRPaymentCollection = QRPaymentCollection::where(['user_id'=>$userId])->where('qr_code_id',$request->input('qr_code_id'))->orWhere('payment_id',$request->input('qr_code_id'))->first();
         if(!is_null($qRPaymentCollection)):
             $data =[
                 'qr_code_id'=>$qRPaymentCollection['qr_code_id'],
@@ -267,8 +267,8 @@ class QRPaymentCollectionController extends Controller
             "ip" => "106.219.152.38",
             "referer" => "http",
             "user_agent" => "Mozilla/5.0",
-            "description" => "Test flow",
-            "notes" => array("note_key" => "value1"),
+            "description" => "Gorocery And Ecommerce Payment",
+            // "notes" => array("note_key" => "value1"),
             "upi" => array(
                 "flow" => "intent"
             )

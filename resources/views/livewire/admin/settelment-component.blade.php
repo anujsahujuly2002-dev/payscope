@@ -68,20 +68,22 @@
                                                 <label class="form-check-label" for="contacusercheck1">{{$srNo+$loop->iteration}}</label>
                                             </div>
                                         </th>
+                                        @if (auth()->user()->getRoleNames()->first() == 'super-admin')
                                         <td>
                                             {{($settelment->user->name)}}
                                         </td>
+                                        @endif
                                         <td>
                                             {{($settelment->settelment_id)}}
                                         </td>
                                         <td class="fw-bolder">
-                                            &#x20B9;{{moneyFormatIndia($item->amount)}}
+                                            &#x20B9;{{moneyFormatIndia($settelment->amount)}}
                                         </td>
                                         <td class="fw-bolder">
-                                            &#x20B9;{{moneyFormatIndia($item->charges)}}
+                                            &#x20B9;{{moneyFormatIndia($settelment->charges)}}
                                         </td>
                                         <td class="fw-bolder">
-                                            &#x20B9;{{moneyFormatIndia($item->gst)}}
+                                            &#x20B9;{{moneyFormatIndia($settelment->gst)}}
                                         </td>
                                         <td>
                                             {{$settelment->created_at}}

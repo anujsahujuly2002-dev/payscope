@@ -31,7 +31,7 @@ class PaymentSettlementCommand extends Command
      */
     public function handle()
     {
-        $getCollections  = SuccessfulPaymentCollection::select('user_id', DB::raw('SUM(amount) as total_amount'),DB::raw('SUM(order_amount) as order_amount'),DB::raw('SUM(charges) as charges'),DB::raw('SUM(gst) as fees'))->whereDate('created_at',now()->format('Y-m-d'))->whereNull('settelment_id')->groupBy('user_id')->get();
+        $getCollections  = SuccessfulPaymentCollection::select('user_id', DB::raw('SUM(amount) as total_amount'),DB::raw('SUM(order_amount) as order_amount'),DB::raw('SUM(charges) as charges'),DB::raw('SUM(gst) as fees'))->whereNull('settelment_id')->groupBy('user_id')->get();
         foreach($getCollections as $collection):
             $settelment=Settelment::create([
                 'user_id'=>$collection->user_id,
@@ -40,7 +40,7 @@ class PaymentSettlementCommand extends Command
                 'charges'=>$collection->charges,
                 'gst'=>$collection->fees
             ]);
-            SuccessfulPaymentCollection::whereDate('created_at',now()->format('Y-m-d'))->whereNull('settelment_id')->where('user_id',$collection->user_id)->update([
+            SuccessfulPaymentCollection::whereNull('settelment_id')->where('user_id',$collection->user_id)->update([
                 'settelment_id'=>$settelment->settelment_id,
             ]);
             addTransactionHistory($settelment->settelment_id,$collection->user_id,$settelment->amount,'credit');
