@@ -167,6 +167,7 @@ class QRPaymentCollectionController extends Controller
                 'qr_close_at'=>Carbon::parse($data['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                 'qr_created_at'=>Carbon::parse($data['created_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                 'status_id'=>"1",
+                'payment_type'=>'qr'
             ]);
             $data['order_id'] = $orderId;
             return $data;
@@ -234,6 +235,8 @@ class QRPaymentCollectionController extends Controller
                     'payment_id'=>$paymentResponse['payload']['payment']['entity']['id'],
                     'payer_name'=>$paymentResponse['payload']['payment']['entity']['vpa'],
                 ]);
+                $paymentCollection=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->with('status')->first()->toArray();
+                PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('qr-code-credit');
             endif;
         }catch (Exception $e){
             Log::info($request->all(),$e);
@@ -264,7 +267,7 @@ class QRPaymentCollectionController extends Controller
             "contact" => $checkRazorPayCustomerId->user->mobile_no,
             "method" => "upi",
             "customer_id" => "cust_P9lEOdEtSHA1FT",
-            "ip" => "106.219.152.38",
+            "ip" => $request->ip(),
             "referer" => "http",
             "user_agent" => "Mozilla/5.0",
             "description" => "Gorocery And Ecommerce Payment",
