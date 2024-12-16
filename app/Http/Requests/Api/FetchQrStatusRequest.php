@@ -23,7 +23,7 @@ class FetchQrStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'qr_code_id'=>'required|exists:q_r_payment_collections,qr_code_id'
+            'qr_code_id'=>'required'
         ];
     }
 

@@ -46,6 +46,7 @@ class FetchRazorpayQrStatusCommand extends Command
                         'utr_number'=>$response['acquirer_data']['rrn'],
                         'payer_name'=>$response['upi']['vpa'],
                     ]);
+                    // dd()
                     $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->with('status')->first()->toArray();
                     PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
                 elseif($response['status'] =='failed'):
@@ -57,7 +58,7 @@ class FetchRazorpayQrStatusCommand extends Command
                     $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->with('status')->first()->toArray();
                     PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-failed');
                 endif;
-            else:
+            elseif($getActivePayment->payment_type=='qr'):
                 $getAllActiveQrs = QRPaymentCollection::where('qr_status','active')->get();
                 foreach($getAllActiveQrs as $getAllActiveQr):
                     if($this->fetchQrStatus($getAllActiveQr->qr_code_id)['status'] =='closed'):
@@ -69,7 +70,7 @@ class FetchRazorpayQrStatusCommand extends Command
                             'close_by'=>Carbon::parse($this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_by'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
                             'close_reason'=>$this->fetchQrStatus($getAllActiveQr->qr_code_id)['close_reason'],
                         ]);
-                        $paymentCollection = QRPaymentCollection::where('id',$getAllActiveQr->id)->with('status')->first()()->toArray();
+                        $paymentCollection = QRPaymentCollection::where('id',$getAllActiveQr->id)->with('status')->first()->toArray();
                         PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-using-qr');
                     endif;
                 endforeach;
