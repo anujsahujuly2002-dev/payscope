@@ -33,7 +33,7 @@ class FundsTransferRequestJob implements ShouldQueue
      * Execute the job.
      */
     public function handle()
-    {
+    {  
          try{
             $walletAmount = Wallet::where('user_id',$this->requestParamater['user_id'])->first();
             $commissionAndGst = getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['payout_charges']+ getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['gst_charge'];
