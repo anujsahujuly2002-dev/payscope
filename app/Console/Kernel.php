@@ -12,6 +12,7 @@ use App\Console\Commands\CheckPaymentStatusCommand;
 use App\Console\Commands\FetchRazorpayQrStatusCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\GetDisputePaymentInRazorPayCommand;
+use App\Console\Commands\PaymentSettlementCommand;
 
 
 class Kernel extends ConsoleKernel
@@ -23,7 +24,9 @@ class Kernel extends ConsoleKernel
         VirtualRequestApi::class,
         CheckPaymentStatusCommand::class,
         FetchRazorpayQrStatusCommand::class,
-        GetDisputePaymentInRazorPayCommand::class
+        GetDisputePaymentInRazorPayCommand::class,
+        PaymentSettlementCommand::class
+
     ];
 
     protected function schedule(Schedule $schedule): void
