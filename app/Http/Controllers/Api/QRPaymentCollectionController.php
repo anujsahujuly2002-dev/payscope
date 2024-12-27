@@ -243,7 +243,7 @@ class QRPaymentCollectionController extends Controller
         }
     }
 
-    public function upiIntent(Request $request) {
+    public function upiIntent(QRPaymentCollectionRequest $request) {
         $userId = $request->attributes->get('user_id');
         $checkServiceActive = User::findOrFail($userId)->services;
         if($checkServiceActive =='0'):
@@ -331,28 +331,34 @@ class QRPaymentCollectionController extends Controller
 
 
     public function webHookOrderPaidCallBack(Request $request){
-        try{    
+        try{ 
             $paymentResponse = $request->all();
-            RazorapEventHistory::create([
-                'event'=>$paymentResponse['event'],
-                'response'=>json_encode($request->all()),
-            ]); 
-            if($paymentResponse['event']==='order.paid'):
-                QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->update([
-                    'qr_status'=>$paymentResponse['payload']['payment']['entity']['status'],
-                    'payments_amount_received'=>$paymentResponse['payload']['payment']['entity']['amount']/100,
-                    'status_id'=>$paymentResponse['payload']['payment']['entity']['status'] =='captured'?'2':"3",
-                    'close_by'=>Carbon::parse($paymentResponse['payload']['payment']['entity']['captured_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-                    'close_reason'=>$paymentResponse['payload']['order']['entity']['status'],
-                    'utr_number'=>$paymentResponse['payload']['payment']['entity']['acquirer_data']['rrn'],
-                    'payment_id'=>$paymentResponse['payload']['payment']['entity']['id'],
-                    'payer_name'=>$paymentResponse['payload']['payment']['entity']['upi']['vpa'],
-                ]);
-                $paymentCollection=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->with('status')->first()->toArray();
-                PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
-            endif;
+            Log::info(json_encode($request->all()));
+            $checkPendingOrder=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->where('status_id','1')->first();
+            if(!is_null($checkPendingOrder)):
+               
+                RazorapEventHistory::create([
+                    'event'=>$paymentResponse['event'],
+                    'response'=>json_encode($request->all()),
+                ]); 
+                if($paymentResponse['event']==='order.paid'):
+                    QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->update([
+                        'qr_status'=>$paymentResponse['payload']['payment']['entity']['status'],
+                        'payments_amount_received'=>$paymentResponse['payload']['payment']['entity']['amount']/100,
+                        'status_id'=>$paymentResponse['payload']['payment']['entity']['status'] =='captured'?'2':"3",
+                        'close_by'=>Carbon::parse($paymentResponse['payload']['payment']['entity']['captured_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                        'close_reason'=>$paymentResponse['payload']['order']['entity']['status'],
+                        'utr_number'=>$paymentResponse['payload']['payment']['entity']['acquirer_data']['rrn'],
+                        'payment_id'=>$paymentResponse['payload']['payment']['entity']['id'],
+                        'payer_name'=>$paymentResponse['payload']['payment']['entity']['upi']['vpa'],
+                    ]);
+                    $paymentCollection=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->with('status')->first()->toArray();
+                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
+                endif;
+            endif; 
+            
         }catch (Exception $e){
-            Log::info(json_encode($request->all()),$e);
+            Log::info([json_encode($request->all()),$e]);
         }
     }
 

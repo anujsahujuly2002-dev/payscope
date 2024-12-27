@@ -44,19 +44,14 @@ class Kernel extends ConsoleKernel
                 $days[] = 6;
             endif;
         }  
-        $schedule->command('app:fetch-razorpay-qr-status-command')->everyMinute();
+        $schedule->command('app:fetch-razorpay-qr-status-command')->everyThirtyMinutes();
         $schedule->command('app:get-successfully-payment-collection-command')->daily()->at('05:00');
-        $schedule->command('app:payment-settlement-command')->daily()->at('09:00')->when(function () use($days){
+        $schedule->command('app:payment-settlement-command')->daily()->at('08:50')->when(function () use ($days) {
             $today = Carbon::today();
-            $weekDays = [];
-            for ($i = 0; $i < 7; $i++) {
-                $weekDays[$i+1] = $today->copy()->startOfWeek()->addDays($i)->format('l'); // 'l' gives the full name of the day
-            }
-            // Get the current day name
-            $currentDayName = $today->format('l'); // 'l' gives the full day name
-            // Search for the key of "Wednesday"
-            $key = array_search($currentDayName, $weekDays);
-            return in_array($key, $days);
+            // Get the current day's numeric index (1 for Monday, 7 for Sunday)
+            $currentDayIndex = $today->isoWeekday(); // ISO-8601 (Monday = 1, Sunday = 7)
+            // Check if the current day index is in the $days array
+            return in_array($currentDayIndex, $days);
         });
 
     }

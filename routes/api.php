@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::controller(FundRequestController::class)->group(function() {
-    Route::post('/payout','payout');
+    Route::post('/payout','payout')->middleware('throttle.custom:1000,1');
     Route::post('/bulk-payout','bulkPayout');
     Route::post("/check-status","checkStatus");
     Route::post('/webhookpaynpro','webHookPaynPro');
