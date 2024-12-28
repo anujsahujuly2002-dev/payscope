@@ -25,7 +25,7 @@ class QRPaymentCollectionRequest extends FormRequest
     {
         return [
             'name'=>'required|string|min:3',
-            'payment_amount' =>"required|numeric|min:10"
+            'payment_amount' =>"required|numeric|min:10|max:100000"
         ];
     }
 

@@ -26,6 +26,7 @@ class QRPaymentCollectionController extends Controller
     {
         $this->api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
     }
+
     public function createQrCode(QRPaymentCollectionRequest $request) {
         $userId = $request->attributes->get('user_id');
         $checkServiceActive = User::findOrFail($userId)->services;
@@ -172,12 +173,10 @@ class QRPaymentCollectionController extends Controller
             $data['order_id'] = $orderId;
             return $data;
         } catch (BadRequestError $e) {
-            dd($e);
-            // Handle Bad Request error (most common for missing/invalid parameters)
-            echo "BadRequestError: " . $e->getMessage();
+            Log::info($e);
         } catch (\Exception $e) {
             // Handle all other errors
-            echo "Error: " . $e->getMessage();
+            Log::info($e);
         }
     }
 
@@ -258,7 +257,7 @@ class QRPaymentCollectionController extends Controller
         else:
             $customerId  = $this->createCustomerId($checkRazorPayCustomerId->user->name,$checkRazorPayCustomerId->user->email,$checkRazorPayCustomerId->user->mobile_no,$checkRazorPayCustomerId->user_id);
         endif;
-        $order = $this->createOrder($request->input('payment_amount'));
+        $order = $this->createPaymentOrder($request->input('payment_amount'));
         $requestParameter = [
             "amount" => $order['amount'],
             "currency" => "INR",
@@ -277,7 +276,6 @@ class QRPaymentCollectionController extends Controller
             )
         ];
         $response = Http::withBasicAuth(env('RAZORPAY_KEY'),env('RAZORPAY_SECRET'))->post('https://api.razorpay.com/v1/payments/create/upi',$requestParameter);
-        // dd($response->json());
         RazorPayLog::create([
             'user_id'=>$userId,
             'type'=>"upi_intent",
@@ -319,7 +317,7 @@ class QRPaymentCollectionController extends Controller
         }
     }
 
-    private function createOrder($amount)
+    private function createPaymentOrder($amount=10)
     {
         return $this->api->order->create(array(
             'amount' => $amount*100, 

@@ -37,7 +37,6 @@ class FetchRazorpayQrStatusCommand extends Command
         foreach ($getActivePayments as $key => $getActivePayment) {
             if($getActivePayment->payment_type=='intent'):
                 $response = $this->fetchPaymentStatus($getActivePayment->payment_id);
-                Log::info(json_encode($response));
                 if($response['status'] =='captured'):
                     $getActivePayment->update([
                         'qr_status'=> $response ['status'],
@@ -48,7 +47,6 @@ class FetchRazorpayQrStatusCommand extends Command
                         'utr_number'=>$response['acquirer_data']['rrn'],
                         'payer_name'=>$response['upi']['vpa'],
                     ]);
-                    // dd()
                     $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->with('status')->first()->toArray();
                     PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
                 elseif($response['status'] =='failed'):
@@ -57,8 +55,6 @@ class FetchRazorpayQrStatusCommand extends Command
                         'status_id'=>"3",
                         'close_reason'=> ucwords(str_replace('_', ' ', $response['error_reason'])),
                     ]);
-                    $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->with('status')->first()->toArray();
-                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-failed');
                 elseif($response['status'] =='refunded'):
                     $getActivePayment->update([
                         'qr_status'=> $response ['status'],
