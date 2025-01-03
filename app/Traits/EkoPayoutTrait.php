@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Wallet;
 use App\Models\FundRequest;
 use App\Jobs\FundsTransferRequestJob;
+use Carbon\Carbon;
 
 trait EkoPayoutTrait {
     
@@ -41,7 +42,7 @@ trait EkoPayoutTrait {
             'payment_mode' => $data['payment_mode'],
         ];
 
-        FundsTransferRequestJob::dispatch($serializableData)->onQueue('funds-transfers');
+        FundsTransferRequestJob::dispatch($serializableData)->onQueue('funds-transfers')->delay(Carbon::now()->addSeconds(3));
         return  [
             'status'=>'0005',
             'statusCode'=>"pending",

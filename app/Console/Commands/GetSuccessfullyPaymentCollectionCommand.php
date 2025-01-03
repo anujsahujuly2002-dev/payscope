@@ -34,7 +34,7 @@ class GetSuccessfullyPaymentCollectionCommand extends Command
                 'user_id'=>$getSuccessfullyPaymentCollection->user_id,
                 'payment_id'=>$getSuccessfullyPaymentCollection->payment_id,
                 'order_amount'=>$getSuccessfullyPaymentCollection->payment_amount,
-                'amount'=>$getSuccessfullyPaymentCollection->payment_amount-getCommission("payin",$getSuccessfullyPaymentCollection->payment_amount,$getSuccessfullyPaymentCollection->user_id)['payout_charges'],
+                'amount'=>$getSuccessfullyPaymentCollection->payment_amount-getCommission("payin",$getSuccessfullyPaymentCollection->payment_amount,$getSuccessfullyPaymentCollection->user_id)['payout_charges']-getCommission("payin",$getSuccessfullyPaymentCollection->payment_amount,$getSuccessfullyPaymentCollection->user_id)['gst_charge'],
                 'charges'=>getCommission("payin",$getSuccessfullyPaymentCollection->payment_amount,$getSuccessfullyPaymentCollection->user_id)['payout_charges'],
                'gst'=>getCommission("payin",$getSuccessfullyPaymentCollection->payment_amount,$getSuccessfullyPaymentCollection->user_id)['gst_charge'],
             ]);

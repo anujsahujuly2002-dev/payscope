@@ -61,7 +61,7 @@ class PaymentCollectionCallbackJob implements ShouldQueue
                 ],
             ];
             try{
-                Log::info(['parameters'=>json_encode($parameters)]);
+                // Log::info(['parameters'=>json_encode($parameters)]);
                 Http::retry(3, 100)->post($webhookUrl->payin_webhook_url ,$parameters);
                 AutoPayinTransactionUpdate::create([
                     'user_id'=> $this->transaction['user_id'],

@@ -17,6 +17,7 @@ class QRCollectionExport implements FromQuery, WithHeadings, WithMapping, Larave
     public function __construct($data)
     {
         ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', 1000000);
         $this->data = $data;
     }
 
@@ -44,7 +45,7 @@ class QRCollectionExport implements FromQuery, WithHeadings, WithMapping, Larave
             ->when($this->data['status'] !== null, function($query) {
                 $query->where('status_id', $this->data['status']);
             })
-            ->with('user');
+            ->with('user','status');
     }
 
     /**

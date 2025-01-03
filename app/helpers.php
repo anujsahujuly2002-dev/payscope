@@ -14,6 +14,7 @@ use App\Models\TransactionHistory;
 use App\Models\UserActivityLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 if(!function_exists('apiCall')):
     function apiCall($headers,$url,$prameter,$log=false,$txn_id=null,$headerType='') {
@@ -192,15 +193,34 @@ if (!function_exists('formatAmount')) {
 
 if(!function_exists('addTransactionHistory')):
     function  addTransactionHistory($transaction_id,$user_id,$amount,$transction_type) {
-        $closingAmount = $transction_type =='credit'?getBalance($user_id) + $amount:getBalance($user_id) - $amount;
-        TransactionHistory::create([
-            'user_id'=>$user_id,
-            'transaction_id'=>$transaction_id,
-            'opening_balance'=>getBalance($user_id),
-            'amount'=>$amount,
-            'closing_balnce'=>$closingAmount,
-            'transaction_type'=>$transction_type
-        ]);
+	$checkPreviousCreditEntry = TransactionHistory::where(['transaction_id'=>$transaction_id,'transaction_type'=>'credit'])->first();
+        if(is_null($checkPreviousCreditEntry) && $transction_type =='credit'):
+	        $closingAmount = getBalance($user_id) + $amount;
+            TransactionHistory::create([
+                'user_id'=>$user_id,
+                'transaction_id'=>$transaction_id,
+                'opening_balance'=>getBalance($user_id),
+                'amount'=>$amount,
+                'closing_balnce'=>$closingAmount,
+                'transaction_type'=>$transction_type
+            ]);
+            Wallet::where('user_id',$user_id)->update([
+                'amount'=>getBalance($user_id) + $amount
+            ]);
+        elseif ($transction_type =='debit'):
+		$closingAmount  =getBalance($user_id) - $amount;
+            TransactionHistory::create([
+                'user_id'=>$user_id,
+                'transaction_id'=>$transaction_id,
+                'opening_balance'=>getBalance($user_id),
+                'amount'=>$amount,
+                'closing_balnce'=>$closingAmount,
+                'transaction_type'=>$transction_type
+            ]);
+            Wallet::where('user_id',$user_id)->update([
+                'amount'=>(getBalance($user_id) - $amount) ,
+            ]);
+        endif;
     }
 endif;
 

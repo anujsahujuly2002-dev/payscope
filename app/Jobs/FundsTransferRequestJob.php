@@ -33,7 +33,7 @@ class FundsTransferRequestJob implements ShouldQueue
      * Execute the job.
      */
     public function handle()
-    {
+    {  
          try{
             $walletAmount = Wallet::where('user_id',$this->requestParamater['user_id'])->first();
             $commissionAndGst = getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['payout_charges']+ getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['gst_charge'];
@@ -62,9 +62,7 @@ class FundsTransferRequestJob implements ShouldQueue
             $commissionAndGst = getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['payout_charges']+ getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['gst_charge'];
             $closing_balance = $walletAmount->amount-($this->requestParamater['amount']+$commissionAndGst) ;
             addTransactionHistory($this->requestParamater['payoutid'] ,$this->requestParamater['user_id'],($this->requestParamater['amount']+$commissionAndGst),'debit');
-            Wallet::where('user_id',$this->requestParamater['user_id'])->update([
-                'amount'=>$closing_balance ,
-            ]);
+            
         
             $fundRequest=FundRequest::create([
                 'user_id'=>$this->requestParamater['user_id'],
@@ -146,9 +144,6 @@ class FundsTransferRequestJob implements ShouldQueue
                             'status_id'=>'3',
                             'closing_balnce'=>$closing_balance+$this->requestParamater['amount']+$commissionAndGst,
                         ]);
-                        Wallet::where('user_id',$this->requestParamater['user_id'])->update([
-                            'amount'=>$main_amount,
-                        ]);
                     endif;
                 }else{
                     addTransactionHistory($this->requestParamater['payoutid'] ,$this->requestParamater['user_id'],($this->requestParamater['amount']+$commissionAndGst),'credit');
@@ -159,9 +154,6 @@ class FundsTransferRequestJob implements ShouldQueue
                         'status_id'=>'3',
                         'closing_balnce'=>$closing_balance+$this->requestParamater['amount']+$commissionAndGst
                     ]);
-                    Wallet::where('user_id',$this->requestParamater['user_id'])->update([
-                        'amount'=>$main_amount,
-                    ]);
                 }
             else:
                 addTransactionHistory($this->requestParamater['payoutid'] ,$this->requestParamater['user_id'],($this->requestParamater['amount']+$commissionAndGst),'credit');
@@ -171,9 +163,6 @@ class FundsTransferRequestJob implements ShouldQueue
                 PayoutRequestHistory::where('id',$fundRequest->id)->update([
                     'status_id'=>'3',
                     'closing_balnce'=>$closing_balance+$this->requestParamater['amount']+$commissionAndGst
-                ]);
-                Wallet::where('user_id',$this->requestParamater['user_id'])->update([
-                    'amount'=>$main_amount,
                 ]);
             endif;
         }catch (Exception $e) {

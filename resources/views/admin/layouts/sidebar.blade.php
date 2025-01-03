@@ -171,8 +171,8 @@
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.payout.payout.request') }}">Payout Request </a></li>
                                     @endcanany
                                 @endif
-                                @if (checkRecordHasPermission(['payout-request', 'payout-new-request']))
-                                    @canany(['payout-request', 'payout-new-request'])
+                                @if (checkRecordHasPermission(['transaction-history']))
+                                    @canany(['transaction-history'])
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.fund.transaction.history') }}">Transaction History</a></li>
                                     @endcanany
                                 @endif

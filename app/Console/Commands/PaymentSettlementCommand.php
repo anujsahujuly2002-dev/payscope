@@ -44,10 +44,6 @@ class PaymentSettlementCommand extends Command
                 'settelment_id'=>$settelment->settelment_id,
             ]);
             addTransactionHistory($settelment->settelment_id,$collection->user_id,$settelment->amount,'credit');
-            $getCurrentWalletAmount =  Wallet::where('user_id',$collection->user_id)->first()->amount;
-            Wallet::where('user_id',$collection->user_id)->update([
-                'amount'=>$collection->total_amount+$getCurrentWalletAmount
-            ]);
         endforeach;
     }
 

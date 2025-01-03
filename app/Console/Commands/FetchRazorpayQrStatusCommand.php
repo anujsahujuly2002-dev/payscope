@@ -8,6 +8,7 @@ use Razorpay\Api\Api;
 use Illuminate\Console\Command;
 use App\Models\QRPaymentCollection;
 use App\Jobs\PaymentCollectionCallbackJob;
+use Illuminate\Support\Facades\Log;
 
 class FetchRazorpayQrStatusCommand extends Command
 {
@@ -46,7 +47,6 @@ class FetchRazorpayQrStatusCommand extends Command
                         'utr_number'=>$response['acquirer_data']['rrn'],
                         'payer_name'=>$response['upi']['vpa'],
                     ]);
-                    // dd()
                     $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->with('status')->first()->toArray();
                     PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
                 elseif($response['status'] =='failed'):
@@ -55,8 +55,18 @@ class FetchRazorpayQrStatusCommand extends Command
                         'status_id'=>"3",
                         'close_reason'=> ucwords(str_replace('_', ' ', $response['error_reason'])),
                     ]);
+                elseif($response['status'] =='refunded'):
+                    $getActivePayment->update([
+                        'qr_status'=> $response ['status'],
+                        'payments_amount_received'=> $response ['amount']/100,
+                        'status_id'=> $response ['status'] =='refunded'?'4':"3",
+                        'close_by'=>Carbon::parse( $response ['captured_at'])->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                        'close_reason'=> $response ['status']=='captured'?"Paid":"Expired",
+                        'utr_number'=>$response['acquirer_data']['rrn'],
+                        'payer_name'=>$response['upi']['vpa'],
+                    ]);
                     $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->with('status')->first()->toArray();
-                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-failed');
+                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
                 endif;
             elseif($getActivePayment->payment_type=='qr'):
                 $getAllActiveQrs = QRPaymentCollection::where('qr_status','active')->get();

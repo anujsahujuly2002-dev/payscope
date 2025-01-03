@@ -46,12 +46,6 @@ class CheckPaymentStatusCommand extends Command
                     'signature'=>$this->getSignature(),
                 ];
                 $res = apiCall($header,$pyanProUrl,$requestParameter,true,$pendingPaymentRequest->payout_id);
-                Log::info("response:-",$res);
-                $to      = 'anujsahujuly2002@gmail.com';
-                $subject = 'Check Status Api Executed For PaynPro';
-                $message = 'Api Response'.json_encode($res);
-                $headers = 'From:programmeranuj930@gmail.com'. "\r\n" .'X-Mailer: PHP/' . phpversion();
-                mail($to, $subject, $message, $headers);
                 if($res['statusCode']==200):
                     if($res['data'][0]['status']=='Failed'):
                         $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
@@ -64,11 +58,7 @@ class CheckPaymentStatusCommand extends Command
                             'status_id'=>'3',
                             'closing_balnce'=>$fundRequestHistory->balance
                         ]);
-                        addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
-                        $getCurrentWalletAmount =  Wallet::where('user_id',$fundRequest->user_id)->first()->amount;
-                        Wallet::where('user_id',$fundRequest->user_id)->update([
-                            'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst+$getCurrentWalletAmount
-                        ]);
+                        
                     elseif($res['data'][0]['status']=='Success'):
                         $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id ])->first();
                         Fundrequest::where('id',$fundRequest->id)->update([
@@ -91,13 +81,10 @@ class CheckPaymentStatusCommand extends Command
                         'status_id'=>'3',
                         'closing_balnce'=>$fundRequestHistory->balance
                     ]);
-                    addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge),'credit');
-                    $getCurrentWalletAmount =  Wallet::where('user_id',$fundRequest->user_id)->first()->amount;
-                    Wallet::where('user_id',$fundRequest->user_id)->update([
-                        'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount
-                    ]);
+                    
                 endif;
             elseif($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='eko'):
+               
                 if($pendingPaymentRequest->payout_ref !=NULL):
                     $apiUrl  = 'https://api.eko.in:25002/ekoicici/v1/transactions/'.$pendingPaymentRequest->payout_ref.'?initiator_id=9519035604';
                 else:
@@ -126,24 +113,39 @@ class CheckPaymentStatusCommand extends Command
                 ]);
                 if($res['data']['tx_status']=='4'):
                     $fundRequest=Fundrequest::where(['payout_id'=>$res['data']['client_ref_id'],'account_number'=>$res['data']['account'] ])->first();
-                    $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
-                    Fundrequest::where('id',$fundRequest->id)->update([
-                        'status_id'=>'4',
-                        'payout_ref'=>$res['data']['tid'],
-                        'utr_number'=>$res['data']['bank_ref_num']
-                    ]);
-                    PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
-                        'status_id'=>'4',
-                        'closing_balnce'=>$fundRequestHistory->balance
-                    ]);
-                    addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
-                    $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
-                    $getCurrentWalletAmount =  Wallet::where('user_id',$fundRequest->user_id)->first()->amount;
-                    Wallet::where('user_id',$fundRequest->user_id)->update([
-                        'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount+$fundRequestHistory->gst
-                    ]);
-                    $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
-                    FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
+                    if(!is_null($fundRequest)):
+                        $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
+                        Fundrequest::where('id',$fundRequest->id)->update([
+                            'status_id'=>'4',
+                            'payout_ref'=>$res['data']['tid'],
+                            'utr_number'=>$res['data']['bank_ref_num']
+                        ]);
+                        PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                            'status_id'=>'4',
+                            'closing_balnce'=>$fundRequestHistory->balance
+                        ]);
+                        addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
+                        $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
+                        $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                        FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
+                    else:
+                        $fundRequest=Fundrequest::where(['payout_id'=>$res['data']['client_ref_id'] ])->first();
+                        $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
+                        Fundrequest::where('id',$fundRequest->id)->update([
+                            'status_id'=>'4',
+                            'payout_ref'=>$res['data']['tid'],
+                            'utr_number'=>$res['data']['bank_ref_num']
+                        ]);
+                        PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                            'status_id'=>'4',
+                            'closing_balnce'=>$fundRequestHistory->balance
+                        ]);
+                        addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
+                        $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
+                        $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                        FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
+                    endif;
+                   
                 elseif($res['data']['tx_status']=='1'):
                     $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
                     $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
@@ -155,12 +157,7 @@ class CheckPaymentStatusCommand extends Command
                         'status_id'=>'3',
                         'closing_balnce'=>$fundRequestHistory->balance
                     ]);
-                    // $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
-                    $getCurrentWalletAmount =  Wallet::where('user_id',$fundRequest->user_id)->first()->amount;
                     addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
-                    Wallet::where('user_id',$fundRequest->user_id)->update([
-                        'amount'=>$fundRequestHistory->amount+$fundRequestHistory->charge+$getCurrentWalletAmount+$fundRequestHistory->gst
-                    ]);
                     $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
                     FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                 elseif($res['data']['tx_status']=='0'):
