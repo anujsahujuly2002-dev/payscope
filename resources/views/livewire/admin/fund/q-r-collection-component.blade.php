@@ -2,6 +2,69 @@
     <div wire:loading class="loading"></div>
     @include('admin.flash-message.flash-message')
     <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <h4 class="fw-bold mb-0">Overview</h4>
+                            <h6 class="mb-0 mt-1 ms-4 text-muted">
+                                <i class="fa fa-clock me-2"></i>8 min Ago
+                            </h6>
+                            <button class="btn btn-link text-primary ms-4 p-0 d-flex align-items-center interactive-btn" style="text-decoration: none;" wire:click="" wire:loading.attr="disabled">
+                                <i class="mdi mdi-replay"></i>
+                                <span class="ms-2">Refresh</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body d-flex flex-wrap">
+                    <!-- Cards Section -->
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card border-0 shadow-sm h-100 hover-card">
+                            <div class="card-body text-center">
+                                <p class="text-muted mb-2">Current Balance 
+                                    <i class="fa fa-info-circle ms-1 text-secondary interactive-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="This is the total amount that is due to be deposited in your bank account after deductions."></i>
+                                </p>
+                                <h3 class="fw-bold mb-0 text-primary">&#x20B9; {{$currentBalance}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card border-0 shadow-sm h-100 hover-card">
+                            <div class="card-body text-center">
+                                <p class="text-muted mb-2">Settlement Due Today 
+                                    <i class="fa fa-info-circle ms-1 text-secondary interactive-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="This is the amount initiated for deposit and is in processing."></i>
+                                </p>
+                                <h3 class="fw-bold mb-0 text-success">&#x20B9; {{$settelmentDueToday}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card border-0 shadow-sm h-100 hover-card">
+                            <div class="card-body text-center">
+                                <p class="text-muted mb-2">Previous Settlement 
+                                    <i class="fa fa-info-circle ms-1 text-secondary interactive-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="This is the last amount initiated for deposit."></i>
+                                </p>
+                                <h3 class="fw-bold mb-0 text-warning">&#x20B9; {{$previousSettelment}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card border-0 shadow-sm h-100 hover-card">
+                            <div class="card-body text-center">
+                                <p class="text-muted mb-2">Upcoming Settlement 
+                                    <i class="fa fa-info-circle ms-1 text-secondary interactive-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="This is the amount that’ll be deposited into your bank account next."></i>
+                                </p>
+                                <h3 class="fw-bold mb-0 text-info">&#x20B9; {{$upcommingSettelment}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">

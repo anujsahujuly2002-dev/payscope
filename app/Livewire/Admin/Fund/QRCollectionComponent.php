@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Exports\QRCollectionExport;
 use App\Models\QRPaymentCollection;
+use App\Models\Settelment;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,6 +25,11 @@ class QRCollectionComponent extends Component
     public $paymentModes;
     public $payment =[];
 
+    public $currentBalance = 0;
+    public $settelmentDueToday = 0;
+    public $previousSettelment = 0;
+    public $upcommingSettelment = 0;
+
 
     public function render()
     {
@@ -34,34 +40,49 @@ class QRCollectionComponent extends Component
         $this->statuses = Status::all();
 
         $qr_collection = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() == 'api-partner', function($u) {
-                $u->where('user_id', auth()->user()->id);
-            })
-            ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
-                $query->where('user_id', auth()->user()->id);
-            })
-            ->when($this->start_date && $this->end_date, function($query) {
-                $query->whereDate('created_at', '>=', $this->start_date)
-                      ->whereDate('created_at', '<=', $this->end_date);
-            })
-            ->when($this->agentId, function($query) {
-                $query->where('user_id', $this->agentId);
-            })
-            ->when($this->start_date && !$this->end_date, function($query) {
-                $query->whereDate('created_at', '>=', $this->start_date);
-            })
-            ->when($this->value, function($query) {
-                $query->where('qr_code_id',$this->value);
-            })
-            ->when($this->value !=null,function($u){
-                $u->orWhere('payment_id',$this->value);
-            })
-            ->when($this->status !== null, function($query) {
-                $query->where('status_id', $this->status);
-            })
-            ->latest()->paginate(100);
-            return view('livewire.admin.fund.q-r-collection-component', [
-            'qr_collection' => $qr_collection
-        ]);
+            $u->where('user_id', auth()->user()->id);
+        })
+        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })
+        ->when($this->start_date && $this->end_date, function($query) {
+            $query->whereDate('created_at', '>=', $this->start_date)->whereDate('created_at', '<=', $this->end_date);
+        })
+        ->when($this->agentId, function($query) {
+            $query->where('user_id', $this->agentId);
+        })
+        ->when($this->start_date && !$this->end_date, function($query) {
+            $query->whereDate('created_at', '>=', $this->start_date);
+        })
+        ->when($this->value, function($query) {
+            $query->where('qr_code_id',$this->value);
+        })
+        ->when($this->value !=null,function($u){
+            $u->orWhere('payment_id',$this->value);
+        })
+        ->when($this->status !== null, function($query) {
+            $query->where('status_id', $this->status);
+        })
+        ->latest()->paginate(100);
+        $this->currentBalance = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() == 'api-partner', function($u) {
+            $u->where('user_id', auth()->user()->id);
+        })
+        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->where(['is_payment_settel'=>'0','status_id'=>'2'])->whereDate('created_at',now()->format('Y-m-d'))->sum('payments_amount_received');
+        $this->settelmentDueToday = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() == 'api-partner', function($u) {
+            $u->where('user_id', auth()->user()->id);
+        })
+        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->where(['is_payment_settel'=>'0','status_id'=>'2'])->whereDate('created_at','<=',now()->format('Y-m-d'))->sum('payments_amount_received');
+        $this->previousSettelment = Settelment::when(auth()->user()->getRoleNames()->first() == 'api-partner', function($u) {
+            $u->where('user_id', auth()->user()->id);
+        })
+        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->latest()->first()->amount;
+        return view('livewire.admin.fund.q-r-collection-component', ['qr_collection' => $qr_collection]);
     }
 
     public function export() {
