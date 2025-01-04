@@ -64,24 +64,31 @@ class QRCollectionComponent extends Component
             $query->where('status_id', $this->status);
         })
         ->latest()->paginate(100);
-        $this->currentBalance = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() == 'api-partner', function($u) {
-            $u->where('user_id', auth()->user()->id);
+        $userId = auth()->user()->id;
+        $role = auth()->user()->getRoleNames()->first();
+        // Query for currentBalance and settelmentDueToday
+        $result = QRPaymentCollection::selectRaw("
+            SUM(CASE WHEN is_payment_settel = '0' AND status_id = '2' AND DATE(created_at) = CURDATE() THEN payments_amount_received ELSE 0 END) as current_balance,
+            SUM(CASE WHEN is_payment_settel = '0' AND status_id = '2' AND DATE(created_at) <= CURDATE() THEN payments_amount_received ELSE 0 END) as settelment_due_today
+        ")
+        ->when($role !== 'super-admin', function ($query) use ($userId) {
+            $query->where('user_id', $userId); // Filter by user_id for non-super-admin roles
         })
-        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
-            $query->where('user_id', auth()->user()->id);
-        })->where(['is_payment_settel'=>'0','status_id'=>'2'])->whereDate('created_at',now()->format('Y-m-d'))->sum('payments_amount_received');
-        $this->settelmentDueToday = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() == 'api-partner', function($u) {
-            $u->where('user_id', auth()->user()->id);
+        ->first();
+
+        // Query for previousSettelment
+        $previousSettelment = Settelment::when($role !== 'super-admin', function ($query) use ($userId) {
+            $query->where('user_id', $userId); // Filter by user_id for non-super-admin roles
         })
-        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
-            $query->where('user_id', auth()->user()->id);
-        })->where(['is_payment_settel'=>'0','status_id'=>'2'])->whereDate('created_at','<=',now()->format('Y-m-d'))->sum('payments_amount_received');
-        $this->previousSettelment = Settelment::when(auth()->user()->getRoleNames()->first() == 'api-partner', function($u) {
-            $u->where('user_id', auth()->user()->id);
-        })
-        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
-            $query->where('user_id', auth()->user()->id);
-        })->latest()->first()->amount;
+        ->latest()
+        ->first();
+
+        // Assigning to properties
+        $this->currentBalance = $result->current_balance ?? 0;
+        $this->settelmentDueToday = $result->settelment_due_today ?? 0;
+
+        // For previousSettelment, fetch amount if record exists
+        $this->previousSettelment = $previousSettelment->amount ?? 0;
         return view('livewire.admin.fund.q-r-collection-component', ['qr_collection' => $qr_collection]);
     }
 
