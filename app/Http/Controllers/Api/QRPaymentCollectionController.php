@@ -245,8 +245,8 @@ class QRPaymentCollectionController extends Controller
 
     public function upiIntent(QRPaymentCollectionRequest $request) {
         $userId = $request->attributes->get('user_id');
-        $checkServiceActive = User::findOrFail($userId)->services;
-        if($checkServiceActive =='0'):
+        $checkServiceActive = UserWiseService::where('user_id',$userId)->first();
+        if(is_null($checkServiceActive) ||$checkServiceActive->payin =='0'):
             return [
                 'status'=>'0008',
                 'msg'=>"This service has been down, Please try again after sometimes",
