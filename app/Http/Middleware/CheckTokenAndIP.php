@@ -24,16 +24,13 @@ class CheckTokenAndIP
                 'msg'=>"Invalid Api token or ip address your current ip is ".$request->ip_address
             ],401);
         endif;
-          // Return user ID for further processing
-          $userId = $checkToken->user_id; // Assuming 'user_id' is the field that contains the user's ID
-
-          // Optionally attach the user ID to the request for further use
-          $request->attributes->set('user_id', $userId);
-  
-          // Create a response object to modify headers
-          $response = $next($request);
-          $response->headers->set('X-User-ID', $userId);
-  
-          return $response;
+        // Return user ID for further processing
+        $userId = $checkToken->user_id; // Assuming 'user_id' is the field that contains the user's ID
+        // Optionally attach the user ID to the request for further use
+        $request->attributes->set('user_id', $userId);
+        // Create a response object to modify headers
+        $response = $next($request);
+        $response->headers->set('X-User-ID', $userId);
+        return $response;
     }
 }

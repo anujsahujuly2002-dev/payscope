@@ -6,13 +6,14 @@ use App\Models\User;
 use App\Models\Wallet;
 use App\Models\FundRequest;
 use App\Jobs\FundsTransferRequestJob;
+use App\Models\UserWiseService;
 use Carbon\Carbon;
 
 trait EkoPayoutTrait {
     
     protected function ekoPayoutApi($data=array()) {
-        $checkServiceActive = User::findOrFail($data['user_id'])->services;
-        if($checkServiceActive =='0'):
+        $checkServiceActive = UserWiseService::where('user_id',$data['user_id'])->first();
+        if(is_null($checkServiceActive) ||$checkServiceActive->payout =='0'):
             return [
                 'status'=>'0008',
                 'msg'=>"This service has been down, Please try again after sometimes",

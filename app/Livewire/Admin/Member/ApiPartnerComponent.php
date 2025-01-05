@@ -13,6 +13,8 @@ use App\Exports\ApiPartnerExport;
 use App\Traits\eKYCTrait;
 use Illuminate\Support\Facades\DB;
 use App\Models\PayoutRequestHistory;
+use App\Models\Service;
+use App\Models\UserWiseService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -48,6 +50,12 @@ class ApiPartnerComponent extends Component
     protected $rules = [
         'otp_code' => 'required|integer',
     ];
+    public $userWiseService;
+    public $serviceForm = false;
+    public $serviceLists = [];
+
+    public $userId;
+
     public function render()
     {
         if(!Auth::user()->can('api-partner-list')|| !checkRecordHasPermission(['api-partner-list'])):
@@ -111,9 +119,7 @@ class ApiPartnerComponent extends Component
             'gst'=>'required|string|min:3',
             'cin_number'=>'required|string|min:3',
             'company_pan'=>'required|string|min:3',
-            'pancard_number'=>'required|string',
-          
-            
+            'pancard_number'=>'required|string',  
             // 'website'=>'required|url:https'
         ])->validate();
         $user = User::create([
@@ -256,8 +262,6 @@ class ApiPartnerComponent extends Component
             'adhaarcard_number'=>'required|numeric|min_digits:12|digits:12',
             'account_number'=>'required|numeric|min_digits:10',
             'ifsc_code'=>'required',
-
-
         ])->validate();
         $validateData ['agent_id']= $this->ekyApiPartnerId;
         $response = $this->signUpEkycInitiate($validateData);
@@ -293,6 +297,37 @@ class ApiPartnerComponent extends Component
             return redirect()->back()->with('error',$response['msg']);
         endif;
 
+    }
+
+    public function getServices($userId) {
+        $this->serviceForm = true;
+        $this->userWiseService = UserWiseService::where('user_id',$userId)->first();
+        $this->serviceLists = Service::where('status','1')->orderBy('name','ASC')->get();
+        $this->userId = $userId;
+        $this->dispatch('show-form');
+    }
+
+    public function changeServiceStatus($status,$type) {
+        $userWiseService = UserWiseService::where('user_id', $this->userId)->first();
+        if(!is_null($userWiseService)):
+            $userWiseService->update([
+                'user_id'=>$this->userId,
+                $type => $status==0?"1":"0", // $type is used directly as the key
+            ]);
+        else:
+            UserWiseService::create([
+                'user_id'=>$this->userId,
+                $type => $status==0?"1":"0", // $type is used directly as the key
+            ]);
+        endif;
+        if($status=='0'):
+            $msg = ucfirst($type).' service has been active';
+        endif;
+        if($status=='1'):
+            $msg = ucfirst($type).' service has been inactive';
+        endif;
+        $this->dispatch('hide-form');
+        return redirect()->back()->with('success',$msg);
     }
 
 
