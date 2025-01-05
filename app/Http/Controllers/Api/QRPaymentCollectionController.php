@@ -4,20 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\User;
 use Razorpay\Api\Api;
 use App\Models\ApiPartner;
 use App\Models\RazorPayLog;
 use Illuminate\Http\Request;
+use App\Models\UserWiseService;
 use App\Models\QRPaymentCollection;
 use App\Models\RazorapEventHistory;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Razorpay\Api\Errors\BadRequestError;
+use App\Jobs\PaymentCollectionCallbackJob;
 use App\Http\Requests\Api\FetchQrStatusRequest;
 use App\Http\Requests\Api\QRPaymentCollectionRequest;
-use App\Jobs\PaymentCollectionCallbackJob;
-use App\Models\User;
 
 class QRPaymentCollectionController extends Controller
 {
@@ -29,8 +30,8 @@ class QRPaymentCollectionController extends Controller
 
     public function createQrCode(QRPaymentCollectionRequest $request) {
         $userId = $request->attributes->get('user_id');
-        $checkServiceActive = User::findOrFail($userId)->services;
-        if($checkServiceActive =='0'):
+        $checkServiceActive = UserWiseService::where('user_id',$userId)->first();
+        if(is_null($checkServiceActive) ||$checkServiceActive->payin =='0'):
             return [
                 'status'=>'0008',
                 'msg'=>"This service has been down, Please try again after sometimes",

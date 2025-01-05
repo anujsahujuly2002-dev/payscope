@@ -80,7 +80,7 @@
                                     <th scope="col">Locked Amount</th>
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Service</th>
+                                    {{-- <th scope="col">Service</th> --}}
                                     <th scope="col" style="width: 200px;">Action</th>
                                 </tr>
                             </thead>
@@ -120,25 +120,19 @@
                                             {{ $apipartner->created_at }}
                                         </td>
                                         <td>
-                                            <input type="checkbox" id="switch{{ $apipartner->id }}" switch="bool"
-                                                @if ($apipartner->status == 1) checked @endif
-                                                wire:change='statusUpdate({{ $apipartner->id }},{{ $apipartner->status }})' />
-                                            <label for="switch{{ $apipartner->id }}" data-on-label="Active"
-                                                data-off-label="Inactive"></label>
+                                            <input type="checkbox" id="switch{{ $apipartner->id }}" switch="bool" @if ($apipartner->status == 1) checked @endif wire:change='statusUpdate({{ $apipartner->id }},{{ $apipartner->status }})' />
+                                            <label for="switch{{ $apipartner->id }}" data-on-label="Active" data-off-label="Inactive"></label>
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <input type="checkbox" id="switch_{{ $apipartner->id }}" switch="bool"
                                                 @if ($apipartner->services == 1) checked @endif
                                                 wire:change='serviceUpdate({{ $apipartner->id }},{{ $apipartner->services }})' />
                                             <label for="switch_{{ $apipartner->id }}" data-on-label="Active"
                                                 data-off-label="Inactive"></label>
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <li class="list-inline-item dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-18 px-2"
-                                                    href="javascript:void(0)" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="uil uil-ellipsis-v"></i>
+                                                <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i class="uil uil-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="javascript:void(0)"
@@ -151,6 +145,11 @@
                                                     @endif --}}
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
                                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="generateOutletId({{ $apipartner->id }})">Generate Outlet Id</a>
+                                                    @if (checkRecordHasPermission(['service-change-status']))
+                                                        @canany(['service-change-status'])
+                                                            <a class="dropdown-item" href="javascript:void(0)" wire:click="getServices({{$apipartner->id}})">Services</a>
+                                                        @endcanany
+                                                    @endif
                                                 </div>
                                             </li>
                                         </td>
@@ -587,7 +586,69 @@
                 </form>
             </div><!-- /.modal-dialog -->
         </div>
-    @else
+        @elseif ($serviceForm)
+            <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+                <div class="modal-dialog modal-lg">
+                    <form autocomplete="off">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myLargeModalLabel">Services List</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-nowrap mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th >Service Name</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($serviceLists as $key => $service)
+                                                <tr>
+                                                    <td>{{ ucfirst($service->name) }}</td>
+                                                    <td>
+                                                        @php
+                                                            $payinStatus = '0';
+                                                            $payOutStatus = '0';
+                                                            $payinCheckedClass = "";
+                                                            $payOutCheckedClass = "";
+                                                            if(!is_null($userWiseService)):
+                                                                if($service->id =='1'):
+                                                                    if($userWiseService->payin =='1'):
+                                                                        $payinCheckedClass ="checked";
+                                                                        $payinStatus = '1';
+                                                                    endif;
+                                                                endif;
+                                                            endif;
+                                                            if(!is_null($userWiseService)):
+                                                                if($service->id =='2'):
+                                                                    if ($userWiseService->payout =='1') :
+                                                                        $payOutCheckedClass ="checked";
+                                                                        $payOutStatus = "1";
+                                                                    endif;
+                                                                endif;
+                                                            endif;
+                                                        @endphp
+                                                        <input type="checkbox" id="switch_{{$service->id}}" switch="bool" @if ($service->id =='1') {{$payinCheckedClass}} @elseif($service->id =='2') {{$payOutCheckedClass}} @endif  wire:change='changeServiceStatus(@if($service->id =='1'){{$payinStatus}},"payin" @elseif($service->id=='2'){{$payOutStatus}},"payout" @endif)' />
+                                                        <label for="switch_{{$service->id}}" data-on-label="Active" data-off-label="Inactive"></label>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                {{-- <button type="submit" class="btn btn-primary">Save changes</button> --}}
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </form>
+                </div><!-- /.modal-dialog -->
+            </div>
+        @else
         <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-lg">
