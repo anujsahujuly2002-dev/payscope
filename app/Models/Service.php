@@ -9,10 +9,6 @@ class Service extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name','api_id','status'
+        'name','status'
     ];
-
-    public function api() {
-        return $this->belongsTo(Api::class,'api_id','id');
-    }
 }

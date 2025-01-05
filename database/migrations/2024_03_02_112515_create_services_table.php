@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('api_id');
-            $table->foreign('api_id')->references('id')->on('apis')->cascadeOnDelete()->cascadeOnUpdate();
             $table->enum('status',['0','1']);
             $table->timestamps();
         });
