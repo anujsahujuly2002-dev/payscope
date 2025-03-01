@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel
                 $days[] = 6;
             endif;
         }  
-        $schedule->command('app:fetch-razorpay-qr-status-command')->everyThirtyMinutes();
+        $schedule->command('app:fetch-razorpay-qr-status-command')->everyMinute();
         $schedule->command('app:get-successfully-payment-collection-command')->daily()->at('05:00');
         $schedule->command('app:payment-settlement-command')->daily()->at('08:50')->when(function () use ($days) {
             $today = Carbon::today();

@@ -31,7 +31,7 @@ Route::get('/',function (){
 
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::match(['get', 'post'], 'web-hook-recived-payment-in-razorapy', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webhookRecivedPaymentInRazorapy'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-    Route::match(['get', 'post'], 'web-hook-order-paid-razorpay', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webHookOrderPaidCallBack'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    Route::match(['get', 'post'], 'web-hook-order-paid-razorpay-nikhil', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webHookOrderPaidCallBack'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::match(['get', 'post'],'webhookpaynpro',[App\Http\Controllers\Api\FundRequestController::class,'webHookPaynPro'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::match(['get', 'post'],'get-dispute-payment',[DashBoardController::class,'getDisputePayment'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::match(['get', 'post'],'eko-payout-webhook',[DashBoardController::class,'ekoPayoutWebHook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
