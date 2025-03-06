@@ -64,7 +64,7 @@ class PayoutRequest extends Component
             $u->where('user_id',$this->agentId);
         })
         ->when($this->value !=null,function($u){
-            $u->where('payout_ref', 'like', '%'.$this->value.'%')->orWhere('payout_id','like','%'.$this->value.'%');
+            $u->where('payout_ref', 'like', '%'.$this->value.'%')->orWhere('payout_id','like','%'.$this->value.'%')->orWhere('order_id','like','%'.$this->value.'%');
         })
         ->orderBy('id','desc')->latest()->paginate(100);
         return view('livewire.admin.payout.payout-request',compact('payoutRequestData'));

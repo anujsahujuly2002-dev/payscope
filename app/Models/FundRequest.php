@@ -23,6 +23,10 @@ class FundRequest extends Model
         'payout_ref',
         'utr_number',
         'payment_type',
+        'creditor_email',
+        'creditor_mobile',
+        'quintus_transaction_id',
+        'quintus_req_id'
     ];
 
     public function user () {

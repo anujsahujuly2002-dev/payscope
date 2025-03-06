@@ -83,7 +83,7 @@ class CheckPaymentStatusCommand extends Command
                     ]);
                     
                 endif;
-            elseif($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='eko'):
+            /*elseif($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='eko'):
                
                 if($pendingPaymentRequest->payout_ref !=NULL):
                     $apiUrl  = 'https://api.eko.in:25002/ekoicici/v1/transactions/'.$pendingPaymentRequest->payout_ref.'?initiator_id=9519035604';
@@ -174,8 +174,58 @@ class CheckPaymentStatusCommand extends Command
                         $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
                         FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                     endif;
+                endif; */  
+            elseif($pendingPaymentRequest->payoutTransactionHistories?->payout_api ==='quintustech'):
+                $header=array(
+                    "partnerId"=>"119946",
+                    "consumersecret"=>"e1a2e6054ae3f87c",
+                    "consumerkey"=>"c8b99c6c7c26e339"
+                );
+                $apiUrl  = 'https://prod.quintustech.in/api/payout/getDataByInstructionIdentification?instructionIdentification='.$pendingPaymentRequest->payout_id;
+                $response = Http::withHeaders($header)->get($apiUrl);
+                $res = $response->json();
+                ApiLog::create([
+                    'url'=>$apiUrl,
+                    'txn_id'=>$pendingPaymentRequest->payout_id,
+                    'header'=>json_encode($header),
+                    'request'=>json_encode(['instructionIdentification'=>$pendingPaymentRequest->payout_id]),
+                    'response'=>json_encode($res)
+                ]);
+                if(!$res['success']):
+                    $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
+                    $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
+                    Fundrequest::where('id',$fundRequest->id)->update([
+                        'status_id'=>'3',
+                        'payout_ref'=>$pendingPaymentRequest->payout_id
+                    ]);
+                    PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                        'status_id'=>'3',
+                        'closing_balnce'=>$fundRequestHistory->balance
+                    ]);
+                    addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
+                    $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                    FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
+                elseif($res['success']):
+                    if(array_key_exists('data',$res)):
+                        if(array_key_exists('referenceNo',$res['data'])):
+                            if($res['data']['status']=='success'):
+                                $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
+                                Fundrequest::where('id',$fundRequest->id)->update([
+                                    'status_id'=>'2',
+                                    'payout_ref'=>$res['data']['quintus_transaction_id'],
+                                    'utr_number'=>$res['data']['referenceNo']
+                                ]);
+                                PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                                    'status_id'=>'2',
+                                ]);
+                                $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                                FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
+                            endif;
+                        endif;
+                    endif;
                 endif;
-            endif;           
+            endif; 
+               
         endforeach;
     }
 

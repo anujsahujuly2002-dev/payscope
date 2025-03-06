@@ -44,8 +44,8 @@
                                     </th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Type</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Charge Range</th>
+                                    <th scope="col">Status</th>
                                     @canany(['charges-slab-edit'])
                                         <th scope="col" style="width: 200px;">Action</th>
                                     @endcanany

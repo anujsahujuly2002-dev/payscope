@@ -68,6 +68,7 @@
                                         </div>
                                     </th>
                                     <th scope="col">id</th>
+                                    <th scope="col">Order Id</th>
                                     <th scope="col">User Details</th>
                                     <th scope="col">Bank Details</th>
                                     <th scope="col">Reference Details</th>
@@ -98,6 +99,9 @@
                                         </th>
                                         <td>
                                             <a href="javascript:void(0)" class="text-body">{{$payoutReq->id}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" class="text-body">{{$payoutReq->order_id}}</a>
                                         </td>
                                         <td>
                                             {{ucfirst($payoutReq->user->name)}}<br> {{$payoutReq?->user?->mobile_no}}</td>

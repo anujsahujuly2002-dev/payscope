@@ -1,0 +1,86 @@
+  2025-03-02 18:07:13 App\Jobs\FundsTransferRequestJob ............... RUNNING
+array:3 [
+  "message" => "Transaction is under processing...."
+  "data" => array:9 [
+    "reqId" => "DMH457JB53MG90J9BIDILQQ3OE550611807"
+    "deductedAmount" => 14.72
+    "serviceCharge" => 4.72
+    "transactionAmount" => 10
+    "referenceNo" => "QT-REF-1496365029555"
+    "quintus_transaction_id" => "QT-UTR-1882385536438"
+    "status" => "awaited"
+    "remark" => "GROSC134851318102"
+    "paymentType" => "IMPS"
+  ]
+  "success" => true
+] // app/Http/Helper/Payout/QuintusPayoutPayment.php:53
+  2025-03-02 19:08:36 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:08:37 App\Jobs\FundsTransferRequestJob ............... 1s FAIL
+  2025-03-02 19:08:40 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:08:41 App\Jobs\FundsTransferRequestJob ............... 1s FAIL
+  2025-03-02 19:08:44 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:08:45 App\Jobs\FundsTransferRequestJob ............... 1s FAIL
+  2025-03-02 19:14:36 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:14:37 App\Jobs\FundsTransferRequestJob ............... 1s FAIL
+  2025-03-02 19:14:40 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:14:41 App\Jobs\FundsTransferRequestJob ............... 1s FAIL
+  2025-03-02 19:14:44 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:14:45 App\Jobs\FundsTransferRequestJob ............... 1s FAIL
+  2025-03-02 19:16:55 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:16:56 App\Jobs\FundsTransferRequestJob ............... 1s FAIL
+  2025-03-02 19:16:59 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:18:29 App\Jobs\FundsTransferRequestJob ........... 1m 30s FAIL
+  2025-03-02 19:18:32 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:20:02 App\Jobs\FundsTransferRequestJob ........... 1m 30s FAIL
+  2025-03-02 19:27:10 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:27:11 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 19:31:53 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:31:54 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 19:36:36 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:36:37 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 19:39:35 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 19:39:36 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:28:24 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:28:25 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:28:28 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:28:29 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:28:32 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:28:33 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:28:33 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:28:34 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:32:17 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:32:18 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:32:18 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:33:18 App\Jobs\FundsTransferRequestJob ............... 1m FAIL
+  2025-03-02 20:33:19 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:34:19 App\Jobs\FundsTransferRequestJob ............... 1m FAIL
+  2025-03-02 20:42:27 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:42:28 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:42:28 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:42:29 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-02 20:42:32 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-02 20:42:33 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-03 18:51:44 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-03 18:51:44 App\Jobs\FundsTransferRequestJob .......... 10.49ms FAIL
+  2025-03-04 17:06:34 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-04 17:06:34 App\Jobs\FundsTransferRequestJob .......... 11.93ms FAIL
+  2025-03-05 15:55:34 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 15:55:36 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-05 16:06:39 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 16:06:40 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-05 16:34:20 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 16:34:21 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-05 16:59:16 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 16:59:18 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-05 18:39:33 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 18:39:35 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-05 18:55:59 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 18:56:00 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-05 21:39:46 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 21:39:47 App\Jobs\FundsTransferRequestJob ............... 1s DONE
+  2025-03-05 22:42:23 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-05 22:43:23 App\Jobs\FundsTransferRequestJob ............... 1m FAIL
+  2025-03-06 00:24:10 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-06 00:25:10 App\Jobs\FundsTransferRequestJob ............... 1m FAIL
+  2025-03-06 00:25:23 App\Jobs\FundsTransferRequestJob ............... RUNNING
+  2025-03-06 00:25:24 App\Jobs\FundsTransferRequestJob ............... 1s DONE

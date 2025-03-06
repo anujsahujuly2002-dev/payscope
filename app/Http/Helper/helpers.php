@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 if(!function_exists('apiCall')):
-    function apiCall($headers,$url,$prameter,$log=false,$txn_id=null,$headerType='') {
+    function apiCall($headers,$url,$prameter,$log=false,$txn_id=null) {
         try {
             $response = Http::retry(3, 100)->withHeaders($headers)->post($url,$prameter);
             $res = $response->getBody()->getContents();

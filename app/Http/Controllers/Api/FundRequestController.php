@@ -2,30 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
-use App\Models\Wallet;
-use App\Models\ApiToken;
-use App\Jobs\BulkPayoutJob;
 use App\Models\FundRequest;
-use App\Traits\PayoutTraits;
 use Illuminate\Http\Request;
-use App\Traits\EkoPayoutTrait;
 use App\Http\Controllers\Controller;
 use App\Models\PayoutRequestHistory;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Api\FundRequestRequest;
-use App\Traits\PayNProPayoutTrait;
 use Illuminate\Support\Facades\Log;
+use  App\Traits\PayoutTraits;
 
 class FundRequestController extends Controller
 {
-    use PayoutTraits,EkoPayoutTrait,PayNProPayoutTrait;
+    use PayoutTraits;
+   
     public function payout(FundRequestRequest $request) {
-       $request['user_id'] =  $request->attributes->get('user_id');
-       $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
-    //    $response = $this->payoutApiRequest($request);
-       $response = $this->ekoPayoutApi($request);;
-        // $response = $this->payNProPayout($request);
+        $request['user_id'] =  $request->attributes->get('user_id');
+        $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
+        $response = $this->fundTransfer($request);
         return $response;
     }
 

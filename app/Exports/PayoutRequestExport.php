@@ -41,7 +41,7 @@ class PayoutRequestExport implements FromQuery,WithHeadings,LaravelShouldQueue,W
                 $query->whereDate('created_at', '>=', $this->data['start_date']);
             })
             ->when($this->data['value'], function($query) {
-                $query->where('qr_code_id', $this->data['value']);
+                $query->where('payout_ref', 'like', '%'.$this->data['value'].'%')->orWhere('payout_id','like','%'.$this->data['value'].'%')->orWhere('order_id','like','%'.$this->data['value'].'%');
             })
             ->when($this->data['status'] !== null, function($query) {
                 $query->where('status_id', $this->data['status']);
@@ -59,7 +59,9 @@ class PayoutRequestExport implements FromQuery,WithHeadings,LaravelShouldQueue,W
     public function map($fundRequest): array
     {
         return [
+
             $fundRequest->user->name,
+            $fundRequest->order_id,
             $fundRequest->payout_id,
             $fundRequest->payout_ref,
             // $fundRequest->payoutTransactionHistories?->balance??"0",
@@ -80,6 +82,6 @@ class PayoutRequestExport implements FromQuery,WithHeadings,LaravelShouldQueue,W
      */
     public function headings(): array
     {
-        return ["Name", "Payout Id", "Payment Reference Number",'Order Amount','Charges' ,'GST','Total Amount','Status','Date'];
+        return ["Name","Order Id", "Payout Id", "Payment Reference Number",'Order Amount','Charges' ,'GST','Total Amount','Status','Date'];
     }
 }

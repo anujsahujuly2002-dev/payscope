@@ -33,6 +33,8 @@ class FundRequestRequest extends FormRequest
             'ifsc_code'=>'required|ifsc',
             'amount'=>'required|min:10|numeric',
             'payment_mode'=>'required',
+            'creditor_email'=>'required',
+            'creditor_mobile'=>'required',
         ];
     }
 
