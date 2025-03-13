@@ -86,8 +86,15 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/manual-request','manualRequest')->name('manual.request');
             Route::get('/virtul-request','virtualRequest')->name('virtual.request');
             Route::get('/qr-request','qrRequest')->name('qr.request');
-            Route::get('/qr-collection','qrCollection')->name('qr.collection');
+            // Route::get('/qr-collection','qrCollection')->name('qr.collection');
             Route::get('/transaction-history','transactionHistory')->name('transaction.history');
+        });
+
+
+        // Payment Collection Route 
+        Route::controller(PaymentCollectionController::class)->prefix('payment-collection')->name('payment.collection.')->group(function(){
+            Route::get('/index','index')->name('index');
+            Route::get('/phone-pe-callback','phonePeCallback')->name('phone.callback');
         });
 
         // Payout Manager Route

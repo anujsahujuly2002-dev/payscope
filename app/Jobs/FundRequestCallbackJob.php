@@ -50,6 +50,7 @@ class FundRequestCallbackJob implements ShouldQueue
                     "charges" => $this->transaction->payoutTransactionHistories->charge,
                 ],
             ];
+            Log::info(json_encode( $parameters));
             try{
                 Http::retry(3, 100)->post($webhookUrl->domain ,$parameters);
                 AutoTransactionUpdateWebhookModel::create([

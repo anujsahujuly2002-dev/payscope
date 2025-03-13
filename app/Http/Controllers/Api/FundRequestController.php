@@ -9,15 +9,16 @@ use App\Models\PayoutRequestHistory;
 use App\Http\Requests\Api\FundRequestRequest;
 use Illuminate\Support\Facades\Log;
 use  App\Traits\PayoutTraits;
+use  App\Traits\EkoPayoutTrait;
 
 class FundRequestController extends Controller
 {
-    use PayoutTraits;
+    use PayoutTraits,EkoPayoutTrait;
    
     public function payout(FundRequestRequest $request) {
         $request['user_id'] =  $request->attributes->get('user_id');
         $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
-        $response = $this->fundTransfer($request);
+        $response = $this->ekoPayoutApi($request);
         return $response;
     }
 

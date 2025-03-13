@@ -145,7 +145,7 @@
                             @endif
                             @if (checkRecordHasPermission(['qr-collection-add-payment', 'qr-collection-list']))
                                 @canany(['qr-collection-add-payment', 'qr-collection-list'])
-                                    <li><a href="{{ route('admin.fund.qr.collection') }}" style="color: #0A1D56;">QR Collection </a></li>
+                                    <li><a href="{{ route('admin.payment.collection.index') }}" style="color: #0A1D56;">Payment Collection </a></li>
                                 @endcanany
                             @endif
                             @if (checkRecordHasPermission(['disputes-list']))

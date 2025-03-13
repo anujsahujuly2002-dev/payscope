@@ -45,8 +45,8 @@ endif;
 if(!function_exists('apiCallWitBody')):
     function apiCallWitBody($headers,$url,$prameter,$log=false,$txn_id=null) {
         try {
-                $response = Http::withHeaders($headers)->withBody($prameter, 'application/x-www-form-urlencoded')->post($url);
-                $res = $response->json();
+            $response = Http::withHeaders($headers)->withBody($prameter, 'application/x-www-form-urlencoded')->post($url);
+            $res = $response->json();
             if($log):
                 ApiLog::create([
                     'url'=>$url,
