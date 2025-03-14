@@ -14,6 +14,8 @@ class QRPaymentCollection extends Model
         'order_id',
         'entity',
         'name',
+        'email',
+        'mobile_no',
         'usage',
         'type',
         'image_url',
@@ -35,6 +37,7 @@ class QRPaymentCollection extends Model
         'charge',
         'gst',
         'payment_type',
+        'payment_channel'
     ];
 
     public function status() {

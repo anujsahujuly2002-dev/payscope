@@ -220,6 +220,21 @@ class CheckPaymentStatusCommand extends Command
                                 ]);
                                 $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
                                 FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
+                            elseif($res['data']['status']==='failed & refund'):
+                                $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
+                                $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
+                                Fundrequest::where('id',$fundRequest->id)->update([
+                                    'status_id'=>'4',
+                                    'payout_ref'=>$res['data']['quintus_transaction_id'],
+                                    'utr_number'=>$res['data']['referenceNo']
+                                ]);
+                                PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
+                                    'status_id'=>'4',
+                                    'closing_balnce'=>$fundRequestHistory->balance
+                                ]);
+                                addTransactionHistory($pendingPaymentRequest->payout_id ,$fundRequest->user_id,($fundRequestHistory->amount+$fundRequestHistory->charge+$fundRequestHistory->gst),'credit');
+                                $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
+                                FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                             endif;
                         endif;
                     endif;
