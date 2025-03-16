@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\PaymentController;
 
+use App\Http\Controllers\Admin\WebHookController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,9 @@ use App\Http\Controllers\Admin\PaymentController;
 
 
 
-Route::get('/genrate-qr-code',[PaymentController::class,'index']);
+Route::get('/genrate-qr-code',function(){
+    dd(json_decode('{"type":"CHECKOUT_ORDER_COMPLETED","event":"checkout.order.completed","payload":{"merchantId":"GROSCOPEUAT","merchantOrderId":"GROSC485325164849","orderId":"OMO2503152356561237947611","state":"COMPLETED","amount":"10000","expireAt":"1742236049290","metaInfo":null,"paymentDetails":[{"paymentMode":"CARD","transactionId":"OM2503152356561247947086","timestamp":"1742063249290","amount":"10000","state":"COMPLETED","splitInstruments":[{"amount":"10000","rail":{"type":"PG","transactionId":"<transactionId>","authorizationCode":"<authorizationCode>","serviceTransactionId":"<serviceTransactionId>"},"instrument":{"type":"CREDIT_CARD","bankTransactionId":"<bankTransactionId>","bankId":"<bankId>","arn":"<arn>","brn":"<brn>"}}]}]}}',true));
+});
 Route::get('migrate',function(){
     Artisan::call('migrate');
     echo "Migration successfully!";
@@ -30,11 +34,12 @@ Route::get('/',function (){
 });
 
 Route::prefix('admin')->name('admin.')->group(function(){
-    Route::match(['get', 'post'], 'web-hook-recived-payment-in-razorapy', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webhookRecivedPaymentInRazorapy'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+   /*  Route::match(['get', 'post'], 'web-hook-recived-payment-in-razorapy', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webhookRecivedPaymentInRazorapy'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::match(['get', 'post'], 'web-hook-order-paid-razorpay-nikhil', [App\Http\Controllers\Api\QRPaymentCollectionController::class,'webHookOrderPaidCallBack'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::match(['get', 'post'],'webhookpaynpro',[App\Http\Controllers\Api\FundRequestController::class,'webHookPaynPro'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::match(['get', 'post'],'get-dispute-payment',[DashBoardController::class,'getDisputePayment'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-    Route::match(['get', 'post'],'eko-payout-webhook',[DashBoardController::class,'ekoPayoutWebHook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    Route::match(['get', 'post'],'eko-payout-webhook',[DashBoardController::class,'ekoPayoutWebHook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]); */
+    Route::match(['get', 'post'],'phone-pe-callback',[WebHookController::class,'phonePeCallBack'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::namespace('Auth')->middleware(['guest'])->controller(AuthController::class)->group(function() {
         Route::get('/','login')->name('login');
         Route::get('/otp-verification',function() {

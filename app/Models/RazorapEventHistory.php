@@ -10,6 +10,7 @@ class RazorapEventHistory extends Model
     use HasFactory;
     protected $fillable = [
         'event',
+        'payment_channel',
         'response',
     ];
 }

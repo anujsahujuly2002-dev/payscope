@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('q_r_payment_collections', function (Blueprint $table) {
-            $table->string('email')->after('name');
-            $table->string('mobile_no')->after('email');
-            $table->enum('payment_channel',['axis-razorpay','phone-pe'])->default('axis-razorpay')->after('payment_type');
-
+        Schema::table('razorap_event_histories', function (Blueprint $table) {
+            $table->enum('payment_channel',['axis-razorpay','phone-pe'])->default('axis-razorpay')->after('event');
         });
     }
 
@@ -24,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('q_r_payment_collections', function (Blueprint $table) {
+        Schema::table('razorap_event_histories', function (Blueprint $table) {
             //
         });
     }

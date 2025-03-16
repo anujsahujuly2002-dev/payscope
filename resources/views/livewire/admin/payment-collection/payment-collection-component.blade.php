@@ -152,8 +152,8 @@
                                     <th scope="col">Amount</th>
                                     <th scope="col">Received Amount</th>
                                     <th scope="col">Payment Details</th>
-                                    <th scope="col">QR Current Status</th>
-                                    <th scope="col">QR Close Reason</th>
+                                    {{--<th scope="col">QR Current Status</th>
+                                    <th scope="col">QR Close Reason</th>--}}
                                     <th scope="col">Created At</th>
                                     <th scope="col">Status</th>
                                     
@@ -190,12 +190,12 @@
                                             Payment Id:-{{$item->payment_id}} <br> UPI Id:-{{$item->payer_name}} <br>
                                             UTR Number :-{{$item->utr_number}}
                                         </td>
-                                        <td>
+                                       {{-- <td>
                                             {{ ucfirst($item->qr_status) }}
                                         </td>
                                         <td>
                                             {{ ucfirst($item->close_reason )}}
-                                        </td>
+                                        </td>--}}
                                         <td>
                                             {{$item->created_at}}
                                         </td>
