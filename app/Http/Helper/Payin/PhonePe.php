@@ -8,7 +8,7 @@ use App\Models\RazorPayLog;
 
 class PhonePe {
 
-    private $apiBaseUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox",$clientId="GROSCOPEUAT_2412031530167115053547",$clientVersion="1",$clientSecret="MjYxODE3OWQtMmE1Zi00MWZlLWI5Y2ItOWRjZGFlZGUxZmIw",$grantType="client_credentials",$client;
+    private $apiBaseUrl = "https://api.phonepe.com/apis",$clientId="SU2503201130339526995472",$clientVersion="1",$clientSecret="bb5879b5-d2a5-4cda-9c33-0406ca168838",$grantType="client_credentials",$client;
 
     public function __construct()
     {
@@ -16,7 +16,14 @@ class PhonePe {
     }
     public function initiatePayment($data) {
         try {
-            $res = json_decode($this->authorization(),true);
+            if(now()->timestamp >= session('expires_at')):
+                $res = json_decode($this->authorization(),true);
+                session([
+                    'access_token' => $res['access_token'],
+                    'expires_at' => $res['expires_at'],
+                ]);
+            endif;
+           
             $requestParameter = [
                 'merchantOrderId' => $data['order_id'],
                 'amount' => $data['amount']*100,
@@ -29,11 +36,11 @@ class PhonePe {
                 ]
             ];
             // dd($requestParameter);
-            $response =  $this->client->post($this->apiBaseUrl.'/checkout/v2/pay', [
+            $response =  $this->client->post($this->apiBaseUrl.'/pg/checkout/v2/pay', [
                 'json' =>  $requestParameter,
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Authorization' => 'O-Bearer '.$res['access_token']
+                    'Authorization' => 'O-Bearer '.session('access_token')
                 ]
             ]);
             $results =$response->getBody()->getContents();
@@ -59,7 +66,7 @@ class PhonePe {
     }   
 
     private function authorization() {
-        $response = $this->client->post($this->apiBaseUrl.'/v1/oauth/token', [
+        $response = $this->client->post($this->apiBaseUrl.'/identity-manager/v1/oauth/token', [
             'form_params' => [
                 'client_id' => $this->clientId,
                 'client_version' => $this->clientVersion,
