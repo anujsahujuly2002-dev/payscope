@@ -112,7 +112,7 @@
                 <div class="col-md-1">
                     <div class="form-group">
 
-                        @can('qr-request-add-fund')
+                        @can('transfer-return-new-request')
 
                         <a type="button"
                             class="btn btn-success d-flex align-items-center justify-content-center rounded-circle"

@@ -198,7 +198,7 @@
                         'virtual-list',
                         'payout-request',
                         'payout-new-request',
-                        'transfer-return'
+                        'fund-manager-transfer-return'
 
                     ]))
                     <li>
@@ -222,8 +222,11 @@
                                     <li><a style="color: #0a1d56;" href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
                                 @endcanany
                             @endif
-
+                            @if (checkRecordHasPermission(['fund-manager-transfer-return', 'transfer-return-new-request']))
+                            @canany(['fund-manager-transfer-return', 'transfer-return-new-request'])
                             <li><a href="{{route('admin.fund.transfer.return')}}" style="color: #0a1d56;">Transfer Return</a></li>
+                            @endcanany
+                            @endif
                             {{-- @if (['payout-request', 'payout-new-request'])
                                 @canany(['payout-request', 'payout-new-request'])
                                     <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
