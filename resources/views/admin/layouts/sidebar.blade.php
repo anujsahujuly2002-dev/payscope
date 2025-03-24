@@ -6,7 +6,7 @@
 <div class="vertical-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
+        <a wire:navigate href="{{ route('admin.dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{ asset('/assets/images/small_logo.png') }}" alt="" height="22">
             </span>
