@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class TransferReturnExport implements FromCollection, WithHeadings
 {
+
     public $data;
 
     public function __construct($data)
