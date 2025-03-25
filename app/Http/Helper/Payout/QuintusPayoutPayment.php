@@ -19,7 +19,7 @@ class QuintusPayoutPayment {
         ];
     }
 
-    
+
 
     public function makePayment($data) {
         $headers = [
@@ -42,7 +42,7 @@ class QuintusPayoutPayment {
             "paymentType"=>"IMPS",
         ];
 
-      
+
         $response = apiCall($headers,$this->url,$payload,true,$payload['instructionIdentification']);
         if($response['success']):
             if(array_key_exists('data',$response)):
@@ -56,13 +56,6 @@ class QuintusPayoutPayment {
         return json_encode($response);
     }
 
-    // public function generateInstructionIdentification() {
-    //     do {
-    //         $instructionIdentification = 'GROSC'.rand(111111111111, 999999999999);
-    //     } while (FundRequest::where("payout_id", $instructionIdentification)->first() instanceof FundRequest);
-
-    //     return  $instructionIdentification;
-    // }
 
 }
 

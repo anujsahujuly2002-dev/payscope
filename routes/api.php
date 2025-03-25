@@ -22,9 +22,9 @@ Route::controller(FundRequestController::class)->group(function() {
     Route::post('/webhookpaynpro','webHookPaynPro');
 });
 
-Route::controller(QRPaymentCollectionController::class)->group(function(){
+Route::controller(PaymentCollectionController::class)->group(function(){
     Route::post('create-qr-code','createQrCode');
     Route::post('fetch-qr-status','fetchQrStatus');
     Route::post('upi-intent','upiIntent');
-    
+
 });

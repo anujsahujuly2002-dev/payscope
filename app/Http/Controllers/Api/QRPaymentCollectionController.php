@@ -52,7 +52,7 @@ class QRPaymentCollectionController extends Controller
         if (!is_dir($imageDirectory)) {
             mkdir($imageDirectory, 0755, true); // 0755 is the permission, true enables recursive creation
         }
-        
+
         // Now set the image path
         $imagePath = $imageDirectory;
         $imageName = 'qr_image_'.time().'.png';
@@ -217,12 +217,12 @@ class QRPaymentCollectionController extends Controller
     }
 
     public function webhookRecivedPaymentInRazorapy(Request $request){
-        try{    
+        try{
             $paymentResponse = $request->all();
             RazorapEventHistory::create([
                 'event'=>$paymentResponse['event'],
                 'response'=>json_encode($request->all()),
-            ]); 
+            ]);
             if($paymentResponse['event']==='qr_code.credited'):
                 QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['qr_code']['entity']['id'])->update([
                     'qr_status'=>$paymentResponse['payload']['qr_code']['entity']['status'],
@@ -244,76 +244,79 @@ class QRPaymentCollectionController extends Controller
     }
 
     public function upiIntent(QRPaymentCollectionRequest $request) {
-        $userId = $request->attributes->get('user_id');
-        $checkServiceActive = UserWiseService::where('user_id',$userId)->first();
-        if(is_null($checkServiceActive) ||$checkServiceActive->payin =='0'):
-            return [
-                'status'=>'0008',
-                'msg'=>"This service has been down, Please try again after sometimes",
+        try {
+            $userId = $request->attributes->get('user_id');
+            $checkServiceActive = UserWiseService::where('user_id',$userId)->first();
+            if(is_null($checkServiceActive) ||$checkServiceActive->payin =='0'):
+                return [
+                    'status'=>'0008',
+                    'msg'=>"This service has been down, Please try again after sometimes",
+                ];
+            endif;
+            $checkRazorPayCustomerId = ApiPartner::where('user_id',$userId)->first();
+            if($checkRazorPayCustomerId->razorpay_customer_id !=NULL):
+                $customerId = $checkRazorPayCustomerId->razorpay_customer_id;
+            else:
+                $customerId  = $this->createCustomerId($checkRazorPayCustomerId->user->name,$checkRazorPayCustomerId->user->email,$checkRazorPayCustomerId->user->mobile_no,$checkRazorPayCustomerId->user_id);
+            endif;
+            $order = $this->createPaymentOrder($request->input('payment_amount'));
+            $requestParameter = [
+                "amount" => $order['amount'],
+                "currency" => "INR",
+                "order_id" => $order['id'],
+                "email" => $checkRazorPayCustomerId->user->email,
+                "contact" => $checkRazorPayCustomerId->user->mobile_no,
+                "method" => "upi",
+                "customer_id" => "cust_P9lEOdEtSHA1FT",
+                "ip" => $request->ip(),
+                "referer" => "http",
+                "user_agent" => "Mozilla/5.0",
+                "description" => "Gorocery And Ecommerce Payment",
+                // "notes" => array("note_key" => "value1"),
+                "upi" => array(
+                    "flow" => "intent"
+                )
             ];
-        endif;
-        $checkRazorPayCustomerId = ApiPartner::where('user_id',$userId)->first();
-        if($checkRazorPayCustomerId->razorpay_customer_id !=NULL):
-            $customerId = $checkRazorPayCustomerId->razorpay_customer_id;
-        else:
-            $customerId  = $this->createCustomerId($checkRazorPayCustomerId->user->name,$checkRazorPayCustomerId->user->email,$checkRazorPayCustomerId->user->mobile_no,$checkRazorPayCustomerId->user_id);
-        endif;
-        $order = $this->createPaymentOrder($request->input('payment_amount'));
-        $requestParameter = [
-            "amount" => $order['amount'],
-            "currency" => "INR",
-            "order_id" => $order['id'],
-            "email" => $checkRazorPayCustomerId->user->email,
-            "contact" => $checkRazorPayCustomerId->user->mobile_no,
-            "method" => "upi",
-            "customer_id" => "cust_P9lEOdEtSHA1FT",
-            "ip" => $request->ip(),
-            "referer" => "http",
-            "user_agent" => "Mozilla/5.0",
-            "description" => "Gorocery And Ecommerce Payment",
-            // "notes" => array("note_key" => "value1"),
-            "upi" => array(
-                "flow" => "intent"
-            )
-        ];
-        $response = Http::withBasicAuth(env('RAZORPAY_KEY'),env('RAZORPAY_SECRET'))->post('https://api.razorpay.com/v1/payments/create/upi',$requestParameter);
-        RazorPayLog::create([
-            'user_id'=>$userId,
-            'type'=>"upi_intent",
-            'request'=>json_encode($requestParameter),
-            'response'=>json_encode($response->json()),
-        ]);
-        QRPaymentCollection::create([
-            'user_id'=>$userId,
-            'qr_code_id'=>$order['id'],
-            'order_id'=>$request->input('order_id'),
-            'entity'=>'Intent',
-            'name'=>$request->input('name'),
-            'usage'=>"Single Use",
-            'type'=>"UPI Intent",
-            'image_url'=>$response->json()['link'],
-            'payment_amount'=> $order['amount']/100,
-            'qr_status'=>'Open',
-            'description'=>"intent code for payment",
-            'fixed_amount'=>'0',
-            'payment_id'=>$response->json()['razorpay_payment_id'],
-            'payments_amount_received'=>0,
-            'payments_count_received'=>0,
-            'qr_close_at'=>Carbon::parse(now())->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-            'qr_created_at'=>Carbon::parse(now())->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
-            'status_id'=>"1",
-            'payment_type'=>'intent',
-        ]);
-        $data['order_id'] = $request->input('order_id');
-        if ($response->successful()) {
-            $response = $response->json();
-            $response['order_id'] =$request->input('order_id');
-            $response['status'] = "Processd";
-            return $response; // or dd($response->json());
-        } else {
+            $response = Http::withBasicAuth(env('RAZORPAY_KEY'),env('RAZORPAY_SECRET'))->post('https://api.razorpay.com/v1/payments/create/upi',$requestParameter);
+            RazorPayLog::create([
+                'user_id'=>$userId,
+                'type'=>"upi_intent",
+                'request'=>json_encode($requestParameter),
+                'response'=>json_encode($response->json()),
+            ]);
+            QRPaymentCollection::create([
+                'user_id'=>$userId,
+                'qr_code_id'=>$order['id'],
+                'order_id'=>$request->input('order_id'),
+                'entity'=>'Intent',
+                'name'=>$request->input('name'),
+                'usage'=>"Single Use",
+                'type'=>"UPI Intent",
+                'image_url'=>$response->json()['link'],
+                'payment_amount'=> $order['amount']/100,
+                'qr_status'=>'Open',
+                'description'=>"intent code for payment",
+                'fixed_amount'=>'0',
+                'payment_id'=>$response->json()['razorpay_payment_id'],
+                'payments_amount_received'=>0,
+                'payments_count_received'=>0,
+                'qr_close_at'=>Carbon::parse(now())->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                'qr_created_at'=>Carbon::parse(now())->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s'),
+                'status_id'=>"1",
+                'payment_type'=>'intent',
+            ]);
+            $data['order_id'] = $request->input('order_id');
+            if ($response) {
+                $response = $response->json();
+                $response['order_id'] =$request->input('order_id');
+                $response['status'] = "Processd";
+                return $response; // or dd($response->json());
+            }
+
+        }catch (Exception $e){
             return response()->json([
-                'error' => $response->status(),
-                'message' => $response->body(),
+                'error' => $e->getCode(),
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -321,25 +324,25 @@ class QRPaymentCollectionController extends Controller
     private function createPaymentOrder($amount=10)
     {
         return $this->api->order->create(array(
-            'amount' => $amount*100, 
+            'amount' => $amount*100,
             'method' => 'upi',
             'currency' => 'INR',
         ));
-        
+
     }
 
 
     public function webHookOrderPaidCallBack(Request $request){
-        try{ 
+        try{
             $paymentResponse = $request->all();
             Log::info(json_encode($request->all()));
             $checkPendingOrder=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->where('status_id','1')->first();
             if(!is_null($checkPendingOrder)):
-               
+
                 RazorapEventHistory::create([
                     'event'=>$paymentResponse['event'],
                     'response'=>json_encode($request->all()),
-                ]); 
+                ]);
                 if($paymentResponse['event']==='order.paid'):
                     QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->update([
                         'qr_status'=>$paymentResponse['payload']['payment']['entity']['status'],
@@ -354,8 +357,8 @@ class QRPaymentCollectionController extends Controller
                     $paymentCollection=QRPaymentCollection::where('qr_code_id',$paymentResponse['payload']['payment']['entity']['order_id'])->with('status')->first()->toArray();
                     PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
                 endif;
-            endif; 
-            
+            endif;
+
         }catch (Exception $e){
             Log::info([json_encode($request->all()),$e]);
         }
