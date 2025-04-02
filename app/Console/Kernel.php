@@ -34,6 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:get-dispute-payment-in-razor-pay-command')->everyThirtyMinutes();
         $schedule->command('app:check-payment-status-command')->everyTwoMinutes();
         $getStaturday = $this->getSaturdaysOfCurrentMonth();
+        
         // Search for the key of a specific date
         $days = [1,2,3,4,5];
         $searchDate = date('Y-m-d');

@@ -187,7 +187,8 @@
                                         </td>
                                         
                                         <td>
-                                            Payment Id:-{{$item->payment_id}} <br> UPI Id:-{{$item->payer_name}} <br>
+                                            Payment Id:-{{$item->payment_id}} <br> 
+                                            {{--UPI Id:-{{$item->payer_name}} <br>--}}
                                             UTR Number :-{{$item->utr_number}}
                                         </td>
                                        {{-- <td>

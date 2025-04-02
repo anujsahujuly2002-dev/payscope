@@ -31,14 +31,13 @@ class PhonePe {
                     'type' => 'PG_CHECKOUT',
                     'message' => 'Payment message used for collect requests',
                     'merchantUrls' => [
-                        'redirectUrl' =>""
+                        'redirectUrl' => $data['redirect_url']
                     ]
                 ],
                 'paymentModeConfig'=>[
                     "enabledPaymentModes"=>[
                         ["type"=>"UPI_INTENT"],
                         ["type"=>"UPI_COLLECT"],
-
                         ["type"=>"UPI_QR"],
 
                     ]

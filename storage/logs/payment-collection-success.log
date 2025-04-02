@@ -1,0 +1,40 @@
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..........  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 36.94ms DONE
+ RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 73.46ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 46.85ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 27.97ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 42.88ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 40.14ms DONE
+ .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 20.17ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 16.54ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 18.82ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 11.29ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 19.27ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 11.86ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 18.95ms DONE
+  2025-03-26 01:34:36 App\Jobs\PaymentCollectionCallbackJob ..... 20.55ms DONE
+  2025-03-27 23:02:24 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-03-27 23:02:25 App\Jobs\PaymentCollectionCallbackJob .... 639.18ms DONE
+  2025-04-02 20:28:21 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-04-02 20:28:21 App\Jobs\PaymentCollectionCallbackJob ...... 9.74ms DONE
+  2025-04-02 23:00:47 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-04-02 23:00:47 App\Jobs\PaymentCollectionCallbackJob ...... 8.32ms DONE
+  2025-04-02 23:04:33 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-04-02 23:04:33 App\Jobs\PaymentCollectionCallbackJob ...... 9.56ms DONE
+  2025-04-02 23:10:04 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-04-02 23:10:04 App\Jobs\PaymentCollectionCallbackJob ..... 10.15ms DONE
+  2025-04-02 23:40:54 App\Jobs\PaymentCollectionCallbackJob .......... RUNNING
+  2025-04-02 23:40:54 App\Jobs\PaymentCollectionCallbackJob ...... 9.11ms DONE

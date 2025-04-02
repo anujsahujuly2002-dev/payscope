@@ -66,7 +66,7 @@ class FetchRazorpayQrStatusCommand extends Command
                         'payer_name'=>$response['upi']['vpa'],
                     ]);
                     $paymentCollection = QRPaymentCollection::where('id',$getActivePayment->id)->with('status')->first()->toArray();
-                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
+                    PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');PaymentCollectionCallbackJob::dispatch($paymentCollection)->onQueue('payment-collection-success');
                 endif;
             elseif($getActivePayment->payment_type=='qr'):
                 $getAllActiveQrs = QRPaymentCollection::where('qr_status','active')->get();

@@ -27,7 +27,9 @@ class PaymentCollectionRequest extends FormRequest
             'name'=>'required|string|min:3',
             'email'=>'required|email',
             'mobile_no'=>'required|digits:10',
-            'payment_amount' =>"required|numeric|min:10|max:100000"
+            'payment_amount' =>"required|numeric|min:10|max:100000",
+            'redirect_url'=>'required',
+            'order_id'=>'unique:q_r_payment_collections,order_id'
         ];
     }
 
