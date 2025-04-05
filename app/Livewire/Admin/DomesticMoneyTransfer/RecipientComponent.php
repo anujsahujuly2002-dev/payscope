@@ -34,9 +34,9 @@ class RecipientComponent extends Component
             sleep(1);
             session()->flash('error',$response['message']);
             return back();
-           
+
         }
-        
+
     }
 
     public function otpValidate() {

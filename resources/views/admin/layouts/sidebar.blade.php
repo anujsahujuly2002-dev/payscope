@@ -143,17 +143,23 @@
                                     <li><a style="color: #0a1d56;" href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
                                 @endcanany
                             @endif
-                            @if (checkRecordHasPermission(['qr-collection-add-payment', 'qr-collection-list']))
-                                @canany(['qr-collection-add-payment', 'qr-collection-list'])
-                                    <li><a href="{{ route('admin.payment.collection.index') }}" style="color: #0A1D56;">Payment Collection </a></li>
-                                @endcanany
-                            @endif
-                            @if (checkRecordHasPermission(['disputes-list']))
-                            @canany(['disputes-list'])
-                                <li><a href="{{ route('admin.payout.disputes') }}" style="color: #0A1D56;">Disputes </a></li>
+                            @if (checkRecordHasPermission(['fund-manager-transfer-return', 'transfer-return-new-request']))
+                            @canany(['fund-manager-transfer-return', 'transfer-return-new-request'])
+                            <li><a href="{{route('admin.fund.transfer.return')}}" style="color: #0a1d56;">Transfer Return</a></li>
                             @endcanany
-                        @endif
-
+                            @endif
+                            {{-- @if (['payout-request', 'payout-new-request'])
+                                @canany(['payout-request', 'payout-new-request'])
+                                    <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
+                                @endcanany
+                             @endif --}}
+                            {{--  <li><a href="javascript:void()">Aeps </a></li>
+                            <li><a href="javascript:void()">Aadhar Pay  </a></li>
+                            <li><a href="javascript:void()">Bill Payment  </a></li>
+                            <li><a href="javascript:void()">Money Transfer </a></li>
+                            <li><a href="javascript:void()">Mini Statement </a></li>
+                            <li><a href="javascript:void()">Recharge </a></li>
+                            <li><a href="javascript:void()">Pancard </a></li> --}}
                         </ul>
                     </li>
                 @endif
@@ -185,7 +191,7 @@
                         <i class="uil-book-open"></i>
                         <span style="color: #0a1d56;">Settelment</span>
                     </a>
-                    
+
                 </li>
                 @if (checkRecordHasPermission(['api-create','api-list','api-change-status','api-edit','manage-setting','setting-update','callback-token-create','callback-token-delete','login-session','charge-slab-list', 'charge-slab-create', 'charges-slab-edit','charge-slabs-status-change', 'operator-delete','service-create', 'manage-service', 'service-edit','service-change-status']))
                     @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'callback-token', 'callback-token-create','callback-token-delete','login-session','charge-slab-list', 'charge-slab-create', 'charges-slab-edit','charge-slabs-status-change', 'operator-delete','service-create', 'manage-service', 'service-edit','service-change-status' ])
@@ -205,7 +211,7 @@
                                         <li><a href="{{route('admin.setup.operator.manager')}}">Charge Slabs</a></li>
                                     @endcanany
                                 @endif
-    
+
                                 @if (checkRecordHasPermission(['api-logs']))
                                     @can('api-logs')
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.api.logs') }}">Api Logs</a></li>
@@ -273,7 +279,7 @@
                         </li>
                     @endcanany
                 @endif
-                
+
                 <li>
                     <a style="color: #0a1d56;" href="{{ route('admin.logout') }}">
                         <i class="fas fa-sign-out-alt"></i>

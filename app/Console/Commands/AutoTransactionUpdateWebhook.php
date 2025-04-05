@@ -59,16 +59,16 @@ class AutoTransactionUpdateWebhook extends Command
                         AutoTransactionUpdateWebhookModel::create([
                             'user_id'=>$transaction->user_id,
                             'transaction_id'=>$transaction->id,
-                            'webhook_url'=>$webhookUrl->domain 
+                            'webhook_url'=>$webhookUrl->domain
                         ]);
                     }catch(Exception $e) {
                         Log::error($e->getMessage());
                     }
-           
+
                 } else {
                     Log::info("Webhook Url Not a registerd");
                 }
-                    
+
             endif;
 
 

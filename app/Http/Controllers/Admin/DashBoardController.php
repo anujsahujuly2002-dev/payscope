@@ -21,7 +21,7 @@ class DashBoardController extends Controller
             'is_logged_in' => '1',
             'logout_time'=>Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        Auth::logout();    
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return to_route('admin.login')->with('success','Your account has been logout');

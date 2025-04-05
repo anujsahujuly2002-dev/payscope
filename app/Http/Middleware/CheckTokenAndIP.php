@@ -16,7 +16,7 @@ class CheckTokenAndIP
      */
     public function handle(Request $request, Closure $next): Response
     {
-    
+
         $checkToken  = ApiToken::where(['ip_address'=>$request->header('X-Client-IP'),'token'=>$request->header('X-Auth-Token')])->first();
         if(!$checkToken):
             return response()->json([

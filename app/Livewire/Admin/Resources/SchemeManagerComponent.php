@@ -29,7 +29,7 @@ class SchemeManagerComponent extends Component
 
     public function render()
     {
-        if(!auth()->user()->can('scheme-manager-list')) 
+        if(!auth()->user()->can('scheme-manager-list'))
         throw UnauthorizedException::forPermissions(['scheme-manager-list']);
         $schemes = Scheme::when(auth()->user()->getRoleNames()->first()=='api-partner',function($q){
             $q->where('user_id',auth()->user()->id);
@@ -39,7 +39,7 @@ class SchemeManagerComponent extends Component
 
 
     public function create() {
-        if(!auth()->user()->can('scheme-manager-create')) 
+        if(!auth()->user()->can('scheme-manager-create'))
         throw UnauthorizedException::forPermissions(['scheme-manager-create']);
         $this->editSchemeForm =false;
         $this->setCommissionForm = false;
@@ -71,7 +71,7 @@ class SchemeManagerComponent extends Component
     }
 
     public function statusUpdate($id,$status){
-        if(!auth()->user()->can('scheme-manager-status-change')) 
+        if(!auth()->user()->can('scheme-manager-status-change'))
         throw UnauthorizedException::forPermissions(['scheme-manager-status-change']);
         $scheme = Scheme::where('id',$id)->update([
             'status'=>$status =="1"?"0":"1",
@@ -100,7 +100,7 @@ class SchemeManagerComponent extends Component
         endif;
     }
 
-    public function edit($scheme){        
+    public function edit($scheme){
         $this->editSchemeForm=True;
         $this->schemeId = $scheme['id'];
         $this->schemeName = $scheme['name'];
@@ -142,7 +142,7 @@ class SchemeManagerComponent extends Component
         endif;
         $this->operaterType =$operaterName;
         $this->operaterList = OperatorManager::where('operator_type',$operaterName)->get();
-        $this->items = array_map(fn($operaterList)=>$operaterList->id,iterator_to_array($this->operaterList)); 
+        $this->items = array_map(fn($operaterList)=>$operaterList->id,iterator_to_array($this->operaterList));
         $this->schemeId = $scheme;
         $commisions = Commission::where(['operator'=>$operaterName,'scheme_id'=>$this->schemeId])->orderBy('slab_id','ASC')->get();
         foreach($commisions as $commision):

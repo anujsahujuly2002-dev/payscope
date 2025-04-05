@@ -86,9 +86,9 @@ class FetchRazorpayQrStatusCommand extends Command
                 endforeach;
             endif;
         }
-        
-        
-        
+
+
+
     }
 
     private function fetchQrStatus($qrCodeId) {
@@ -101,9 +101,9 @@ class FetchRazorpayQrStatusCommand extends Command
        } catch (Exception $th) {
             dd($th);
        }
-     
+
     }
 
 
-    
+
 }

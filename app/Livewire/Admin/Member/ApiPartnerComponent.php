@@ -119,7 +119,7 @@ class ApiPartnerComponent extends Component
             'gst'=>'required|string|min:3',
             'cin_number'=>'required|string|min:3',
             'company_pan'=>'required|string|min:3',
-            'pancard_number'=>'required|string',  
+            'pancard_number'=>'required|string',
             // 'website'=>'required|url:https'
         ])->validate();
         $user = User::create([

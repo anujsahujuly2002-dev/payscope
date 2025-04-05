@@ -58,7 +58,6 @@ class CheckPaymentStatusCommand extends Command
                             'status_id'=>'3',
                             'closing_balnce'=>$fundRequestHistory->balance
                         ]);
-                        
                     elseif($res['data'][0]['status']=='Success'):
                         $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id ])->first();
                         Fundrequest::where('id',$fundRequest->id)->update([
@@ -81,16 +80,16 @@ class CheckPaymentStatusCommand extends Command
                         'status_id'=>'3',
                         'closing_balnce'=>$fundRequestHistory->balance
                     ]);
-                    
+
                 endif;
             /*elseif($pendingPaymentRequest->payoutTransactionHistories?->payout_api =='eko'):
-               
+
                 if($pendingPaymentRequest->payout_ref !=NULL):
                     $apiUrl  = 'https://api.eko.in:25002/ekoicici/v1/transactions/'.$pendingPaymentRequest->payout_ref.'?initiator_id=9519035604';
                 else:
                     $apiUrl  = 'https://api.eko.in:25002/ekoicici/v1/transactions/client_ref_id:'.$pendingPaymentRequest->payout_id.'?initiator_id=9519035604';
                 endif;
-                
+
                 $key = "7865654c-2149-40d3-a184-aff404864a68";
                 $encodedKey = base64_encode($key);
                 $secret_key_timestamp =round(microtime(true) * 1000);
@@ -145,7 +144,7 @@ class CheckPaymentStatusCommand extends Command
                         $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
                         FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                     endif;
-                   
+
                 elseif($res['data']['tx_status']=='1'):
                     $fundRequest=Fundrequest::where(['payout_id'=>$pendingPaymentRequest->payout_id])->first();
                     $fundRequestHistory = PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->first();
@@ -174,7 +173,7 @@ class CheckPaymentStatusCommand extends Command
                         $paymentWebHook = Fundrequest::where('id',$fundRequest->id)->first();
                         FundRequestCallbackJob::dispatch($paymentWebHook)->onQueue('fund-request-status');
                     endif;
-                endif; */  
+                endif; */
             elseif($pendingPaymentRequest->payoutTransactionHistories?->payout_api ==='quintustech'):
                 $header=array(
                     "partnerId"=>"119946",
@@ -239,8 +238,8 @@ class CheckPaymentStatusCommand extends Command
                         endif;
                     endif;
                 endif;
-            endif; 
-               
+            endif;
+
         endforeach;
     }
 

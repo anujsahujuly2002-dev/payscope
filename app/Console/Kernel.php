@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:get-dispute-payment-in-razor-pay-command')->everyThirtyMinutes();
         $schedule->command('app:check-payment-status-command')->everyTwoMinutes();
         $getStaturday = $this->getSaturdaysOfCurrentMonth();
-        
+
         // Search for the key of a specific date
         $days = [1,2,3,4,5];
         $searchDate = date('Y-m-d');
@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel
             if(in_array($noOfWeek,[1,3,5])):
                 $days[] = 6;
             endif;
-        }  
+        }
         // $schedule->command('app:fetch-razorpay-qr-status-command')->everyMinute();
         $schedule->command('app:get-successfully-payment-collection-command')->daily()->at('05:00');
         $schedule->command('app:payment-settlement-command')->daily()->at('08:50')->when(function () use ($days) {
@@ -72,14 +72,14 @@ class Kernel extends ConsoleKernel
 
         // Get the first day of the current month
         $startDate = new DateTime('first day of this month');
-    
+
         // Get the last day of the current month
         $endDate = new DateTime('last day of this month');
-    
+
         // Create a DatePeriod for every Saturday
         $interval = new DateInterval('P1D'); // 1-day interval
         $period = new DatePeriod($startDate, $interval, $endDate);
-    
+
         // Loop through the period and check if the day is Saturday
         foreach ($period as $date) {
             if ($date->format('N') == 6) { // 'N' returns the ISO-8601 numeric representation of the day (6 = Saturday)

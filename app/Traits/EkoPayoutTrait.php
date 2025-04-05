@@ -10,7 +10,7 @@ use App\Models\UserWiseService;
 use Carbon\Carbon;
 
 trait EkoPayoutTrait {
-    
+
     protected function ekoPayoutApi($data=array()) {
         $checkServiceActive = UserWiseService::where('user_id',$data['user_id'])->first();
         if(is_null($checkServiceActive) ||$checkServiceActive->payout =='0'):

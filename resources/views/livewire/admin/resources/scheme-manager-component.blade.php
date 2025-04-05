@@ -90,7 +90,7 @@
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <div class="menu-header">Commission</div>
                                                         <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'payin')">Payin</a>
-                    
+
                                                         <a class="dropdown-item" href="javascript:void()" wire:click.prevent="getCommission({{$scheme->id}},'payout')">Payout</a>
                                                         <a class="dropdown-item" href="javascript:void()">Virtual Account</a>
                                                     </div>
@@ -253,7 +253,7 @@
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
-                </form>                
+                </form>
             </div><!-- /.modal-dialog -->
         </div>
     @endif
