@@ -1,0 +1,30 @@
+[2025-04-04 10:02:40] production.ERROR: foreach() argument must be of type array|object, null given {"exception":"[object] (ErrorException(code: 0): foreach() argument must be of type array|object, null given at /var/www/groscope/app/Console/Commands/GetDisputePaymentInRazorPayCommand.php:41)
+[stacktrace]
+#0 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#1 /var/www/groscope/app/Console/Commands/GetDisputePaymentInRazorPayCommand.php(41): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}()
+#2 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\GetDisputePaymentInRazorPayCommand->handle()
+#3 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Container/Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#4 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#5 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#6 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Container/Container.php(662): Illuminate\\Container\\BoundMethod::call()
+#7 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Console/Command.php(211): Illuminate\\Container\\Container->call()
+#8 /var/www/groscope/vendor/symfony/console/Command/Command.php(326): Illuminate\\Console\\Command->execute()
+#9 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Console/Command.php(180): Symfony\\Component\\Console\\Command\\Command->run()
+#10 /var/www/groscope/vendor/symfony/console/Application.php(1096): Illuminate\\Console\\Command->run()
+#11 /var/www/groscope/vendor/symfony/console/Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand()
+#12 /var/www/groscope/vendor/symfony/console/Application.php(175): Symfony\\Component\\Console\\Application->doRun()
+#13 /var/www/groscope/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
+#14 /var/www/groscope/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
+#15 {main}
+"} 
+[2025-04-04 15:40:43] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 15:42:27] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 15:43:21] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 15:54:14] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 15:57:27] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 16:03:09] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 16:06:18] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 16:22:08] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 23:30:54] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 23:50:16] production.INFO: Webhook Url Not a registerd  
+[2025-04-04 23:50:22] production.INFO: Webhook Url Not a registerd  

@@ -37,7 +37,8 @@ class QRPaymentCollection extends Model
         'charge',
         'gst',
         'payment_type',
-        'payment_channel'
+        'payment_channel',
+        'merchant_order_id'
     ];
 
     public function status() {

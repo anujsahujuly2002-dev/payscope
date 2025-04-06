@@ -13,7 +13,7 @@ use App\Console\Commands\FetchRazorpayQrStatusCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\GetDisputePaymentInRazorPayCommand;
 use App\Console\Commands\PaymentSettlementCommand;
-
+use App\Console\Commands\CheckStatusPhonePeCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,14 +25,16 @@ class Kernel extends ConsoleKernel
         CheckPaymentStatusCommand::class,
         FetchRazorpayQrStatusCommand::class,
         GetDisputePaymentInRazorPayCommand::class,
-        PaymentSettlementCommand::class
+        PaymentSettlementCommand::class,
+        CheckStatusPhonePeCommand::class,
 
     ];
 
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:get-dispute-payment-in-razor-pay-command')->everyThirtyMinutes();
-        $schedule->command('app:check-payment-status-command')->everyTwoMinutes();
+        $schedule->command('app:get-dispute-payment-in-razor-pay-command')->everyThirtyMinutes();
+        $schedule->command('app:check-status-phone-pe-command')->everyTwoMinutes();
         $getStaturday = $this->getSaturdaysOfCurrentMonth();
         
         // Search for the key of a specific date

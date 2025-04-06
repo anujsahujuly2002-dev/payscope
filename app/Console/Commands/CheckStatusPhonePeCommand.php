@@ -7,6 +7,8 @@ use Exception;
 use GuzzleHttp\Client;
 use App\Models\QRPaymentCollection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\PaymentCollectionCallbackJob;
 
 class CheckStatusPhonePeCommand extends Command
 {
@@ -40,36 +42,64 @@ class CheckStatusPhonePeCommand extends Command
                     'expires_at' => $res['expires_at'],
                 ]);
             endif;
-            $getPendingPayments = QRPaymentCollection::where(['payment_channel'=>'phone-pe'])->get();
+            $getPendingPayments = QRPaymentCollection::where(['payment_channel'=>'phone-pe','status_id'=>'1'])->get();
             foreach($getPendingPayments  as $pendingStatus):
+                // $logs = DB::table('razor_pay_logs')
+                // ->whereRaw("JSON_EXTRACT(response, '$.orderId') = ?", [$pendingStatus->qr_code_id])
+                // ->first();
+                // $ordeer = json_decode($logs->request,true);
                 $response = Http::withHeaders([
                     'Content-Type'  => 'application/json',
                     'Authorization' => 'O-Bearer ' . session('access_token'),
-                ])->get("https://api.phonepe.com/apis/pg/checkout/v2/order/{$pendingStatus->qr_code_id}/status?details=true&errorContext=true");
-
-
-                // Decode JSON response
-                $results = json_decode($response->getBody(), true);
-                // dd($results['success'], $results['code']);
-                if($results['success'] ===false && $results['code'] ==='ORDER_NOT_FOUND'):
-                    print_r($results);
-                    // QRPaymentCollection::where->update([
-                    //     'qr_status'=>'closed',
-                    //     'status_id'=>"3",
-                    //     'close_reason'=> ucwords(str_replace('_', ' ', $results['message'])),
-                    // ]);
+                ])->get("https://api.phonepe.com/apis/pg/checkout/v2/order/{$pendingStatus->order_id}/status?details=true&errorContext=true");
+                $results = json_decode($response->getBody()->getContents(), true);
+                if(array_key_exists('success',$results)&&$results['success'] ===false && $results['code'] ==='ORDER_NOT_FOUND'):
+                    $pendingStatus->update([
+                        'qr_status'=>'closed',
+                        'status_id'=>"3",
+                        'close_reason'=> ucwords(str_replace('_', ' ', $results['message'])),
+                    ]);
+                elseif(array_key_exists('state',$results) && $results['state'] ==='COMPLETED'):
+                    if(array_key_exists('state',$results['paymentDetails'][0]) && $results['paymentDetails'][0]['state'] ==='FAILED'):
+                        $pendingStatus->update([
+                            'payments_amount_received' => $results['payableAmount'] / 100,
+                            'status_id' =>  "3",
+                            'utr_number' => $results['paymentDetails'][1]['rail']['utr'],
+                            'payment_id' => $results['paymentDetails'][1]['rail']['upiTransactionId'],
+                            'close_reason'=> ucwords(str_replace('_', ' ', $results['paymentDetails'][0]['detailedErrorCode']))
+                        ]);
+                    else:
+                        $pendingStatus->update([
+                            'payments_amount_received' => $results['payableAmount'] / 100,
+                            'status_id' => ($results['state'] === 'COMPLETED') ? '2' : "3",
+                            'utr_number' => $results['paymentDetails'][0]['rail']['utr'],
+                            'payment_id' => $results['paymentDetails'][0]['rail']['upiTransactionId'],
+                            
+                        ]);
+                    endif;
+                    $paymentCollection = QRPaymentCollection::where('qr_code_id', $results['orderId'])->with('status')->first();
+                    if ($paymentCollection) :
+                        PaymentCollectionCallbackJob::dispatch($paymentCollection->toArray())->onQueue('payment-collection-success');
+                    endif;
+                elseif(array_key_exists('state',$results) && $results['state'] ==='FAILED'):
+                    $pendingStatus->update([
+                        'qr_status'=>'closed',
+                        'status_id'=>"3",
+                        'close_reason'=> ucwords(str_replace('_', ' ', $results['errorContext']['description'])),
+                    ]);
+                    $paymentCollection = QRPaymentCollection::where('qr_code_id', $results['orderId'])->with('status')->first();
+                    if ($paymentCollection) :
+                        PaymentCollectionCallbackJob::dispatch($paymentCollection->toArray())->onQueue('payment-collection-success');
+                    endif;
                 else:
-                    dd($results);
+                    print_r($results);
                 endif;
                 
             endforeach;
            
         }catch (Exception $e){
-            return [
-                'status'=>false,
-                "message"=>$e->getMessage(),
-            ];
-
+            print_r($results);
+            echo $e->getMessage().PHP_EOL;
         }
 
       

@@ -1,0 +1,35 @@
+[2025-04-06 22:20:40] production.ERROR: HTTP request returned status code 500:
+{
+    "title": "mysqli_sql_exception",
+    "type": "mysqli_sql_exception",
+    "code": 500,
+    "message": "You have an  (truncated...)
+  
+[2025-04-06 22:46:24] production.ERROR: HTTP request returned status code 500:
+{
+    "title": "mysqli_sql_exception",
+    "type": "mysqli_sql_exception",
+    "code": 500,
+    "message": "You have an  (truncated...)
+  
+[2025-04-06 22:59:28] production.ERROR: HTTP request returned status code 500:
+{
+    "title": "mysqli_sql_exception",
+    "type": "mysqli_sql_exception",
+    "code": 500,
+    "message": "You have an  (truncated...)
+  
+[2025-04-06 23:00:37] production.ERROR: HTTP request returned status code 500:
+{
+    "title": "mysqli_sql_exception",
+    "type": "mysqli_sql_exception",
+    "code": 500,
+    "message": "You have an  (truncated...)
+  
+[2025-04-06 23:02:10] production.ERROR: HTTP request returned status code 500:
+{
+    "title": "mysqli_sql_exception",
+    "type": "mysqli_sql_exception",
+    "code": 500,
+    "message": "You have an  (truncated...)
+  
