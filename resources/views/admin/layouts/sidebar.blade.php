@@ -121,7 +121,7 @@
                         </li>
                     @endcanany
                 @endif
-                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request','virtual-list','payout-request','payout-new-request','qr-collection-add-payment','qr-collection-list']))
+                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request','virtual-list','payout-request','payout-new-request','qr-collection-add-payment','qr-collection-list','fund-manager-transfer-return', 'transfer-return-new-request']))
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="uil-history"></i>
@@ -144,22 +144,15 @@
                                 @endcanany
                             @endif
                             @if (checkRecordHasPermission(['fund-manager-transfer-return', 'transfer-return-new-request']))
-                            @canany(['fund-manager-transfer-return', 'transfer-return-new-request'])
-                            <li><a href="{{route('admin.fund.transfer.return')}}" style="color: #0a1d56;">Transfer Return</a></li>
-                            @endcanany
-                            @endif
-                            {{-- @if (['payout-request', 'payout-new-request'])
-                                @canany(['payout-request', 'payout-new-request'])
-                                    <li><a href="{{route('admin.payout.payout.request')}}">Payout Request </a></li>
+                                @canany(['fund-manager-transfer-return', 'transfer-return-new-request'])
+                                    <li><a href="{{route('admin.fund.transfer.return')}}" style="color: #0a1d56;">Transfer Return</a></li>
                                 @endcanany
-                             @endif --}}
-                            {{--  <li><a href="javascript:void()">Aeps </a></li>
-                            <li><a href="javascript:void()">Aadhar Pay  </a></li>
-                            <li><a href="javascript:void()">Bill Payment  </a></li>
-                            <li><a href="javascript:void()">Money Transfer </a></li>
-                            <li><a href="javascript:void()">Mini Statement </a></li>
-                            <li><a href="javascript:void()">Recharge </a></li>
-                            <li><a href="javascript:void()">Pancard </a></li> --}}
+                            @endif
+                            @if (checkRecordHasPermission(['disputes-list']))
+                                @canany(['disputes-list'])
+                                    <li><a href="{{ route('admin.payout.disputes') }}" style="color: #0A1D56;">Disputes </a></li>
+                                @endcanany
+                            @endif
                         </ul>
                     </li>
                 @endif

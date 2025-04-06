@@ -15,16 +15,11 @@ class WebHookController extends Controller
 {
     public function phonePeCallBack(Request $request) {
         try {
-            // Log incoming request data
-            Log::info(['request_data' => json_encode($request->all())]);
-
             // Validate Authorization Header
             $headers = $request->header();
             if (!isset($headers['authorization'][0])) {
-                Log::info("Missing authorization header.");
                 throw new Exception("Missing authorization header.");
             }
-
             $authorizationHash = $headers['authorization'][0];
             if (!$this->checkHeaderAuthorization($authorizationHash)) {
                 return response()->json([
@@ -32,13 +27,11 @@ class WebHookController extends Controller
                     'message' => "Authorization token does not match."
                 ], 403);
             }
-
             // Validate Event Payload
             $paymentResponse = $request->all();
             if (!isset($paymentResponse['event'], $paymentResponse['payload']['orderId'])) {
                 throw new Exception("Invalid payload structure.");
             }
-
             // Process Payment Events
             if ($paymentResponse['event'] === 'checkout.order.completed') {
                 RazorapEventHistory::create([
@@ -88,7 +81,6 @@ class WebHookController extends Controller
 
         } catch (QueryException $qe) {
             // Database query-related exception
-            Log::error("Database Error: " . $qe->getMessage());
             return response()->json([
                 'status' => false,
                 'message' => "Database error occurred. Please try again."
@@ -96,7 +88,6 @@ class WebHookController extends Controller
 
         } catch (Exception $e) {
             // General exceptions
-            Log::error("Payment Processing Error: " . $e->getMessage());
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()

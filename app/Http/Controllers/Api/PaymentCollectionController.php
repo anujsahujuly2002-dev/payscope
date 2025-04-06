@@ -43,7 +43,8 @@ class PaymentCollectionController extends Controller
                 QRPaymentCollection::create([
                     'user_id'=>$userId,
                     'qr_code_id'=>$response['data']['orderId'],
-                    'order_id'=>$request->input('order_id')??$requestParameter['order_id'],
+                    'order_id'=>$requestParameter['order_id'],
+                    'merchant_order_id'=>$request->input('order_id')??$requestParameter['order_id'],
                     'name'=>$requestParameter['name'],
                     'email'=>$requestParameter['email'],
                     'mobile_no'=>$requestParameter['mobile_no'],
