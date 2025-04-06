@@ -75,7 +75,6 @@
                                             <input type="checkbox" id="switch{{$operatorManger->id}}" switch="bool"  @if($operatorManger->status==1) checked @endif wire:change='statusUpdate({{$operatorManger->id}},{{$operatorManger->status}})' />
                                             <label for="switch{{$operatorManger->id}}" data-on-label="Active" data-off-label="Inactive"></label>
                                         </td>
-
                                         @canany(['charges-slab-edit'])
                                             <td>
                                                 <ul class="list-inline mb-0">

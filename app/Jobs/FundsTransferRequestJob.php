@@ -33,7 +33,7 @@ class FundsTransferRequestJob implements ShouldQueue
      * Execute the job.
      */
     public function handle()
-    {  
+    {
         // $quintusPayoutPayment  = New QuintusPayoutPayment();
         // Log::info($quintusPayoutPayment->makePayment($this->requestParamater));
          try{
@@ -64,8 +64,8 @@ class FundsTransferRequestJob implements ShouldQueue
             $commissionAndGst = getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['payout_charges']+ getCommission("payout",$this->requestParamater['amount'],$this->requestParamater['user_id'])['gst_charge'];
             $closing_balance = $walletAmount->amount-($this->requestParamater['amount']+$commissionAndGst) ;
             addTransactionHistory($this->requestParamater['payoutid'] ,$this->requestParamater['user_id'],($this->requestParamater['amount']+$commissionAndGst),'debit');
-            
-        
+
+
             $fundRequest=FundRequest::create([
                 'user_id'=>$this->requestParamater['user_id'],
                 'order_id'=>$this->requestParamater['order_id'],
@@ -136,7 +136,7 @@ class FundsTransferRequestJob implements ShouldQueue
                             PayoutRequestHistory::where('fund_request_id',$fundRequest->id)->update([
                                 'status_id'=>'1',
                             ]);
-                        endif;                
+                        endif;
                     else:
                         addTransactionHistory($this->requestParamater['payoutid'] ,$this->requestParamater['user_id'],($this->requestParamater['amount']+$commissionAndGst),'credit');
                         FundRequest::where('id',$fundRequest->id)->update([
@@ -171,7 +171,7 @@ class FundsTransferRequestJob implements ShouldQueue
             Log::info(['message'=>$e->getMessage(),'transaction_id'=>$this->requestParamater['payoutid']]);
             return false;
         }
-        
+
     }
 
     private function getPaymentModesName($data) {

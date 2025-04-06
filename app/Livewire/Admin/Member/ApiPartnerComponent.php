@@ -55,6 +55,12 @@ class ApiPartnerComponent extends Component
     public $serviceLists = [];
 
     public $userId;
+    public $walletAmount;
+    public $walletForm = false; // Default hidden
+
+    public $lockedWalletAmount;
+    public $lockedWalletForm = false;
+    protected $listeners = ['openWalletModal' => 'showWalletForm'];
 
     public function render()
     {
@@ -99,6 +105,8 @@ class ApiPartnerComponent extends Component
         $this->createApiPartnerForm = true;
         $this->assignPermissionUserBasedForm = false;
         $this->schemeForm=false;
+        $this->walletForm = false;
+        $this->lockedWalletForm = false;
         $this->dispatch('show-form');
     }
 
@@ -300,6 +308,8 @@ class ApiPartnerComponent extends Component
     }
 
     public function getServices($userId) {
+        $this->createApiPartnerForm = false;
+        $this->ekycForm =false;
         $this->serviceForm = true;
         $this->userWiseService = UserWiseService::where('user_id',$userId)->first();
         $this->serviceLists = Service::where('status','1')->orderBy('name','ASC')->get();
@@ -329,6 +339,104 @@ class ApiPartnerComponent extends Component
         $this->dispatch('hide-form');
         return redirect()->back()->with('success',$msg);
     }
+
+    // Wallet Update method section start=========================================
+    public function wallet($userId)
+    {
+        if (!Auth::user()->can('api-partner-create') || !checkRecordHasPermission('api-partner-create')):
+            throw UnauthorizedException::forPermissions(['api-partner-create']);
+        endif;
+        $this->reset();
+        $this->walletForm = true;
+        $this->createApiPartnerForm = false;
+        $this->assignPermissionUserBasedForm = false;
+        $this->schemeForm = false;
+        $this->lockedWalletForm = false;
+        $this->serviceForm = false;
+        $this->userId = $userId;
+
+        $wallet = Wallet::where('user_id', $userId)->first();
+        $this->walletAmount = $wallet->amount ? $wallet->amount : 0; // If wallet record exists, assign amount else 0
+        $this->dispatch('show-form');
+    }
+
+    public function walletAmountUpdate()
+    {
+        $this->validate([
+            'walletAmount' => 'required|numeric|min:0',
+        ]);
+
+        try {
+            $wallet = DB::table('wallets')
+                ->where('user_id', $this->userId)
+                ->update(['amount' => $this->walletAmount]);
+
+            if($wallet) {
+                session()->flash('success', 'Wallet amount updated successfully!');
+            } else {
+                session()->flash('error', 'No changes detected or wallet not found.');
+            }
+
+            $this->dispatch('hide-form');
+
+        } catch (\Exception $e) {
+
+            \Log::error('Wallet Update Error: ' . $e->getMessage());
+            session()->flash('error', 'An error occurred while updating the wallet amount.');
+        }
+    }
+    // Wallet Update method section End=========================================
+
+
+
+    // Lock wallet update section start=================================
+    public function lockedWallet($userId)
+    {
+        if (!Auth::user()->can('api-partner-create') || !checkRecordHasPermission('api-partner-create')):
+            throw UnauthorizedException::forPermissions(['api-partner-create']);
+        endif;
+        $this->reset();
+        $this->walletForm = false;
+        $this->createApiPartnerForm = false;
+        $this->assignPermissionUserBasedForm = false;
+        $this->schemeForm = false;
+        $this->lockedWalletForm = true;
+        $this->serviceForm = false;
+        $this->userId = $userId;
+
+        $lockedWallet = Wallet::where('user_id', $userId)->first();
+        $this->lockedWalletAmount = $lockedWallet->locked_amuont ? $lockedWallet->locked_amuont : 0;
+
+        $this->dispatch('show-form');
+
+    }
+
+    public function lockedWalletAmountUpdate()
+    {
+        $this->validate([
+            'lockedWalletAmount' => 'required|numeric|min:0',
+        ]);
+
+        try {
+            $lockedWallet = DB::table('wallets')
+                ->where('user_id', $this->userId)
+                ->update(['locked_amuont' => $this->lockedWalletAmount]);
+
+            if ($lockedWallet) {
+                session()->flash('success', 'Locked Wallet amount updated successfully!');
+            } else {
+                session()->flash('error', 'No changes detected or locked wallet not found.');
+            }
+
+            $this->dispatch('hide-form');
+
+        } catch (\Exception $e) {
+
+            \Log::error('Locked Wallet Update Error: ' . $e->getMessage());
+            session()->flash('error', 'An error occurred while updating the locked wallet amount.');
+        }
+    }
+    // Lock wallet update section End=================================
 
 
 }

@@ -46,7 +46,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
                             </table>
                         </div>
@@ -91,4 +90,3 @@
         <!-- end row -->
         @include('admin.delete-confirmation.delete-confirmation')
     </div>
-

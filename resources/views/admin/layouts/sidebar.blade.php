@@ -143,6 +143,11 @@
                                     <li><a style="color: #0a1d56;" href="{{ route('admin.fund.qr.request') }}">QR Request</a></li>
                                 @endcanany
                             @endif
+                            @if (checkRecordHasPermission(['qr-collection-add-payment', 'qr-collection-list']))
+                                @canany(['qr-collection-add-payment', 'qr-collection-list'])
+                                    <li><a href="{{ route('admin.payment.collection.index') }}" style="color: #0A1D56;">Payment Collection </a></li>
+                                @endcanany
+                            @endif
                             @if (checkRecordHasPermission(['fund-manager-transfer-return', 'transfer-return-new-request']))
                                 @canany(['fund-manager-transfer-return', 'transfer-return-new-request'])
                                     <li><a href="{{route('admin.fund.transfer.return')}}" style="color: #0a1d56;">Transfer Return</a></li>
@@ -204,12 +209,18 @@
                                         <li><a href="{{route('admin.setup.operator.manager')}}">Charge Slabs</a></li>
                                     @endcanany
                                 @endif
-
                                 @if (checkRecordHasPermission(['api-logs']))
                                     @can('api-logs')
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.api.logs') }}">Api Logs</a></li>
                                     @endcan
                                 @endif
+
+                                @if (checkRecordHasPermission(['razorpay-api-logs']))
+                                    @can('razorpay-api-logs')
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.razorpay.api.logs') }}">Razorpay Api Logs</a></li>
+                                    @endcan
+                                @endif
+
                                 @if (checkRecordHasPermission(['login-session']))
                                     @can('login-session')
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.login.session') }}">Login Session </a></li>
@@ -272,7 +283,6 @@
                         </li>
                     @endcanany
                 @endif
-
                 <li>
                     <a style="color: #0a1d56;" href="{{ route('admin.logout') }}">
                         <i class="fas fa-sign-out-alt"></i>

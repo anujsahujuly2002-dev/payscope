@@ -59,7 +59,6 @@ class QRRequestComponent extends Component
         ->when($this->value !=null,function($u){
             $u->where('order_id','like','%'.$this->value.'%');
         })
-
         ->when($this->status !== null, function ($query){
             return $query->where('status_id', $this->status);
 

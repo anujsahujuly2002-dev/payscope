@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\WebHookController;
 
 /*
@@ -60,6 +59,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
                 Route::get('/','retailer')->name('list');
             });
             Route::get('view-profile/{id}','viewProfile')->name('view.profile');
+            Route::get('/wallet', 'wallet')->name('wallet');
         });
 
         // Setup Tools Route
@@ -96,6 +96,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(LogManagerController::class)->prefix('log-manager')->name('log.manager.')->group(function() {
             Route::get('/login-session','loginSession')->name('login.session');
             Route::get('/api-logs','apiLogs')->name('api.logs');
+            Route::get('/razorpay-api-logs','razorpayapiLogs')->name('razorpay.api.logs');
         });
 
         // Scheme Manager Route

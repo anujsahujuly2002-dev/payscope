@@ -74,7 +74,6 @@ class VirtualRequestApi extends Command
                 // echo "Sr No.:-".($i+1).PHP_EOL;
                 // echo "Fund Request Id:-".$fundRequests->id.PHP_EOL.
                 // $update = PayoutRequestHistory::where('fund_request_id',$fundRequests->id)->update([
-
                 //     'balance'=>$arr['3'],
                 //     'amount'=>$arr['4'],
                 //     'charge'=>$arr['5'],

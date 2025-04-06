@@ -31,7 +31,7 @@ class FundRequestCallbackJob implements ShouldQueue
      * Execute the job.
      */
     public function handle(): void
-    {   
+    {
         $webhookUrl = ApiToken::where('user_id', $this->transaction ->user_id)->latest()->first();
         if (!is_null($webhookUrl) && $webhookUrl->domain !== NULL) {
             $parameters = [
@@ -50,18 +50,17 @@ class FundRequestCallbackJob implements ShouldQueue
                     "charges" => $this->transaction->payoutTransactionHistories->charge,
                 ],
             ];
-            Log::info(json_encode( $parameters));
             try{
                 Http::retry(3, 100)->post($webhookUrl->domain ,$parameters);
                 AutoTransactionUpdateWebhookModel::create([
                     'user_id'=>$this->transaction ->user_id,
                     'transaction_id'=>$this->transaction ->id,
-                    'webhook_url'=>$webhookUrl->domain 
+                    'webhook_url'=>$webhookUrl->domain
                 ]);
             }catch(Exception $e) {
                 Log::error($e->getMessage());
             }
-   
+
         } else {
             Log::info("Webhook Url Not a registerd");
         }

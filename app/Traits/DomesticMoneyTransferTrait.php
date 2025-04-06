@@ -59,7 +59,6 @@ trait DomesticMoneyTransferTrait {
                 ];
             endif;
         endif;
-
     }
 
     protected function otpVerification($data) {

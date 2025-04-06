@@ -23,7 +23,6 @@ class DashboardComponent extends Component
     public $paymentModes;
 
 
-
     public function render(){
 
         $loginActivities =  LoginSession::when(auth()->user()->getRoleNames()->first() !='super-admin',function($query){

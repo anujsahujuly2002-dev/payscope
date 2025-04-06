@@ -29,8 +29,6 @@ trait PayoutTraits {
                 'msg'=>'Low balance to make this request.'
             ];
         endif;
-            ];
-        endif;
         do {
             $data['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
         } while (FundRequest::where("payout_id", $data['payoutid'])->first() instanceof FundRequest);

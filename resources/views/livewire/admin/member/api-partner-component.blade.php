@@ -120,19 +120,24 @@
                                             {{ $apipartner->created_at }}
                                         </td>
                                         <td>
-                                            <input type="checkbox" id="switch{{ $apipartner->id }}" switch="bool" @if ($apipartner->status == 1) checked @endif wire:change='statusUpdate({{ $apipartner->id }},{{ $apipartner->status }})' />
-                                            <label for="switch{{ $apipartner->id }}" data-on-label="Active" data-off-label="Inactive"></label>
+                                            <input type="checkbox" id="switch{{ $apipartner->id }}" switch="bool"
+                                                @if ($apipartner->status == 1) checked @endif
+                                                wire:change='statusUpdate({{ $apipartner->id }},{{ $apipartner->status }})' />
+                                            <label for="switch{{ $apipartner->id }}" data-on-label="Active"
+                                                data-off-label="Inactive"></label>
                                         </td>
                                         {{-- <td>
                                             <input type="checkbox" id="switch_{{ $apipartner->id }}" switch="bool"
-                                                @if ($apipartner->services == 1) checked @endif
-                                                wire:change='serviceUpdate({{ $apipartner->id }},{{ $apipartner->services }})' />
-                                            <label for="switch_{{ $apipartner->id }}" data-on-label="Active"
-                                                data-off-label="Inactive"></label>
-                                        </td> --}}
+                                    @if ($apipartner->services == 1) checked @endif
+                                    wire:change='serviceUpdate({{ $apipartner->id }},{{ $apipartner->services }})' />
+                                    <label for="switch_{{ $apipartner->id }}" data-on-label="Active"
+                                        data-off-label="Inactive"></label>
+                                    </td> --}}
                                         <td>
                                             <li class="list-inline-item dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i class="uil uil-ellipsis-v"></i>
+                                                <a class="text-muted dropdown-toggle font-size-18 px-2"
+                                                    href="javascript:void(0)" role="button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true"><i class="uil uil-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="javascript:void(0)"
@@ -143,13 +148,23 @@
                                                         href="{{ route('admin.view.profile', base64_encode($apipartner->id)) }}">Profile</a>
                                                     {{-- @endcan
                                                     @endif --}}
-                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="generateOutletId({{ $apipartner->id }})">Generate Outlet Id</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        wire:click="changeScheme({{ $apipartner->id }},'dmt')">Scheme</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        wire:click="generateOutletId({{ $apipartner->id }})">Generate
+                                                        Outlet Id</a>
                                                     @if (checkRecordHasPermission(['service-change-status']))
                                                         @canany(['service-change-status'])
-                                                            <a class="dropdown-item" href="javascript:void(0)" wire:click="getServices({{$apipartner->id}})">Services</a>
+                                                            <a class="dropdown-item" href="javascript:void(0)"
+                                                                wire:click="getServices({{ $apipartner->id }})">Services</a>
                                                         @endcanany
                                                     @endif
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        wire:click="wallet({{ $apipartner->id }})">Wallet</a>
+
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        wire:click="lockedWallet({{ $apipartner->id }})"> Locked
+                                                        Wallet</a>
                                                 </div>
                                             </li>
                                         </td>
@@ -398,39 +413,57 @@
                                 <div class="card-body">
                                     <div class="row g-2">
                                         <div class="col-md-4 mb-0">
-                                            <label for="company_name" class="form-label"> Company Name<span style="color: red;">*</span></label>
-                                            <input type="text" id="company_name" class="form-control @error('company_name') is-invalid @enderror" placeholder="Enter Company Name" wire:model.defer='state.company_name' />
+                                            <label for="company_name" class="form-label"> Company Name<span
+                                                    style="color: red;">*</span></label>
+                                            <input type="text" id="company_name"
+                                                class="form-control @error('company_name') is-invalid @enderror"
+                                                placeholder="Enter Company Name"
+                                                wire:model.defer='state.company_name' />
                                             @error('company_name')
-                                                <div class="invalid-feedback">  {{ $message }}</div>
+                                                <div class="invalid-feedback"> {{ $message }}</div>
                                             @enderror
                                         </div>
 
                                         <div class="col-md-4 mb-0">
-                                            <label for="website" class="form-label">Website<span style="color: red;">*</span></label>
-                                            <input type="text" id="website" class="form-control @error('website') is-invalid @enderror"  placeholder="Enter Website" wire:model.defer='state.website' />
+                                            <label for="website" class="form-label">Website<span
+                                                    style="color: red;">*</span></label>
+                                            <input type="text" id="website"
+                                                class="form-control @error('website') is-invalid @enderror"
+                                                placeholder="Enter Website" wire:model.defer='state.website' />
                                             @error('website')
                                                 <div class="invalid-feedback"> {{ $message }} </div>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-0">
-                                            <label for="company_pan" class="form-label">Company PAN<span style="color: red;">*</span></label>
-                                            <input type="text" id="company_pan" class="form-control @error('company_pan') is-invalid @enderror" placeholder="Enter Company PAN"  wire:model.defer='state.company_pan' />
+                                            <label for="company_pan" class="form-label">Company PAN<span
+                                                    style="color: red;">*</span></label>
+                                            <input type="text" id="company_pan"
+                                                class="form-control @error('company_pan') is-invalid @enderror"
+                                                placeholder="Enter Company PAN"
+                                                wire:model.defer='state.company_pan' />
                                             @error('company_pan')
-                                                <div class="invalid-feedback">  {{ $message }}</div>
+                                                <div class="invalid-feedback"> {{ $message }}</div>
                                             @enderror
                                         </div>
 
                                         <div class="col-md-4 mb-0 ">
-                                            <label for="cin_number" class="form-label">CIN Number<span style="color: red;">*</span></label>
-                                            <input type="text" id="cin_number" class="form-control @error('cin_number') is-invalid @enderror" placeholder="Enter CIN Number  " wire:model.defer='state.cin_number' />
+                                            <label for="cin_number" class="form-label">CIN Number<span
+                                                    style="color: red;">*</span></label>
+                                            <input type="text" id="cin_number"
+                                                class="form-control @error('cin_number') is-invalid @enderror"
+                                                placeholder="Enter CIN Number  "
+                                                wire:model.defer='state.cin_number' />
                                             @error('cin_number')
-                                                <div class="invalid-feedback">  {{ $message }}  </div>
+                                                <div class="invalid-feedback"> {{ $message }} </div>
                                             @enderror
                                         </div>
 
                                         <div class="col-md-4 mb-0">
-                                            <label for="gst" class="form-label">GSTIN<span  style="color: red;">*</span></label>
-                                            <input type="text" id="gst" class="form-control @error('gst') is-invalid @enderror" placeholder="Enter GST Number" wire:model.defer='state.gst' />
+                                            <label for="gst" class="form-label">GSTIN<span
+                                                    style="color: red;">*</span></label>
+                                            <input type="text" id="gst"
+                                                class="form-control @error('gst') is-invalid @enderror"
+                                                placeholder="Enter GST Number" wire:model.defer='state.gst' />
                                             @error('gst')
                                                 <div class="invalid-feedback"> {{ $message }} </div>
                                             @enderror
@@ -518,8 +551,8 @@
                             <div class="row">
                                 <div class="col-md-6 mb-0">
                                     <label for="adhaarcard_number" class="form-label">AdhaarCard Number</label>
-                                    <input type="text"
-                                        id="adhaarcard_number"class="form-control @error('adhaarcard_number') is-invalid @enderror"
+                                    <input type="text" id="adhaarcard_number"
+                                        class="form-control @error('adhaarcard_number') is-invalid @enderror"
                                         placeholder="Enter Adhaar Card Number"
                                         wire:model.defer='ekycFormData.adhaarcard_number' />
                                     @error('adhaarcard_number')
@@ -586,69 +619,143 @@
                 </form>
             </div><!-- /.modal-dialog -->
         </div>
-        @elseif ($serviceForm)
-            <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
-                <div class="modal-dialog modal-lg">
-                    <form autocomplete="off">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myLargeModalLabel">Services List</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-nowrap mb-0">
-                                        <thead>
+    @elseif ($serviceForm)
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">Services List</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-nowrap mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Service Name</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($serviceLists as $key => $service)
                                             <tr>
-                                                <th >Service Name</th>
-                                                <th>Status</th>
+                                                <td>{{ ucfirst($service->name) }}</td>
+                                                <td>
+                                                    @php
+                                                        $payinStatus = '0';
+                                                        $payOutStatus = '0';
+                                                        $payinCheckedClass = '';
+                                                        $payOutCheckedClass = '';
+                                                        if (!is_null($userWiseService)):
+                                                            if ($service->id == '1'):
+                                                                if ($userWiseService->payin == '1'):
+                                                                    $payinCheckedClass = 'checked';
+                                                                    $payinStatus = '1';
+                                                                endif;
+                                                            endif;
+                                                        endif;
+                                                        if (!is_null($userWiseService)):
+                                                            if ($service->id == '2'):
+                                                                if ($userWiseService->payout == '1'):
+                                                                    $payOutCheckedClass = 'checked';
+                                                                    $payOutStatus = '1';
+                                                                endif;
+                                                            endif;
+                                                        endif;
+                                                    @endphp
+                                                    <input type="checkbox" id="switch_{{ $service->id }}"
+                                                        switch="bool"
+                                                        @if ($service->id == '1') {{ $payinCheckedClass }} @elseif($service->id == '2') {{ $payOutCheckedClass }} @endif
+                                                        wire:change='changeServiceStatus(@if ($service->id == '1') {{ $payinStatus }},"payin" @elseif($service->id == '2'){{ $payOutStatus }},"payout" @endif)' />
+                                                    <label for="switch_{{ $service->id }}" data-on-label="Active"
+                                                        data-off-label="Inactive"></label>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($serviceLists as $key => $service)
-                                                <tr>
-                                                    <td>{{ ucfirst($service->name) }}</td>
-                                                    <td>
-                                                        @php
-                                                            $payinStatus = '0';
-                                                            $payOutStatus = '0';
-                                                            $payinCheckedClass = "";
-                                                            $payOutCheckedClass = "";
-                                                            if(!is_null($userWiseService)):
-                                                                if($service->id =='1'):
-                                                                    if($userWiseService->payin =='1'):
-                                                                        $payinCheckedClass ="checked";
-                                                                        $payinStatus = '1';
-                                                                    endif;
-                                                                endif;
-                                                            endif;
-                                                            if(!is_null($userWiseService)):
-                                                                if($service->id =='2'):
-                                                                    if ($userWiseService->payout =='1') :
-                                                                        $payOutCheckedClass ="checked";
-                                                                        $payOutStatus = "1";
-                                                                    endif;
-                                                                endif;
-                                                            endif;
-                                                        @endphp
-                                                        <input type="checkbox" id="switch_{{$service->id}}" switch="bool" @if ($service->id =='1') {{$payinCheckedClass}} @elseif($service->id =='2') {{$payOutCheckedClass}} @endif  wire:change='changeServiceStatus(@if($service->id =='1'){{$payinStatus}},"payin" @elseif($service->id=='2'){{$payOutStatus}},"payout" @endif)' />
-                                                        <label for="switch_{{$service->id}}" data-on-label="Active" data-off-label="Inactive"></label>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            {{-- <button type="submit" class="btn btn-primary">Save changes</button> --}}
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+    @elseif($walletForm)
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent="walletAmountUpdate" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">Update Wallet Amount</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 mb-0 mt-2">
+                                    <label for="wallet_amount" class="form-label">Amount</label>
+                                    <input type="text" id="wallet_amount"
+                                        class="form-control @error('walletAmount') is-invalid @enderror"
+                                        placeholder="Enter your amount" wire:model.defer='walletAmount' />
+                                    @error('walletAmount')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                {{-- <button type="submit" class="btn btn-primary">Save changes</button> --}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update Amount</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+    @elseif($lockedWalletForm)
+        <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <form wire:submit.prevent="lockedWalletAmountUpdate" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myLargeModalLabel">Update Locked Wallet Amount</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 mb-0 mt-2">
+                                    <label for="locked_wallet_amount" class="form-label">Amount</label>
+                                    <input type="text" id="locked_wallet_amount"
+                                        class="form-control @error('lockedWalletAmount') is-invalid @enderror"
+                                        placeholder="Enter your amount" wire:model.defer='lockedWalletAmount' />
+                                    @error('lockedWalletAmount')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div><!-- /.modal-content -->
-                    </form>
-                </div><!-- /.modal-dialog -->
-            </div>
-        @else
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update Amount</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+    @else
         <div class="modal fade bs-example-modal-lg" id="form" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-lg">

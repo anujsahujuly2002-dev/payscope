@@ -61,7 +61,6 @@ class OperaterManagerComponent extends Component
         $statusUpdate = OperatorManager::findOrFail($id)->update([
             'status'=>$status==0?"1":"0",
         ]);
-
         if($status=='0'):
             $msg = "Slab Active Successfully";
         else:

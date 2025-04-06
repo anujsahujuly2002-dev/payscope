@@ -49,7 +49,6 @@ class PayoutRequestExport implements FromQuery,WithHeadings,LaravelShouldQueue,W
             ->with('user','status');
     }
 
-
     /**
      * Map each row of data to the desired format
      *
