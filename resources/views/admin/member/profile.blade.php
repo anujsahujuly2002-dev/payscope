@@ -9,25 +9,46 @@ Profile
     @endcomponent
     @livewire('admin.member.profile-componet')
 @endsection
-@section('script-bottom')
-<script>
-    window.addEventListener('otp-move', function(event) {
-        const position = event.detail.position;
-        const key = event.detail.key;
+@section('css')
 
-        // Use a short delay so the value registers before focus moves
-        setTimeout(() => {
-            if (key !== 'Backspace') {
-                const nextInput = document.getElementById(`otp-digit-${position + 1}`);
-                if (nextInput) nextInput.focus();
-            } else {
-                const prevInput = document.getElementById(`otp-digit-${position - 1}`);
-                if (prevInput) prevInput.focus();
-            }
-        }, 10); // Just 10ms is enough
-    });
-</script>
+<style>
+    /* OTP Verification Styles */
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
 
+    .modal-dialog {
+        margin-top: 10vh;
+    }
+
+    #otpVerificationModal input.form-control {
+        letter-spacing: 8px;
+        font-size: 24px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    #otpVerificationModal .btn-primary {
+        padding: 10px 30px;
+    }
+
+    .timer-container {
+        margin-top: 10px;
+    }
+
+    .timer-container .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 576px) {
+        #otpVerificationModal input.form-control {
+            letter-spacing: 4px;
+            font-size: 20px;
+        }
+    }
+</style>
 
 
 @endsection
