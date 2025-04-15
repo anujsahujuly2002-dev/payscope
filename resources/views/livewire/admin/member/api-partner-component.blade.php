@@ -21,7 +21,7 @@
                         <div class="col-md-2 mb-10">
                             <div class="form-group">
                                 <input type="text" class="form-control  rounded bg-light border-0"
-                                    placeholder="Mobile No." wire:model.live="value">
+                                    placeholder="Name | Email |Mobile No." wire:model.live="value">
                             </div>
                         </div>
                         <div class="col-md-2 mb-10">
@@ -102,7 +102,7 @@
                                             <a href="javascript:void(0)" class="text-body">{{ $apipartner->id }}</a>
                                         </td>
                                         <td>
-                                            {{ ucfirst($apipartner->name) }}<br>{{ $apipartner->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner->getRoleNames()->first()) }}
+                                            {{ ucfirst($apipartner->name) }}<br>{{ ($apipartner->email) }}<br>{{ $apipartner->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner->getRoleNames()->first()) }}
                                         </td>
                                         <td>
                                             {{ ucfirst($apipartner?->apiPartner?->parentDetails?->name) }}<br>{{ $apipartner?->apiPartner?->parentDetails?->getRoleNames()->first() == 'super-admin' ? '9519035604' : $apipartner?->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner?->apiPartner?->parentDetails?->getRoleNames()->first()) }}

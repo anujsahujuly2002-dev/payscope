@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Carbon\Carbon;
 use App\Models\Transfer_Return;
+use App\Models\TransferReturn;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -23,7 +24,7 @@ class TransferReturnExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $query = Transfer_Return::query();
+        $query = TransferReturn::query();
 
         if (!empty($this->data['user_id'])) {
             if (is_array($this->data['user_id'])) {
@@ -54,7 +55,7 @@ class TransferReturnExport implements FromCollection, WithHeadings
                 'Amount' => $transaction->amount,
                 'Transaction Type' => $transaction->transaction_type == 1 ? 'Credited' : 'Debited',
                 'Remark' => $transaction->remark,
-                'Status' => ucfirst($transaction->status),
+                'Status' => ucfirst(strip_tags($transaction->Status->name)),
                 'Date' => Carbon::parse($transaction->created_at)->format('d M Y h:i A'),
             ];
         });

@@ -90,7 +90,7 @@ class ApiPartnerComponent extends Component
             $u->where('user_id',$this->agentId);
         })
         ->when($this->value !=null,function($u){
-            $u->where('mobile_no',$this->value);
+            $u->where('mobile_no',$this->value)->orWhere('email',$this->value)->orWhere('name','like','%'.$this->value.'%');
         })->latest()->paginate(10);
         return view('livewire.admin.member.api-partner-component',compact('states','schemes','apiPartners'));
     }

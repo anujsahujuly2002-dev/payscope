@@ -16,4 +16,8 @@ class TransferReturn extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function Status() {
+        return $this->belongsTo(Status::class,'status','id');
+    }
 }
