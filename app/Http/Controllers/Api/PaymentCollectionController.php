@@ -84,7 +84,7 @@ class PaymentCollectionController extends Controller
     public function fetchQrStatus(FetchQrStatusRequest $request) {
         $userId = $request->attributes->get('user_id');
         $data = [];
-        $qRPaymentCollection = QRPaymentCollection::where(['user_id'=>$userId])->where('qr_code_id',$request->input('qr_code_id'))->orWhere('payment_id',$request->input('qr_code_id'))->orWhere('order_id',$request->input('qr_code_id'))->first();
+        $qRPaymentCollection = QRPaymentCollection::where(['user_id'=>$userId])->where('qr_code_id',$request->input('qr_code_id'))->orWhere('payment_id',$request->input('qr_code_id'))->orWhere('order_id',$request->input('qr_code_id'))->orWhere('merchant_order_id',$request->input('qr_code_id'))->first();
         if(!is_null($qRPaymentCollection)):
             $data =[
                 'qr_code_id'=>$qRPaymentCollection['qr_code_id'],

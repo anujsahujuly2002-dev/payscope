@@ -59,28 +59,31 @@ class PaymentCollectionComponent extends Component
         $qr_collection = QRPaymentCollection::when(auth()->user()->getRoleNames()->first() == 'api-partner', function ($u) {
             $u->where('user_id', auth()->user()->id);
         })
-            ->when(auth()->user()->getRoleNames()->first() == 'retailer', function ($query) {
-                $query->where('user_id', auth()->user()->id);
-            })
-            ->when($this->start_date && $this->end_date, function ($query) {
-                $query->whereDate('created_at', '>=', $this->start_date)->whereDate('created_at', '<=', $this->end_date);
-            })
-            ->when($this->agentId, function ($query) {
-                $query->where('user_id', $this->agentId);
-            })
-            ->when($this->start_date && !$this->end_date, function ($query) {
-                $query->whereDate('created_at', '>=', $this->start_date);
-            })
-            ->when($this->value, function ($query) {
-                $query->where('qr_code_id', $this->value);
-            })
-            ->when($this->value != null, function ($u) {
-                $u->orWhere('payment_id', $this->value);
-            })
-            ->when($this->status !== null, function ($query) {
-                $query->where('status_id', $this->status);
-            })
-            ->latest()->paginate(100);
+        ->when(auth()->user()->getRoleNames()->first() == 'retailer', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })
+        ->when($this->start_date && $this->end_date, function($query) {
+            $query->whereDate('created_at', '>=', $this->start_date)->whereDate('created_at', '<=', $this->end_date);
+        })
+        ->when($this->agentId, function($query) {
+            $query->where('user_id', $this->agentId);
+        })
+        ->when($this->start_date && !$this->end_date, function($query) {
+            $query->whereDate('created_at', '>=', $this->start_date);
+        })
+        ->when($this->value, function($query) {
+            $query->where('qr_code_id',$this->value);
+        })
+        ->when($this->value !=null,function($u){
+            $u->orWhere('payment_id',$this->value);
+        })
+        ->when($this->value !=null,function($u){
+            $u->orWhere('merchant_order_id',$this->value);
+        })
+        ->when($this->status !== null, function($query) {
+            $query->where('status_id', $this->status);
+        })
+        ->latest()->paginate(100);
         $userId = auth()->user()->id;
         $role = auth()->user()->getRoleNames()->first();
         // Query for currentBalance and settelmentDueToday
@@ -121,7 +124,7 @@ class PaymentCollectionComponent extends Component
 
     public function openPrintSlipModal($id,$user_id)
     {
-    
+
         $this->qr_payment_collection = QRPaymentCollection::where('id', $id)->first();
         $this->users = User::where('id', $user_id)->first();
         // $this->fund_request = FundRequest::where('user_id', $user_id)->first();
@@ -145,7 +148,7 @@ class PaymentCollectionComponent extends Component
     {
         $this->reset(['qr_payment_collection', 'users', 'transationSlip']);
     }
-    
+
 
     public function makePayment()
     {

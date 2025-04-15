@@ -25,12 +25,14 @@ class SettelmentComponent extends Component
             $twoBetweenDates->whereDate('created_at','>=',$this->start_date)->whereDate("created_at","<=",$this->end_date);
 
         }) ->when($this->transaction_id !=null,function($u){
-            $u->where('txn_id', 'like', '%'.$this->transaction_id.'%');
+            $u->where('settelment_id', 'like', '%'.$this->transaction_id.'%');
             // $u->where('txn_id',$this->transaction_id);
 
-        })->when($this->value !=null,function($u){
-            $u->where('payout_ref', 'like', '%'.$this->value.'%')->orWhere('payout_id','like','%'.$this->value.'%');
-        })->latest()->paginate(100);
+        })
+        // ->when($this->value !=null,function($u){
+        //     $u->where('payout_ref', 'like', '%'.$this->value.'%')->orWhere('payout_id','like','%'.$this->value.'%');
+        // })
+        ->latest()->paginate(100);
         return view('livewire.admin.settelment-component',compact('settelments'));
     }
     
