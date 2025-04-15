@@ -74,7 +74,7 @@
                                     </th>
                                     <th scope="col">Id</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Parent Details</th>
+                                    {{-- <th scope="col">Parent Details</th> --}}
                                     <th scope="col">Company Profile</th>
                                     <th scope="col">Wallet Amount</th>
                                     <th scope="col">Locked Amount</th>
@@ -105,11 +105,11 @@
                                             {{ ucfirst($apipartner->name) }}<br>{{ ($apipartner->email) }}<br>{{ $apipartner->apiPartner?->mobile_no }}
                                             {{-- <br>{{ ucfirst($apipartner->getRoleNames()->first()) }} --}}
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             {{ ucfirst($apipartner?->apiPartner?->parentDetails?->name) }}<br>{{ $apipartner?->apiPartner?->parentDetails?->getRoleNames()->first() == 'super-admin' ? '9519035604' : $apipartner?->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner?->apiPartner?->parentDetails?->getRoleNames()->first()) }}
-                                        </td>
+                                        </td> --}}
                                         <td>
-                                            <strong>Company Name:-</strong>{{ ucfirst($apipartner?->apiPartner?->company_name) }}<br><strong>GST Number:-</strong>{{ $apipartner?->apiPartner?->company_gst_number }}
+                                            <strong>Company Name:-</strong>{{ ucfirst($apipartner?->apiPartner?->company_name) }}<br><strong>GST Number:-</strong>{{ $apipartner?->apiPartner?->company_gst_number }} <strong>Comapany CIN No:-</strong>{{ $apipartner?->apiPartner?->company_cin_number }}
                                         </td>
                                         <td class="fw-bolder">
                                             &#x20B9;{{ moneyFormatIndia($apipartner->walletAmount->amount) }}
