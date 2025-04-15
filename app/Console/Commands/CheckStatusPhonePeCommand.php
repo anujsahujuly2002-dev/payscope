@@ -44,10 +44,6 @@ class CheckStatusPhonePeCommand extends Command
             endif;
             $getPendingPayments = QRPaymentCollection::where(['payment_channel'=>'phone-pe','status_id'=>'1'])->get();
             foreach($getPendingPayments  as $pendingStatus):
-                // $logs = DB::table('razor_pay_logs')
-                // ->whereRaw("JSON_EXTRACT(response, '$.orderId') = ?", [$pendingStatus->qr_code_id])
-                // ->first();
-                // $ordeer = json_decode($logs->request,true);
                 $response = Http::withHeaders([
                     'Content-Type'  => 'application/json',
                     'Authorization' => 'O-Bearer ' . session('access_token'),
@@ -61,11 +57,13 @@ class CheckStatusPhonePeCommand extends Command
                     ]);
                 elseif(array_key_exists('state',$results) && $results['state'] ==='COMPLETED'):
                     if(array_key_exists('state',$results['paymentDetails'][0]) && $results['paymentDetails'][0]['state'] ==='FAILED'):
+                        $paymentDetails=($this->getAllRailArrays($results['paymentDetails']));
+                        // dd($paymentDetails);
                         $pendingStatus->update([
                             'payments_amount_received' => $results['payableAmount'] / 100,
                             'status_id' =>  "3",
-                            'utr_number' => $results['paymentDetails'][1]['rail']['utr'],
-                            'payment_id' => $results['paymentDetails'][1]['rail']['upiTransactionId'],
+                            'utr_number' => $paymentDetails['0']['utr'],
+                            'payment_id' => $paymentDetails['0']['upiTransactionId'],
                             'close_reason'=> ucwords(str_replace('_', ' ', $results['paymentDetails'][0]['detailedErrorCode']))
                         ]);
                     else:
@@ -98,8 +96,8 @@ class CheckStatusPhonePeCommand extends Command
             endforeach;
            
         }catch (Exception $e){
-            print_r($results);
-            echo $e->getMessage().PHP_EOL;
+            // print_r($results);
+            echo $e->getMessage().PHP_EOL."Line No:-".$e->getLine();
         }
 
       
@@ -121,4 +119,20 @@ class CheckStatusPhonePeCommand extends Command
         ]);
         return $response->getBody()->getContents();
     }
+
+    private function  getAllRailArrays($array) {
+        $railArrays = [];
+    
+        foreach ($array as $key => $value) {
+            if ($key === 'rail' && is_array($value)) {
+                $railArrays[] = $value;
+            }
+            if (is_array($value)) {
+                $railArrays = array_merge($railArrays, $this->getAllRailArrays($value));
+            }
+        }
+    
+        return $railArrays;
+    }
+    
 }

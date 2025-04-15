@@ -67,6 +67,9 @@ class PaymentCollectionComponent extends Component
         ->when($this->value !=null,function($u){
             $u->orWhere('payment_id',$this->value);
         })
+        ->when($this->value !=null,function($u){
+            $u->orWhere('merchant_order_id',$this->value);
+        })
         ->when($this->status !== null, function($query) {
             $query->where('status_id', $this->status);
         })
