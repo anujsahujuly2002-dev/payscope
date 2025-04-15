@@ -108,7 +108,7 @@
                                             {{ ucfirst($apipartner?->apiPartner?->parentDetails?->name) }}<br>{{ $apipartner?->apiPartner?->parentDetails?->getRoleNames()->first() == 'super-admin' ? '9519035604' : $apipartner?->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner?->apiPartner?->parentDetails?->getRoleNames()->first()) }}
                                         </td>
                                         <td>
-                                            {{ ucfirst($apipartner?->apiPartner?->shop_name) }}<br>{{ $apipartner?->apiPartner?->website }}
+                                            <strong>Company Name:-</strong>{{ ucfirst($apipartner?->apiPartner?->company_name) }}<br><strong>GST Number:-</strong>{{ $apipartner?->apiPartner?->company_gst_number }}
                                         </td>
                                         <td class="fw-bolder">
                                             &#x20B9;{{ moneyFormatIndia($apipartner->walletAmount->amount) }}
@@ -126,13 +126,6 @@
                                             <label for="switch{{ $apipartner->id }}" data-on-label="Active"
                                                 data-off-label="Inactive"></label>
                                         </td>
-                                        {{-- <td>
-                                            <input type="checkbox" id="switch_{{ $apipartner->id }}" switch="bool"
-                                    @if ($apipartner->services == 1) checked @endif
-                                    wire:change='serviceUpdate({{ $apipartner->id }},{{ $apipartner->services }})' />
-                                    <label for="switch_{{ $apipartner->id }}" data-on-label="Active"
-                                        data-off-label="Inactive"></label>
-                                    </td> --}}
                                         <td>
                                             <li class="list-inline-item dropdown">
                                                 <a class="text-muted dropdown-toggle font-size-18 px-2"
