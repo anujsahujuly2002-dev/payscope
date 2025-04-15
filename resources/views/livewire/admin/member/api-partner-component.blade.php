@@ -109,7 +109,7 @@
                                             {{ ucfirst($apipartner?->apiPartner?->parentDetails?->name) }}<br>{{ $apipartner?->apiPartner?->parentDetails?->getRoleNames()->first() == 'super-admin' ? '9519035604' : $apipartner?->apiPartner?->mobile_no }}<br>{{ ucfirst($apipartner?->apiPartner?->parentDetails?->getRoleNames()->first()) }}
                                         </td> --}}
                                         <td>
-                                            <strong>Company Name:-</strong>{{ ucfirst($apipartner?->apiPartner?->company_name) }}<br><strong>GST Number:-</strong>{{ $apipartner?->apiPartner?->company_gst_number }} <strong>Comapany CIN No:-</strong>{{ $apipartner?->apiPartner?->company_cin_number }}
+                                            <strong>Name:-</strong>{{ ucfirst($apipartner?->apiPartner?->company_name) }}<br><strong>GST Number:-</strong>{{ $apipartner?->apiPartner?->company_gst_number }} <br> <strong>CIN No:-</strong>{{ $apipartner?->apiPartner?->company_cin_number }}
                                         </td>
                                         <td class="fw-bolder">
                                             &#x20B9;{{ moneyFormatIndia($apipartner->walletAmount->amount) }}
