@@ -36,11 +36,10 @@ class FundController extends Controller
         return view('admin.fund-manager.auto-transaction-update-webhook');
     }
 
-    
+    public function transfer_return() {
+        return view('admin.fund-manager.transfer-return');
+    }
 
 
-
-
-    
 
 }

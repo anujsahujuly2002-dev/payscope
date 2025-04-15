@@ -14,7 +14,7 @@ use  App\Traits\EkoPayoutTrait;
 class FundRequestController extends Controller
 {
     use PayoutTraits,EkoPayoutTrait;
-   
+
     public function payout(FundRequestRequest $request) {
         $request['user_id'] =  $request->attributes->get('user_id');
         $request['payment_mode'] = getPaymentModesId($request->input('payment_mode'));
@@ -67,6 +67,6 @@ class FundRequestController extends Controller
         else:
            Log::info('Request data:', $request->all());
         endif;
-       
-    }   
+
+    }
 }

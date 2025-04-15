@@ -26,7 +26,6 @@ class FundRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
             'account_number'=>'required|numeric|min:10',
             'bank_name'=>'required',
             'account_holder_name'=>'required|string|min:3',

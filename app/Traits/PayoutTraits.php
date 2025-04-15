@@ -29,14 +29,6 @@ trait PayoutTraits {
                 'msg'=>'Low balance to make this request.'
             ];
         endif;
-        // Check previous transaction time
-        $previousTransactionTimeCheck = FundRequest::where(['user_id'=>$data['user_id'],'account_number'=>$data['account_number'],'amount'=>$data['amount']])->whereBetween('created_at',[Carbon::now()->subSeconds(30)->format('Y-m-d H:i:s'), Carbon::now()->addSeconds(30)->format('Y-m-d H:i:s')])->count();
-        if($previousTransactionTimeCheck > 0):
-            return [
-                'status'=>'0003',
-                'msg'=>'Next transaction allowed after 1 Min.'
-            ];
-        endif;
         do {
             $data['payoutid'] = 'GROSC'.rand(111111111111, 999999999999);
         } while (FundRequest::where("payout_id", $data['payoutid'])->first() instanceof FundRequest);
@@ -149,7 +141,7 @@ trait PayoutTraits {
     }
 
 
-    // Payout Method 
+    // Payout Method
 
     protected function fundTransfer($data=[]) {
         // dd($data);

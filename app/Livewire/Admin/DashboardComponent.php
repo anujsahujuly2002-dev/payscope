@@ -21,7 +21,6 @@ class DashboardComponent extends Component
     public $statuses;
     public $banks;
     public $paymentModes;
-    
 
 
     public function render(){
@@ -54,9 +53,8 @@ class DashboardComponent extends Component
     }
 
     public function transaction($transactionId){
-        
+
         $this->selectedTransaction = PayoutRequestHistory::find($transactionId);
         $this->dispatch('show-form');
     }
-
 }

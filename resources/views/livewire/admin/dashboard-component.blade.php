@@ -59,7 +59,7 @@
                                 class="counterup">{{ formatAmount($totalCommission) }}  Lakh.</span></h4>
                         <p class="text-white mb-0">Total Payout Charges:</p>
                     </div>
-                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since 
+                    <p class="text-white mt-3 mb-0"><span class="me-1 text-warning"><i class="mdi mdi-arrow-down-bold me-1"></i>0%</span> since
                     </p>
                 </div>
             </div>

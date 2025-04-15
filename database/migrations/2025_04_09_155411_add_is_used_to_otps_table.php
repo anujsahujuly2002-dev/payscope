@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('q_r_payment_collections', function (Blueprint $table) {
-            $table->string("merchant_order_id")->after('order_id')->nullable();
+        Schema::table('otps', function (Blueprint $table) {
+            $table->boolean('is_used')->default(false)->after('expire_at');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('q_r_payment_collections', function (Blueprint $table) {
-            //
+        Schema::table('otps', function (Blueprint $table) {
+            $table->dropColumn('is_used');
         });
     }
 };

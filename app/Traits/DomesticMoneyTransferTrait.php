@@ -50,7 +50,7 @@ trait DomesticMoneyTransferTrait {
                     'status'=>false,
                     'msg'=>'Your '.$res['status'],
                     // 'txn_id'=>$data['orderid']
-                ]; 
+                ];
             else:
                 return [
                     'status'=>false,
@@ -59,7 +59,6 @@ trait DomesticMoneyTransferTrait {
                 ];
             endif;
         endif;
-        
     }
 
     protected function otpVerification($data) {

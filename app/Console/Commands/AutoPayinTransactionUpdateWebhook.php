@@ -71,12 +71,12 @@ class AutoPayinTransactionUpdateWebhook extends Command
                                 AutoPayinTransactionUpdate::create([
                                     'user_id'=>$transaction->user_id,
                                     'qr_collection_id'=>$transaction->id,
-                                    'webhook_url'=>$webhookUrl->domain 
+                                    'webhook_url'=>$webhookUrl->domain
                                 ]);
                             }catch(Exception $e) {
                                 Log::error($e->getMessage());
                             }
-                   
+
                         } else {
                             Log::info("Webhook Url Not a registerd");
                         }
@@ -86,7 +86,7 @@ class AutoPayinTransactionUpdateWebhook extends Command
         }catch(Exception $e) {
             Log::error([$e->getMessage()]);
         }
-        
+
 
     }
 }

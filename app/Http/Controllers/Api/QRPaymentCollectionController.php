@@ -52,7 +52,6 @@ class QRPaymentCollectionController extends Controller
         if (!is_dir($imageDirectory)) {
             mkdir($imageDirectory, 0755, true); // 0755 is the permission, true enables recursive creation
         }
-
         // Now set the image path
         $imagePath = $imageDirectory;
         $imageName = 'qr_image_'.time().'.png';

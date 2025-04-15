@@ -57,13 +57,13 @@ class QRCollectionExport implements FromQuery, WithHeadings, WithMapping, Larave
     public function map($qrPaymentCollection): array
     {
         return [
-            $qrPaymentCollection->user?->name ?? 'N/A', 
-            $qrPaymentCollection->user?->email ?? 'N/A', 
+            $qrPaymentCollection->user?->name ?? 'N/A',
+            $qrPaymentCollection->user?->email ?? 'N/A',
             $qrPaymentCollection->qr_code_id,
             $qrPaymentCollection->payment_id,
             $qrPaymentCollection->payment_amount,
             $qrPaymentCollection->payments_amount_received,
-            $qrPaymentCollection->qr_status,
+            // $qrPaymentCollection->qr_status,
             $qrPaymentCollection->close_reason,
             strip_tags($qrPaymentCollection->status?->name),
             Carbon::parse($qrPaymentCollection->created_at)->format('dS M Y H:i:s'),
@@ -84,7 +84,7 @@ class QRCollectionExport implements FromQuery, WithHeadings, WithMapping, Larave
             'Payment Id',
             'Amount',
             'Received Amount',
-            'Current Status',
+            // 'Current Status',
             'QR Close Reason',
             'Status',
             'Date'

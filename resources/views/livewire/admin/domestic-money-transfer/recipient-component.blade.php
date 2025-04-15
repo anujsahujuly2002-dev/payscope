@@ -24,7 +24,7 @@
                                         @if (checkRecordHasPermission(['beneficiary-registration']))
                                             @can('beneficiary-registration')
                                                 <a href="javascript:void(0);" class="btn btn-success d-flex" wire:click.prevent='create'><i class="mdi mdi-plus"></i>Beneficiary Registration</a>
-                                            @endcan 
+                                            @endcan
                                         @endif
                                         </div>
                                     </div>
@@ -46,7 +46,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-    
                                 </tbody>
                             </table>
                         </div>
@@ -91,4 +90,3 @@
         <!-- end row -->
         @include('admin.delete-confirmation.delete-confirmation')
     </div>
-    

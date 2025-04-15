@@ -121,7 +121,7 @@
                         </li>
                     @endcanany
                 @endif
-                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request','virtual-list','payout-request','payout-new-request','qr-collection-add-payment','qr-collection-list']))
+                @if (checkRecordHasPermission(['fund-manager-manual-request','fund-new-request','approved-fund-request','virtual-list','payout-request','payout-new-request','qr-collection-add-payment','qr-collection-list','fund-manager-transfer-return', 'transfer-return-new-request']))
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="uil-history"></i>
@@ -148,12 +148,16 @@
                                     <li><a href="{{ route('admin.payment.collection.index') }}" style="color: #0A1D56;">Payment Collection </a></li>
                                 @endcanany
                             @endif
+                            @if (checkRecordHasPermission(['fund-manager-transfer-return', 'transfer-return-new-request']))
+                                @canany(['fund-manager-transfer-return', 'transfer-return-new-request'])
+                                    <li><a href="{{route('admin.fund.transfer.return')}}" style="color: #0a1d56;">Transfer Return</a></li>
+                                @endcanany
+                            @endif
                             @if (checkRecordHasPermission(['disputes-list']))
-                            @canany(['disputes-list'])
-                                <li><a href="{{ route('admin.payout.disputes') }}" style="color: #0A1D56;">Disputes </a></li>
-                            @endcanany
-                        @endif
-
+                                @canany(['disputes-list'])
+                                    <li><a href="{{ route('admin.payout.disputes') }}" style="color: #0A1D56;">Disputes </a></li>
+                                @endcanany
+                            @endif
                         </ul>
                     </li>
                 @endif
@@ -185,7 +189,7 @@
                         <i class="uil-book-open"></i>
                         <span style="color: #0a1d56;">Settelment</span>
                     </a>
-                    
+
                 </li>
                 @if (checkRecordHasPermission(['api-create','api-list','api-change-status','api-edit','manage-setting','setting-update','callback-token-create','callback-token-delete','login-session','charge-slab-list', 'charge-slab-create', 'charges-slab-edit','charge-slabs-status-change', 'operator-delete','service-create', 'manage-service', 'service-edit','service-change-status']))
                     @canany(['api-create', 'api-list', 'api-change-status', 'api-edit', 'callback-token', 'callback-token-create','callback-token-delete','login-session','charge-slab-list', 'charge-slab-create', 'charges-slab-edit','charge-slabs-status-change', 'operator-delete','service-create', 'manage-service', 'service-edit','service-change-status' ])
@@ -205,12 +209,18 @@
                                         <li><a href="{{route('admin.setup.operator.manager')}}">Charge Slabs</a></li>
                                     @endcanany
                                 @endif
-    
                                 @if (checkRecordHasPermission(['api-logs']))
                                     @can('api-logs')
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.api.logs') }}">Api Logs</a></li>
                                     @endcan
                                 @endif
+
+                                @if (checkRecordHasPermission(['razorpay-api-logs']))
+                                    @can('razorpay-api-logs')
+                                        <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.razorpay.api.logs') }}">Razorpay Api Logs</a></li>
+                                    @endcan
+                                @endif
+
                                 @if (checkRecordHasPermission(['login-session']))
                                     @can('login-session')
                                         <li><a style="color: #0a1d56;" href="{{ route('admin.log.manager.login.session') }}">Login Session </a></li>
@@ -273,7 +283,6 @@
                         </li>
                     @endcanany
                 @endif
-                
                 <li>
                     <a style="color: #0a1d56;" href="{{ route('admin.logout') }}">
                         <i class="fas fa-sign-out-alt"></i>

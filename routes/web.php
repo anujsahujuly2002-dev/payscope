@@ -1,12 +1,6 @@
 <?php
-
-
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Admin\PaymentController;
-
 use App\Http\Controllers\Admin\WebHookController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +12,6 @@ use App\Http\Controllers\Admin\WebHookController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
-
-Route::get('/genrate-qr-code',function(){
-    dd(json_decode('{"type":"CHECKOUT_ORDER_COMPLETED","event":"checkout.order.completed","payload":{"merchantId":"GROSCOPEUAT","merchantOrderId":"GROSC485325164849","orderId":"OMO2503152356561237947611","state":"COMPLETED","amount":"10000","expireAt":"1742236049290","metaInfo":null,"paymentDetails":[{"paymentMode":"CARD","transactionId":"OM2503152356561247947086","timestamp":"1742063249290","amount":"10000","state":"COMPLETED","splitInstruments":[{"amount":"10000","rail":{"type":"PG","transactionId":"<transactionId>","authorizationCode":"<authorizationCode>","serviceTransactionId":"<serviceTransactionId>"},"instrument":{"type":"CREDIT_CARD","bankTransactionId":"<bankTransactionId>","bankId":"<bankId>","arn":"<arn>","brn":"<brn>"}}]}]}}',true));
-});
-Route::get('migrate',function(){
-    Artisan::call('migrate');
-    echo "Migration successfully!";
-});
 
 Route::get('/',function (){
     return to_route('admin.login');
@@ -74,8 +58,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::prefix('retailer')->name('retailer.')->group(function() {
                 Route::get('/','retailer')->name('list');
             });
-            
             Route::get('view-profile/{id}','viewProfile')->name('view.profile');
+            Route::get('/wallet', 'wallet')->name('wallet');
         });
 
         // Setup Tools Route
@@ -93,13 +77,15 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/qr-request','qrRequest')->name('qr.request');
             // Route::get('/qr-collection','qrCollection')->name('qr.collection');
             Route::get('/transaction-history','transactionHistory')->name('transaction.history');
+            Route::get('/transfer-return','transfer_return')->name('transfer.return');
         });
 
 
-        // Payment Collection Route 
+        // Payment Collection Route
         Route::controller(PaymentCollectionController::class)->prefix('payment-collection')->name('payment.collection.')->group(function(){
             Route::get('/index','index')->name('index');
             Route::get('/phone-pe-callback','phonePeCallback')->name('phone.callback');
+
         });
 
         // Payout Manager Route
@@ -110,6 +96,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(LogManagerController::class)->prefix('log-manager')->name('log.manager.')->group(function() {
             Route::get('/login-session','loginSession')->name('login.session');
             Route::get('/api-logs','apiLogs')->name('api.logs');
+            Route::get('/razorpay-api-logs','razorpayapiLogs')->name('razorpay.api.logs');
         });
 
         // Scheme Manager Route

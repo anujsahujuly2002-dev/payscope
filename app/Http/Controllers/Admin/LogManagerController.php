@@ -14,4 +14,9 @@ class LogManagerController extends Controller
     public function apiLogs() {
         return view('admin.log-manager.api-logs');
     }
+
+    
+    public function razorpayapiLogs() {
+        return view('admin.log-manager.razorpay-api-logs');
+    }
 }
