@@ -1,6 +1,106 @@
 <div>
     <div wire:loading  class="loading"></div>
     @include('admin.flash-message.flash-message')
+    <div class="card mb-2 bg-transparent shadow-none border-none">
+
+
+
+        <div class="card" >
+            <div class="card-header   d-flex justify-content-between align-items-center" style="border-bottom: 1px dotted #b2b3b6;
+            background:white;">
+                <div class="fw-semibold text-muted">Overview</div>
+
+                <div class="select-container">
+                    <select class="form-select w-auto" id="overviewSelect" style="border: none; color:red;padding-right:0.75rem;">
+                        <option selected>This Week</option>
+                        <option>Last Week</option>
+                        <option>This Month</option>
+                        <option>Last Month</option>
+                        <option>Custom Range</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card-body">
+        <div class="row">
+
+            <!-- Collected Amount -->
+            <div class="col-md-3">
+                <div class="card" style="background-color:#0a1d56;">
+                    <div class="card-body">
+                        <div class="float-end mt-2">
+                            <i class="fas fa-coins text-success fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1 mt-1 text-white">₹ <span class="counterup">1000</span></h4>
+                            <p class="text-white mb-0">Collected Amount</p>
+                        </div>
+                        <p class="text-white mt-3 mb-0">
+                            from  <span class="text-success me-1"><i class=" me-1"></i>24</span> payments
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disputes -->
+            <div class="col-md-3">
+                <div class="card" style="background-color:#fc0800;">
+                    <div class="card-body">
+                        <div class="float-end mt-2">
+                            <i class="fas fa-exclamation-triangle text-light fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1 mt-1 text-white">₹ <span class="counterup">1000</span></h4>
+                            <p class="text-white mb-0">Disputes</p>
+                        </div>
+                        <p class="text-white mt-3 mb-0">
+                            from <span class="text-light me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>5</span>   payments
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Refunds -->
+            <div class="col-md-3">
+                <div class="card" style="background-color:#0a1d56;">
+                    <div class="card-body">
+                        <div class="float-end mt-2">
+                            <i class="fas fa-undo text-success fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1 mt-1 text-white">₹ <span class="counterup">1000</span></h4>
+                            <p class="text-white mb-0">Refunds</p>
+                        </div>
+                        <p class="text-white mt-3 mb-0">
+                            <span class="text-light me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>+0%</span> from 8 payments
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Failed -->
+            <div class="col-md-3">
+                <div class="card" style="background-color:#fc0800;">
+                    <div class="card-body">
+                        <div class="float-end mt-2">
+                            <i class="fas fa-times-circle text-light fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1 mt-1 text-white">₹ <span class="counterup">1000</span></h4>
+                            <p class="text-white mb-0">Failed</p>
+                        </div>
+                        <p class="text-white mt-3 mb-0">
+                            <span class="text-light me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>+0%</span> from 12 payments
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+        </div>
+
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
