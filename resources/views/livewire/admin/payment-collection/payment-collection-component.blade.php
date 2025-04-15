@@ -420,7 +420,7 @@
                 </div>
 
                 <div class="modal-footer receipt-footer justify-content-between no-print">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" wire:click="closeSlipModal" >
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" >
                         <i class="fas fa-times me-2"></i>Cancel
                     </button>
                     <button type="button" class="btn  btn-light" onclick="printSlipOnly()">
@@ -628,7 +628,7 @@
                 </style>
             </head>
             <body>
-              
+
                 <div class="receipt-body">
                     ${slipContent.innerHTML}
                 </div>
